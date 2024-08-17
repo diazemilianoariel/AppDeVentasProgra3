@@ -3,12 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\programador\\Desktop\\Ventas\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\ventas\\front\\default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|C:\\Users\\programador\\Desktop\\Ventas\\front\\master.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}",
-      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\master.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}"
+      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\ventas\\front\\producto.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\producto.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     }
   ],
   "DocumentGroupContainers": [
@@ -35,26 +31,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Default.aspx",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\Ventas\\Front\\Default.aspx",
-              "RelativeDocumentMoniker": "Front\\Default.aspx",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\Ventas\\Front\\Default.aspx",
-              "RelativeToolTip": "Front\\Default.aspx",
+              "Title": "producto.aspx",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\Ventas\\Front\\producto.aspx",
+              "RelativeDocumentMoniker": "Front\\producto.aspx",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\Ventas\\Front\\producto.aspx",
+              "RelativeToolTip": "Front\\producto.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2024-08-09T23:05:26.025Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MASTER.Master",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\Ventas\\Front\\MASTER.Master",
-              "RelativeDocumentMoniker": "Front\\MASTER.Master",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\Ventas\\Front\\MASTER.Master",
-              "RelativeToolTip": "Front\\MASTER.Master",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2024-08-09T23:02:19.448Z",
+              "WhenOpened": "2024-08-17T10:03:00.464Z",
               "EditorCaption": ""
             }
           ]
