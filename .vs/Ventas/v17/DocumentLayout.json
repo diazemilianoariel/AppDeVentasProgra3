@@ -3,8 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\programador\\Desktop\\Ventas\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\ventas\\front\\producto.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\producto.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+      "AbsoluteMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|c:\\users\\programador\\desktop\\ventas\\dominio\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|solutionrelative:dominio\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|c:\\users\\programador\\desktop\\ventas\\dominio\\perfil.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|solutionrelative:dominio\\perfil.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|c:\\users\\programador\\desktop\\ventas\\dominio\\factura.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|solutionrelative:dominio\\factura.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|c:\\users\\programador\\desktop\\ventas\\dominio\\compra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|solutionrelative:dominio\\compra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|c:\\users\\programador\\desktop\\ventas\\dominio\\venta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|solutionrelative:dominio\\venta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|c:\\users\\programador\\desktop\\ventas\\dominio\\proveedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|solutionrelative:dominio\\proveedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|c:\\users\\programador\\desktop\\ventas\\dominio\\producto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|solutionrelative:dominio\\producto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,8 +38,60 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Perfil.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\Ventas\\dominio\\Perfil.cs",
+              "RelativeDocumentMoniker": "dominio\\Perfil.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\Ventas\\dominio\\Perfil.cs",
+              "RelativeToolTip": "dominio\\Perfil.cs",
+              "ViewState": "AQIAAAoAAAAAAAAAAAAQwBYAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-18T10:16:43.953Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Factura.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\Ventas\\dominio\\Factura.cs",
+              "RelativeDocumentMoniker": "dominio\\Factura.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\Ventas\\dominio\\Factura.cs",
+              "RelativeToolTip": "dominio\\Factura.cs",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAAABQAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-18T10:08:47.676Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Cliente.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\Ventas\\dominio\\Cliente.cs",
+              "RelativeDocumentMoniker": "dominio\\Cliente.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\Ventas\\dominio\\Cliente.cs",
+              "RelativeToolTip": "dominio\\Cliente.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-18T10:05:03.7Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Compra.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\Ventas\\dominio\\Compra.cs",
+              "RelativeDocumentMoniker": "dominio\\Compra.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\Ventas\\dominio\\Compra.cs",
+              "RelativeToolTip": "dominio\\Compra.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-18T10:05:02.45Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
@@ -30,15 +106,41 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "producto.aspx",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\Ventas\\Front\\producto.aspx",
-              "RelativeDocumentMoniker": "Front\\producto.aspx",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\Ventas\\Front\\producto.aspx",
-              "RelativeToolTip": "Front\\producto.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2024-08-17T10:03:00.464Z",
+              "DocumentIndex": 4,
+              "Title": "Venta.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\Ventas\\dominio\\Venta.cs",
+              "RelativeDocumentMoniker": "dominio\\Venta.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\Ventas\\dominio\\Venta.cs",
+              "RelativeToolTip": "dominio\\Venta.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAAACMAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-18T10:04:59.293Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Proveedor.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\Ventas\\dominio\\Proveedor.cs",
+              "RelativeDocumentMoniker": "dominio\\Proveedor.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\Ventas\\dominio\\Proveedor.cs",
+              "RelativeToolTip": "dominio\\Proveedor.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAswB0AAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-18T10:04:57.368Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Producto.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\Ventas\\dominio\\Producto.cs",
+              "RelativeDocumentMoniker": "dominio\\Producto.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\Ventas\\dominio\\Producto.cs",
+              "RelativeToolTip": "dominio\\Producto.cs",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAAABQAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-18T09:53:10.682Z",
               "EditorCaption": ""
             }
           ]

@@ -67,6 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DATABASE\TiendaOnline_1.sql" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -83,9 +84,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DATABASE\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\dominio\dominio.csproj">
       <Project>{9512e1c9-53a7-4d8a-be0f-71318c8fcc45}</Project>
