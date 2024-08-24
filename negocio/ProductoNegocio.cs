@@ -10,14 +10,65 @@ namespace negocio
      
     public class ProductoNegocio
     {
-        
+
         public void AgregarProducto()
         {
-            // logica para agregrar un producto a la base de datos 
+            AccesoDatos accesoDatos = new AccesoDatos();
+            try
+            {
+                // Usar parámetros para evitar inyecciones SQL
+                accesoDatos.SetearConsulta("INSERT INTO Productos (nombre, descripcion, imagen, precio) VALUES (@nombre, @descripcion, @imagen, @precio)");
+
+                // Agregar parámetros con los valores correspondientes
+                accesoDatos.SetearParametro("@nombre", "Producto de prueba");
+                accesoDatos.SetearParametro("@descripcion", "Descripcion de prueba");
+                accesoDatos.SetearParametro("@imagen", "imagen.jpg");
+                accesoDatos.SetearParametro("@precio", 100);
 
 
-          
+                // Ejecutar la acción de inserción
+                accesoDatos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                accesoDatos.CerrarConexion();
+            }
         }
+
+        public void AgregarProducto(Producto producto)
+        {
+            AccesoDatos accesoDatos = new AccesoDatos();
+            try
+            {
+                // Usar parámetros para evitar inyecciones SQL
+                accesoDatos.SetearConsulta("INSERT INTO Productos (nombre, descripcion, imagen, precio) VALUES (@nombre, @descripcion, @imagen, @precio)");
+
+                // Agregar parámetros con los valores correspondientes
+                accesoDatos.SetearParametro("@nombre", producto.nombre);
+                accesoDatos.SetearParametro("@descripcion", producto.descripcion);
+                accesoDatos.SetearParametro("@imagen", producto.imagen);
+                accesoDatos.SetearParametro("@precio", producto.precio);
+
+
+                // Ejecutar la acción de inserción
+                accesoDatos.EjecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                accesoDatos.CerrarConexion();
+            }
+        }
+
+
 
         public void ModificarProducto()
         {

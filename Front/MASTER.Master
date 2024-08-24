@@ -1,31 +1,71 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MASTER.master.cs" Inherits="Front.MASTER" %>
-
-<!DOCTYPE html>
-
+﻿<!DOCTYPE html>
 <html>
-
-
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Site.css" />
+    <style>
+        /*body {
+           background-image: url('descarga.png');
+           background-repeat: no-repeat;
+           background-attachment: fixed;
+           background-size: cover;
+
+        }*/
+    </style>
+
 </head>
-
-
 
 <body>
 
-
     <form id="form1" runat="server">
-        <div>
+        <!-- Aquí tu contenido principal -->
+        <header class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="Default.aspx">
+                <!-- Agrega la imagen aquí -->
+                <img src="icono.jpg" alt="Pañalera Logo" style="height: 40px; width: auto;" />Pañaleraaaa</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="Home.aspx">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Clientes.aspx">Clientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Proveedores.aspx">Proveedores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Productos.aspx">Productos</a>
+                        <!-- Agrega más enlaces según las páginas mencionadas -->
+                    </li>
+                </ul>
+            </div>
+        </header>
+
+        <main class="container">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
-        </div>
+            <h1>lalalal</h1>
+
+        </main>
+
+        <footer class="bg-dark text-white text-center p-3">
+            &copy; 2024 Mi Negocio. Todos los derechos reservados.
+        </footer>
     </form>
 
-
-
-
+    <!-- Bootstrap JS, Popper.js, y jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -22,7 +22,7 @@ CREATE TABLE Productos (
 -- Insertar datos en la tabla Productos
 INSERT INTO Productos(nombreProducto, descripcionProducto, precioProducto, imagenProducto, stockProducto, marcaProducto, tipoProducto, categoriaProducto, proveedorProducto, estadoProducto)
 VALUES 
-('Pañales Premium', 'Pañales de alta calidad', 150.00, 'imagen1.jpg', 100, 'Pampers', 'Infantil', 'Higiene', 'Proveedor 1', 'Disponible'),
+('Pañales Premium', 'Pañales de alta calidad', 150.00, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7-sxQmlOLd0g2PssU7ebnL16ObpDujb9k1w&s', 100, 'Pampers', 'Infantil', 'Higiene', 'Proveedor 1', 'Disponible'),
 ('Mamadera 250ml', 'Mamadera con válvula anti-cólico', 50.00, 'imagen2.jpg', 200, 'Avent', 'Infantil', 'Alimentación', 'Proveedor 2', 'Disponible'),
 ('Chupete Suave', 'Chupete de silicona suave', 20.00, 'imagen3.jpg', 150, 'Nuk', 'Infantil', 'Accesorios', 'Proveedor 3', 'Disponible'),
 ('Leche en Polvo', 'Leche en polvo para bebés', 80.00, 'imagen4.jpg', 80, 'Nestle', 'Infantil', 'Alimentación', 'Proveedor 4', 'Disponible'),

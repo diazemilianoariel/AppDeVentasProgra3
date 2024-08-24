@@ -1,26 +1,25 @@
- CREATE DATABASE TiendaOnline;
+CREATE DATABASE TiendaOnline;
 GO
 USE TiendaOnline;
 GO
 
-
 -- Tabla para Producto
 CREATE TABLE Productos (
-    idProducto INT PRIMARY KEY IDENTITY(1,1),
-    nombreProducto VARCHAR(50),
-    descripcionProducto TEXT,
-    precioProducto DECIMAL(10, 2),
-    imagenProducto VARCHAR(255),
-    stockProducto INT,
-    marcaProducto VARCHAR(50),
-    tipoProducto VARCHAR(50),
-    categoriaProducto VARCHAR(50),
-    proveedorProducto VARCHAR(50),
-    estadoProducto VARCHAR(20)
+    id INT PRIMARY KEY IDENTITY(1,1),
+    nombre VARCHAR(50),
+    descripcion TEXT,
+    precio DECIMAL(10, 2),
+    imagen VARCHAR(255),
+    stock INT,
+    marca VARCHAR(50),
+    tipo VARCHAR(50),
+    categoria VARCHAR(50),
+    proveedor VARCHAR(50),
+    estado VARCHAR(20)
 );
 
 -- Insertar datos en la tabla Productos
-INSERT INTO Productos(nombreProducto, descripcionProducto, precioProducto, imagenProducto, stockProducto, marcaProducto, tipoProducto, categoriaProducto, proveedorProducto, estadoProducto)
+INSERT INTO Productos(nombre, descripcion, precio, imagen, stock, marca, tipo, categoria, proveedor, estado)
 VALUES 
 ('Pañales Premium', 'Pañales de alta calidad', 150.00, 'imagen1.jpg', 100, 'Pampers', 'Infantil', 'Higiene', 'Proveedor 1', 'Disponible'),
 ('Mamadera 250ml', 'Mamadera con válvula anti-cólico', 50.00, 'imagen2.jpg', 200, 'Avent', 'Infantil', 'Alimentación', 'Proveedor 2', 'Disponible'),
@@ -31,15 +30,15 @@ VALUES
 
 -- Tabla para Proveedor
 CREATE TABLE Proveedores (
-    idProveedor INT PRIMARY KEY IDENTITY(1,1),
-    nombreProveedor VARCHAR(50),
-    direccionProveedor VARCHAR(100),
-    telefonoProveedor VARCHAR(15),
-    emailProveedor VARCHAR(50)
+    id INT PRIMARY KEY IDENTITY(1,1),
+    nombre VARCHAR(50),
+    direccion VARCHAR(100),
+    telefono VARCHAR(15),
+    email VARCHAR(50)
 );
 
 -- Insertar datos en la tabla Proveedores
-INSERT INTO Proveedores(nombreProveedor, direccionProveedor, telefonoProveedor, emailProveedor)
+INSERT INTO Proveedores(nombre, direccion, telefono, email)
 VALUES 
 ('Proveedor 1', 'Calle Falsa 123', '123456789', 'proveedor1@example.com'),
 ('Proveedor 2', 'Av. Siempre Viva 456', '987654321', 'proveedor2@example.com'),
@@ -49,17 +48,17 @@ VALUES
 
 -- Tabla para Cliente
 CREATE TABLE Clientes (
-    idCliente INT PRIMARY KEY IDENTITY(1,1),
-    nombreCliente VARCHAR(50),
-    apellidoCliente VARCHAR(50),
-    dniCliente VARCHAR(20),
-    direccionCliente VARCHAR(100),
-    telefonoCliente VARCHAR(15),
-    emailCliente VARCHAR(50)
+    id INT PRIMARY KEY IDENTITY(1,1),
+    nombre VARCHAR(50),
+    apellido VARCHAR(50),
+    dni VARCHAR(20),
+    direccion VARCHAR(100),
+    telefono VARCHAR(15),
+    email VARCHAR(50)
 );
 
 -- Insertar datos en la tabla Clientes
-INSERT INTO Clientes(nombreCliente, apellidoCliente, dniCliente, direccionCliente, telefonoCliente, emailCliente)
+INSERT INTO Clientes(nombre, apellido, dni, direccion, telefono, email)
 VALUES 
 ('Juan', 'Pérez', '12345678', 'Calle 1', '111111111', 'juan.perez@example.com'),
 ('María', 'García', '23456789', 'Calle 2', '222222222', 'maria.garcia@example.com'),
@@ -69,14 +68,14 @@ VALUES
 
 -- Tabla para Venta
 CREATE TABLE Ventas (
-    idVenta INT PRIMARY KEY IDENTITY(1,1),
-    fechaVenta DATE,
-    montoVenta DECIMAL(10, 2),
-    idCliente INT FOREIGN KEY REFERENCES Clientes(idCliente)
+    id INT PRIMARY KEY IDENTITY(1,1),
+    fecha DATE,
+    monto DECIMAL(10, 2),
+    idCliente INT FOREIGN KEY REFERENCES Clientes(id)
 );
 
 -- Insertar datos en la tabla Ventas
-INSERT INTO Ventas(fechaVenta, montoVenta, idCliente)
+INSERT INTO Ventas(fecha, monto, idCliente)
 VALUES 
 ('2023-08-01', 1500.00, 1),
 ('2023-08-02', 300.00, 2),
@@ -86,14 +85,14 @@ VALUES
 
 -- Tabla para Compra
 CREATE TABLE Compras (
-    idCompra INT PRIMARY KEY IDENTITY(1,1),
-    idProveedor INT FOREIGN KEY REFERENCES Proveedores(idProveedor),
-    fechaCompra DATE,
-    totalCompra DECIMAL(10, 2)
+    id INT PRIMARY KEY IDENTITY(1,1),
+    idProveedor INT FOREIGN KEY REFERENCES Proveedores(id),
+    fecha DATE,
+    total DECIMAL(10, 2)
 );
 
 -- Insertar datos en la tabla Compras
-INSERT INTO Compras(idProveedor, fechaCompra, totalCompra)
+INSERT INTO Compras(idProveedor, fecha, total)
 VALUES 
 (1, '2023-07-15', 1000.00),
 (2, '2023-07-16', 2000.00),
@@ -103,18 +102,18 @@ VALUES
 
 -- Tabla para Factura
 CREATE TABLE Facturas (
-    idFactura INT PRIMARY KEY IDENTITY(1,1),
-    idVenta INT FOREIGN KEY REFERENCES Ventas(idVenta),
-    idCliente INT FOREIGN KEY REFERENCES Clientes(idCliente),
-    fechaFactura DATE,
-    totalFactura DECIMAL(10, 2),
-    subTotalFactura DECIMAL(10, 2),
-    ivaFactura DECIMAL(10, 2),
-    descuentoFactura DECIMAL(10, 2)
+    id INT PRIMARY KEY IDENTITY(1,1),
+    idVenta INT FOREIGN KEY REFERENCES Ventas(id),
+    idCliente INT FOREIGN KEY REFERENCES Clientes(id),
+    fecha DATE,
+    total DECIMAL(10, 2),
+    subTotal DECIMAL(10, 2),
+    iva DECIMAL(10, 2),
+    descuento DECIMAL(10, 2)
 );
 
 -- Insertar datos en la tabla Facturas
-INSERT INTO Facturas(idVenta, idCliente, fechaFactura, totalFactura, subTotalFactura, ivaFactura, descuentoFactura)
+INSERT INTO Facturas(idVenta, idCliente, fecha, total, subTotal, iva, descuento)
 VALUES 
 (1, 1, '2023-08-01', 1500.00, 1300.00, 150.00, 50.00),
 (2, 2, '2023-08-02', 300.00, 260.00, 30.00, 10.00),
@@ -124,14 +123,14 @@ VALUES
 
 -- Tabla para Perfil
 CREATE TABLE Perfiles (
-    idPerfil INT PRIMARY KEY IDENTITY(1,1),
-    nombrePerfil VARCHAR(50),
-    descripcionPerfil TEXT,
-    estadoPerfil VARCHAR(20)
+    id INT PRIMARY KEY IDENTITY(1,1),
+    nombre VARCHAR(50),
+    descripcion TEXT,
+    estado VARCHAR(20)
 );
 
 -- Insertar datos en la tabla Perfiles
-INSERT INTO Perfiles(nombrePerfil, descripcionPerfil, estadoPerfil)
+INSERT INTO Perfiles(nombre, descripcion, estado)
 VALUES 
 ('Administrador', 'Perfil con acceso total al sistema', 'Activo'),
 ('Vendedor', 'Perfil con acceso limitado a ventas', 'Activo'),

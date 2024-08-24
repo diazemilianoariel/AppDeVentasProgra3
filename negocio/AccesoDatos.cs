@@ -25,7 +25,7 @@ namespace negocio
         public AccesoDatos()
         {
             //VER CONEXION SERVER...
-            conexion = new SqlConnection("server=.\\SQLEXPRESS; database=CLINICA_GRUPO_14_DB; integrated security=true");
+            conexion = new SqlConnection("server=.\\SQLEXPRESS; database=TiendaOnline; integrated security=true");
              comando = new SqlCommand();
           
         }
