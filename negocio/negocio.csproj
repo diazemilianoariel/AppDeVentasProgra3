@@ -67,7 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DATABASE\TiendaOnline_1.sql" />
+    <Content Include="DATABASE\TiendaOnline.sql" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
