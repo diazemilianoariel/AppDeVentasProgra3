@@ -1,7 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MASTER.Master" AutoEventWireup="true" CodeBehind="Productos.aspx.cs" Inherits="Front.producto" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <link href="ColumnaLateral.css" rel="stylesheet" />
+     <link href="ColumnaLateral.css" rel="stylesheet" />
+     <link href="estilos.css" rel="stylesheet" />
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -80,17 +81,18 @@
                                 <asp:BoundField DataField="nombre" HeaderText="Nombre" />
                                 <asp:BoundField DataField="descripcion" HeaderText="Descripción" />
                                 <asp:BoundField DataField="precio" HeaderText="Precio" />
-                                <asp:BoundField DataField="imagen" HeaderText="Imagen" />
+                                <asp:BoundField DataField="Stock" HeaderText="Stock" />
+                                <asp:BoundField DataField="Marca" HeaderText="Marca" />
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:Button ID="btnVerDetalle" runat="server" Text="Ver Detalle" CommandName="VerDetalle" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-info" />
+                                        <asp:Button ID="btnVerDetalle" runat="server" Text="Ver Detalle" CommandName="VerDetalle" CommandArgument='<%#Container.DataItemIndex %>' CssClass="btn btn-info" OnClick="BtnVerDetalle_Click"  />
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
                                
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:Button ID="btnSeleccionar" runat="server" Text="Seleccionar" CommandName="Seleccionar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-primary" />
+                                        <asp:Button ID="btnSeleccionar" runat="server" Text="Seleccionar" CommandName="Seleccionar" CommandArgument='<%# Container.DataItemIndex %>' CssClass="btn btn-primary" />
                                     </ItemTemplate>
                                     </asp:TemplateField>
 
