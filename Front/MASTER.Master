@@ -36,23 +36,33 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="Home.aspx">Inicio</a>
+                        <a class="nav-link" href="Panel.aspx">Panel</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="Clientes.aspx">Clientes</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="Proveedores.aspx">Proveedores</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Productos.aspx">Productos</a>
-                        <!-- Agrega más enlaces según las páginas mencionadas -->
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="Productos.aspx" id="productosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos
+                          </a>
+                        <div class="dropdown-menu" aria-labelledby="productosDropdown">
+                            <a class="dropdown-item" href="Productos.aspx">Productos</a>
+                            <a class="dropdown-item" href="Categoria.aspx">Categoría</a>
+                            <a class="dropdown-item" href="Marca.aspx">Marca</a>
+                            <a class="dropdown-item" href="Tipo.aspx">Tipo</a>
+                        </div>
                     </li>
                 </ul>
 
 
-            <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar" name="query" id="query" runat="server">
-            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Buscar</button>
+
+                <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar" name="query" id="query" runat="server">
+                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Buscar</button>
 
 
             </div>
@@ -65,8 +75,8 @@
 
 
         </main>
-       
-       
+
+
 
         <footer class="bg-dark text-white text-center p-3">
             &copy; 2024 Mi Negocio. Todos los derechos reservados.

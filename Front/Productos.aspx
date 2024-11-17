@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MASTER.Master" AutoEventWireup="true" CodeBehind="Productos.aspx.cs" Inherits="Front.producto" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-     <link href="ColumnaLateral.css" rel="stylesheet" />
-     <link href="estilos.css" rel="stylesheet" />
+    <%--     <link href="ColumnaLateral.css" rel="stylesheet" />--%>
+    <link href="estilos.css" rel="stylesheet" />
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -71,6 +71,10 @@
                 </div>
             </div>
 
+           
+
+
+
             <!-- Grilla donde van los datos seleccionados -->
             <div class="row mt-5">
                 <div class="col-md-12">
@@ -85,16 +89,16 @@
                                 <asp:BoundField DataField="Marca" HeaderText="Marca" />
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:Button ID="btnVerDetalle" runat="server" Text="Ver Detalle" CommandName="VerDetalle" CommandArgument='<%#Container.DataItemIndex %>' CssClass="btn btn-info" OnClick="BtnVerDetalle_Click"  />
+                                        <asp:Button ID="btnVerDetalle" runat="server" Text="Ver Detalle" CommandName="VerDetalle" CommandArgument='<%#Container.DataItemIndex %>' CssClass="btn btn-info" OnClick="BtnVerDetalle_Click" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                               
+
                                 <asp:TemplateField>
                                     <ItemTemplate>
                                         <asp:Button ID="btnSeleccionar" runat="server" Text="Seleccionar" CommandName="Seleccionar" CommandArgument='<%# Container.DataItemIndex %>' CssClass="btn btn-primary" />
                                     </ItemTemplate>
-                                    </asp:TemplateField>
+                                </asp:TemplateField>
 
                             </Columns>
                         </asp:GridView>

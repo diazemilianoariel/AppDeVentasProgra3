@@ -8,7 +8,7 @@ namespace dominio
     public class Factura
     {
         // esta clase registrará las facturas de las ventas:
-        public int IdFactura { get; set; }
+        public int Id { get; set; }
         public int IdVenta { get; set; }
         public int idCliente { get; set; }
         public DateTime Fecha { get; set; }

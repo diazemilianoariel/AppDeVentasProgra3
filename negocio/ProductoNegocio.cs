@@ -7,7 +7,7 @@ using negocio;
 
 namespace negocio
 {
-     
+
     public class ProductoNegocio
     {
         public List<Producto> ListarProductos()
@@ -52,7 +52,7 @@ namespace negocio
             }
         }
 
-        public Producto  ObtenerProducto(int id)
+        public Producto ObtenerProducto(int id)
         {
             AccesoDatos accesoDatos = new AccesoDatos();
             Producto producto = new Producto();
@@ -106,35 +106,15 @@ namespace negocio
         }
 
 
+      
 
         public void AgregarProducto(Producto producto)
         {
-            AccesoDatos accesoDatos = new AccesoDatos();
-            try
-            {
-                // Usar parámetros para evitar inyecciones SQL
-                accesoDatos.SetearConsulta("INSERT INTO Productos (nombre, descripcion, imagen, precio) VALUES (@nombre, @descripcion, @imagen, @precio)");
-
-                // Agregar parámetros con los valores correspondientes
-                accesoDatos.SetearParametro("@nombre", producto.nombre);
-                accesoDatos.SetearParametro("@descripcion", producto.descripcion);
-                accesoDatos.SetearParametro("@imagen", producto.imagen);
-                accesoDatos.SetearParametro("@precio", producto.precio);
-
-
-                // Ejecutar la acción de inserción
-                accesoDatos.EjecutarAccion();
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                accesoDatos.CerrarConexion();
-            }
+           
         }
+
+
+
 
         public void ModificarProducto(Producto producto)
         {
@@ -266,6 +246,54 @@ namespace negocio
             }
         }
 
-      
+        public Producto ObtenerProducto(object id)
+        {
+            AccesoDatos accesoDatos = new AccesoDatos();
+            Producto producto = new Producto();
+
+            try
+            {
+                // Usar parámetros para evitar inyecciones SQL
+                accesoDatos.SetearConsulta("SELECT P.id, P.nombre, P.descripcion, P.imagen, P.precio, S.cantidad, M.nombre, T.nombre, C.nombre, Pr.nombre, P.estado FROM Productos P " +
+                                         "INNER JOIN Stock S ON P.id = S.idProducto " +
+                                         "INNER JOIN Marcas M ON P.idMarca = M.id " +
+                                         "INNER JOIN Tipos T ON P.idTipo = T.id " +
+                                         "INNER JOIN Categorias C ON P.idCategoria = C.id " +
+                                         "INNER JOIN Proveedores Pr ON P.id = Pr.id " +
+                                         "WHERE P.id = @id ");
+
+                // Agregar parámetros con los valores correspondientes
+                accesoDatos.SetearParametro("@id", id);
+
+                // Ejecutar la consulta
+                accesoDatos.EjecutarLectura();
+
+                // Leer los datos obtenidos
+                if (accesoDatos.Lector.Read())
+                {
+                    producto.nombre = accesoDatos.Lector.GetString(1);
+                    producto.descripcion = accesoDatos.Lector.GetString(2);
+                    producto.imagen = accesoDatos.Lector.GetString(3);
+                    producto.precio = accesoDatos.Lector.GetDecimal(4);
+                    producto.stock = accesoDatos.Lector.GetInt32(5);
+                    producto.marca = accesoDatos.Lector.GetString(6);
+                    producto.tipo = accesoDatos.Lector.GetString(7);
+                    producto.categoria = accesoDatos.Lector.GetString(8);
+                    producto.proveedor = accesoDatos.Lector.GetString(9);
+                    producto.estado = accesoDatos.Lector.GetString(10);
+                }
+
+                return producto;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                accesoDatos.CerrarConexion();
+
+            }
+        }
     }
 }

@@ -74,22 +74,23 @@ namespace Front
             }
         }
 
-
-
-        // crear la definicion de boton1_click
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
 
+            ProductoNegocio negocio = new ProductoNegocio();
             Producto producto = new Producto();
 
             producto.nombre = TextBoxNombre.Text;
             producto.descripcion = TextBoxDescripcion.Text;
             producto.imagen = TextBoxImagen.Text;
             producto.precio = Convert.ToDecimal(TextBoxPrecio.Text);
-
-            // instanciar la clase ProductoNegocio
-            ProductoNegocio negocio = new ProductoNegocio();
-            // llamar al metodo AgregarProducto
+            producto.stock = Convert.ToInt32(TextBoxStock.Text);
+            producto.marca = TextBoxMarca.Text;
+            producto.tipo = TextBoxTipo.Text;
+            producto.categoria = TextBoxCategoria.Text;
+            producto.proveedor = TextBoxProveedor.Text;
+            producto.estado = TextBoxEstado.Text;
+          
             negocio.AgregarProducto(producto);
 
 
@@ -141,9 +142,6 @@ namespace Front
                 Response.Write("Por favor, seleccione un producto.");
             }
         }
-
-
-
 
 
         protected void GridViewProductos_RowCommand(object sender, GridViewCommandEventArgs e)

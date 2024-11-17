@@ -68,11 +68,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Buscar.aspx" />
+    <Content Include="Categoria.aspx" />
     <Content Include="Clientes.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="DetalleProducto.aspx" />
     <Content Include="estilos.css" />
-    <Content Include="Home.aspx" />
+    <Content Include="Panel.aspx" />
     <Content Include="Productos.aspx" />
     <Content Include="Proveedores.aspx" />
     <Content Include="Web.config" />
@@ -84,6 +85,13 @@
     </Compile>
     <Compile Include="Buscar.aspx.designer.cs">
       <DependentUpon>Buscar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Categoria.aspx.cs">
+      <DependentUpon>Categoria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Categoria.aspx.designer.cs">
+      <DependentUpon>Categoria.aspx</DependentUpon>
     </Compile>
     <Compile Include="Clientes.aspx.cs">
       <DependentUpon>Clientes.aspx</DependentUpon>
@@ -106,12 +114,12 @@
     <Compile Include="DetalleProducto.aspx.designer.cs">
       <DependentUpon>DetalleProducto.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Home.aspx.cs">
-      <DependentUpon>Home.aspx</DependentUpon>
+    <Compile Include="Panel.aspx.cs">
+      <DependentUpon>Panel.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Home.aspx.designer.cs">
-      <DependentUpon>Home.aspx</DependentUpon>
+    <Compile Include="Panel.aspx.designer.cs">
+      <DependentUpon>Panel.aspx</DependentUpon>
     </Compile>
     <Compile Include="MASTER.Master.cs">
       <DependentUpon>MASTER.Master</DependentUpon>
