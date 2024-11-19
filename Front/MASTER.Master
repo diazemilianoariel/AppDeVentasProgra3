@@ -52,9 +52,9 @@
                           </a>
                         <div class="dropdown-menu" aria-labelledby="productosDropdown">
                             <a class="dropdown-item" href="Productos.aspx">Productos</a>
-                            <a class="dropdown-item" href="Categoria.aspx">Categoría</a>
-                            <a class="dropdown-item" href="Marca.aspx">Marca</a>
-                            <a class="dropdown-item" href="Tipo.aspx">Tipo</a>
+                            <a class="dropdown-item" href="Categorias.aspx">Categoría</a>
+                            <a class="dropdown-item" href="Marcas.aspx">Marca</a>
+                            <a class="dropdown-item" href="Tipos.aspx">Tipo</a>
                         </div>
                     </li>
                 </ul>

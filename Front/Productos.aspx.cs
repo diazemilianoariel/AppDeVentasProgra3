@@ -79,7 +79,6 @@ namespace Front
 
             ProductoNegocio negocio = new ProductoNegocio();
             Producto producto = new Producto();
-
             producto.nombre = TextBoxNombre.Text;
             producto.descripcion = TextBoxDescripcion.Text;
             producto.imagen = TextBoxImagen.Text;

@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
+
 namespace dominio
 {
-    public class TIpo
+    public class Tipos
     {
-        int id { get; set; }
+       public int id { get; set; }
+        [StringLength(50)]
+        public string nombre { get; set; }
 
-        string nombre { get; set; }
+        public bool estado { get; set; }
     }
 }

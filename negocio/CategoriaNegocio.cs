@@ -10,9 +10,7 @@ using negocio;
 
 
 
-
-
-namespace negocio.Logica
+namespace negocio
 {
     public class CategoriaNegocio
     {
@@ -25,7 +23,7 @@ namespace negocio.Logica
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select id, nombre from Categorias");
+                datos.SetearConsulta("select id, nombre from Categorias where estado = 1");
                 datos.EjecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -96,7 +94,7 @@ namespace negocio.Logica
 
         }
 
-        public void ModificarCategoria(Categoria categoria)
+        public void ActualizarCategoria(Categoria categoria)
         {
             AccesoDatos datos = new AccesoDatos();
             try
@@ -116,12 +114,12 @@ namespace negocio.Logica
             }
         }
 
-        public void EliminarCategoria(int id)
+        public void bajaLogica(int id)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("delete from Categorias where id = @id");
+                datos.SetearConsulta("update Categorias set estado = 0 where id = @id");
                 datos.SetearParametro("@id", id);
                 datos.EjecutarAccion();
             }
@@ -135,6 +133,52 @@ namespace negocio.Logica
             }
         }
 
+        public void altaLogica(string nombre)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("update Categorias set estado = 1 where nombre = @nombre");
+                datos.SetearParametro("@nombre", nombre);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
 
+        public bool buscarCategoriaNombre(string nombre)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("select id, nombre from Categorias where nombre = @nombre");
+                datos.SetearParametro("@nombre", nombre);
+                datos.EjecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+
+
+        }
     }
 }
