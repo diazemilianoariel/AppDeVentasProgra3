@@ -105,17 +105,10 @@ namespace negocio
             }
         }
 
-
-      
-
         public void AgregarProducto(Producto producto)
         {
            
         }
-
-
-
-
         public void ModificarProducto(Producto producto)
         {
             AccesoDatos accesoDatos = new AccesoDatos();

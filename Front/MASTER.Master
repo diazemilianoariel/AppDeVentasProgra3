@@ -40,16 +40,26 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="Clientes.aspx">Clientes</a>
+                        <a class="nav-link dropdown-toggle" href="Clientes.aspx" id="ClientesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Clientes
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="ClientesDropdown">
+                            <a class="dropdown-item" href="Clientes.aspx">Clientes</a>
+
+                        </div>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="Proveedores.aspx">Proveedores</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="Proveedores.aspx" id="ProveedoresDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Proveedores
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="ProveedoresDropdown">
+                            <a class="dropdown-item" href="Proveedores.aspx">Proveedores</a>
+
+                        </div>
                     </li>
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="Productos.aspx" id="productosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos
-                          </a>
+                        </a>
                         <div class="dropdown-menu" aria-labelledby="productosDropdown">
                             <a class="dropdown-item" href="Productos.aspx">Productos</a>
                             <a class="dropdown-item" href="Categorias.aspx">Categoría</a>
