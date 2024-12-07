@@ -72,6 +72,7 @@
     <Content Include="Clientes.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="DetalleProducto.aspx" />
+    <Content Include="DetalleProveedor.aspx" />
     <Content Include="estilos.css" />
     <Content Include="Marcas.aspx" />
     <Content Include="Panel.aspx" />
@@ -115,6 +116,13 @@
     </Compile>
     <Compile Include="DetalleProducto.aspx.designer.cs">
       <DependentUpon>DetalleProducto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DetalleProveedor.aspx.cs">
+      <DependentUpon>DetalleProveedor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalleProveedor.aspx.designer.cs">
+      <DependentUpon>DetalleProveedor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Marcas.aspx.cs">
       <DependentUpon>Marcas.aspx</DependentUpon>

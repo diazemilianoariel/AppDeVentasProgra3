@@ -40,7 +40,8 @@ CREATE TABLE Proveedores (
     nombre VARCHAR(50),
     direccion VARCHAR(100),
     telefono VARCHAR(15),
-    email VARCHAR(50)
+    email VARCHAR(50),
+    estado BIT  DEFAULT 1
 );
 
 -- Tabla intermedia para Proveedor_Producto

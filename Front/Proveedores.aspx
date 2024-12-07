@@ -58,11 +58,11 @@
                                 <asp:BoundField DataField="telefono" HeaderText="Teléfono" />
                                 <asp:BoundField DataField="email" HeaderText="Email" />
 
-                                <asp:TemplateField>
+                                <%--<asp:TemplateField>
                                     <ItemTemplate>
                                         <asp:Button ID="btnVerDetalle" runat="server" Text="Ver Detalle" CommandName="VerDetalle" CommandArgument='<%#Container.DataItemIndex %>' CssClass="btn btn-info" OnClick="BtnVerDetalle_Click" />
                                     </ItemTemplate>
-                                </asp:TemplateField>
+                                </asp:TemplateField>--%>
 
                                 <asp:TemplateField>
                                     <ItemTemplate>

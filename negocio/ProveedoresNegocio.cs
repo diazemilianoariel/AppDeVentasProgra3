@@ -16,17 +16,19 @@ namespace negocio
             AccesoDatos accesoDatos = new AccesoDatos();
             try
             {
-                accesoDatos.SetearConsulta("sp_listar_proveedores");
+                accesoDatos.SetearConsulta("SELECT id, nombre, direccion, telefono, email FROM Proveedores where estado = 1");
                 accesoDatos.EjecutarLectura();
 
                 while (accesoDatos.Lector.Read())
                 {
                     Proveedor proveedor = new Proveedor();
 
-                    proveedor.Nombre = accesoDatos.Lector["Nombre"] != DBNull.Value ? accesoDatos.Lector["Nombre"].ToString() : string.Empty;
-                    proveedor.Direccion = accesoDatos.Lector["Direccion"] != DBNull.Value ? accesoDatos.Lector["Direccion"].ToString() : string.Empty;
-                    proveedor.Telefono = accesoDatos.Lector["Telefono"] != DBNull.Value ? accesoDatos.Lector["Telefono"].ToString() : string.Empty;
-                    proveedor.Email = accesoDatos.Lector["Email"] != DBNull.Value ? accesoDatos.Lector["Email"].ToString() : string.Empty;
+
+                    proveedor.id = (int)accesoDatos.Lector["id"];
+                    proveedor.Nombre =  accesoDatos.Lector["Nombre"].ToString();
+                    proveedor.Direccion = accesoDatos.Lector["Direccion"].ToString();
+                    proveedor.Telefono = accesoDatos.Lector["Telefono"].ToString();
+                    proveedor.Email = accesoDatos.Lector["Email"].ToString();
 
                     lista.Add(proveedor);
                 }
@@ -46,6 +48,7 @@ namespace negocio
 
         public Proveedor ObtenerProveedor(int id)
         {
+
             AccesoDatos accesoDatos = new AccesoDatos();
             Proveedor proveedor = new Proveedor();
             try
@@ -102,7 +105,9 @@ namespace negocio
             AccesoDatos accesoDatos = new AccesoDatos();
             try
             {
+
                 accesoDatos.SetearConsulta("UPDATE Proveedores SET nombre = @nombre, direccion = @direccion, telefono = @telefono, email = @correo WHERE id = @id");
+                accesoDatos.SetearParametro("@id", proveedor.id);
                 accesoDatos.SetearParametro("@nombre", proveedor.Nombre);
                 accesoDatos.SetearParametro("@direccion", proveedor.Direccion);
                 accesoDatos.SetearParametro("@telefono", proveedor.Telefono);
@@ -124,7 +129,7 @@ namespace negocio
             AccesoDatos accesoDatos = new AccesoDatos();
             try
             {
-                accesoDatos.SetearConsulta("DELETE FROM Proveedores WHERE id = @id");
+                accesoDatos.SetearConsulta("UPDATE Proveedores SET estado = 0 WHERE id = @id");
                 accesoDatos.SetearParametro("@id", id);
                 accesoDatos.EjecutarAccion();
             }

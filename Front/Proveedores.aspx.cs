@@ -37,9 +37,9 @@ namespace Front
         protected void GridViewProveedores_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridViewRow fila = GridViewProveedores.SelectedRow;
-            if (fila != null && fila.Cells.Count > 1) // Asegurarse de que la fila y la celda existen
+            if (fila != null && fila.Cells.Count > 1) 
             {
-                int id = Convert.ToInt32(fila.Cells[1].Text); // Asegúrate de que esta celda contiene el ID correcto y es convertible a int
+                int id = Convert.ToInt32(fila.Cells[1].Text); 
 
                 ProveedoresNegocio negocio = new ProveedoresNegocio();
                 Proveedor proveedor = negocio.ObtenerProveedor(id);
@@ -49,13 +49,12 @@ namespace Front
                 TextBoxDireccion.Text = proveedor.Direccion;
                 TextBoxTelefono.Text = proveedor.Telefono;
                 TextBoxEmail.Text = proveedor.Email;
+
+
             }
             else
             {
-                // Manejar el caso donde la fila o la celda no existen
-                // Por ejemplo, mostrar un mensaje de error
-
-                // Limpiar los TextBoxes
+                
                 TextBoxId.Text = "";
                 TextBoxNombre.Text = "";
                 TextBoxDireccion.Text = "";
@@ -98,9 +97,36 @@ namespace Front
                     Response.Write("¡Ups! Parece que seleccionaste una fila inexistente.");
                 }
             }
-            // ... (resto del código para otros comandos)
-        }
+            else
+            {
+                if (e.CommandName == "VerDetalle")
+                {
+                    int index = Convert.ToInt32(e.CommandArgument);
 
+                    // Verificar si el índice está dentro del rango
+                    if (index >= 0 && index < GridViewProveedores.Rows.Count)
+                    {
+                        GridViewRow row = GridViewProveedores.Rows[index];
+                        if (row != null && row.Cells.Count > 0) // Asegurarse de que la fila y la celda existen
+                        {
+                            int idProveedor = Convert.ToInt32(row.Cells[0].Text); // Suponemos que el ID está en la columna 0
+
+                            // Redirigir a la página de detalle, pasando el ID como parámetro
+                            Response.Redirect("DetalleProveedor.aspx?id=" + idProveedor);
+                        }
+                    }
+                    else
+                    {
+                        // Manejar el caso donde el índice está fuera del rango
+                        // Por ejemplo, mostrar un mensaje de error al usuario
+                        Response.Write("¡Ups! Parece que seleccionaste una fila inexistente.");
+
+
+                    }
+                }
+
+            }
+        }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
@@ -139,6 +165,7 @@ namespace Front
             Proveedor proveedor = new Proveedor
             {
 
+                id = Convert.ToInt32(TextBoxId.Text),
                 Nombre = TextBoxNombre.Text,
                 Direccion = TextBoxDireccion.Text,
                 Telefono = TextBoxTelefono.Text,
@@ -152,9 +179,11 @@ namespace Front
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
+
             ProveedoresNegocio negocio = new ProveedoresNegocio();
             negocio.EliminarProveedor(Convert.ToInt32(TextBoxId.Text));
             CargarGrilla();
+            LimpiarCampos();
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
