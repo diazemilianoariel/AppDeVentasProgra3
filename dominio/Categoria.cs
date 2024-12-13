@@ -14,7 +14,6 @@ namespace dominio
         public int id { get; set; }
         [StringLength(50)]
         public string nombre { get; set; }
-
         public bool estado { get; set; }
     }
 }

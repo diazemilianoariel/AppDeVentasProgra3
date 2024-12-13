@@ -6,20 +6,16 @@
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
-    <!-- Bootstrap CSS -->
+
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+
     <link rel="stylesheet" type="text/css" href="~/Content/Site.css" />
 
 
-    <%--<style>
-        body {
-           background-image: url('fondoPagina.jpg');
-           background-repeat: no-repeat;
-           background-attachment: fixed;
-           background-size: cover;
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-        }
-    </style>--%>
+
+
 </head>
 
 <body>
@@ -30,23 +26,21 @@
         <header class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="Default.aspx">
                 <img src="iconoPrincipal.png" alt="Pañalera Logo" style="height: 40px; width: auto;" /></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="Panel.aspx">Panel</a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="Clientes.aspx" id="ClientesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Clientes
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="ClientesDropdown">
+                        <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="ClientesDropdown">
                             <a class="dropdown-item" href="Clientes.aspx">Clientes</a>
-
                         </div>
                     </li>
+
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="Proveedores.aspx" id="ProveedoresDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Proveedores
@@ -69,12 +63,14 @@
                     </li>
                 </ul>
 
+                <div class="ml-auto">
+                    <a href="Login.aspx" class="btn btn-primary">Entrar <i class="bi bi-box-arrow-in-right"></i></a>
+                </div>
 
 
-                <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar" name="query" id="query" runat="server">
-                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Buscar</button>
 
-
+                <%--  <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar" name="query" id="query" runat="server">
+                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Buscar</button>--%>
             </div>
         </header>
 

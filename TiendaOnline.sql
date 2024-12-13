@@ -6,41 +6,44 @@ GO
 -- Tabla para Marca
 CREATE TABLE Marcas (
     id INT PRIMARY KEY IDENTITY(1,1),
-    nombre VARCHAR(50)
+    nombre NVARCHAR(50),
+    estado BIT  DEFAULT 1
 );
 
 -- Tabla para Tipo
 CREATE TABLE Tipos (
     id INT PRIMARY KEY IDENTITY(1,1),
-    nombre VARCHAR(50)
+    nombre NVARCHAR(50),
+    estado BIT  DEFAULT 1
 );
 
 -- Tabla para Categoria
 CREATE TABLE Categorias (
     id INT PRIMARY KEY IDENTITY(1,1),
-    nombre VARCHAR(50)
+    nombre NVARCHAR(50),
+    estado BIT  DEFAULT 1
 );
 
 -- Tabla para Producto
 CREATE TABLE Productos (
     id INT PRIMARY KEY IDENTITY(1,1),
-    nombre VARCHAR(50),
+    nombre NVARCHAR(50),
     descripcion TEXT,
     precio DECIMAL(10, 2),
-    imagen VARCHAR(255),
+    imagen NVARCHAR(255),
     idMarca INT FOREIGN KEY REFERENCES Marcas(id),
     idTipo INT FOREIGN KEY REFERENCES Tipos(id),
     idCategoria INT FOREIGN KEY REFERENCES Categorias(id),
-    estado VARCHAR(20)
+    estado BIT  DEFAULT 1
 );
 
 -- Tabla para Proveedor
 CREATE TABLE Proveedores (
     id INT PRIMARY KEY IDENTITY(1,1),
-    nombre VARCHAR(50),
-    direccion VARCHAR(100),
-    telefono VARCHAR(15),
-    email VARCHAR(50),
+    nombre NVARCHAR(50),
+    direccion NVARCHAR(100),
+    telefono NVARCHAR(15),
+    email NVARCHAR(50),
     estado BIT  DEFAULT 1
 );
 
@@ -54,12 +57,13 @@ CREATE TABLE Proveedores_Productos (
 -- Tabla para Cliente
 CREATE TABLE Clientes (
     id INT PRIMARY KEY IDENTITY(1,1),
-    nombre VARCHAR(50),
-    apellido VARCHAR(50),
-    dni VARCHAR(20),
-    direccion VARCHAR(100),
-    telefono VARCHAR(15),
-    email VARCHAR(50)
+    nombre NVARCHAR(50),
+    apellido NVARCHAR(50),
+    dni NVARCHAR(20),
+    direccion NVARCHAR(100),
+    telefono NVARCHAR(15),
+    email NVARCHAR(50),
+    estado bit DEFAULT 1
 );
 
 -- Tabla para Venta
@@ -110,9 +114,10 @@ CREATE TABLE Facturas (
 -- Tabla para Perfil
 CREATE TABLE Perfiles (
     id INT PRIMARY KEY IDENTITY(1,1),
-    nombre VARCHAR(50),
+    nombre NVARCHAR(50),
     descripcion TEXT,
-    estado VARCHAR(20)
+    estado BIT  DEFAULT 1
+    
 );
 
 -- Tabla para Stock
@@ -153,11 +158,11 @@ INSERT INTO Categorias (nombre) VALUES
 
 -- Insertar datos en la tabla Productos
 INSERT INTO Productos (nombre, descripcion, precio, imagen, idMarca, idTipo, idCategoria, estado) VALUES 
-('Pañales Premium', 'Pañales de alta calidad', 150.00, 'https://example.com/images/paniales.jpg', 1, 1, 1, 'Disponible'),
-('Mamadera 250ml', 'Mamadera con válvula anti-cólico', 50.00, 'https://example.com/images/mamadera.jpg', 2, 1, 2, 'Disponible'),
-('Chupete Suave', 'Chupete de silicona suave', 20.00, 'https://example.com/images/chupete.jpg', 3, 2, 3, 'Disponible'),
-('Leche en Polvo', 'Leche en polvo para bebés', 80.00, 'https://example.com/images/leche.jpg', 4, 1, 2, 'Disponible'),
-('Termómetro Digital', 'Termómetro digital de alta precisión', 120.00, 'https://example.com/images/termometro.jpg', 5, 3, 4, 'Disponible');
+('Pañales Premium', 'Pañales de alta calidad', 150.00, 'https://example.com/images/paniales.jpg', 1, 1, 1, 1),
+('Mamadera 250ml', 'Mamadera con válvula anti-cólico', 50.00, 'https://example.com/images/mamadera.jpg', 2, 1, 2, 1),
+('Chupete Suave', 'Chupete de silicona suave', 20.00, 'https://example.com/images/chupete.jpg', 3, 2, 3, 1),
+('Leche en Polvo', 'Leche en polvo para bebés', 80.00, 'https://example.com/images/leche.jpg', 4, 1, 2, 1),
+('Termómetro Digital', 'Termómetro digital de alta precisión', 120.00, 'https://example.com/images/termometro.jpg', 5, 3, 4, 1);
 
 -- Insertar datos en la tabla Proveedores
 INSERT INTO Proveedores (nombre, direccion, telefono, email) VALUES 
@@ -230,11 +235,11 @@ INSERT INTO Facturas (idVenta, fecha, total, subTotal, iva, descuento) VALUES
 
 -- Insertar datos en la tabla Perfiles
 INSERT INTO Perfiles (nombre, descripcion, estado) VALUES 
-('Administrador', 'Perfil con acceso total al sistema', 'Activo'),
-('Vendedor', 'Perfil con acceso limitado a ventas', 'Activo'),
-('Gerente', 'Perfil con acceso a reportes y gestión', 'Activo'),
-('Soporte', 'Perfil con acceso a soporte técnico', 'Inactivo'),
-('Cliente', 'Perfil con acceso a la tienda en línea', 'Activo');
+('Administrador', 'Perfil con acceso total al sistema', 1),
+('Vendedor', 'Perfil con acceso limitado a ventas', 1),
+('Gerente', 'Perfil con acceso a reportes y gestión', 1),
+('Soporte', 'Perfil con acceso a soporte técnico', 0),
+('Cliente', 'Perfil con acceso a la tienda en línea', 1);
 
 -- Insertar datos en la tabla Stock
 INSERT INTO Stock (idProducto, cantidad, stockMinimo, fechaActualizacion) VALUES 

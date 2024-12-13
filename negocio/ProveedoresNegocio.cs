@@ -25,7 +25,7 @@ namespace negocio
 
 
                     proveedor.id = (int)accesoDatos.Lector["id"];
-                    proveedor.Nombre =  accesoDatos.Lector["Nombre"].ToString();
+                    proveedor.Nombre = accesoDatos.Lector["Nombre"].ToString();
                     proveedor.Direccion = accesoDatos.Lector["Direccion"].ToString();
                     proveedor.Telefono = accesoDatos.Lector["Telefono"].ToString();
                     proveedor.Email = accesoDatos.Lector["Email"].ToString();
@@ -122,6 +122,8 @@ namespace negocio
             {
                 accesoDatos.CerrarConexion();
             }
+
+
         }
 
         public void EliminarProveedor(int id)
@@ -143,6 +145,63 @@ namespace negocio
             }
         }
 
-     
+
+        public void ActivarProveedor(int id)
+        {
+            AccesoDatos accesoDatos = new AccesoDatos();
+            try
+            {
+                accesoDatos.SetearConsulta("UPDATE Proveedores SET estado = 1 WHERE id = @id");
+                accesoDatos.SetearParametro("@id", id);
+                accesoDatos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                accesoDatos.CerrarConexion();
+            }
+
+
+        }
+
+
+        public Proveedor ObtenerProveedorPorEmail(string email)
+        {
+            AccesoDatos accesoDatos = new AccesoDatos();
+            Proveedor proveedor = null;
+            try
+            {
+                accesoDatos.SetearConsulta("SELECT id, nombre, direccion, telefono, email, estado FROM Proveedores WHERE email = @Email");
+                accesoDatos.SetearParametro("@Email", email);
+                accesoDatos.EjecutarLectura();
+
+                if (accesoDatos.Lector.Read())
+                {
+                    proveedor = new Proveedor
+                    {
+                        id = accesoDatos.Lector.GetInt32(0),
+                        Nombre = accesoDatos.Lector.GetString(1),
+                        Direccion = accesoDatos.Lector.GetString(2),
+                        Telefono = accesoDatos.Lector.GetString(3),
+                        Email = accesoDatos.Lector.GetString(4),
+                        estado = accesoDatos.Lector.GetBoolean(5)
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                accesoDatos.CerrarConexion();
+            }
+
+            return proveedor;
+        }
+
     }
 }

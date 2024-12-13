@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -24,13 +25,13 @@ namespace negocio
         //defino el constructor
         public AccesoDatos()
         {
-            //VER CONEXION SERVER...
+            // Configura la cadena de conexión para usar UTF-8
             conexion = new SqlConnection("server=.\\SQLEXPRESS; database=TiendaOnline; integrated security=true");
-             comando = new SqlCommand();
-          
+            comando = new SqlCommand();
         }
 
-            public void SetearConsulta(string query)
+
+        public void SetearConsulta(string query)
         {
             comando.CommandType = System.Data.CommandType.Text;
             comando.CommandText = query;
@@ -75,8 +76,17 @@ namespace negocio
 
         public void SetearParametro(string parametro, object valor)
         {
-            comando.Parameters.AddWithValue(parametro, valor);
+            if (valor is string)
+            {
+                comando.Parameters.Add(new SqlParameter(parametro, SqlDbType.NVarChar) { Value = valor });
+            }
+            else
+            {
+                comando.Parameters.AddWithValue(parametro, valor);
+            }
         }
+
+
         public void CerrarConexion()
         {
             if (lector != null)

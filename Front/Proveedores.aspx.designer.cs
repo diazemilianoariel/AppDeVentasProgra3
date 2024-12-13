@@ -105,6 +105,24 @@ namespace Front
         protected global::System.Web.UI.WebControls.TextBox TextBoxEmail;
 
         /// <summary>
+        /// Control lblConfirmacionReactivacion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblConfirmacionReactivacion;
+
+        /// <summary>
+        /// Control btnConfirmarReactivacion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnConfirmarReactivacion;
+
+        /// <summary>
         /// Control btnAgregar.
         /// </summary>
         /// <remarks>

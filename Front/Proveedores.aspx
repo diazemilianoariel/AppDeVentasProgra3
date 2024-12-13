@@ -16,7 +16,7 @@
                 <!-- Columna izquierda con los TextBoxes y Labels -->
                 <div class="col-md-6">
                     <div class="form-group">
-                        <asp:Label ID ="LabelID" runat="server" AssociatedControlID="TextBoxId" CssClass="form-label" >ID Proveedor</asp:Label>
+                        <asp:Label ID="LabelID" runat="server" AssociatedControlID="TextBoxId" CssClass="form-label">ID Proveedor</asp:Label>
                         <asp:TextBox ID="TextBoxId" runat="server" CssClass="form-control" ReadOnly="true" Visible="true"></asp:TextBox>
 
                         <asp:Label ID="LabelNombre" runat="server" AssociatedControlID="TextBoxNombre" CssClass="form-label fw-bold">Nombre</asp:Label>
@@ -34,6 +34,15 @@
                 </div>
             </div>
 
+            <!-- Mensaje de confirmación para reactivar proveedor -->
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <asp:Label ID="lblConfirmacionReactivacion" runat="server" CssClass="alert alert-warning" Text="El proveedor ya existe pero está inactivo. ¿Desea reactivarlo?" Visible="false"></asp:Label>
+                    <asp:Button ID="btnConfirmarReactivacion" runat="server" CssClass="btn btn-primary" Text="Reactivar" OnClick="btnConfirmarReactivacion_Click" Visible="false" />
+                </div>
+            </div>
+
+
             <!-- Botones del ABM -->
             <div class="row mt-3">
                 <div class="col-md-12">
@@ -47,10 +56,12 @@
             </div>
 
             <!-- Grilla donde van los datos seleccionados -->
+
             <div class="row mt-5">
                 <div class="col-md-12">
+                    <h2 class="text-center">Lista de Proveedores</h2>
                     <div class="table-responsive">
-                        <asp:GridView ID="GridViewProveedores" runat="server" CssClass="table table-striped table-bordered table-dark" AutoGenerateColumns="False" OnRowCommand="GridViewProveedores_RowCommand">
+                        <asp:GridView ID="GridViewProveedores" runat="server" CssClass="table table-striped table-bordered table-hover" AutoGenerateColumns="False" OnRowCommand="GridViewProveedores_RowCommand">
                             <Columns>
                                 <asp:BoundField DataField="id" HeaderText="ID" />
                                 <asp:BoundField DataField="nombre" HeaderText="Nombre" />

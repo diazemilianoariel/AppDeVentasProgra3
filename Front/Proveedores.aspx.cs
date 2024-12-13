@@ -54,12 +54,7 @@ namespace Front
             }
             else
             {
-                
-                TextBoxId.Text = "";
-                TextBoxNombre.Text = "";
-                TextBoxDireccion.Text = "";
-                TextBoxTelefono.Text = "";
-                TextBoxEmail.Text = "";
+                LimpiarCampos();
             }
         }
 
@@ -143,6 +138,25 @@ namespace Front
                         Email = TextBoxEmail.Text
                     };
 
+                    Proveedor proveedorExistente = new Proveedor();
+                    proveedorExistente = negocio.ObtenerProveedorPorEmail(proveedor.Email);
+                    if (proveedorExistente != null)
+                    {
+                        if (!proveedorExistente.estado)
+                        {
+                            // Mostrar mensaje de confirmación para reactivar el proveedor
+                            lblConfirmacionReactivacion.Visible = true;
+                            btnConfirmarReactivacion.Visible = true;
+                            btnConfirmarReactivacion.CommandArgument = proveedorExistente.id.ToString();
+                            return;
+                        }
+                        else
+                        {
+                            Response.Write("El proveedor ya existe y está activo.");
+                            return;
+                        }
+                    }
+
                     negocio.AgregarProveedor(proveedor);
                     CargarGrilla();
                     LimpiarCampos();
@@ -160,6 +174,20 @@ namespace Front
             }
         }
 
+        protected void btnConfirmarReactivacion_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(((Button)sender).CommandArgument);
+            ProveedoresNegocio negocio = new ProveedoresNegocio();
+            negocio.ActivarProveedor(id);
+            string script = "alert('Proveedor reactivado exitosamente.');";
+            ScriptManager.RegisterStartupScript(this, GetType(), "ServerControlScript", script, true);
+            CargarGrilla();
+            LimpiarCampos();
+            lblConfirmacionReactivacion.Visible = false;
+            btnConfirmarReactivacion.Visible = false;
+        }
+
+
         protected void btnModificar_Click(object sender, EventArgs e)
         {
             Proveedor proveedor = new Proveedor
@@ -175,6 +203,8 @@ namespace Front
             ProveedoresNegocio negocio = new ProveedoresNegocio();
             negocio.ModificarProveedor(proveedor);
             CargarGrilla();
+
+            LimpiarCampos();
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)
@@ -188,31 +218,27 @@ namespace Front
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-            TextBoxId.Text = "";
-            TextBoxNombre.Text = "";
-            TextBoxDireccion.Text = "";
-            TextBoxTelefono.Text = "";
-            TextBoxEmail.Text = "";
+           LimpiarCampos();
         }
 
-        protected void BtnVerDetalle_Click(object sender, EventArgs e)
-        {
-            // Obtener el id del proveedor seleccionado
-            GridViewRow fila = GridViewProveedores.SelectedRow;
-            if (fila != null)
-            {
-                int id = Convert.ToInt32(fila.Cells[1].Text); // Asegúrate de que esta celda contiene el ID correcto y es convertible a int
-                // Redirigir a la página de detalle, pasando el ID como parámetro
-                Response.Redirect("DetalleProveedor.aspx?id=" + id);
-            }
-            else
-            {
-                // Manejar el caso cuando no hay fila seleccionada
-                // Por ejemplo, mostrar un mensaje de error al usuario
-                Response.Write("Por favor, seleccione un proveedor.");
-            }
-        }
 
+        //protected void BtnVerDetalle_Click(object sender, EventArgs e)
+        //{
+        //    // Obtener el id del proveedor seleccionado
+        //    GridViewRow fila = GridViewProveedores.SelectedRow;
+        //    if (fila != null)
+        //    {
+        //        int id = Convert.ToInt32(fila.Cells[1].Text); // Asegúrate de que esta celda contiene el ID correcto y es convertible a int
+        //        // Redirigir a la página de detalle, pasando el ID como parámetro
+        //        Response.Redirect("DetalleProveedor.aspx?id=" + id);
+        //    }
+        //    else
+        //    {
+        //        // Manejar el caso cuando no hay fila seleccionada
+        //        // Por ejemplo, mostrar un mensaje de error al usuario
+        //        Response.Write("Por favor, seleccione un proveedor.");
+        //    }
+        //}
 
         private void LimpiarCampos()
         {
