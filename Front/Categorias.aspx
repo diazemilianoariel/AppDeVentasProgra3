@@ -17,7 +17,16 @@
                         <div class="form-group">
                             <label for="TextBoxNombreCategoria">Nombre de la Categoría</label>
                             <asp:TextBox ID="TextBoxCategoria" runat="server" CssClass="form-control"></asp:TextBox>
+
+                            <div>
+                                <asp:Label ID="lblError" runat="server" CssClass="text-danger d-none"></asp:Label>
+                            </div>
+
                         </div>
+
+
+
+
                         <div class="form-group text-right">
                             <asp:Button ID="btnAgregarCategoria" runat="server" Text="Agregar Categoría" CssClass="btn btn-success" OnClick="btnAgregarCategoria_Click" />
                         </div>
@@ -36,8 +45,12 @@
                                 <asp:BoundField DataField="nombre" HeaderText="Nombre" HeaderStyle-CssClass="bg-secondary text-white" ItemStyle-CssClass="text-center" />
                                 <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-secondary text-white" ItemStyle-CssClass="text-center">
                                     <ItemTemplate>
+
                                         <div class="btn-group" role="group">
+
+
                                             <asp:Button ID="btnEditar" runat="server" Text="Editar" CommandName="Editar" CommandArgument='<%# Container.DataItemIndex %>' CssClass="btn btn-warning btn-sm" />
+
                                             <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CommandName="Eliminar" CommandArgument='<%# Container.DataItemIndex %>' CssClass="btn btn-danger btn-sm" />
                                         </div>
                                         <asp:Panel ID="editSection" runat="server" CssClass="mt-2" Style="display: none;">
@@ -45,9 +58,9 @@
                                                 <label for="TextBoxNuevoNombreCategoria">Nuevo Nombre</label>
                                                 <asp:TextBox ID="TextBoxNuevaCategoria" runat="server" CssClass="form-control"></asp:TextBox>
                                             </div>
-                                            <div class="form-group text-right">
+                                            <%--  <div class="form-group text-right">
                                                 <asp:Button ID="btnActualizarCategoria" runat="server" Text="Actualizar" CssClass="btn btn-warning btn-sm" OnClick="btnActualizarCategoria_Click" />
-                                            </div>
+                                            </div>--%>
                                         </asp:Panel>
                                     </ItemTemplate>
                                 </asp:TemplateField>

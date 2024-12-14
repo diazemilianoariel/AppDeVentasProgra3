@@ -158,11 +158,11 @@ INSERT INTO Categorias (nombre) VALUES
 
 -- Insertar datos en la tabla Productos
 INSERT INTO Productos (nombre, descripcion, precio, imagen, idMarca, idTipo, idCategoria, estado) VALUES 
-('Pañales Premium', 'Pañales de alta calidad', 150.00, 'https://example.com/images/paniales.jpg', 1, 1, 1, 1),
-('Mamadera 250ml', 'Mamadera con válvula anti-cólico', 50.00, 'https://example.com/images/mamadera.jpg', 2, 1, 2, 1),
-('Chupete Suave', 'Chupete de silicona suave', 20.00, 'https://example.com/images/chupete.jpg', 3, 2, 3, 1),
-('Leche en Polvo', 'Leche en polvo para bebés', 80.00, 'https://example.com/images/leche.jpg', 4, 1, 2, 1),
-('Termómetro Digital', 'Termómetro digital de alta precisión', 120.00, 'https://example.com/images/termometro.jpg', 5, 3, 4, 1);
+('Pañales Premium', 'Pañales de alta calidad', 150.00, 'https://www.babysec.com.ar/assets/uploads/product/image/58c15-e8a52-6b52b-babysec-premium.png', 1, 1, 1, 1),
+('Mamadera 250ml', 'Mamadera con válvula anti-cólico', 50.00, 'https://www.electrooutlet.com.ar/Image/0/750_750-fae47c5ebe4a407bbf16ac5b0034b12f.jpg', 2, 1, 2, 1),
+('Chupete Suave', 'Chupete de silicona suave', 20.00, 'https://dcdn.mitiendanube.com/stores/614/910/products/screenshot_8-396ed9815ff6c3ec1117064822176944-640-0.jpg', 3, 2, 3, 1),
+('Leche en Polvo', 'Leche en polvo para bebés', 80.00, 'https://d2eebw31vcx88p.cloudfront.net/selmadigital/uploads/f6a7fa4d184ed4a477ea3c820e3dfcc14654681a.jpg.webp', 4, 1, 2, 1),
+('Termómetro Digital', 'Termómetro digital de alta precisión', 120.00, 'https://static.chollometro.com/threads/raw/kvzYb/1403911_1/re/768x768/qt/60/1403911_1.jpg', 5, 3, 4, 1);
 
 -- Insertar datos en la tabla Proveedores
 INSERT INTO Proveedores (nombre, direccion, telefono, email) VALUES 

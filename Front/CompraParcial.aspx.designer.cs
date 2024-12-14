@@ -11,16 +11,16 @@ namespace Front
 {
 
 
-    public partial class Default
+    public partial class CompraParcial
     {
 
         /// <summary>
-        /// Control rptProductos.
+        /// Control lblIdProducto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptProductos;
+        protected global::System.Web.UI.WebControls.Label lblIdProducto;
     }
 }

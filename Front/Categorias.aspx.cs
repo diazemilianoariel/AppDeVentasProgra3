@@ -71,13 +71,39 @@ namespace Front
                         nombre = nuevoNombre
                     };
 
+                    // existecategoria ?
+
+                   ;
+
+
+                    if (!negocio.ExisteCategoria(categoria.nombre))
+                    {
+
+
                     negocio.ActualizarCategoria(categoria);
                     CargarCategorias();
 
                     // Limpiar el TextBoxCategoria después de actualizar
                     TextBoxCategoria.Text = string.Empty;
+                    }
+                    else
+                    {
+                        // una ventana emergente que diga que ya existe la categoria
+                        // Mostrar una ventana emergente que diga que ya existe la categoría
+                        lblError.Text = "categoria_Existente";
+                    
+
+
+
+                }
+
+
+
                 }
             }
+
+
+
             else if (e.CommandName == "Eliminar")
             {
                 int index = Convert.ToInt32(e.CommandArgument);

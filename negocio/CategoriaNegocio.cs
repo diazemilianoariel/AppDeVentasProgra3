@@ -180,5 +180,36 @@ namespace negocio
 
 
         }
+
+
+        public bool ExisteCategoria(string nombre)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("select id, nombre from Categorias where nombre = @nombre");
+                datos.SetearParametro("@nombre", nombre);
+                datos.EjecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+
+
+        }
+
     }
 }
