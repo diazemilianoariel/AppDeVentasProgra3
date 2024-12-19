@@ -36,26 +36,28 @@
                     </div>
                 </div>
 
-                <!-- Columna derecha con los TextBoxes y Labels -->
+                <!-- Columna derecha con los DropDownList y Labels -->
                 <div class="col-md-6">
                     <div class="form-group">
-                        <asp:Label ID="LabelMarca" runat="server" AssociatedControlID="TextBoxMarca" CssClass="form-label fw-bold">Marca</asp:Label>
-                        <asp:TextBox ID="TextBoxMarca" runat="server" CssClass="form-control"></asp:TextBox>
+                        <asp:Label ID="LabelMarca" runat="server" AssociatedControlID="DropDownListMarca" CssClass="form-label fw-bold">Marca</asp:Label>
+                        <asp:DropDownList ID="DropDownListMarca" runat="server" CssClass="form-control"></asp:DropDownList>
 
-                        <asp:Label ID="LabelTipo" runat="server" AssociatedControlID="TextBoxTipo" CssClass="form-label fw-bold">Tipo</asp:Label>
-                        <asp:TextBox ID="TextBoxTipo" runat="server" CssClass="form-control"></asp:TextBox>
+                        <asp:Label ID="LabelTipo" runat="server" AssociatedControlID="DropDownListTipo" CssClass="form-label fw-bold">Tipo</asp:Label>
+                        <asp:DropDownList ID="DropDownListTipo" runat="server" CssClass="form-control"></asp:DropDownList>
 
-                        <asp:Label ID="LabelCategoria" runat="server" AssociatedControlID="TextBoxCategoria" CssClass="form-label fw-bold">Categoría</asp:Label>
-                        <asp:TextBox ID="TextBoxCategoria" runat="server" CssClass="form-control"></asp:TextBox>
+                        <asp:Label ID="LabelCategoria" runat="server" AssociatedControlID="DropDownListCategoria" CssClass="form-label fw-bold">Categoría</asp:Label>
+                        <asp:DropDownList ID="DropDownListCategoria" runat="server" CssClass="form-control"></asp:DropDownList>
 
-                        <asp:Label ID="LabelProveedor" runat="server" AssociatedControlID="TextBoxProveedor" CssClass="form-label fw-bold">Proveedor</asp:Label>
-                        <asp:TextBox ID="TextBoxProveedor" runat="server" CssClass="form-control"></asp:TextBox>
+                        <asp:Label ID="LabelProveedor" runat="server" AssociatedControlID="DropDownListProveedor" CssClass="form-label fw-bold">Proveedor</asp:Label>
+                        <asp:DropDownList ID="DropDownListProveedor" runat="server" CssClass="form-control"></asp:DropDownList>
 
-                        <asp:Label ID="LabelEstado" runat="server" AssociatedControlID="TextBoxEstado" CssClass="form-label fw-bold">Estado</asp:Label>
-                        <asp:TextBox ID="TextBoxEstado" runat="server" CssClass="form-control"></asp:TextBox>
+                        <asp:Label ID="LabelEstado" runat="server" AssociatedControlID="CheckBoxEstado" CssClass="form-label fw-bold">Estado</asp:Label>
+                        <asp:CheckBox ID="CheckBoxEstado" runat="server" CssClass="form-control" Checked="true"></asp:CheckBox>
                     </div>
                 </div>
             </div>
+
+
 
             <!-- Botones del ABM -->
             <div class="row mt-3">
@@ -71,7 +73,7 @@
                 </div>
             </div>
 
-           
+
 
 
 

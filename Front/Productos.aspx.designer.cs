@@ -123,13 +123,13 @@ namespace Front
         protected global::System.Web.UI.WebControls.Label LabelMarca;
 
         /// <summary>
-        /// Control TextBoxMarca.
+        /// Control DropDownListMarca.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxMarca;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListMarca;
 
         /// <summary>
         /// Control LabelTipo.
@@ -141,13 +141,13 @@ namespace Front
         protected global::System.Web.UI.WebControls.Label LabelTipo;
 
         /// <summary>
-        /// Control TextBoxTipo.
+        /// Control DropDownListTipo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxTipo;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListTipo;
 
         /// <summary>
         /// Control LabelCategoria.
@@ -159,13 +159,13 @@ namespace Front
         protected global::System.Web.UI.WebControls.Label LabelCategoria;
 
         /// <summary>
-        /// Control TextBoxCategoria.
+        /// Control DropDownListCategoria.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxCategoria;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListCategoria;
 
         /// <summary>
         /// Control LabelProveedor.
@@ -177,13 +177,13 @@ namespace Front
         protected global::System.Web.UI.WebControls.Label LabelProveedor;
 
         /// <summary>
-        /// Control TextBoxProveedor.
+        /// Control DropDownListProveedor.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxProveedor;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListProveedor;
 
         /// <summary>
         /// Control LabelEstado.
@@ -195,13 +195,13 @@ namespace Front
         protected global::System.Web.UI.WebControls.Label LabelEstado;
 
         /// <summary>
-        /// Control TextBoxEstado.
+        /// Control CheckBoxEstado.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxEstado;
+        protected global::System.Web.UI.WebControls.CheckBox CheckBoxEstado;
 
         /// <summary>
         /// Control btnAgregar.

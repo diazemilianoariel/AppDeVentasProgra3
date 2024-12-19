@@ -75,6 +75,7 @@
     <Content Include="Default.aspx" />
     <Content Include="DetalleProducto.aspx" />
     <Content Include="DetalleProveedor.aspx" />
+    <Content Include="EstiloCSS\estilo.css" />
     <Content Include="estilos.css" />
     <Content Include="HomeAdministrador.aspx" />
     <Content Include="Login.aspx" />

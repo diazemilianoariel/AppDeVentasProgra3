@@ -18,12 +18,15 @@ namespace dominio
         // que no admita numeros negativos y que tenga 2 decimales
         [Range(0, 9999999999999999.99)]
         public decimal precio { get; set; }
-        public string imagen { get; set; }
+
+        public string Imagen { get; set; }
         public int stock { get; set; }
         public string marca { get; set; }
         public string tipo { get; set; }
         public string categoria { get; set; }
         public string proveedor { get; set; }
-        public string estado { get; set; }
+        public bool estado { get; set; }
+
+
     }
 }

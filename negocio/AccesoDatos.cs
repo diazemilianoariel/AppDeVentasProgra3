@@ -5,6 +5,8 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
+
+
 namespace negocio
 {
     public class AccesoDatos
@@ -85,6 +87,30 @@ namespace negocio
                 comando.Parameters.AddWithValue(parametro, valor);
             }
         }
+
+
+
+
+        // para un registro recien inserttado 
+        public object EjecutarEscalar()
+        {
+            comando.Connection = conexion;
+            try
+            {
+                conexion.Open();
+                return comando.ExecuteScalar();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexion.Close();
+            }
+        }
+
+
 
 
         public void CerrarConexion()

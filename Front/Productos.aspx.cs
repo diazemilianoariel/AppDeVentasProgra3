@@ -16,10 +16,43 @@ namespace Front
         {
             if(!IsPostBack)
             {
+                CargarDropDownLists();
                 CargarGrilla();
             }
 
 
+        }
+
+
+        private void CargarDropDownLists()
+        {
+            // Cargar Marcas
+            MarcaNegocio marcaNegocio = new MarcaNegocio();
+            DropDownListMarca.DataSource = marcaNegocio.ListarMarcas();
+            DropDownListMarca.DataTextField = "nombre";
+            DropDownListMarca.DataValueField = "id";
+            DropDownListMarca.DataBind();
+
+            // Cargar Tipos
+            TipoNegocio tipoNegocio = new TipoNegocio();
+            DropDownListTipo.DataSource = tipoNegocio.ListarTipos();
+            DropDownListTipo.DataTextField = "nombre";
+            DropDownListTipo.DataValueField = "id";
+            DropDownListTipo.DataBind();
+
+            // Cargar Categorías
+            CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+            DropDownListCategoria.DataSource = categoriaNegocio.ListarCategorias();
+            DropDownListCategoria.DataTextField = "nombre";
+            DropDownListCategoria.DataValueField = "id";
+            DropDownListCategoria.DataBind();
+
+            // Cargar Proveedores
+            ProveedoresNegocio proveedorNegocio = new ProveedoresNegocio();
+            DropDownListProveedor.DataSource = proveedorNegocio.ListarProveedores();
+            DropDownListProveedor.DataTextField = "nombre";
+            DropDownListProveedor.DataValueField = "id";
+            DropDownListProveedor.DataBind();
         }
 
 
@@ -44,14 +77,10 @@ namespace Front
                 TextBoxId.Text = producto.id.ToString();
                 TextBoxNombre.Text = producto.nombre;
                 TextBoxDescripcion.Text = producto.descripcion;
-                TextBoxImagen.Text = producto.imagen;
+                TextBoxImagen.Text = producto.Imagen;
                 TextBoxPrecio.Text = producto.precio.ToString();
                 TextBoxStock.Text = producto.stock.ToString();
-                TextBoxMarca.Text = producto.marca.ToString();
-                TextBoxTipo.Text = producto.tipo.ToString();
-                TextBoxCategoria.Text = producto.categoria.ToString();
-                TextBoxProveedor.Text = producto.proveedor.ToString();
-                TextBoxEstado.Text = producto.estado.ToString();
+               
             }
             else
             {
@@ -65,35 +94,50 @@ namespace Front
                 TextBoxImagen.Text = "";
                 TextBoxPrecio.Text = "";
                 TextBoxStock.Text = "";
-                TextBoxMarca.Text = "";
-                TextBoxTipo.Text = "";
-                TextBoxCategoria.Text = "";
-                TextBoxProveedor.Text = "";
-                TextBoxEstado.Text = "";
+                
 
             }
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
+            Producto producto = new Producto
+            {
+                nombre = TextBoxNombre.Text,
+                descripcion = TextBoxDescripcion.Text,
+                precio = Convert.ToDecimal(TextBoxPrecio.Text),
+                Imagen = TextBoxImagen.Text,
+                stock = Convert.ToInt32(TextBoxStock.Text),
+                marca = DropDownListMarca.SelectedValue,
+                tipo = DropDownListTipo.SelectedValue,
+                categoria = DropDownListCategoria.SelectedValue,
+                proveedor = DropDownListProveedor.SelectedValue,
+                estado = CheckBoxEstado.Checked
+            };
 
             ProductoNegocio negocio = new ProductoNegocio();
-            Producto producto = new Producto();
-            producto.nombre = TextBoxNombre.Text;
-            producto.descripcion = TextBoxDescripcion.Text;
-            producto.imagen = TextBoxImagen.Text;
-            producto.precio = Convert.ToDecimal(TextBoxPrecio.Text);
-            producto.stock = Convert.ToInt32(TextBoxStock.Text);
-            producto.marca = TextBoxMarca.Text;
-            producto.tipo = TextBoxTipo.Text;
-            producto.categoria = TextBoxCategoria.Text;
-            producto.proveedor = TextBoxProveedor.Text;
-            producto.estado = TextBoxEstado.Text;
-          
             negocio.AgregarProducto(producto);
 
-
+            CargarGrilla();
+            LimpiarCampos();
         }
+
+        private void LimpiarCampos()
+        {
+            TextBoxNombre.Text = string.Empty;
+            TextBoxDescripcion.Text = string.Empty;
+            TextBoxPrecio.Text = string.Empty;
+            TextBoxImagen.Text = string.Empty;
+            TextBoxStock.Text = string.Empty;
+            DropDownListMarca.SelectedIndex = 0;
+            DropDownListTipo.SelectedIndex = 0;
+            DropDownListCategoria.SelectedIndex = 0;
+            DropDownListProveedor.SelectedIndex = 0;
+            CheckBoxEstado.Checked = true;
+        }
+
+
+
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
@@ -102,12 +146,18 @@ namespace Front
             producto.id = Convert.ToInt32(TextBoxId.Text);
             producto.nombre = TextBoxNombre.Text;
             producto.descripcion = TextBoxDescripcion.Text;
-            producto.imagen = TextBoxImagen.Text;
             producto.precio = Convert.ToDecimal(TextBoxPrecio.Text);
+            producto.Imagen = TextBoxImagen.Text;
+            producto.stock = Convert.ToInt32(TextBoxStock.Text);
+            
 
             ProductoNegocio negocio = new ProductoNegocio();
             negocio.ModificarProducto(producto);
+
+            CargarGrilla();
         }
+
+
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
@@ -120,8 +170,10 @@ namespace Front
             TextBoxId.Text = "";
             TextBoxNombre.Text = "";
             TextBoxDescripcion.Text = "";
-            TextBoxImagen.Text = "";
             TextBoxPrecio.Text = "";
+            TextBoxImagen.Text = "";
+            TextBoxStock.Text = "";
+          
         }
 
         protected void BtnVerDetalle_Click(object sender, EventArgs e)
@@ -164,32 +216,16 @@ namespace Front
                         TextBoxId.Text = producto.id.ToString();
                         TextBoxNombre.Text = producto.nombre;
                         TextBoxDescripcion.Text = producto.descripcion;
-                        TextBoxImagen.Text = producto.imagen;
+                        TextBoxImagen.Text = producto.Imagen;
                         TextBoxPrecio.Text = producto.precio.ToString();
                         TextBoxStock.Text = producto.stock.ToString();
-                        TextBoxMarca.Text = producto.marca.ToString();
-                        TextBoxTipo.Text = producto.tipo.ToString();
-                        TextBoxCategoria.Text = producto.categoria.ToString();
-                        TextBoxProveedor.Text = producto.proveedor.ToString();
-                        TextBoxEstado.Text = producto.estado.ToString();
+                        
                     }
                 }
                 else
                 {
-                    // Manejar el caso donde el índice está fuera del rango
-
-                    // Limpiar los TextBoxes
-                    TextBoxId.Text = "";
-                    TextBoxNombre.Text = "";
-                    TextBoxDescripcion.Text = "";
-                    TextBoxImagen.Text = "";
-                    TextBoxPrecio.Text = "";
-                    TextBoxStock.Text = "";
-                    TextBoxMarca.Text = "";
-                    TextBoxTipo.Text = "";
-                    TextBoxCategoria.Text = "";
-                    TextBoxProveedor.Text = "";
-                    TextBoxEstado.Text = "";
+                    // mensaje de error
+                    Response.Write("¡Ups! Parece que seleccionaste una fila inexistente.");
                 }
             }
             else
@@ -208,6 +244,16 @@ namespace Front
                             // Redirigir a la página de detalle, pasando el ID como parámetro
                             Response.Redirect("DetalleProducto.aspx?id=" + id);
                         }
+                        else
+                        {
+                            // mensaje de error
+                            Response.Write("¡Ups! Parece que seleccionaste una fila inexistente.");
+                        }
+                    }
+                    else
+                    {
+                        // mensaje de error
+                        Response.Write("¡Ups! Parece que seleccionaste una fila inexistente.");
                     }
                 }
 

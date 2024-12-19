@@ -7,21 +7,21 @@ GO
 CREATE TABLE Marcas (
     id INT PRIMARY KEY IDENTITY(1,1),
     nombre NVARCHAR(50),
-    estado BIT  DEFAULT 1
+    estado BIT  DEFAULT 1 NOT NULL
 );
 
 -- Tabla para Tipo
 CREATE TABLE Tipos (
     id INT PRIMARY KEY IDENTITY(1,1),
     nombre NVARCHAR(50),
-    estado BIT  DEFAULT 1
+    estado BIT  DEFAULT 1 NOT NULL
 );
 
 -- Tabla para Categoria
 CREATE TABLE Categorias (
     id INT PRIMARY KEY IDENTITY(1,1),
     nombre NVARCHAR(50),
-    estado BIT  DEFAULT 1
+    estado BIT  DEFAULT 1 NOT NULL
 );
 
 -- Tabla para Producto
@@ -34,7 +34,7 @@ CREATE TABLE Productos (
     idMarca INT FOREIGN KEY REFERENCES Marcas(id),
     idTipo INT FOREIGN KEY REFERENCES Tipos(id),
     idCategoria INT FOREIGN KEY REFERENCES Categorias(id),
-    estado BIT  DEFAULT 1
+    estado BIT  DEFAULT 1 NOT NULL 
 );
 
 -- Tabla para Proveedor
@@ -44,7 +44,7 @@ CREATE TABLE Proveedores (
     direccion NVARCHAR(100),
     telefono NVARCHAR(15),
     email NVARCHAR(50),
-    estado BIT  DEFAULT 1
+    estado BIT  DEFAULT 1 NOT NULL
 );
 
 -- Tabla intermedia para Proveedor_Producto
@@ -63,7 +63,7 @@ CREATE TABLE Clientes (
     direccion NVARCHAR(100),
     telefono NVARCHAR(15),
     email NVARCHAR(50),
-    estado bit DEFAULT 1
+    estado BIT  DEFAULT 1 NOT NULL
 );
 
 -- Tabla para Venta
@@ -116,7 +116,7 @@ CREATE TABLE Perfiles (
     id INT PRIMARY KEY IDENTITY(1,1),
     nombre NVARCHAR(50),
     descripcion TEXT,
-    estado BIT  DEFAULT 1
+    estado BIT  DEFAULT 1 NOT NULL
     
 );
 

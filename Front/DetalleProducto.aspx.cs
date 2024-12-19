@@ -60,11 +60,11 @@ namespace Front
                 LabelPrecioProducto.Text = producto.precio.ToString();
                 LabelStockProducto.Text = producto.stock.ToString();
                 LabelMarcaProducto.Text = producto.marca;
-                ImageProducto.ImageUrl = producto.imagen;
+                ImageProducto.ImageUrl = producto.Imagen;
                 LabelTipoProducto.Text = producto.tipo;
                 LabelCategoriaProducto.Text = producto.categoria;
                 LabelProveedorProducto.Text = producto.proveedor;
-                LabelEstadoProducto.Text = producto.estado;
+                LabelEstadoProducto.Text = producto.estado.ToString();
 
 
             }

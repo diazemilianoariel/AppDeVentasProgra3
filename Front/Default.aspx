@@ -5,7 +5,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container">
-        <div class="row mt-4" id="productCards">
+        <div class="row mt-3" id="productCards">
 
 
 
@@ -14,9 +14,9 @@
             <asp:Repeater runat="server" ID="rptProductos">
 
                 <ItemTemplate>
-                    <div class="col-md-4">
-                        <div class="card mb-4 shadow-sm">
-                            <img src="<%#Eval("imagen") %>" class="card-img-top img-fluid"  style="height: 200px; object-fit: cover;">
+                    <div class="col-md-3">
+                        <div class="card mb-2 shadow-sm card-fixed-size">
+                            <img src="<%#Eval("imagen") %>" class="card-img-top img-fluid"  style="height: 220px; object-fit: cover;">
 
                             <div class="card-body">
                                 <h5 class="card-title"><%#Eval("nombre") %></h5>
