@@ -13,6 +13,6 @@ namespace dominio
 
         int stockMinimo { get; set; }
 
-        DateTime Fecha { get; set; }
+        DateTime Fecha  { get; set; }
     }
 }

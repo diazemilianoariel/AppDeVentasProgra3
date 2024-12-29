@@ -79,6 +79,7 @@ namespace Front
                 TextBoxDescripcion.Text = producto.descripcion;
                 TextBoxImagen.Text = producto.Imagen;
                 TextBoxPrecio.Text = producto.precio.ToString();
+                TextBoxGanancia.Text = producto.margenGanancia.ToString();
                 TextBoxStock.Text = producto.stock.ToString();
                
             }
@@ -93,6 +94,7 @@ namespace Front
                 TextBoxDescripcion.Text = "";
                 TextBoxImagen.Text = "";
                 TextBoxPrecio.Text = "";
+                TextBoxGanancia.Text = "";
                 TextBoxStock.Text = "";
                 
 
@@ -106,6 +108,7 @@ namespace Front
                 nombre = TextBoxNombre.Text,
                 descripcion = TextBoxDescripcion.Text,
                 precio = Convert.ToDecimal(TextBoxPrecio.Text),
+                margenGanancia = Convert.ToDecimal(TextBoxGanancia.Text),
                 Imagen = TextBoxImagen.Text,
                 stock = Convert.ToInt32(TextBoxStock.Text),
                 marca = DropDownListMarca.SelectedValue,
@@ -127,6 +130,7 @@ namespace Front
             TextBoxNombre.Text = string.Empty;
             TextBoxDescripcion.Text = string.Empty;
             TextBoxPrecio.Text = string.Empty;
+            TextBoxGanancia.Text = string.Empty;
             TextBoxImagen.Text = string.Empty;
             TextBoxStock.Text = string.Empty;
             DropDownListMarca.SelectedIndex = 0;
@@ -147,6 +151,7 @@ namespace Front
             producto.nombre = TextBoxNombre.Text;
             producto.descripcion = TextBoxDescripcion.Text;
             producto.precio = Convert.ToDecimal(TextBoxPrecio.Text);
+            producto.margenGanancia = Convert.ToDecimal(TextBoxGanancia.Text);
             producto.Imagen = TextBoxImagen.Text;
             producto.stock = Convert.ToInt32(TextBoxStock.Text);
             
@@ -171,6 +176,7 @@ namespace Front
             TextBoxNombre.Text = "";
             TextBoxDescripcion.Text = "";
             TextBoxPrecio.Text = "";
+            TextBoxGanancia.Text = "";
             TextBoxImagen.Text = "";
             TextBoxStock.Text = "";
           
@@ -218,6 +224,7 @@ namespace Front
                         TextBoxDescripcion.Text = producto.descripcion;
                         TextBoxImagen.Text = producto.Imagen;
                         TextBoxPrecio.Text = producto.precio.ToString();
+                        TextBoxGanancia.Text = producto.margenGanancia.ToString();
                         TextBoxStock.Text = producto.stock.ToString();
                         
                     }
@@ -261,6 +268,23 @@ namespace Front
         }
 
 
+        protected void TextBoxGanancia_TextChanged(object sender, EventArgs e)
+        {
+            // Obtener el precio del producto
+            decimal precio;
+            if (decimal.TryParse(TextBoxPrecio.Text, out precio))
+            {
+                // Obtener el margen de ganancia ingresado por el usuario
+                decimal margenGanancia;
+                if (decimal.TryParse(TextBoxGanancia.Text, out margenGanancia))
+                {
+                    // Calcular el precio con el margen de ganancia aplicado
+                    decimal precioConGanancia = precio + (precio * (margenGanancia / 100));
+                    // Mostrar el precio con ganancia en el TextBoxPrecio
+                    TextBoxPrecio.Text = precioConGanancia.ToString("F2");
+                }
+            }
+        }
 
 
 

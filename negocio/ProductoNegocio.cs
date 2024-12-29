@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using dominio;
 using negocio;
 
@@ -17,7 +18,7 @@ namespace negocio
             try
             {
                 // Usar parámetros para evitar inyecciones SQL
-                accesoDatos.SetearConsulta("SELECT P.id, P.nombre, P.descripcion, P.imagen, P.precio, S.cantidad, M.nombre FROM Productos P " +
+                accesoDatos.SetearConsulta("SELECT P.id, P.nombre, P.descripcion, P.imagen, P.precio, P.margenGanancia, S.cantidad, M.nombre FROM Productos P " +
                     "INNER JOIN Stock S ON P.id = S.idProducto " +
                     "INNER JOIN Marcas M ON P.idMarca = M.id");
 
@@ -33,8 +34,9 @@ namespace negocio
                     producto.descripcion = accesoDatos.Lector.GetString(2);
                     producto.Imagen = accesoDatos.Lector.GetString(3);
                     producto.precio = accesoDatos.Lector.GetDecimal(4);
-                    producto.stock = accesoDatos.Lector.GetInt32(5);
-                    producto.marca = accesoDatos.Lector.GetString(6);
+                    producto.margenGanancia = accesoDatos.Lector.GetDecimal(5);
+                    producto.stock = accesoDatos.Lector.GetInt32(6);
+                    producto.marca = accesoDatos.Lector.GetString(7);
 
 
                     lista.Add(producto);
@@ -59,7 +61,7 @@ namespace negocio
             try
             {
                 // Usar parámetros para evitar inyecciones SQL
-                accesoDatos.SetearConsulta("SELECT P.id, P.nombre, P.descripcion, P.imagen, P.precio, S.cantidad, M.nombre AS Marca, T.nombre AS Tipo, C.nombre AS Categoria, Pr.nombre AS Proveedor, P.estado " +
+                accesoDatos.SetearConsulta("SELECT P.id, P.nombre, P.descripcion, P.imagen, P.precio, P.margenGanancia, S.cantidad, M.nombre AS Marca, T.nombre AS Tipo, C.nombre AS Categoria, Pr.nombre AS Proveedor, P.estado " +
                                    "FROM Productos P " +
                                    "INNER JOIN Stock S ON P.id = S.idProducto " +
                                    "INNER JOIN Marcas M ON P.idMarca = M.id " +
@@ -86,12 +88,13 @@ namespace negocio
                     producto.descripcion = accesoDatos.Lector.GetString(2);
                     producto.Imagen = accesoDatos.Lector.GetString(3);
                     producto.precio = accesoDatos.Lector.GetDecimal(4);
-                    producto.stock = accesoDatos.Lector.GetInt32(5);
-                    producto.marca = accesoDatos.Lector.GetString(6);
-                    producto.tipo = accesoDatos.Lector.GetString(7);
-                    producto.categoria = accesoDatos.Lector.GetString(8);
-                    producto.proveedor = accesoDatos.Lector.GetString(9);
-                    producto.estado = accesoDatos.Lector.GetBoolean(10);
+                    producto.margenGanancia = accesoDatos.Lector.GetDecimal(5);
+                    producto.stock = accesoDatos.Lector.GetInt32(6);
+                    producto.marca = accesoDatos.Lector.GetString(7);
+                    producto.tipo = accesoDatos.Lector.GetString(8);
+                    producto.categoria = accesoDatos.Lector.GetString(9);
+                    producto.proveedor = accesoDatos.Lector.GetString(10);
+                    producto.estado = accesoDatos.Lector.GetBoolean(11);
                 }
 
                 return producto;
@@ -113,17 +116,51 @@ namespace negocio
             AccesoDatos accesodatos = new AccesoDatos();
             int idProducto;
 
+
+
+            try
+            {
+                // Verificar si el producto ya existe
+                accesodatos.SetearConsulta("SELECT COUNT(*) " +
+                                           "FROM Productos " +
+                                           "WHERE nombre = @nombree AND descripcion = @descripcionn");
+                accesodatos.SetearParametro("@nombree", producto.nombre);
+                accesodatos.SetearParametro("@descripcionn", producto.descripcion);
+
+                int count = Convert.ToInt32(accesodatos.EjecutarEscalar());
+
+                if (count > 0)
+                {
+                    throw new Exception("El producto ya existe");
+                }
+            }
+            catch ( Exception ex)
+            {
+                throw ex;
+
+
+            }
+            finally
+            {
+                accesodatos.CerrarConexion();
+            }
+
+
+
+
+
             try
             {
                 // Insertar en la tabla Productos
-                accesodatos.SetearConsulta("INSERT INTO Productos (nombre, descripcion, imagen, precio, estado, idMarca, idTipo, idCategoria) " +
-                                           "VALUES (@nombre, @descripcion, @imagen, @precio, @estado, @idMarca, @idTipo, @idCategoria); " +
+                accesodatos.SetearConsulta("INSERT INTO Productos (nombre, descripcion, imagen, precio, margenGanancia, estado, idMarca, idTipo, idCategoria) " +
+                                           "VALUES (@nombre, @descripcion, @imagen, @precio, @margenGanancia, @estado, @idMarca, @idTipo, @idCategoria); " +
                                            "SELECT SCOPE_IDENTITY();");
 
                 accesodatos.SetearParametro("@nombre", producto.nombre);
                 accesodatos.SetearParametro("@descripcion", producto.descripcion);
                 accesodatos.SetearParametro("@imagen", producto.Imagen);
                 accesodatos.SetearParametro("@precio", producto.precio);
+                accesodatos.SetearParametro("@margenGanancia", producto.margenGanancia);
                 accesodatos.SetearParametro("@estado", producto.estado);
                 accesodatos.SetearParametro("@idMarca", producto.marca);
                 accesodatos.SetearParametro("@idTipo", producto.tipo);
@@ -140,6 +177,9 @@ namespace negocio
             {
                 accesodatos.CerrarConexion();
             }
+
+
+
 
             try
             {
@@ -184,6 +224,9 @@ namespace negocio
             {
                 accesodatos.CerrarConexion();
             }
+
+
+
         }
 
 

@@ -28,13 +28,15 @@ CREATE TABLE Categorias (
 CREATE TABLE Productos (
     id INT PRIMARY KEY IDENTITY(1,1),
     nombre NVARCHAR(50),
-    descripcion TEXT,
+    descripcion NVARCHAR(100),
     precio DECIMAL(10, 2),
     imagen NVARCHAR(255),
     idMarca INT FOREIGN KEY REFERENCES Marcas(id),
     idTipo INT FOREIGN KEY REFERENCES Tipos(id),
     idCategoria INT FOREIGN KEY REFERENCES Categorias(id),
+    margenGanancia DECIMAL(10, 2) NOT NULL  ,
     estado BIT  DEFAULT 1 NOT NULL 
+
 );
 
 -- Tabla para Proveedor
@@ -54,8 +56,16 @@ CREATE TABLE Proveedores_Productos (
     PRIMARY KEY (idProveedor, idProducto)
 );
 
--- Tabla para Cliente
-CREATE TABLE Clientes (
+-- Tabla para Perfil
+CREATE TABLE Perfiles (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    nombre NVARCHAR(50),
+    estado BIT  DEFAULT 1 NOT NULL
+    
+);
+
+-- Tabla para Usuario
+CREATE TABLE Usuarios (
     id INT PRIMARY KEY IDENTITY(1,1),
     nombre NVARCHAR(50),
     apellido NVARCHAR(50),
@@ -63,27 +73,40 @@ CREATE TABLE Clientes (
     direccion NVARCHAR(100),
     telefono NVARCHAR(15),
     email NVARCHAR(50),
+    clave NVARCHAR(50),
+    idPerfil INT FOREIGN KEY REFERENCES Perfiles(id) DEFAULT 1 NOT NULL,
     estado BIT  DEFAULT 1 NOT NULL
 );
 
--- Tabla para Venta
+--- tabla estado de venta
+CREATE TABLE EstadoVenta (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    nombre NVARCHAR(50),
+);
+
+
+-- Tabla para Venta a clientes
 CREATE TABLE Ventas (
     id INT PRIMARY KEY IDENTITY(1,1),
     fecha DATE,
     monto DECIMAL(10, 2),
-    idCliente INT FOREIGN KEY REFERENCES Clientes(id)
+    idUsuario INT FOREIGN KEY REFERENCES Usuarios(id),
+    EnLocal bit DEFAULT 0 NOT NULL, -- 0 = Venta Online, 1 = Venta En local
+    idEstadoVenta int FOREIGN KEY REFERENCES EstadoVenta(id) DEFAULT 1 NOT NULL
+    
 );
 
--- Tabla para DetalleVenta
+-- Tabla para DetalleVenta a clientes
 CREATE TABLE DetalleVentas (
     id INT PRIMARY KEY IDENTITY(1,1),
     idVenta INT FOREIGN KEY REFERENCES Ventas(id),
     idProducto INT FOREIGN KEY REFERENCES Productos(id),
     cantidad INT,
-    precioVenta DECIMAL(10, 2)
+    precioVenta DECIMAL(10, 2),
+    estado BIT  DEFAULT 0 NOT NULL
 );
 
--- Tabla para Compra
+-- Tabla para Compra a proveedores
 CREATE TABLE Compras (
     id INT PRIMARY KEY IDENTITY(1,1),
     idProveedor INT FOREIGN KEY REFERENCES Proveedores(id),
@@ -91,7 +114,7 @@ CREATE TABLE Compras (
     total DECIMAL(10, 2)
 );
 
--- Tabla para DetalleCompra
+-- Tabla para DetalleCompras a proveedores
 CREATE TABLE DetalleCompras (
     id INT PRIMARY KEY IDENTITY(1,1),
     idCompra INT FOREIGN KEY REFERENCES Compras(id),
@@ -106,21 +129,12 @@ CREATE TABLE Facturas (
     idVenta INT FOREIGN KEY REFERENCES Ventas(id),
     fecha DATE,
     total DECIMAL(10, 2),
-    subTotal DECIMAL(10, 2),
-    iva DECIMAL(10, 2),
-    descuento DECIMAL(10, 2)
+    subTotal DECIMAL(10, 2)
 );
 
--- Tabla para Perfil
-CREATE TABLE Perfiles (
-    id INT PRIMARY KEY IDENTITY(1,1),
-    nombre NVARCHAR(50),
-    descripcion TEXT,
-    estado BIT  DEFAULT 1 NOT NULL
-    
-);
 
--- Tabla para Stock
+
+-- Tabla para Stock de productos
 CREATE TABLE Stock (
     idProducto INT FOREIGN KEY REFERENCES Productos(id),
     cantidad INT,
@@ -129,123 +143,89 @@ CREATE TABLE Stock (
     PRIMARY KEY (idProducto)
 );
 
+
 USE TiendaOnline;
 GO
 
 -- Insertar datos en la tabla Marcas
-INSERT INTO Marcas (nombre) VALUES 
-('Pampers'),
-('Avent'),
-('Nuk'),
-('Nestle'),
-('Braun');
+INSERT INTO Marcas (nombre) VALUES ('Disney');
+INSERT INTO Marcas (nombre) VALUES ('Hasbro');
 
 -- Insertar datos en la tabla Tipos
-INSERT INTO Tipos (nombre) VALUES 
-('Infantil'),
-('Accesorios'),
-('Salud'),
-('Alimentación'),
-('Baño');
+INSERT INTO Tipos (nombre) VALUES ('Juguetes');
+INSERT INTO Tipos (nombre) VALUES ('Ropa');
 
 -- Insertar datos en la tabla Categorias
-INSERT INTO Categorias (nombre) VALUES 
-('Higiene'),
-('Alimentación'),
-('Accesorios'),
-('Salud'),
-('Baño');
+INSERT INTO Categorias (nombre) VALUES ('Niños');
+INSERT INTO Categorias (nombre) VALUES ('Niñas');
 
 -- Insertar datos en la tabla Productos
-INSERT INTO Productos (nombre, descripcion, precio, imagen, idMarca, idTipo, idCategoria, estado) VALUES 
-('Pañales Premium', 'Pañales de alta calidad', 150.00, 'https://www.babysec.com.ar/assets/uploads/product/image/58c15-e8a52-6b52b-babysec-premium.png', 1, 1, 1, 1),
-('Mamadera 250ml', 'Mamadera con válvula anti-cólico', 50.00, 'https://www.electrooutlet.com.ar/Image/0/750_750-fae47c5ebe4a407bbf16ac5b0034b12f.jpg', 2, 1, 2, 1),
-('Chupete Suave', 'Chupete de silicona suave', 20.00, 'https://dcdn.mitiendanube.com/stores/614/910/products/screenshot_8-396ed9815ff6c3ec1117064822176944-640-0.jpg', 3, 2, 3, 1),
-('Leche en Polvo', 'Leche en polvo para bebés', 80.00, 'https://d2eebw31vcx88p.cloudfront.net/selmadigital/uploads/f6a7fa4d184ed4a477ea3c820e3dfcc14654681a.jpg.webp', 4, 1, 2, 1),
-('Termómetro Digital', 'Termómetro digital de alta precisión', 120.00, 'https://static.chollometro.com/threads/raw/kvzYb/1403911_1/re/768x768/qt/60/1403911_1.jpg', 5, 3, 4, 1);
+INSERT INTO Productos (nombre, descripcion, precio, imagen, idMarca, idTipo, idCategoria, margenGanancia) VALUES 
+('Peluche Mickey', 'Peluche de Mickey Mouse', 100.00, 'https://images.unsplash.com/photo-1533450718592-29d45635f0a9?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8anBnfGVufDB8fDB8fHww', 1, 1, 1, 20), 
+('Peluche Minnie', 'Peluche de Minnie Mouse', 100.00, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuSw-OdEWAVkZN58ydZ_Mz8CwNzFAEHRHn5g&s', 1, 1, 2, 20),
+( 'pañales pampers', 'pañales pampers', 100.00, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuSw-OdEWAVkZN58ydZ_Mz8CwNzFAEHRHn5g&s', 1, 1, 1, 20),
+( 'pañales huggies', 'pañales huggies', 100.00, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuSw-OdEWAVkZN58ydZ_Mz8CwNzFAEHRHn5g&s', 1, 1, 1, 20);
 
 -- Insertar datos en la tabla Proveedores
 INSERT INTO Proveedores (nombre, direccion, telefono, email) VALUES 
-('Proveedor 1', 'Calle Falsa 123', '123456789', 'proveedor1@example.com'),
-('Proveedor 2', 'Av. Siempre Viva 456', '987654321', 'proveedor2@example.com'),
-('Proveedor 3', 'Paseo de la Reforma 789', '456123789', 'proveedor3@example.com'),
-('Proveedor 4', 'Gran Vía 101', '321654987', 'proveedor4@example.com'),
-('Proveedor 5', 'Av. Libertador 202', '654987321', 'proveedor5@example.com');
+('Proveedor 1', 'Direccion 1', '123456789', 'proveedor1@gmail.com'),
+('Proveedor 2', 'Direccion 2', '123456789', 'proveedor2@gmail.com');
+
 
 -- Insertar datos en la tabla Proveedores_Productos
-INSERT INTO Proveedores_Productos (idProveedor, idProducto) VALUES 
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5),
-(1, 5),
-(2, 3),
-(3, 2),
-(4, 1),
-(5, 4);
-
--- Insertar datos en la tabla Clientes
-INSERT INTO Clientes (nombre, apellido, dni, direccion, telefono, email) VALUES 
-('Juan', 'Pérez', '12345678', 'Calle 1', '111111111', 'juan.perez@example.com'),
-('María', 'García', '23456789', 'Calle 2', '222222222', 'maria.garcia@example.com'),
-('Carlos', 'Sánchez', '34567890', 'Calle 3', '333333333', 'carlos.sanchez@example.com'),
-('Lucía', 'Rodríguez', '45678901', 'Calle 4', '444444444', 'lucia.rodriguez@example.com'),
-('Pedro', 'Fernández', '56789012', 'Calle 5', '555555555', 'pedro.fernandez@example.com');
-
--- Insertar datos en la tabla Ventas
-INSERT INTO Ventas (fecha, monto, idCliente) VALUES 
-('2024-08-01', 150.00, 1),
-('2024-08-02', 300.00, 2),
-('2024-08-03', 100.00, 3),
-('2024-08-04', 240.00, 4),
-('2024-08-05', 120.00, 5);
-
--- Insertar datos en la tabla DetalleVentas
-INSERT INTO DetalleVentas (idVenta, idProducto, cantidad, precioVenta) VALUES 
-(1, 1, 1, 150.00),
-(2, 2, 2, 100.00),
-(3, 3, 3, 30.00),
-(4, 4, 1, 240.00),
-(5, 5, 1, 120.00);
-
--- Insertar datos en la tabla Compras
-INSERT INTO Compras (idProveedor, fecha, total) VALUES 
-(1, '2024-07-15', 1000.00),
-(2, '2024-07-16', 2000.00),
-(3, '2024-07-17', 1500.00),
-(4, '2024-07-18', 1800.00),
-(5, '2024-07-19', 1200.00);
-
--- Insertar datos en la tabla DetalleCompras
-INSERT INTO DetalleCompras (idCompra, idProducto, cantidad, precioCompra) VALUES 
-(1, 1, 50, 20.00),
-(2, 2, 100, 15.00),
-(3, 3, 150, 10.00),
-(4, 4, 200, 8.00),
-(5, 5, 250, 5.00);
-
--- Insertar datos en la tabla Facturas
-INSERT INTO Facturas (idVenta, fecha, total, subTotal, iva, descuento) VALUES 
-(1, '2024-08-01', 165.00, 150.00, 15.00, 0.00),
-(2, '2024-08-02', 330.00, 300.00, 30.00, 0.00),
-(3, '2024-08-03', 110.00, 100.00, 10.00, 0.00),
-(4, '2024-08-04', 264.00, 240.00, 24.00, 0.00),
-(5, '2024-08-05', 132.00, 120.00, 12.00, 0.00);
+INSERT INTO Proveedores_Productos (idProveedor, idProducto) VALUES (1, 1);
+INSERT INTO Proveedores_Productos (idProveedor, idProducto) VALUES (2, 2);
 
 -- Insertar datos en la tabla Perfiles
-INSERT INTO Perfiles (nombre, descripcion, estado) VALUES 
-('Administrador', 'Perfil con acceso total al sistema', 1),
-('Vendedor', 'Perfil con acceso limitado a ventas', 1),
-('Gerente', 'Perfil con acceso a reportes y gestión', 1),
-('Soporte', 'Perfil con acceso a soporte técnico', 0),
-('Cliente', 'Perfil con acceso a la tienda en línea', 1);
+INSERT INTO Perfiles (nombre) VALUES ('Cliente'); --1
+INSERT INTO Perfiles (nombre) VALUES ('Administrador'); --2
+INSERT INTO Perfiles (nombre) VALUES ('Vendedor'); --3
+
+-- Insertar datos en la tabla Usuarios
+INSERT INTO Usuarios (nombre, apellido, dni, direccion, telefono, email, clave, idPerfil) VALUES 
+('Mariel', 'Torres', '6666666', 'Direccion 5', '345678112', 'Mariel3@gmail.com', '12345677' , 1)
+('administrador', 'Admin', '12345678', 'Direccion 1', '123456789', 'Administrador@admin.com', '111111', 2),
+('Larry', 'Cricione', '12345678', 'Direccion 2', '123456789', 'cliente1@gmial.com', '123456' , 1),
+('Nazareno', 'Ligero', '90123456', 'Direccion 3', '012345678', 'cliente2@gmail.com', '123456' , 1),
+('vendedor', 'Apellido 4', '78901234', 'Direccion 4', '901234567', 'vendedor@gmail.com', '123456' , 3);
+
+-- Insertar datos en la tabla EstadoVenta
+INSERT INTO EstadoVenta (nombre) VALUES ('Pendiente');
+INSERT INTO EstadoVenta (nombre) VALUES ('Aprobado');
+INSERT INTO EstadoVenta (nombre) VALUES ('Cancelado');
+
+-- Insertar datos en la tabla Ventas
+INSERT INTO Ventas (fecha, monto, idUsuario, EnLocal, idEstadoVenta) VALUES ('2021-01-01', 100.00, 1, 0, 1);
+INSERT INTO Ventas (fecha, monto, idUsuario, EnLocal, idEstadoVenta) VALUES ('2021-01-02', 200.00, 2, 1, 1);
+
+-- Insertar datos en la tabla DetalleVentas
+INSERT INTO DetalleVentas (idVenta, idProducto, cantidad, precioVenta) VALUES (1, 1, 1, 100.00);
+INSERT INTO DetalleVentas (idVenta, idProducto, cantidad, precioVenta) VALUES (2, 2, 2, 100.00);
+
+-- Insertar datos en la tabla Compras
+INSERT INTO Compras (idProveedor, fecha, total) VALUES (1, '2021-01-01', 100.00);
+INSERT INTO Compras (idProveedor, fecha, total) VALUES (2, '2021-01-02', 200.00);
+
+-- Insertar datos en la tabla DetalleCompras
+INSERT INTO DetalleCompras (idCompra, idProducto, cantidad, precioCompra) VALUES (1, 1, 1, 100.00);
+INSERT INTO DetalleCompras (idCompra, idProducto, cantidad, precioCompra) VALUES (2, 2, 2, 100.00);
+
+
+-- Insertar datos en la tabla Facturas
+INSERT INTO Facturas (idVenta, fecha, total, subTotal) VALUES (1, '2021-01-01', 100.00, 100.00);
+INSERT INTO Facturas (idVenta, fecha, total, subTotal) VALUES (2, '2021-01-02', 200.00, 200.00);
+
 
 -- Insertar datos en la tabla Stock
-INSERT INTO Stock (idProducto, cantidad, stockMinimo, fechaActualizacion) VALUES 
-(1, 100, 20, '2024-08-01'),
-(2, 200, 30, '2024-08-01'),
-(3, 150, 15, '2024-08-01'),
-(4, 80, 10, '2024-08-01'),
-(5, 50, 5, '2024-08-01');
+INSERT INTO Stock (idProducto, cantidad, stockMinimo, fechaActualizacion) VALUES (1, 10, 5, '2021-01-01');
+INSERT INTO Stock (idProducto, cantidad, stockMinimo, fechaActualizacion) VALUES (2, 20, 10, '2021-01-02');
+
+
+
+
+
+
+
+
+
 

@@ -17,18 +17,21 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select id, Nombre, apellido, dni, direccion, telefono, email from Clientes where estado = 1");
+                datos.SetearConsulta("select U.id, U.nombre, U.apellido, U.dni, U.direccion, U.telefono, U.email, p.nombre as Perfil from Usuarios U INNER JOIN Perfiles P on U.idPerfil = P.id where U.estado = 1");
                 datos.EjecutarLectura();
                 while (datos.Lector.Read())
                 {
                     Cliente aux = new Cliente();
-                    aux.Id = (int)datos.Lector["id"];
-                    aux.Nombre = (string)datos.Lector["nombre"];
-                    aux.Apellido = (string)datos.Lector["apellido"];
-                    aux.Dni = (string)datos.Lector["dni"];
-                    aux.Direccion = (string)datos.Lector["direccion"];
-                    aux.Telefono = (string)datos.Lector["telefono"];
-                    aux.Email = (string)datos.Lector["email"];
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Apellido = (string)datos.Lector["Apellido"];
+                    aux.Dni = (string)datos.Lector["Dni"];
+                    aux.Direccion = (string)datos.Lector["Direccion"];
+                    aux.Telefono = (string)datos.Lector["Telefono"];
+                    aux.Email = (string)datos.Lector["Email"];
+                    aux.nombrePerfil = (string)datos.Lector["Perfil"];
+
+
                     lista.Add(aux);
                 }
                 return lista;
@@ -88,13 +91,15 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("insert into Clientes (Nombre, Apellido, Dni, Direccion, Telefono, Email) values (@Nombre, @Apellido, @Dni, @Direccion, @Telefono, @Email)");
+                datos.SetearConsulta("insert into Usuarios (Nombre, Apellido, Dni, Direccion, Telefono, Email, Clave, idPerfil) values (@Nombre, @Apellido, @Dni, @Direccion, @Telefono, @Email, @Clave, @idPerfil)");
                 datos.SetearParametro("@Nombre", nuevo.Nombre);
                 datos.SetearParametro("@Apellido", nuevo.Apellido);
                 datos.SetearParametro("@Dni", nuevo.Dni);
                 datos.SetearParametro("@Direccion", nuevo.Direccion);
                 datos.SetearParametro("@Telefono", nuevo.Telefono);
                 datos.SetearParametro("@Email", nuevo.Email);
+                datos.SetearParametro("@Clave", nuevo.clave);
+                datos.SetearParametro("@idPerfil", nuevo.idPerfil);
                 datos.EjecutarAccion();
             }
             catch (Exception ex)
@@ -163,7 +168,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select Id, Nombre, Apellido, Dni, Direccion, Telefono, Email from Clientes where Dni = @Dni and estado = 0");
+                datos.SetearConsulta("select Id, Nombre, Apellido, Dni, Direccion, Telefono, Email from Usuarios where Dni = @Dni and estado = 0");
                 datos.SetearParametro("@Dni", dni);
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())

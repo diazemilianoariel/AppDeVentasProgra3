@@ -19,6 +19,6 @@ namespace Front
                 
                 Response.Redirect("HomeAdministrador.aspx");
 
-        }
+            }
     }
 }

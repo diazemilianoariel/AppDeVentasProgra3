@@ -75,6 +75,7 @@
     <Compile Include="Compra.cs" />
     <Compile Include="DetalleCompra.cs" />
     <Compile Include="DetalleVenta.cs" />
+    <Compile Include="estadoVenta.cs" />
     <Compile Include="Factura.cs" />
     <Compile Include="Marca.cs" />
     <Compile Include="Perfil.cs" />

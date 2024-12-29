@@ -159,6 +159,24 @@ namespace Front
         protected global::System.Web.UI.WebControls.Button btnConfirmarReactivacion;
 
         /// <summary>
+        /// Control LabelPerfilCliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelPerfilCliente;
+
+        /// <summary>
+        /// Control ddlPerfilCliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlPerfilCliente;
+
+        /// <summary>
         /// Control btnActivarCliente.
         /// </summary>
         /// <remarks>

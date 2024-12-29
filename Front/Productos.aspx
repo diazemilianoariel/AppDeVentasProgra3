@@ -3,6 +3,16 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <%--     <link href="ColumnaLateral.css" rel="stylesheet" />--%>
     <link href="estilos.css" rel="stylesheet" />
+    <style>
+        body {
+            background-image: url('https://www.shutterstock.com/shutterstock/photos/2369360047/display_1500/stock-photo-mockup-wall-in-the-children-s-room-on-wall-cream-color-background-d-rendering-2369360047.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
+
+
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -27,6 +37,15 @@
 
                         <asp:Label ID="LabelPrecio" runat="server" AssociatedControlID="TextBoxPrecio" CssClass="form-label fw-bold">Precio</asp:Label>
                         <asp:TextBox ID="TextBoxPrecio" runat="server" CssClass="form-control"></asp:TextBox>
+
+
+                        <asp:Label ID="LabelGanancia" runat="server" AssociatedControlID="TextBoxGanancia" CssClass="form-label fw-bold">Margen De Ganancia</asp:Label>
+
+                        <asp:TextBox ID="TextBoxGanancia" runat="server" CssClass="form-control" AutoPostBack="true" OnTextChanged="TextBoxGanancia_TextChanged"></asp:TextBox>
+
+
+
+
 
                         <asp:Label ID="LabelImagen" runat="server" AssociatedControlID="TextBoxImagen" CssClass="form-label fw-bold">Imagen URL</asp:Label>
                         <asp:TextBox ID="TextBoxImagen" runat="server" CssClass="form-control"></asp:TextBox>

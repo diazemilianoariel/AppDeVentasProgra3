@@ -16,5 +16,13 @@ namespace dominio
         public string Telefono { get; set; }
         public string Email { get; set; }
 
+        public string clave { get; set; }
+
+        public int idPerfil { get; set; }
+
+        public string nombrePerfil { get; set; }
+
+        public bool estado { get; set; }
+
     }
 }

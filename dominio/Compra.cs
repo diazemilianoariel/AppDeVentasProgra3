@@ -12,7 +12,16 @@ namespace dominio
         public int IdProveedor { get; set; }
         public DateTime Fecha { get; set; }
         public decimal Total { get; set; }
-        
+
+        // cliente 
+        public string Cliente { get; set; }
+
+        // producto
+        public string Producto { get; set; }
+
+        // cantidad
+        public int Cantidad { get; set; }
+
 
     }
 }

@@ -14,8 +14,8 @@ namespace dominio
         public DateTime Fecha { get; set; }
         public decimal TotalFacutra{ get; set; }
         public decimal subTotalFactura { get; set; }
-        public decimal Iva { get; set; }
-        public decimal Descuento { get; set; }
+        public decimal Iva { get; set; } //   a revisar     
+        public decimal Descuento { get; set; } // a revisar 
         
 
     }

@@ -13,5 +13,7 @@ namespace dominio
         int cantidad { get; set; }
 
         decimal precioVenta { get; set; }
+
+        public bool estado { get; set; }
     }
 }

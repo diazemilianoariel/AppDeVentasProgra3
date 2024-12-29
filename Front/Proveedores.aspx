@@ -2,6 +2,14 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="estilos.css" rel="stylesheet" />
+     <style>
+     body {
+         background-image: url('https://www.shutterstock.com/shutterstock/photos/1130074277/display_1500/stock-vector-abstract-marble-trendy-texture-in-pastel-and-gold-colors-trendy-chic-background-made-in-vector-1130074277.jpg');
+         background-size: cover;
+         background-repeat: no-repeat;
+         background-attachment: fixed;
+     }
+ </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

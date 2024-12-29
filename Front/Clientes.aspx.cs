@@ -49,8 +49,10 @@ namespace Front
                 TextBoxDireccionCliente.Text = HttpUtility.HtmlDecode(fila.Cells[4].Text);
                 TextBoxTelefonoCliente.Text = HttpUtility.HtmlDecode(fila.Cells[5].Text);
                 TextBoxEmailCliente.Text = HttpUtility.HtmlDecode(fila.Cells[6].Text);
+                ddlPerfilCliente.Text = HttpUtility.HtmlDecode(fila.Cells[7].Text); // Añadir esta línea para el perfil
             }
         }
+
 
 
 
@@ -72,6 +74,7 @@ namespace Front
                 TextBoxDireccionCliente.Text = cliente.Direccion;
                 TextBoxTelefonoCliente.Text = cliente.Telefono;
                 TextBoxEmailCliente.Text = cliente.Email;
+                ddlPerfilCliente.Text = cliente.nombrePerfil;
 
             }
         }
@@ -91,6 +94,8 @@ namespace Front
                         Dni = TextBoxDniCliente.Text,
                         Direccion = TextBoxDireccionCliente.Text,
                         Telefono = TextBoxTelefonoCliente.Text,
+                        idPerfil = int.Parse(ddlPerfilCliente.SelectedValue),
+                        clave = TextBoxDniCliente.Text,
                         Email = TextBoxEmailCliente.Text
                     };
 
@@ -106,7 +111,6 @@ namespace Front
                     else
                     {
                         negocio.AgregarCliente(cliente);
-                        Response.Write("Cliente agregado exitosamente.");
                         CargarGrillaClientes();
                         LimpiarCampos();
                     }
@@ -209,7 +213,7 @@ namespace Front
 
         private bool ValidarCampos()
         {
-            return 
+            return
                    !string.IsNullOrEmpty(TextBoxNombreCliente.Text) &&
                    !string.IsNullOrEmpty(TextBoxApellidoCliente.Text) &&
                    !string.IsNullOrEmpty(TextBoxDniCliente.Text) &&
@@ -217,5 +221,10 @@ namespace Front
                    !string.IsNullOrEmpty(TextBoxTelefonoCliente.Text) &&
                    !string.IsNullOrEmpty(TextBoxEmailCliente.Text);
         }
+
+
+
+
+
     }
 }

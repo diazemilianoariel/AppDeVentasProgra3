@@ -20,12 +20,25 @@ namespace dominio
         public decimal precio { get; set; }
 
         public string Imagen { get; set; }
-        public int stock { get; set; }
+        public int stock { get; set; }  // hace falta ? 
         public string marca { get; set; }
         public string tipo { get; set; }
         public string categoria { get; set; }
-        public string proveedor { get; set; }
+        public string proveedor { get; set; }  // mmmmm ?
+
+        public decimal margenGanancia { get; set; }
         public bool estado { get; set; }
+
+        /*[id] [int] IDENTITY(1,1) NOT NULL,
+	    [nombre] [nvarchar](50) NULL,
+	    [descripcion] [nvarchar](100) NULL,
+	    [precio] [decimal](10, 2) NULL,
+	    [imagen] [nvarchar](255) NULL,
+	    [idMarca] [int] NULL,
+	    [idTipo] [int] NULL,
+	    [idCategoria] [int] NULL,
+	    [margenGanancia] [decimal](10, 2) NOT NULL,
+	    [estado] [bit] NOT NULL*/
 
 
     }

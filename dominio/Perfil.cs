@@ -12,11 +12,11 @@ namespace dominio
         public enum TipoPerfil
         {
             Administrador,
-            Vendedor
+            Vendedor,
+            Cliente
         }
         public int IdPerfil { get; set; }
         public string Nombre { get; set; }
-        public string Descripcion { get; set; }
         public string Estado { get; set; }
     }
 

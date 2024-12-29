@@ -1,6 +1,7 @@
 ﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 
 namespace dominio
@@ -14,9 +15,13 @@ namespace dominio
         public DateTime Fecha { get; set; }
         public decimal Monto { get; set; }
         public Cliente Cliente { get; set; }
+
+        public bool EnLocal { get; set; }
+
+        public int idEstadoVenta { get; set; }
         public List<Producto> Productos { get; set; }
 
-        // constructor
+        // constructor sin parámetros
         public Venta()
         {
             Productos = new List<Producto>();
