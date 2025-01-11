@@ -161,7 +161,7 @@ INSERT INTO Categorias (nombre) VALUES ('Niñas');
 
 -- Insertar datos en la tabla Productos
 INSERT INTO Productos (nombre, descripcion, precio, imagen, idMarca, idTipo, idCategoria, margenGanancia) VALUES 
-('Peluche Mickey', 'Peluche de Mickey Mouse', 100.00, 'https://images.unsplash.com/photo-1533450718592-29d45635f0a9?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8anBnfGVufDB8fDB8fHww', 1, 1, 1, 20), 
+('Peluche Mickey', 'Peluche de Mickey Mouse', 100.00, 'https://http2.mlstatic.com/D_NQ_NP_766265-MLU74210721135_012024-O.webp', 1, 1, 1, 20), 
 ('Peluche Minnie', 'Peluche de Minnie Mouse', 100.00, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuSw-OdEWAVkZN58ydZ_Mz8CwNzFAEHRHn5g&s', 1, 1, 2, 20),
 ( 'pañales pampers', 'pañales pampers', 100.00, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuSw-OdEWAVkZN58ydZ_Mz8CwNzFAEHRHn5g&s', 1, 1, 1, 20),
 ( 'pañales huggies', 'pañales huggies', 100.00, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuSw-OdEWAVkZN58ydZ_Mz8CwNzFAEHRHn5g&s', 1, 1, 1, 20);

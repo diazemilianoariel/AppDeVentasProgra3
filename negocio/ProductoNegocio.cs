@@ -433,6 +433,61 @@ namespace negocio
         }
 
 
+        public List<Producto> BuscarProductos(string busqueda)
+        {
+            List<Producto> lista = new List<Producto>();
+            AccesoDatos accesoDatos = new AccesoDatos();
+            try
+            {
+                accesoDatos.SetearConsulta("SELECT P.id, P.nombre, P.descripcion, P.imagen, P.precio, P.margenGanancia, S.cantidad, M.nombre AS MarcaNombre, T.nombre AS TipoNombre, C.nombre AS CategoriaNombre, P.estado, Prov.nombre AS ProveedorNombre " +
+                                           "FROM Productos P " +
+                                           "INNER JOIN Stock S ON P.id = S.idProducto " +
+                                           "INNER JOIN Marcas M ON P.idMarca = M.id " +
+                                           "INNER JOIN Tipos T ON T.id = P.idTipo " +
+                                           "INNER JOIN Categorias C ON C.id = P.idCategoria " +
+                                           "INNER JOIN Proveedores_Productos PP ON P.id = PP.idProducto " +
+                                           "INNER JOIN Proveedores Prov ON PP.idProveedor = Prov.id " +
+                                           "WHERE P.nombre LIKE @busqueda OR P.descripcion LIKE @busqueda");
+
+                accesoDatos.SetearParametro("@busqueda", "%" + busqueda + "%");
+
+                accesoDatos.EjecutarLectura();
+
+                while (accesoDatos.Lector.Read())
+                {
+                    Producto producto = new Producto();
+                    producto.id = accesoDatos.Lector.GetInt32(0);
+                    producto.nombre = accesoDatos.Lector.GetString(1);
+                    producto.descripcion = accesoDatos.Lector.GetString(2);
+                    producto.Imagen = accesoDatos.Lector.GetString(3);
+                    producto.precio = accesoDatos.Lector.GetDecimal(4);
+                    producto.margenGanancia = accesoDatos.Lector.GetDecimal(5);
+                    producto.stock = accesoDatos.Lector.GetInt32(6);
+                    producto.marca = accesoDatos.Lector.GetString(7);
+                    producto.tipo = accesoDatos.Lector.GetString(8);
+                    producto.categoria = accesoDatos.Lector.GetString(9);
+                    producto.estado = accesoDatos.Lector.GetBoolean(10);
+                    producto.proveedor = accesoDatos.Lector.GetString(11);
+
+                    lista.Add(producto);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                accesoDatos.CerrarConexion();
+            }
+
+            return lista;
+        }
+
+
+
+
 
     }
+
 }

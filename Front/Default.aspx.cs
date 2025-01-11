@@ -5,48 +5,62 @@ using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-
 namespace Front
 {
     public partial class Default : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-
-            ProductoNegocio productoNegocio = new ProductoNegocio();
-            List<Producto> listaProductos = productoNegocio.ListarProductos();
-            Session["listaProductos"] = listaProductos; // Guardo la lista de productos en la sesion para poder accederla desde el front
-
             if (!IsPostBack)
             {
                 CargarProductos();
             }
-
-
-
         }
 
         private void CargarProductos()
         {
-            List<Producto> listaProductos = (List<Producto>)Session["listaProductos"]; // Recupero la lista de productos de la sesion
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+            List<Producto> listaProductos = productoNegocio.ListarProductos();
             rptProductos.DataSource = listaProductos;
             rptProductos.DataBind();
         }
 
-
-
-        protected void btnVerDetalle_Click(object sender, EventArgs e)
+        protected void btnAgregarCarrito_Click(object sender, EventArgs e)
         {
-            int idProducto = Convert.ToInt32((sender as LinkButton).CommandArgument);
-            Session.Add("idProducto", idProducto);
+            // Implementar la lógica para agregar productos al carrito
+        }
 
-            Response.Redirect("CompraParcial.aspx");
+        protected void btnConfirmarCompra_Click(object sender, EventArgs e)
+        {
+            // Implementar la lógica para confirmar la compra
+        }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            // Implementar la lógica para eliminar productos del carrito
         }
 
 
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+           
 
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+            List<Producto> listaProductos = productoNegocio.ListarProductos();
+            List<Producto> listaFiltrada = new List<Producto>();
 
+            foreach (Producto producto in listaProductos)
+            {
+                if (producto.nombre.ToLower().Contains(txtBuscar.Text.ToLower()))
+                {
+                    listaFiltrada.Add(producto);
+                }
+            }
 
+            rptProductos.DataSource = listaFiltrada;
+
+            rptProductos.DataBind();
+
+        }
     }
 }
