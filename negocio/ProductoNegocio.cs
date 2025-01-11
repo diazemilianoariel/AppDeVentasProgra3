@@ -11,6 +11,9 @@ namespace negocio
 
     public class ProductoNegocio
     {
+
+
+
         public List<Producto> ListarProductos()
         {
             List<Producto> lista = new List<Producto>();
@@ -18,9 +21,16 @@ namespace negocio
             try
             {
                 // Usar parámetros para evitar inyecciones SQL
-                accesoDatos.SetearConsulta("SELECT P.id, P.nombre, P.descripcion, P.imagen, P.precio, P.margenGanancia, S.cantidad, M.nombre FROM Productos P " +
-                    "INNER JOIN Stock S ON P.id = S.idProducto " +
-                    "INNER JOIN Marcas M ON P.idMarca = M.id");
+                accesoDatos.SetearConsulta("SELECT P.id, P.nombre, P.descripcion, P.imagen, P.precio, P.margenGanancia, S.cantidad, M.nombre AS MarcaNombre, T.nombre AS TipoNombre, C.nombre AS CategoriaNombre, P.estado, Prov.nombre AS ProveedorNombre " +
+            "FROM Productos P " +
+            "INNER JOIN Stock S ON P.id = S.idProducto " +
+            "INNER JOIN Marcas M ON P.idMarca = M.id " +
+            "INNER JOIN Tipos T ON T.id = P.idTipo " +
+            "INNER JOIN Categorias C ON C.id = P.idCategoria " +
+            "INNER JOIN Proveedores_Productos PP ON P.id = PP.idProducto " +
+            "INNER JOIN Proveedores Prov ON PP.idProveedor = Prov.id");
+
+
 
                 // Ejecutar la consulta
                 accesoDatos.EjecutarLectura();
@@ -29,6 +39,7 @@ namespace negocio
                 while (accesoDatos.Lector.Read())
                 {
                     Producto producto = new Producto();
+
                     producto.id = accesoDatos.Lector.GetInt32(0);
                     producto.nombre = accesoDatos.Lector.GetString(1);
                     producto.descripcion = accesoDatos.Lector.GetString(2);
@@ -37,9 +48,20 @@ namespace negocio
                     producto.margenGanancia = accesoDatos.Lector.GetDecimal(5);
                     producto.stock = accesoDatos.Lector.GetInt32(6);
                     producto.marca = accesoDatos.Lector.GetString(7);
+                    producto.tipo = accesoDatos.Lector.GetString(8);
+                    producto.categoria = accesoDatos.Lector.GetString(9);
+                    producto.estado = accesoDatos.Lector.GetBoolean(10);
+                    producto.proveedor = accesoDatos.Lector.GetString(11);
+
+
 
 
                     lista.Add(producto);
+
+
+
+
+
                 }
 
                 return lista;
@@ -83,7 +105,7 @@ namespace negocio
                 // Leer los datos obtenidos
                 if (accesoDatos.Lector.Read())
                 {
-
+                    producto.id = accesoDatos.Lector.GetInt32(0);
                     producto.nombre = accesoDatos.Lector.GetString(1);
                     producto.descripcion = accesoDatos.Lector.GetString(2);
                     producto.Imagen = accesoDatos.Lector.GetString(3);
@@ -95,6 +117,8 @@ namespace negocio
                     producto.categoria = accesoDatos.Lector.GetString(9);
                     producto.proveedor = accesoDatos.Lector.GetString(10);
                     producto.estado = accesoDatos.Lector.GetBoolean(11);
+
+
                 }
 
                 return producto;
@@ -134,7 +158,7 @@ namespace negocio
                     throw new Exception("El producto ya existe");
                 }
             }
-            catch ( Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
 
@@ -228,12 +252,6 @@ namespace negocio
 
 
         }
-
-
-
-
-
-
 
         public void ModificarProducto(Producto producto)
         {

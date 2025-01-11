@@ -12,6 +12,8 @@ namespace Front
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
             ProductoNegocio productoNegocio = new ProductoNegocio();
             List<Producto> listaProductos = productoNegocio.ListarProductos();
             Session["listaProductos"] = listaProductos; // Guardo la lista de productos en la sesion para poder accederla desde el front

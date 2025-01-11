@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using dominio;
+using negocio;
 
 namespace Front
 {
@@ -14,11 +16,38 @@ namespace Front
 
 
         }
-            protected void btnIniciarSesion_Click(object sender, EventArgs e)
+        protected void btnIniciarSesion_Click(object sender, EventArgs e)
+        {
+            ClienteNegocio negocio = new ClienteNegocio();
+            Cliente cliente = new Cliente
             {
+
                 
-                Response.Redirect("HomeAdministrador.aspx");
+                Email = txtEmail.Text,
+                clave = txtPassword.Text
+
+            };
+
+            if (negocio.Loguear(cliente))
+            {
+                Session["cliente"] = cliente;
+                // deberia loguearse en la pagina que se esta actualmente 
+                Response.Redirect("Default.aspx");
 
             }
+            else
+            {
+                Response.Redirect("Login.aspx");
+
+            }
+
+
+
+
+           
+
+        }
+
+     
     }
 }

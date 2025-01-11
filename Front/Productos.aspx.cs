@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Services.Description;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -14,13 +15,25 @@ namespace Front
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+
+            if (Session["cliente"] == null || !EsAdministradorOSoporte((Cliente)Session["cliente"]))
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
+
+            if (!IsPostBack)
             {
                 CargarDropDownLists();
                 CargarGrilla();
             }
 
 
+        }
+
+        private bool EsAdministradorOSoporte(Cliente cliente)
+        {
+            return cliente.nombrePerfil == "Administrador" || cliente.nombrePerfil == "Soporte" || cliente.nombrePerfil == "Vendedor";
         }
 
 
@@ -63,6 +76,82 @@ namespace Front
             GridViewProductos.DataBind();
         }
 
+
+
+        protected void GridViewProductos_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Seleccionar")
+            {
+                int index = Convert.ToInt32(e.CommandArgument);
+
+               
+                    GridViewRow row = GridViewProductos.Rows[index];
+                    if (row != null && row.Cells.Count > 0) // Asegurarse de que la fila y la celda existen
+                    {
+                        int id = Convert.ToInt32(row.Cells[0].Text);
+
+                        ProductoNegocio negocio = new ProductoNegocio();
+                        Producto producto = negocio.ObtenerProducto(id);
+
+                        // Asignar los valores a los TextBoxes
+                        TextBoxId.Text = producto.id.ToString();
+                        TextBoxNombre.Text = producto.nombre;
+                        TextBoxDescripcion.Text = producto.descripcion;
+                        TextBoxImagen.Text = producto.Imagen;
+                        TextBoxPrecio.Text = producto.precio.ToString();
+                        TextBoxGanancia.Text = producto.margenGanancia.ToString();
+                        TextBoxStock.Text = producto.stock.ToString();
+
+                        ListItem itemMarca = DropDownListMarca.Items.FindByValue(producto.marca);
+                        if (itemMarca != null)
+                        {
+                            DropDownListMarca.ClearSelection();
+                            itemMarca.Selected = true;
+
+                        }
+
+
+                        CheckBoxEstado.Checked = producto.estado;
+
+
+
+                    }
+                
+               
+            }
+            else
+            {
+                if (e.CommandName == "VerDetalle")
+                {
+                    int index = Convert.ToInt32(e.CommandArgument);
+                    // Verificar si el índice está dentro del rango
+                    if (index >= 0 && index < GridViewProductos.Rows.Count)
+                    {
+                        GridViewRow row = GridViewProductos.Rows[index];
+                        if (row != null && row.Cells.Count > 0) // Asegurarse de que la fila y la celda existen
+                        {
+                            int id = Convert.ToInt32(row.Cells[0].Text);
+
+                            // Redirigir a la página de detalle, pasando el ID como parámetro
+                            Response.Redirect("DetalleProducto.aspx?id=" + id);
+                        }
+                        else
+                        {
+                            // mensaje de error
+                            Response.Write("¡Ups! Parece que seleccionaste una fila inexistente.");
+                        }
+                    }
+                    else
+                    {
+                        // mensaje de error
+                        Response.Write("¡Ups! Parece que seleccionaste una fila inexistente.");
+                    }
+                }
+
+            }
+        }
+
+
         protected void GridViewProductos_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridViewRow fila = GridViewProductos.SelectedRow;
@@ -81,7 +170,11 @@ namespace Front
                 TextBoxPrecio.Text = producto.precio.ToString();
                 TextBoxGanancia.Text = producto.margenGanancia.ToString();
                 TextBoxStock.Text = producto.stock.ToString();
-               
+                ListItem itemMarca = DropDownListMarca.Items.FindByValue(producto.marca);
+                ListItem itemTipo = DropDownListTipo.Items.FindByValue(producto.tipo);
+                ListItem itemCategoria = DropDownListCategoria.Items.FindByValue(producto.categoria);
+                CheckBoxEstado.Checked = producto.estado;
+
             }
             else
             {
@@ -96,7 +189,13 @@ namespace Front
                 TextBoxPrecio.Text = "";
                 TextBoxGanancia.Text = "";
                 TextBoxStock.Text = "";
-                
+                DropDownListMarca.SelectedIndex = 0;
+                DropDownListTipo.SelectedIndex = 0;
+                DropDownListCategoria.SelectedIndex = 0;
+                DropDownListProveedor.SelectedIndex = 0;
+                CheckBoxEstado.Checked = true;
+
+
 
             }
         }
@@ -201,71 +300,6 @@ namespace Front
         }
 
 
-        protected void GridViewProductos_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandName == "Seleccionar")
-            {
-                int index = Convert.ToInt32(e.CommandArgument);
-
-                // Verificar si el índice está dentro del rango
-                if (index >= 0 && index < GridViewProductos.Rows.Count)
-                {
-                    GridViewRow row = GridViewProductos.Rows[index];
-                    if (row != null && row.Cells.Count > 0) // Asegurarse de que la fila y la celda existen
-                    {
-                        int id = Convert.ToInt32(row.Cells[0].Text);
-
-                        ProductoNegocio negocio = new ProductoNegocio();
-                        Producto producto = negocio.ObtenerProducto(id);
-
-                        // Asignar los valores a los TextBoxes
-                        TextBoxId.Text = producto.id.ToString();
-                        TextBoxNombre.Text = producto.nombre;
-                        TextBoxDescripcion.Text = producto.descripcion;
-                        TextBoxImagen.Text = producto.Imagen;
-                        TextBoxPrecio.Text = producto.precio.ToString();
-                        TextBoxGanancia.Text = producto.margenGanancia.ToString();
-                        TextBoxStock.Text = producto.stock.ToString();
-                        
-                    }
-                }
-                else
-                {
-                    // mensaje de error
-                    Response.Write("¡Ups! Parece que seleccionaste una fila inexistente.");
-                }
-            }
-            else
-            {
-                if (e.CommandName == "VerDetalle")
-                {
-                    int index = Convert.ToInt32(e.CommandArgument);
-                    // Verificar si el índice está dentro del rango
-                    if (index >= 0 && index < GridViewProductos.Rows.Count)
-                    {
-                        GridViewRow row = GridViewProductos.Rows[index];
-                        if (row != null && row.Cells.Count > 0) // Asegurarse de que la fila y la celda existen
-                        {
-                            int id = Convert.ToInt32(row.Cells[0].Text);
-
-                            // Redirigir a la página de detalle, pasando el ID como parámetro
-                            Response.Redirect("DetalleProducto.aspx?id=" + id);
-                        }
-                        else
-                        {
-                            // mensaje de error
-                            Response.Write("¡Ups! Parece que seleccionaste una fila inexistente.");
-                        }
-                    }
-                    else
-                    {
-                        // mensaje de error
-                        Response.Write("¡Ups! Parece que seleccionaste una fila inexistente.");
-                    }
-                }
-
-            }
-        }
 
 
         protected void TextBoxGanancia_TextChanged(object sender, EventArgs e)

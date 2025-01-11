@@ -11,15 +11,33 @@ namespace Front
     {
         protected TextBox TextBoxIdCategoria;
         protected TextBox TextBoxNuevaCategoria;
-        protected Panel editSection;
+        protected Panel editSection; // Sección de edición
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["cliente"] == null || !EsAdministradorOSoporte((Cliente)Session["cliente"]))
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
+
+
+
+
             if (!IsPostBack)
             {
                 CargarCategorias();
             }
+
+
+
         }
+
+        private bool EsAdministradorOSoporte(Cliente cliente)
+        {
+            return cliente.nombrePerfil == "Administrador" || cliente.nombrePerfil == "Soporte" || cliente.nombrePerfil == "Vendedor";
+        }
+
 
         private void CargarCategorias()
         {

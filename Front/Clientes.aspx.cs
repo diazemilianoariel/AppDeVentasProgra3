@@ -15,16 +15,46 @@ namespace Front
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
+            if (Session["cliente"] == null || !EsAdministradorOSoporte((Cliente)Session["cliente"]))
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
+
+
             if (!IsPostBack)
             {
 
 
-
+                CargarPerfiles();
                 CargarGrillaClientes();
 
             }
 
         }
+
+        private bool EsAdministradorOSoporte(Cliente cliente)
+        {
+            return cliente.idPerfil == 2 || cliente.idPerfil == 3 || cliente.idPerfil == 4;
+        }
+
+
+        private void CargarPerfiles()
+        {
+
+            ClienteNegocio negocio = new ClienteNegocio();
+            ddlPerfilCliente.DataSource = negocio.ListarPerfiles();
+            ddlPerfilCliente.DataValueField = "id";
+            ddlPerfilCliente.DataTextField = "nombre";
+
+            ddlPerfilCliente.DataBind();
+
+        }
+
+
+
 
 
         private void CargarGrillaClientes()
@@ -34,6 +64,12 @@ namespace Front
             GridViewClientes.DataBind();
         }
 
+
+
+        
+
+
+
         protected void GridViewClientes_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "Seleccionar")
@@ -41,7 +77,7 @@ namespace Front
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow fila = GridViewClientes.Rows[index];
 
-                // Asignar los valores de la fila seleccionada a los TextBoxes
+                // Asignar 
                 TextBoxIdCliente.Text = HttpUtility.HtmlDecode(fila.Cells[0].Text);
                 TextBoxNombreCliente.Text = HttpUtility.HtmlDecode(fila.Cells[1].Text);
                 TextBoxApellidoCliente.Text = HttpUtility.HtmlDecode(fila.Cells[2].Text);
@@ -49,9 +85,34 @@ namespace Front
                 TextBoxDireccionCliente.Text = HttpUtility.HtmlDecode(fila.Cells[4].Text);
                 TextBoxTelefonoCliente.Text = HttpUtility.HtmlDecode(fila.Cells[5].Text);
                 TextBoxEmailCliente.Text = HttpUtility.HtmlDecode(fila.Cells[6].Text);
-                ddlPerfilCliente.Text = HttpUtility.HtmlDecode(fila.Cells[7].Text); // Añadir esta línea para el perfil
+
+                // Selecciona e perfil de clientee
+                string perfilNombre = fila.Cells[7].Text;
+                ListItem item = ddlPerfilCliente.Items.FindByText(perfilNombre);
+                if (item != null)
+                {
+                    ddlPerfilCliente.ClearSelection();
+                    item.Selected = true;
+                }
+                else
+                {
+                    // manejar algo en caso de eror 
+                    ddlPerfilCliente.ClearSelection();
+                    ddlPerfilCliente.Items.Clear();
+                        
+
+                }
+
+
+
+
+
             }
         }
+
+
+     
+
 
 
 
@@ -74,7 +135,11 @@ namespace Front
                 TextBoxDireccionCliente.Text = cliente.Direccion;
                 TextBoxTelefonoCliente.Text = cliente.Telefono;
                 TextBoxEmailCliente.Text = cliente.Email;
-                ddlPerfilCliente.Text = cliente.nombrePerfil;
+
+                // Seleccionar el perfil del cliente
+                ListItem item = ddlPerfilCliente.Items.FindByValue(cliente.idPerfil.ToString());
+
+
 
             }
         }
@@ -223,7 +288,7 @@ namespace Front
         }
 
 
-
+     
 
 
     }

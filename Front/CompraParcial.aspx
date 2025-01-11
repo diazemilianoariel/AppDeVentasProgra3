@@ -5,6 +5,10 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+
+    <h1> aca tiene que ir el carrito ....</h1>
+
   
 
 </asp:Content>

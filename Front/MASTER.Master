@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MASTER.Master.cs" Inherits="Front.MASTER" %>
+
+<!DOCTYPE html>
 <html>
 <head runat="server">
     <meta charset="utf-8" />
@@ -46,10 +48,11 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="Clientes.aspx" id="ClientesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Clientes
+                        <a class="nav-link dropdown-toggle" href="Clientes.aspx" id="ClientesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuarios
                         </a>
                         <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="ClientesDropdown">
-                            <a class="dropdown-item" href="Clientes.aspx">Clientes</a>
+                            <a class="dropdown-item" href="Clientes.aspx">Usuarios</a>
+                            <a class="dropdown-item" href="Perfiles.aspx">Perfiles</a>
                         </div>
                     </li>
 
@@ -77,7 +80,9 @@
 
                 <div class="ml-auto d-flex">
                     <a href="Login.aspx" class="btn btn-primary mr-2">Entrar <i class="bi bi-box-arrow-in-right"></i></a>
-                    <a href="#" class="btn btn-primary">Salir <i class="bi bi-box-arrow-in-right"></i></a>
+                    
+
+                    <asp:LinkButton ID="btnLogout" runat="server" CssClass="btn btn-primary" OnClick="BtnLogout_Click">Salir <i class="bi bi-box-arrow-right"></i></asp:LinkButton>
                 </div>
 
 

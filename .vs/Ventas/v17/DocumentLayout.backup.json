@@ -3,34 +3,26 @@
   "WorkspaceRootPath": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\front\\perfiles.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\perfiles.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\front\\perfiles.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\perfiles.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\front\\clientes.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\clientes.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\front\\clientes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\clientes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3DF910B5-5CB0-47DC-8894-659C2DD82C01}|negocio\\negocio.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\negocio\\clientenegocio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3DF910B5-5CB0-47DC-8894-659C2DD82C01}|negocio\\negocio.csproj|solutionrelative:negocio\\clientenegocio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\dominio\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|solutionrelative:dominio\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\front\\productos.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\productos.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     }
   ],
   "DocumentGroupContainers": [
     {
-      "Orientation": 1,
+      "Orientation": 0,
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 200,
-          "SelectedChildIndex": 10,
+          "DockedWidth": 456,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -49,77 +41,57 @@
               "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Cliente.cs",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\dominio\\Cliente.cs",
-              "RelativeDocumentMoniker": "dominio\\Cliente.cs",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\dominio\\Cliente.cs",
-              "RelativeToolTip": "dominio\\Cliente.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABgAAAAoAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "Perfiles.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Perfiles.aspx.cs",
+              "RelativeDocumentMoniker": "Front\\Perfiles.aspx.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Perfiles.aspx.cs",
+              "RelativeToolTip": "Front\\Perfiles.aspx.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAADwvxwAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-29T21:01:46.57Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Productos.aspx",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Productos.aspx",
-              "RelativeDocumentMoniker": "Front\\Productos.aspx",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Productos.aspx",
-              "RelativeToolTip": "Front\\Productos.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2024-12-29T20:02:06.421Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ClienteNegocio.cs",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\negocio\\ClienteNegocio.cs",
-              "RelativeDocumentMoniker": "negocio\\ClienteNegocio.cs",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\negocio\\ClienteNegocio.cs",
-              "RelativeToolTip": "negocio\\ClienteNegocio.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAiwB8AAABDAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-29T19:32:47.906Z",
+              "WhenOpened": "2025-01-11T06:11:33.615Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Clientes.aspx",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Clientes.aspx",
-              "RelativeDocumentMoniker": "Front\\Clientes.aspx",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Clientes.aspx",
-              "RelativeToolTip": "Front\\Clientes.aspx",
+              "Title": "Perfiles.aspx",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Perfiles.aspx",
+              "RelativeDocumentMoniker": "Front\\Perfiles.aspx",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Perfiles.aspx",
+              "RelativeToolTip": "Front\\Perfiles.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2024-12-29T19:12:26.742Z",
+              "WhenOpened": "2025-01-11T06:11:31.041Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Clientes.aspx.cs",
               "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Clientes.aspx.cs",
               "RelativeDocumentMoniker": "Front\\Clientes.aspx.cs",
               "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Clientes.aspx.cs",
               "RelativeToolTip": "Front\\Clientes.aspx.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAgwBsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABMAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-29T19:12:25.507Z",
+              "WhenOpened": "2025-01-11T06:07:59.699Z",
               "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 170,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             }
           ]
         }

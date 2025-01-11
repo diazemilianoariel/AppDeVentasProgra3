@@ -63,8 +63,6 @@ C:\Users\programador\Desktop\Ventas\Front\obj\Debug\Front.csproj.CoreCompileInpu
 C:\Users\programador\Desktop\Ventas\Front\obj\Debug\Front.csproj.Up2Date
 C:\Users\programador\Desktop\Ventas\Front\obj\Debug\Front.dll
 C:\Users\programador\Desktop\Ventas\Front\obj\Debug\Front.pdb
-C:\Users\programador\Desktop\AppDeVentasProgra3\Front\obj\Debug\Front.csproj.AssemblyReference.cache
-C:\Users\programador\Desktop\AppDeVentasProgra3\Front\obj\Debug\Front.csproj.CoreCompileInputs.cache
 C:\Users\programador\Desktop\AppDeVentasProgra3\Front\bin\Front.dll.config
 C:\Users\programador\Desktop\AppDeVentasProgra3\Front\bin\Front.dll
 C:\Users\programador\Desktop\AppDeVentasProgra3\Front\bin\Front.pdb
@@ -125,6 +123,8 @@ C:\Users\programador\Desktop\AppDeVentasProgra3\Front\bin\dominio.dll.config
 C:\Users\programador\Desktop\AppDeVentasProgra3\Front\bin\negocio.pdb
 C:\Users\programador\Desktop\AppDeVentasProgra3\Front\bin\negocio.dll.config
 C:\Users\programador\Desktop\AppDeVentasProgra3\Front\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\programador\Desktop\AppDeVentasProgra3\Front\obj\Debug\Front.csproj.AssemblyReference.cache
+C:\Users\programador\Desktop\AppDeVentasProgra3\Front\obj\Debug\Front.csproj.CoreCompileInputs.cache
 C:\Users\programador\Desktop\AppDeVentasProgra3\Front\obj\Debug\Front.csproj.Up2Date
 C:\Users\programador\Desktop\AppDeVentasProgra3\Front\obj\Debug\Front.dll
 C:\Users\programador\Desktop\AppDeVentasProgra3\Front\obj\Debug\Front.pdb

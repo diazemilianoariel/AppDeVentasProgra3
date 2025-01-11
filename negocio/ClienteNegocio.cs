@@ -11,43 +11,40 @@ namespace negocio
 {
     public class ClienteNegocio
     {
+        
+
         public List<Cliente> ListarClientes()
         {
             List<Cliente> lista = new List<Cliente>();
             AccesoDatos datos = new AccesoDatos();
-            try
             {
-                datos.SetearConsulta("select U.id, U.nombre, U.apellido, U.dni, U.direccion, U.telefono, U.email, p.nombre as Perfil from Usuarios U INNER JOIN Perfiles P on U.idPerfil = P.id where U.estado = 1");
-                datos.EjecutarLectura();
-                while (datos.Lector.Read())
+                try
                 {
-                    Cliente aux = new Cliente();
-                    aux.Id = (int)datos.Lector["Id"];
-                    aux.Nombre = (string)datos.Lector["Nombre"];
-                    aux.Apellido = (string)datos.Lector["Apellido"];
-                    aux.Dni = (string)datos.Lector["Dni"];
-                    aux.Direccion = (string)datos.Lector["Direccion"];
-                    aux.Telefono = (string)datos.Lector["Telefono"];
-                    aux.Email = (string)datos.Lector["Email"];
-                    aux.nombrePerfil = (string)datos.Lector["Perfil"];
-
-
-                    lista.Add(aux);
+                    datos.SetearConsulta("select U.id, U.Nombre, U.apellido, U.dni, U.direccion, U.telefono, U.email, P.nombre as Perfil from Usuarios U INNER JOIN Perfiles P on U.idPerfil = P.id where U.estado = 1");
+                    datos.EjecutarLectura();
+                    while (datos.Lector.Read())
+                    {
+                        Cliente aux = new Cliente
+                        {
+                            Id = (int)datos.Lector["id"],
+                            Nombre = (string)datos.Lector["Nombre"],
+                            Apellido = (string)datos.Lector["apellido"],
+                            Dni = (string)datos.Lector["dni"],
+                            Direccion = (string)datos.Lector["direccion"],
+                            Telefono = (string)datos.Lector["telefono"],
+                            Email = (string)datos.Lector["email"],
+                            nombrePerfil = (string)datos.Lector["Perfil"]
+                        };
+                        lista.Add(aux);
+                    }
+                    return lista;
                 }
-                return lista;
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al listar clientes", ex);
+                }
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.CerrarConexion();
-
-            }
-
         }
-
 
 
 
@@ -84,6 +81,8 @@ namespace negocio
             }
         }
 
+        
+
 
 
         public void AgregarCliente(Cliente nuevo)
@@ -118,7 +117,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("update Clientes set Nombre = @Nombre, Apellido = @Apellido, Dni = @Dni, Direccion = @Direccion, Telefono = @Telefono, Email = @Email where Id = @Id");
+                datos.SetearConsulta("update Usuarios set Nombre = @Nombre, Apellido = @Apellido, Dni = @Dni, Direccion = @Direccion, Telefono = @Telefono, Email = @Email where Id = @Id");
                 datos.SetearParametro("@Nombre", modificado.Nombre);
                 datos.SetearParametro("@Apellido", modificado.Apellido);
                 datos.SetearParametro("@Dni", modificado.Dni);
@@ -145,7 +144,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("update Clientes SET estado = 0 where Id = @Id");
+                datos.SetearConsulta("update Usuarios SET estado = 0 where Id = @Id");
                 datos.SetearParametro("@Id", id);
                 datos.EjecutarAccion();
             }
@@ -218,9 +217,104 @@ namespace negocio
 
 
 
+        public List<Perfil> ListarPerfiles()
+        {
+            List<Perfil> lista = new List<Perfil>();
+            AccesoDatos datos = new AccesoDatos();
+            {
+                try
+                {
+                    datos.SetearConsulta("select id, Nombre, estado  from Perfiles  where estado = 1");
+                    datos.EjecutarLectura();
+                    while (datos.Lector.Read())
+                    {
+                        Perfil aux = new Perfil
+                        {
+                            Id = (int)datos.Lector["id"],
+                            Nombre = (string)datos.Lector["Nombre"],
+                            Estado = (bool)datos.Lector["estado"],
+
+
+                        };
+                        lista.Add(aux);
+                    }
+                    return lista;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al listar Perfils", ex);
+                }
+            }
+        }
+
+
+
+        // validar usuario 
+        public bool Loguear(Cliente cliente)
+        {
+            try
+            {
+                AccesoDatos datos = new AccesoDatos();
+                datos.SetearConsulta("select Id, Nombre, Apellido, Dni, Direccion, Telefono, Email, idPerfil from Usuarios where Email = @Email and Clave = @Clave and estado = 1");
+                datos.SetearParametro("@Email", cliente.Email);
+                datos.SetearParametro("@Clave", cliente.clave);
+                datos.EjecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    cliente.Id = (int)datos.Lector["Id"];
+                    cliente.Nombre = (string)datos.Lector["Nombre"];
+                    cliente.Apellido = (string)datos.Lector["Apellido"];
+                    cliente.Dni = (string)datos.Lector["Dni"];
+                    cliente.Direccion = (string)datos.Lector["Direccion"];
+                    cliente.Telefono = (string)datos.Lector["Telefono"];
+
+                    // 1 = cliente
+                    // 2 = administrador 
+                    // 3 = vendedor 
+                    // 4 = soporte 
+
+                    cliente.idPerfil = (int)datos.Lector["idPerfil"];
+
+                    if(cliente.idPerfil == 1)
+                    {
+                        cliente.nombrePerfil = "Cliente";
+                    }
+                    if (cliente.idPerfil == 2)
+                    {
+                        cliente.nombrePerfil = "Administrador";
+                    }
+                    if (cliente.idPerfil == 3)
+                    {
+                        cliente.nombrePerfil = "Vendedor";
+                    }
+                    if (cliente.idPerfil == 4)
+                    {
+                        cliente.nombrePerfil = "Soporte";
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+            // datos cerrados
+            finally
+            {
+                AccesoDatos datos = new AccesoDatos();
+                datos.CerrarConexion();
+            }
 
 
 
 
+        }
+
+
+
+      
     }
 }

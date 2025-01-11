@@ -60,8 +60,6 @@ C:\Users\programador\Desktop\Ventas\negocio\obj\Debug\negocio.csproj.CoreCompile
 C:\Users\programador\Desktop\Ventas\negocio\obj\Debug\negocio.csproj.Up2Date
 C:\Users\programador\Desktop\Ventas\negocio\obj\Debug\negocio.dll
 C:\Users\programador\Desktop\Ventas\negocio\obj\Debug\negocio.pdb
-C:\Users\programador\Desktop\AppDeVentasProgra3\negocio\obj\Debug\negocio.csproj.AssemblyReference.cache
-C:\Users\programador\Desktop\AppDeVentasProgra3\negocio\obj\Debug\negocio.csproj.CoreCompileInputs.cache
 C:\Users\programador\Desktop\AppDeVentasProgra3\negocio\bin\negocio.dll.config
 C:\Users\programador\Desktop\AppDeVentasProgra3\negocio\bin\negocio.dll
 C:\Users\programador\Desktop\AppDeVentasProgra3\negocio\bin\negocio.pdb
@@ -119,6 +117,8 @@ C:\Users\programador\Desktop\AppDeVentasProgra3\negocio\bin\Microsoft.CodeDom.Pr
 C:\Users\programador\Desktop\AppDeVentasProgra3\negocio\bin\dominio.pdb
 C:\Users\programador\Desktop\AppDeVentasProgra3\negocio\bin\dominio.dll.config
 C:\Users\programador\Desktop\AppDeVentasProgra3\negocio\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\programador\Desktop\AppDeVentasProgra3\negocio\obj\Debug\negocio.csproj.AssemblyReference.cache
+C:\Users\programador\Desktop\AppDeVentasProgra3\negocio\obj\Debug\negocio.csproj.CoreCompileInputs.cache
 C:\Users\programador\Desktop\AppDeVentasProgra3\negocio\obj\Debug\negocio.csproj.Up2Date
 C:\Users\programador\Desktop\AppDeVentasProgra3\negocio\obj\Debug\negocio.dll
 C:\Users\programador\Desktop\AppDeVentasProgra3\negocio\obj\Debug\negocio.pdb

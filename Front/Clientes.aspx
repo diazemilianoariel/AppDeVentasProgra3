@@ -25,7 +25,7 @@
             <div class="col col-6">
 
                 <div class="mb-3">
-                    <asp:Label ID="LabelIdCliente" runat="server" AssociatedControlID="TextBoxIdCliente" CssClass="form-label">ID Cliente</asp:Label>
+                    <asp:Label ID="LabelIdCliente" runat="server" AssociatedControlID="TextBoxIdCliente" CssClass="form-label">ID</asp:Label>
                     <asp:TextBox ID="TextBoxIdCliente" runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
                 </div>
                 <div class="mb-3">
@@ -64,12 +64,14 @@
 
 
                 <div class="mb-3">
-                    <asp:Label ID="LabelPerfilCliente" runat="server" AssociatedControlID="ddlPerfilCliente" CssClass="form-label">Perfil</asp:Label>
-                    <asp:DropDownList ID="ddlPerfilCliente" runat="server" CssClass="form-control">
-                        <asp:ListItem Text="Cliente" Value="1"></asp:ListItem>
-                        <asp:ListItem Text="Administrador" Value="2"></asp:ListItem>
-                        <asp:ListItem Text="Vendedor" Value="3"></asp:ListItem>
-                    </asp:DropDownList>
+                
+
+
+
+                    <asp:Label ID="LabelPerfilCliente" runat="server" AssociatedControlID="ddlPerfilCliente" CssClass="form-label">Perfiles</asp:Label>
+                     <asp:DropDownList ID="ddlPerfilCliente" runat="server" CssClass="form-control"></asp:DropDownList>
+
+
                 </div>
             </div>
         </div>
@@ -103,7 +105,7 @@
                         <asp:BoundField DataField="direccion" HeaderText="Dirección" />
                         <asp:BoundField DataField="telefono" HeaderText="Telefono" />
                         <asp:BoundField DataField="email" HeaderText="Email" />
-                        <asp:BoundField DataField="Perfil" HeaderText="Perfil" />
+                        <asp:BoundField DataField="nombrePerfil" HeaderText="Perfil" />
                         <asp:TemplateField>
                             <ItemTemplate>
                                 <asp:Button ID="btnSeleccionarCliente" runat="server" Text="Seleccionar" CommandName="Seleccionar" CommandArgument='<%# Container.DataItemIndex %>' CssClass="btn btn-primary btn-sm" />
@@ -113,6 +115,7 @@
                         </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
+
             </div>
         </div>
     </div>

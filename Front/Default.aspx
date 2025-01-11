@@ -16,7 +16,7 @@
                 <ItemTemplate>
                     <div class="col-md-3">
                         <div class="card mb-2 shadow-sm card-fixed-size">
-                            <img src="<%#Eval("imagen") %>" class="card-img-top img-fluid"  style="height: 220px; object-fit: cover;">
+                            <img src="<%#Eval("imagen") %>" class="card-img-top img-fluid" style="height: 220px; object-fit: cover;">
 
                             <div class="card-body">
                                 <h5 class="card-title"><%#Eval("nombre") %></h5>
@@ -27,11 +27,11 @@
                                     <div class="btn-group">
 
 
-                                        <a href="CompraParcial.aspx" class="btn btn-sm btn-outline-primary">Comprar</a>
-                                        
+                                        <a href="CompraParcial.aspx" class="btn btn-sm btn-outline-primary">Agregar Al Carrito</a>
 
 
-                                        <asp:LinkButton ID="btnVerDetalle" runat="server" CssClass="btn btn-retro w-100" CommandArgument='<%# Eval("id") %>' OnClick="btnVerDetalle_Click">Comprar</asp:LinkButton>
+
+                                        <%--<asp:LinkButton ID="btnVerDetalle" runat="server" CssClass="btn btn-retro w-100" CommandArgument='<%# Eval("id") %>' OnClick="btnVerDetalle_Click">Comprar</asp:LinkButton>--%>
 
 
 
