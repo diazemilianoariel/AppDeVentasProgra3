@@ -116,3 +116,4 @@ C:\Users\programador\Desktop\AppDeVentasProgra3\dominio\obj\Debug\dominio.csproj
 C:\Users\programador\Desktop\AppDeVentasProgra3\dominio\obj\Debug\dominio.csproj.Up2Date
 C:\Users\programador\Desktop\AppDeVentasProgra3\dominio\obj\Debug\dominio.dll
 C:\Users\programador\Desktop\AppDeVentasProgra3\dominio\obj\Debug\dominio.pdb
+C:\Users\programador\Desktop\AppDeVentasProgra3\dominio\bin\AjaxControlToolkit.dll

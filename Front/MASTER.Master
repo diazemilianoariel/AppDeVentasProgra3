@@ -9,7 +9,7 @@
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="~/Content/Site.css" />
+    <link rel="stylesheet" type="text/css" href="~/EstiloCSS/estilo.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
@@ -20,7 +20,18 @@
         <!-- Aquí tu contenido principal -->
         <header class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="Default.aspx">
-                <img src="iconoPrincipal.png" alt="Pañalera Logo" style="height: 40px; width: auto;" /></a>
+                <img src="IconoHomee.png" alt="Pañalera Logo" class="icono-home" />
+
+            </a>
+
+            <a class="navbar-brand" href="Carrito.aspx">
+                <img src="IconoCarrito.png" alt="Pañalera Logo" class="icono-carrito" />
+                <span class="badge badge-pill badge-danger" id="ActualizarCarrito" runat="server">0</span>
+               
+
+
+
+            </a>
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">

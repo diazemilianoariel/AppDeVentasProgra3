@@ -128,3 +128,4 @@ C:\Users\programador\Desktop\AppDeVentasProgra3\Front\obj\Debug\Front.csproj.Cor
 C:\Users\programador\Desktop\AppDeVentasProgra3\Front\obj\Debug\Front.csproj.Up2Date
 C:\Users\programador\Desktop\AppDeVentasProgra3\Front\obj\Debug\Front.dll
 C:\Users\programador\Desktop\AppDeVentasProgra3\Front\obj\Debug\Front.pdb
+C:\Users\programador\Desktop\AppDeVentasProgra3\Front\bin\AjaxControlToolkit.dll

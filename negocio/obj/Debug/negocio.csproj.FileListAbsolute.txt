@@ -122,3 +122,4 @@ C:\Users\programador\Desktop\AppDeVentasProgra3\negocio\obj\Debug\negocio.csproj
 C:\Users\programador\Desktop\AppDeVentasProgra3\negocio\obj\Debug\negocio.csproj.Up2Date
 C:\Users\programador\Desktop\AppDeVentasProgra3\negocio\obj\Debug\negocio.dll
 C:\Users\programador\Desktop\AppDeVentasProgra3\negocio\obj\Debug\negocio.pdb
+C:\Users\programador\Desktop\AppDeVentasProgra3\negocio\bin\AjaxControlToolkit.dll

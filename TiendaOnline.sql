@@ -144,8 +144,6 @@ CREATE TABLE Stock (
 );
 
 
-USE TiendaOnline;
-GO
 
 -- Insertar datos en la tabla Marcas
 INSERT INTO Marcas (nombre) VALUES ('Disney');
@@ -183,7 +181,7 @@ INSERT INTO Perfiles (nombre) VALUES ('Vendedor'); --3
 
 -- Insertar datos en la tabla Usuarios
 INSERT INTO Usuarios (nombre, apellido, dni, direccion, telefono, email, clave, idPerfil) VALUES 
-('Mariel', 'Torres', '6666666', 'Direccion 5', '345678112', 'Soporte@Soporte.com', '12345677' , 1)
+('Mariel', 'Torres', '6666666', 'Direccion 5', '345678112', 'Soporte@Soporte.com', '12345677' , 1),
 ('administrador', 'Admin', '12345678', 'Direccion 1', '123456789', 'Administrador@admin.com', '111111', 2),
 ('Larry', 'Cricione', '12345678', 'Direccion 2', '123456789', 'cliente1@gmial.com', '123456' , 1),
 ('Nazareno', 'Ligero', '90123456', 'Direccion 3', '012345678', 'cliente2@gmail.com', '123456' , 1),

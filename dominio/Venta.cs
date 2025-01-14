@@ -13,30 +13,42 @@ namespace dominio
 
         public int IdVenta { get; set; }
         public DateTime Fecha { get; set; }
-        public decimal Monto { get; set; }
+        public decimal Monto => CalcularMonto();
         public Cliente Cliente { get; set; }
 
         public bool EnLocal { get; set; }
 
         public int idEstadoVenta { get; set; }
+
+        public string nombreEstadoVenta { get; set; }
+
+
         public List<Producto> Productos { get; set; }
 
-        // constructor sin parámetros
         public Venta()
         {
             Productos = new List<Producto>();
         }
 
-        // constructor con parámetros
-        public Venta(int idVenta, DateTime fecha, decimal monto, Cliente cliente)
+        public Venta(int idVenta, DateTime fecha, Cliente cliente)
         {
             IdVenta = idVenta;
             Fecha = fecha;
-            Monto = monto;
             Cliente = cliente;
             Productos = new List<Producto>();
         }
 
-       
+        private decimal CalcularMonto()
+        {
+            decimal total = 0;
+            foreach (var producto in Productos)
+            {
+                total += producto.SubTotal;
+            }
+            return total;
+        }
+
+
+
     }
 }

@@ -19,8 +19,12 @@ namespace dominio
         [Range(0, 9999999999999999.99)]
         public decimal precio { get; set; }
 
+        public decimal SubTotal => precio * Cantidad;
+
         public string Imagen { get; set; }
-        public int stock { get; set; }  // hace falta ? 
+        public int stock { get; set; }  // propiedad para que el usuario  va a ingresar la cantidad de productos que tiene en stock
+
+        public int Cantidad { get; set; }  // propiedad para que el cliente eliga cuantos va a comprar
         public string marca { get; set; }
         public string tipo { get; set; }
         public string categoria { get; set; }
@@ -28,6 +32,9 @@ namespace dominio
 
         public decimal margenGanancia { get; set; }
         public bool estado { get; set; }
+
+
+
 
         /*[id] [int] IDENTITY(1,1) NOT NULL,
 	    [nombre] [nvarchar](50) NULL,

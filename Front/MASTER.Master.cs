@@ -12,9 +12,23 @@ namespace Front
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                ActualizarContadorCarrito();
+            }
         }
 
+        public void ActualizarContadorCarrito(int totalProductos = 0)
+        {
+            ActualizarCarrito.InnerText = totalProductos.ToString();
+            ScriptManager.RegisterStartupScript(this,GetType(), "ActualizarContadorCarrito", $"actualizarContadorCarrito({totalProductos});", true);
+        }
+
+
+        public string CartCountClientID
+        {
+            get { return ActualizarCarrito.ClientID; }
+        }
         protected void BtnLogout_Click(object sender, EventArgs e)
         {
             // Eliminar la sesión del usuario

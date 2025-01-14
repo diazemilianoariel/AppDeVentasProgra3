@@ -15,6 +15,15 @@ namespace Front
     {
 
         /// <summary>
+        /// Control ScriptManager1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
+
+        /// <summary>
         /// Control txtBuscar.
         /// </summary>
         /// <remarks>
@@ -33,6 +42,15 @@ namespace Front
         protected global::System.Web.UI.WebControls.Button btnBuscar;
 
         /// <summary>
+        /// Control updPanelProductos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel updPanelProductos;
+
+        /// <summary>
         /// Control rptProductos.
         /// </summary>
         /// <remarks>
@@ -42,21 +60,48 @@ namespace Front
         protected global::System.Web.UI.WebControls.Repeater rptProductos;
 
         /// <summary>
-        /// Control gvCarrito.
+        /// Control pnlCarrito.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvCarrito;
+        protected global::System.Web.UI.WebControls.Panel pnlCarrito;
 
         /// <summary>
-        /// Control btnConfirmarCompra.
+        /// Control iframeCarrito.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnConfirmarCompra;
+        protected global::System.Web.UI.HtmlControls.HtmlIframe iframeCarrito;
+
+        /// <summary>
+        /// Control btnCerrarModal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCerrarModal;
+
+        /// <summary>
+        /// Control btnShowModal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnShowModal;
+
+        /// <summary>
+        /// Control mpeCarrito.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ModalPopupExtender mpeCarrito;
     }
 }

@@ -43,6 +43,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=20.1.0.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <HintPath>..\packages\AjaxControlToolkit.20.1.0\lib\net40\AjaxControlToolkit.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -70,13 +73,12 @@
     <Content Include="Buscar.aspx" />
     <Content Include="Categorias.aspx" />
     <Content Include="Clientes.aspx" />
-    <Content Include="CompraParcial.aspx" />
+    <Content Include="Carrito.aspx" />
     <Content Include="Compras.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="DetalleProducto.aspx" />
     <Content Include="DetalleProveedor.aspx" />
     <Content Include="EstiloCSS\estilo.css" />
-    <Content Include="estilos.css" />
     <Content Include="HomeAdministrador.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Marcas.aspx" />
@@ -111,12 +113,12 @@
     <Compile Include="Clientes.aspx.designer.cs">
       <DependentUpon>Clientes.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CompraParcial.aspx.cs">
-      <DependentUpon>CompraParcial.aspx</DependentUpon>
+    <Compile Include="Carrito.aspx.cs">
+      <DependentUpon>Carrito.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CompraParcial.aspx.designer.cs">
-      <DependentUpon>CompraParcial.aspx</DependentUpon>
+    <Compile Include="Carrito.aspx.designer.cs">
+      <DependentUpon>Carrito.aspx</DependentUpon>
     </Compile>
     <Compile Include="Compras.aspx.cs">
       <DependentUpon>Compras.aspx</DependentUpon>

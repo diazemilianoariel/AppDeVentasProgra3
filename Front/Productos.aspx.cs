@@ -16,11 +16,11 @@ namespace Front
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if (Session["cliente"] == null || !EsAdministradorOSoporte((Cliente)Session["cliente"]))
+           /* if (Session["cliente"] == null || !EsAdministradorOSoporte((Cliente)Session["cliente"]))
             {
                 Response.Redirect("Login.aspx");
                 return;
-            }
+            }*/
 
             if (!IsPostBack)
             {
@@ -31,10 +31,10 @@ namespace Front
 
         }
 
-        private bool EsAdministradorOSoporte(Cliente cliente)
+       /* private bool EsAdministradorOSoporte(Cliente cliente)
         {
             return cliente.nombrePerfil == "Administrador" || cliente.nombrePerfil == "Soporte" || cliente.nombrePerfil == "Vendedor";
-        }
+        }*/
 
 
         private void CargarDropDownLists()

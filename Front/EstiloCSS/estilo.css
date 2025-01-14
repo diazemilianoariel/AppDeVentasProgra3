@@ -17,4 +17,15 @@
     justify-content: space-between;
 }
 
+.icono-home {
+    height: 80px; /* Ajusta el tamaño según tus necesidades */
+    width: auto;
+
+}
+
+
+.icono-carrito {
+    height: 40px; /* Ajusta el tamaño según tus necesidades */
+    width: auto;
+}
 
