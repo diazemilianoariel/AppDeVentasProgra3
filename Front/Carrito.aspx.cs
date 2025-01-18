@@ -17,12 +17,27 @@ namespace Front
         protected void Page_Load(object sender, EventArgs e)
         {
 
+
+             //if (Session["cliente"] == null || !EsAdministradorClienteVendedor((Cliente)Session["cliente"]))
+             //{
+             //    Response.Redirect("Login.aspx");
+             //    return;
+             //}
+
+
             if (!IsPostBack)
             {
                 CargarCarrito();
             }
 
         }
+
+
+
+         //private bool EsAdministradorClienteVendedor(Cliente cliente)
+         //{
+         //    return cliente.nombrePerfil == "Cliente" || cliente.nombrePerfil == "Administrador" || cliente.nombrePerfil == "Vendedor";
+         //}
 
         private void CargarCarrito()
         {
@@ -79,8 +94,49 @@ namespace Front
 
         protected void btnConfirmarCompra_Click(object sender, EventArgs e)
         {
-            // Implementar la lógica para confirmar la compra
+            try
+            {
+                List<Producto> carrito = ObtenerCarrito();
+
+                if (carrito.Count > 0)
+                {
+                    decimal totalGeneral = carrito.Sum(p => p.SubTotal);
+                    Cliente cliente = (Cliente)Session["cliente"];
+                    CarritoNegocio carritoNegocio = new CarritoNegocio();
+                    bool exito = carritoNegocio.InsertarVenta(carrito, totalGeneral);
+
+                    if (exito)
+                    {
+                        // Limpiar el carrito
+                        Session["Carrito"] = new List<Producto>();
+                        CargarCarrito();
+
+                        // Mostrar mensaje de éxito
+                        lblMensaje.Text = "Venta generada de manera exitosa.";
+                        lblMensaje.Visible = true;
+
+                        // Redirigir a la página de inicio después de unos segundos
+                        ScriptManager.RegisterStartupScript(this, GetType(), "Redirect", "setTimeout(function() { window.location.href = 'Default.aspx'; }, 3000);", true);
+                    }
+                    else
+                    {
+                        lblMensaje.Text = "Error al confirmar la compra. Por favor, inténtelo de nuevo.";
+                        lblMensaje.Visible = true;
+                    }
+                }
+                else
+                {
+                    lblMensaje.Text = "El carrito está vacío.";
+                    lblMensaje.Visible = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Ocurrió un error: " + ex.Message;
+                lblMensaje.Visible = true;
+            }
         }
+
 
 
         protected void btnVolverHome_Click(object sender, EventArgs e)

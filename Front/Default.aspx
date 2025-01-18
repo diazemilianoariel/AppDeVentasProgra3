@@ -54,11 +54,6 @@
                                     <asp:Button ID="btnVerDetalle" runat="server" Text="Ver Detalle" CommandArgument='<%# Eval("Id") %>' OnClick="btnVerDetalle_Click" CssClass="btn btn-info" />
                                     <asp:Button ID="btnQuitarCarrito" runat="server" Text="Quitar del Carrito" CommandArgument='<%# Eval("Id") %>' OnClick="btnQuitarCarrito_Click" CssClass="btn btn-danger" />
                                 </div>
-
-
-
-
-
                             </div>
                         </div>
                     </ItemTemplate>

@@ -51,6 +51,11 @@
                     <asp:Button ID="btnVolverHome" runat="server" Text="Volver al Home" CssClass="btn btn-secondary" OnClick="btnVolverHome_Click" />
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <asp:Label ID="lblMensaje" runat="server" Text="" Visible="false" CssClass="alert alert-danger"></asp:Label>
+                </div>
+            </div>
         </ContentTemplate>
     </asp:UpdatePanel>
 

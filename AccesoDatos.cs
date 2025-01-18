@@ -1,11 +1,9 @@
-ï»¿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-
-
 
 namespace negocio
 {
@@ -14,14 +12,6 @@ namespace negocio
         private SqlConnection conexion;
         private SqlCommand comando;
         private SqlDataReader lector;
-
-
-
-
-        public SqlDataReader Lector
-        {
-            get { return lector; }
-        }
 
         public SqlConnection Conexion
         {
@@ -33,26 +23,28 @@ namespace negocio
             get { return comando; }
         }
 
+        public SqlDataReader Lector
+        {
+            get { return lector; }
+        }
 
-
-        //defino el constructor
+        // Defino el constructor
         public AccesoDatos()
         {
-            // Configura la cadena de conexiÃ³n para usar UTF-8
+            // Configura la cadena de conexión para usar UTF-8
             conexion = new SqlConnection("server=.\\SQLEXPRESS; database=TiendaOnline; integrated security=true");
             comando = new SqlCommand();
         }
 
-
         public void SetearConsulta(string query)
         {
-            comando.CommandType = System.Data.CommandType.Text;
+            comando.CommandType = CommandType.Text;
             comando.CommandText = query;
         }
 
         public void SetearProcedimiento(string sp)
         {
-            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.CommandType = CommandType.StoredProcedure;
             comando.CommandText = sp;
         }
 
@@ -75,24 +67,14 @@ namespace negocio
             comando.Connection = conexion;
             try
             {
-                if (conexion.State != ConnectionState.Open)
-                {
-                    conexion.Open();
-                }
+                conexion.Open();
                 comando.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            finally
-            {
-                conexion.Close();
-            }
         }
-
-        
-     
 
         public void SetearParametro(string parametro, object valor)
         {
@@ -106,22 +88,13 @@ namespace negocio
             }
         }
 
-      
-
-    
-
-
-
-        // para un registro recien inserttado 
+        // Para un registro recién insertado
         public object EjecutarEscalar()
         {
             comando.Connection = conexion;
             try
             {
-                if (conexion.State != System.Data.ConnectionState.Open)
-                {
-                    conexion.Open();
-                }
+                conexion.Open();
                 return comando.ExecuteScalar();
             }
             catch (Exception ex)
@@ -134,19 +107,11 @@ namespace negocio
             }
         }
 
-      
-
-
         public void CerrarConexion()
         {
             if (lector != null)
                 lector.Close();
-            if (conexion.State == ConnectionState.Open)
-            {
-                conexion.Close();
-            }
+            conexion.Close();
         }
     }
-
-
 }
