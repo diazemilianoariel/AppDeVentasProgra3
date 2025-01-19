@@ -14,6 +14,23 @@ namespace Front
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            if (!IsPostBack)
+            {
+                string mensaje = Request.QueryString["mensaje"];
+                if (!string.IsNullOrEmpty(mensaje))
+                {
+                    lblMensaje.Text = mensaje;
+                    lblMensaje.Visible = true;
+                }
+                else
+                {
+                    lblMensaje.Text = "inicie sesion o registrese para poder operar.";
+                    lblMensaje.Visible = true;
+                }
+
+            }
+
+
 
         }
         protected void btnIniciarSesion_Click(object sender, EventArgs e)

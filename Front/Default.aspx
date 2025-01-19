@@ -7,7 +7,7 @@
         function actualizarContadorCarrito(totalProductos) {
             document.getElementById('<%= ((Front.MASTER)Master).CartCountClientID %>').innerText = totalProductos;
         }
-</script>
+    </script>
 
 </asp:Content>
 
@@ -26,6 +26,13 @@
             </div>
         </div>
     </div>
+
+    <!-- Mensaje de confirmación -->
+    <asp:UpdatePanel ID="updPanelMensaje" runat="server">
+        <ContentTemplate>
+            <asp:Label ID="lblMensaje" runat="server" CssClass="alert alert-success" Visible="false"></asp:Label>
+        </ContentTemplate>
+    </asp:UpdatePanel>
 
     <!-- Listado de productos -->
     <asp:UpdatePanel ID="updPanelProductos" runat="server">
@@ -55,6 +62,10 @@
                                     <asp:Button ID="btnQuitarCarrito" runat="server" Text="Quitar del Carrito" CommandArgument='<%# Eval("Id") %>' OnClick="btnQuitarCarrito_Click" CssClass="btn btn-danger" />
                                 </div>
                             </div>
+
+
+
+
                         </div>
                     </ItemTemplate>
                 </asp:Repeater>
@@ -62,11 +73,5 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 
-    <!-- Modal Popup -->
-    <asp:Panel ID="pnlCarrito" runat="server" CssClass="modalPopup" Style="display: none;">
-        <iframe id="iframeCarrito" runat="server" width="100" height="500" frameborder="0"></iframe>
-        <asp:Button ID="btnCerrarModal" runat="server" Text="Cerrar" CssClass="btn btn-secondary" OnClick="btnCerrarModal_Click" />
-    </asp:Panel>
-    <asp:Button ID="btnShowModal" runat="server" Style="display: none;" />
-    <ajaxToolkit:ModalPopupExtender ID="mpeCarrito" runat="server" TargetControlID="btnShowModal" PopupControlID="pnlCarrito" BackgroundCssClass="modalBackground" />
+
 </asp:Content>

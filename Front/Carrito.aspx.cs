@@ -15,15 +15,7 @@ namespace Front
 
 
         protected void Page_Load(object sender, EventArgs e)
-        {
-
-
-             //if (Session["cliente"] == null || !EsAdministradorClienteVendedor((Cliente)Session["cliente"]))
-             //{
-             //    Response.Redirect("Login.aspx");
-             //    return;
-             //}
-
+        { 
 
             if (!IsPostBack)
             {
@@ -34,10 +26,7 @@ namespace Front
 
 
 
-         //private bool EsAdministradorClienteVendedor(Cliente cliente)
-         //{
-         //    return cliente.nombrePerfil == "Cliente" || cliente.nombrePerfil == "Administrador" || cliente.nombrePerfil == "Vendedor";
-         //}
+         
 
         private void CargarCarrito()
         {
@@ -92,8 +81,30 @@ namespace Front
             lblTotalGeneral.Text = totalGeneral.ToString("F2");
         }
 
+        private bool EsAdministradorClienteVendedor(Cliente cliente)
+        {
+            return cliente.idPerfil == 1 || // Cliente
+          cliente.idPerfil == 2 || // Administrador
+          cliente.idPerfil == 3 || // Vendedor
+          cliente.idPerfil == 4;   // Soporte
+        }
+
         protected void btnConfirmarCompra_Click(object sender, EventArgs e)
         {
+            // manejar la sesion momstrando un cartel aclaratorio que diga que debe iniciar sesion para poder comprar
+
+            if (Session["cliente"] == null || !EsAdministradorClienteVendedor((Cliente)Session["cliente"]))
+            {
+
+              
+
+                Response.Redirect("Login.aspx?mensaje=inicie+sesion+o+registrese+para+poder+operar.");
+                return;
+            }
+
+
+
+
             try
             {
                 List<Producto> carrito = ObtenerCarrito();
@@ -135,6 +146,8 @@ namespace Front
                 lblMensaje.Text = "Ocurrió un error: " + ex.Message;
                 lblMensaje.Visible = true;
             }
+
+
         }
 
 

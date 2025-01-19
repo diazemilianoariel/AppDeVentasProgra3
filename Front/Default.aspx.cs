@@ -59,12 +59,17 @@ namespace Front
 
                         AgregarProductoAlCarrito(carrito, producto, cantidad);
                         Session["Carrito"] = carrito;
-                        MostrarMensaje("Producto agregado al carrito.", false);
+                        MostrarMensaje("Producto agregado al carrito.",false );
                         ActualizarContadorCarrito();
+                        ScriptManager.RegisterStartupScript(this, GetType(), "ScrollToMessage", "scrollToMessage();", true);
 
-                        // Mostrar el modal
-                        iframeCarrito.Attributes["src"] = "Carrito.aspx";
-                        ScriptManager.RegisterStartupScript(this, GetType(), "ShowModal", "document.getElementById('btnShowModal').click();", true);
+                        ScriptManager.RegisterStartupScript(this, GetType(), "Redirect", "setTimeout(function() { window.location.href = 'Default.aspx'; }, 2000);", true);
+
+
+
+                        //ScriptManager.RegisterStartupScript(this, GetType(), "UpdatePanel", "setTimeout(function() { __doPostBack('" + updPanelMensaje.UniqueID + "', ''); }, 500);", true);
+
+
                     }
                 }
             }
@@ -74,10 +79,7 @@ namespace Front
             }
         }
 
-        protected void btnCerrarModal_Click(object sender, EventArgs e)
-        {
-            mpeCarrito.Hide();
-        }
+   
 
         protected void btnQuitarCarrito_Click(object sender, EventArgs e)
         {
@@ -123,7 +125,9 @@ namespace Front
 
         private void MostrarMensaje(string mensaje, bool esError = true)
         {
-            // Implementar la lógica para mostrar mensajes
+            lblMensaje.Text = mensaje;
+            lblMensaje.CssClass = esError ? "alert alert-danger" : "alert alert-success";
+            lblMensaje.Visible = true;
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)

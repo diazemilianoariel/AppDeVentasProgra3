@@ -84,9 +84,20 @@ namespace Front
 
         protected void btnVolver_Click(object sender, EventArgs e)
         {
-            int  idProducto = Convert.ToInt32(((Button)sender).CommandArgument);
-            Session["PreviousPageUrl"] = Request.Url.ToString();
-            Response.Redirect($"DetalleProducto.aspx?id={idProducto}");
+
+            Button button = (Button)sender;
+            string commnandArgument = button.CommandArgument;
+
+            if(int.TryParse(commnandArgument, out int idProducto))
+            {
+                Response.Redirect($"DetalleProducto.aspx?id={idProducto}");
+            }
+            else
+            {
+                Response.Redirect("Default.aspx");
+                }
+
+               
 
 
         }
