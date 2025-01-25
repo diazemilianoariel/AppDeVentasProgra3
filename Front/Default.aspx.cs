@@ -61,6 +61,8 @@ namespace Front
                         Session["Carrito"] = carrito;
                         MostrarMensaje("Producto agregado al carrito.",false );
                         ActualizarContadorCarrito();
+
+
                         ScriptManager.RegisterStartupScript(this, GetType(), "ScrollToMessage", "scrollToMessage();", true);
 
                         ScriptManager.RegisterStartupScript(this, GetType(), "Redirect", "setTimeout(function() { window.location.href = 'Default.aspx'; }, 2000);", true);

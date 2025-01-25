@@ -3,6 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
     <script type="text/javascript">
         function actualizarContadorCarrito(totalProductos) {
             document.getElementById('<%= ((Front.MASTER)Master).CartCountClientID %>').innerText = totalProductos;

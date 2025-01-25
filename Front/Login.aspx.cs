@@ -48,6 +48,7 @@ namespace Front
             if (negocio.Loguear(cliente))
             {
                 Session["cliente"] = cliente;
+                Session["Perfil"] = cliente.idPerfil;
                 // deberia loguearse en la pagina que se esta actualmente 
                 Response.Redirect("Default.aspx");
 

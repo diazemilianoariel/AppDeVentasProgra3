@@ -27,7 +27,7 @@
             <a class="navbar-brand" href="Carrito.aspx">
                 <img src="IconoCarrito.png" alt="Pañalera Logo" class="icono-carrito" />
                 <span class="badge badge-pill badge-danger" id="ActualizarCarrito" runat="server">0</span>
-               
+
 
 
 
@@ -35,6 +35,17 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
+
+
+
+
+
+
+
+                    <%int idPerfil = (Session["Perfil"] != null) ? (int)Session["Perfil"] : 0;
+                        if (idPerfil == 2 || idPerfil == 4)
+                        { %>
+
                     <li class="nav-item">
                         <a class="nav-link" href="Ventas.aspx">Ventas</a>
                     </li>
@@ -73,6 +84,8 @@
                         </div>
                     </li>
 
+
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="Productos.aspx" id="productosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos
                         </a>
@@ -83,13 +96,54 @@
                             <a class="dropdown-item" href="Tipos.aspx">Tipo</a>
                         </div>
                     </li>
+
+
+
+
+                    <%} %>
                 </ul>
 
+
+
                 <div class="ml-auto d-flex">
+
+
+
+
+
+
+                    <% var clientee = Session["cliente"];
+                        if (clientee == null)
+                        {
+                    %>
+
                     <a href="Login.aspx" class="btn btn-primary mr-2">Entrar <i class="bi bi-box-arrow-in-right"></i></a>
 
 
-                    <asp:LinkButton ID="btnLogout" runat="server" CssClass="btn btn-primary" OnClick="BtnLogout_Click">Salir <i class="bi bi-box-arrow-right"></i></asp:LinkButton>
+
+                    <%
+                        }%>
+
+
+                    <% var cliente = Session["cliente"];
+                        if (cliente != null)
+                        {
+                    %>
+
+
+                    <asp:Label ID="lblNombre" runat="server" Text="" CssClass="text-white" class="form-label me-2">
+                            
+
+                    </asp:Label>
+
+
+
+                    <asp:LinkButton ID="btnLogout" runat="server" CssClass="btn btn-primary ms-5" OnClick="BtnLogout_Click">Salir <i class="bi bi-box-arrow-right" ></i></asp:LinkButton>
+
+
+
+                    <%
+                        }%>
                 </div>
 
 

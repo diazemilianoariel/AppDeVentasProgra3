@@ -32,6 +32,16 @@ namespace negocio
                 datosVenta.SetearParametro("@idUsuario", 1); // Cambiar por el ID del usuario actual
                 datosVenta.SetearParametro("@monto", totalGeneral);
                 idVenta = (int)datosVenta.EjecutarEscalar();
+
+                // aca se debe descontar del stock la cantidad de productos vendidos
+
+
+
+
+
+
+
+
             }
             catch (Exception ex)
             {

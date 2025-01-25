@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using dominio;
+using MercadoPago.Common;
+using MercadoPago.DataStructures.Preference;
 using negocio;
+using MercadoPago.Resources;
 
 namespace Front
 {
@@ -16,6 +20,8 @@ namespace Front
 
         protected void Page_Load(object sender, EventArgs e)
         { 
+
+
 
             if (!IsPostBack)
             {
@@ -35,6 +41,8 @@ namespace Front
             rptCarrito.DataBind();
             ActualizarTotalGeneral();
         }
+
+
 
         private List<Producto> ObtenerCarrito()
         {
@@ -81,29 +89,83 @@ namespace Front
             lblTotalGeneral.Text = totalGeneral.ToString("F2");
         }
 
-        private bool EsAdministradorClienteVendedor(Cliente cliente)
-        {
-            return cliente.idPerfil == 1 || // Cliente
-          cliente.idPerfil == 2 || // Administrador
-          cliente.idPerfil == 3 || // Vendedor
-          cliente.idPerfil == 4;   // Soporte
-        }
+        //private bool EsAdministradorClienteVendedor(Cliente cliente)
+        //{
+        //   return cliente.idPerfil == 1 || // Cliente
+        //  cliente.idPerfil == 2 || // Administrador
+        //  cliente.idPerfil == 3 || // Vendedor
+        //  cliente.idPerfil == 4;   // Soporte
+        //}
 
-        protected void btnConfirmarCompra_Click(object sender, EventArgs e)
-        {
-            // manejar la sesion momstrando un cartel aclaratorio que diga que debe iniciar sesion para poder comprar
+         protected void btnConfirmarCompra_Click(object sender, EventArgs e)
+         {
+             // manejar la sesion momstrando un cartel aclaratorio que diga que debe iniciar sesion para poder comprar
 
+             //if (Session["cliente"] == null || !EsAdministradorClienteVendedor((Cliente)Session["cliente"]))
+             //{
+
+
+
+             //    Response.Redirect("Login.aspx?mensaje=inicie+sesion+o+registrese+para+poder+operar.");
+             //    return;
+             //}
+
+
+
+
+             try
+             {
+                 List<Producto> carrito = ObtenerCarrito();
+
+                 if (carrito.Count > 0)
+                 {
+                     decimal totalGeneral = carrito.Sum(p => p.SubTotal);
+                     Cliente cliente = (Cliente)Session["cliente"];
+                     CarritoNegocio carritoNegocio = new CarritoNegocio();
+                     bool exito = carritoNegocio.InsertarVenta(carrito, totalGeneral);
+
+                     if (exito)
+                     {
+                         // Limpiar el carrito
+                         Session["Carrito"] = new List<Producto>();
+                         CargarCarrito();
+
+                         // Mostrar mensaje de éxito
+                         lblMensaje.Text = "Venta generada de manera exitosa.";
+                         lblMensaje.Visible = true;
+
+                         // Redirigir a la página de inicio después de unos segundos
+                         ScriptManager.RegisterStartupScript(this, GetType(), "Redirect", "setTimeout(function() { window.location.href = 'Default.aspx'; }, 3000);", true);
+                     }
+                     else
+                     {
+                         lblMensaje.Text = "Error al confirmar la compra. Por favor, inténtelo de nuevo.";
+                         lblMensaje.Visible = true;
+                     }
+                 }
+                 else
+                 {
+                     lblMensaje.Text = "El carrito está vacío.";
+                     lblMensaje.Visible = true;
+                 }
+             }
+             catch (Exception ex)
+             {
+                 lblMensaje.Text = "Ocurrió un error: " + ex.Message;
+                 lblMensaje.Visible = true;
+             }
+
+
+         }
+
+
+      /*  protected void btnConfirmarCompra_Click(object sender, EventArgs e)
+        {
             if (Session["cliente"] == null || !EsAdministradorClienteVendedor((Cliente)Session["cliente"]))
             {
-
-              
-
                 Response.Redirect("Login.aspx?mensaje=inicie+sesion+o+registrese+para+poder+operar.");
                 return;
             }
-
-
-
 
             try
             {
@@ -113,27 +175,42 @@ namespace Front
                 {
                     decimal totalGeneral = carrito.Sum(p => p.SubTotal);
                     Cliente cliente = (Cliente)Session["cliente"];
-                    CarritoNegocio carritoNegocio = new CarritoNegocio();
-                    bool exito = carritoNegocio.InsertarVenta(carrito, totalGeneral);
 
-                    if (exito)
+                    //  credenciales de Mercado Pago tokennn
+                    MercadoPago.SDK.AccessToken = ConfigurationManager.AppSettings["MercadoPagoAccessToken"];
+
+                    // Crear la preferencia de pago
+                    Preference preference = new Preference();
+
+                    foreach (var producto in carrito)
                     {
-                        // Limpiar el carrito
-                        Session["Carrito"] = new List<Producto>();
-                        CargarCarrito();
-
-                        // Mostrar mensaje de éxito
-                        lblMensaje.Text = "Venta generada de manera exitosa.";
-                        lblMensaje.Visible = true;
-
-                        // Redirigir a la página de inicio después de unos segundos
-                        ScriptManager.RegisterStartupScript(this, GetType(), "Redirect", "setTimeout(function() { window.location.href = 'Default.aspx'; }, 3000);", true);
+                        preference.Items.Add(new Item()
+                        {
+                            Title = producto.nombre,
+                            Quantity = producto.Cantidad,
+                            CurrencyId = CurrencyId.ARS,
+                            UnitPrice = producto.precio
+                        });
                     }
-                    else
+
+                    preference.Payer = new Payer()
                     {
-                        lblMensaje.Text = "Error al confirmar la compra. Por favor, inténtelo de nuevo.";
-                        lblMensaje.Visible = true;
-                    }
+                        Email = cliente.Email
+                    };
+
+                    preference.BackUrls = new BackUrls()
+                    {
+                        Success = "https://tusitio.com/Return.aspx",
+                        Failure = "https://tusitio.com/Cancel.aspx",
+                        Pending = "https://tusitio.com/Pending.aspx"
+                    };
+
+                    preference.AutoReturn = AutoReturnType.approved;
+
+                    preference.Save();
+
+                    // Redirigir al usuario a la URL de aprobación de Mercado Pago
+                    Response.Redirect(preference.InitPoint);
                 }
                 else
                 {
@@ -146,11 +223,7 @@ namespace Front
                 lblMensaje.Text = "Ocurrió un error: " + ex.Message;
                 lblMensaje.Visible = true;
             }
-
-
-        }
-
-
+        }*/
 
         protected void btnVolverHome_Click(object sender, EventArgs e)
         {

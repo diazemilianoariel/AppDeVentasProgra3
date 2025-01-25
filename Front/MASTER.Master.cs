@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dominio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,10 +13,29 @@ namespace Front
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
+
+            //Cliente cliente = new Cliente();
+            // cliente = (Cliente)Session["cliente"];
+
+
             if (!IsPostBack)
             {
                 ActualizarContadorCarrito();
+
+
+
             }
+
+            Cliente cliente = (Cliente)Session["cliente"];
+            if (cliente != null)
+            {
+                lblNombre.Text = "Bienvenido " +cliente.Nombre  ;
+            }
+
+
+
         }
 
         public void ActualizarContadorCarrito(int totalProductos = 0)
@@ -29,6 +49,8 @@ namespace Front
         {
             get { return ActualizarCarrito.ClientID; }
         }
+
+
         protected void BtnLogout_Click(object sender, EventArgs e)
         {
             // Eliminar la sesión del usuario
