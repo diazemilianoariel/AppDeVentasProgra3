@@ -108,9 +108,7 @@ namespace negocio
 
       
 
-    
-
-
+   
 
         // para un registro recien inserttado 
         public object EjecutarEscalar()

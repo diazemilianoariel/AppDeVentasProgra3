@@ -109,7 +109,7 @@ namespace negocio
 
             try
             {
-                datos.SetearConsulta("select v.id, v.fecha, v.idUsuario, U.nombre, U.apellido, U.dni, U.email, U.telefono, U.direccion, v.enLocal, E.nombre as nombreestadoventa, v.idEstadoVenta from ventas v inner join Usuarios U on v.idUsuario = U.id INNER JOIN EstadoVenta E on v.idEstadoVenta = E.id where v.idEstadoVenta != 1");
+                datos.SetearConsulta("select v.id, v.fecha, v.idUsuario, U.nombre, U.apellido, U.dni, U.email, U.telefono, U.direccion, v.enLocal, E.nombre as nombreestadoventa, v.idEstadoVenta from ventas v inner join Usuarios U on v.idUsuario = U.id INNER JOIN EstadoVenta E on v.idEstadoVenta = E.id where v.idEstadoVenta = 1");
                 datos.EjecutarLectura();
 
 
@@ -121,7 +121,6 @@ namespace negocio
                     Venta aux = new Venta();
                     aux.IdVenta = (int)datos.Lector["id"];
                     aux.Fecha = (DateTime)datos.Lector["fecha"];
-
                     aux.Cliente = new Cliente();
                     aux.Cliente.Id = (int)datos.Lector["id"];
                     aux.Cliente.Nombre = (string)datos.Lector["nombre"];

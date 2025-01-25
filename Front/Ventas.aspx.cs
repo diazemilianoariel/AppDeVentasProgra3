@@ -22,6 +22,8 @@ namespace Front
 
             }
         }
+
+
         private void CargarVentas()
         {
             VentaNegocio negocio = new VentaNegocio();

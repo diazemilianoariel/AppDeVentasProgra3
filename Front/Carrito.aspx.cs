@@ -120,6 +120,8 @@ namespace Front
                  if (carrito.Count > 0)
                  {
                      decimal totalGeneral = carrito.Sum(p => p.SubTotal);
+
+
                      Cliente cliente = (Cliente)Session["cliente"];
                      CarritoNegocio carritoNegocio = new CarritoNegocio();
                      bool exito = carritoNegocio.InsertarVenta(carrito, totalGeneral);

@@ -19,13 +19,18 @@ namespace negocio
 
         public bool InsertarVenta(List<Producto> carrito, decimal totalGeneral)
         {
+
+            // hay  stock sufuciente ??
+            // se derifica que haya stock suficiente para la venta
+
+
             int idVenta;
 
             // Insertar en la tabla Ventas
             AccesoDatos datosVenta = new AccesoDatos();
             try
             {
-                datosVenta.Conexion.Open();
+               // datosVenta.Conexion.Open();
                 datosVenta.SetearConsulta("INSERT INTO Ventas (fecha, idUsuario, monto) OUTPUT INSERTED.id VALUES (@fecha, @idUsuario, @monto)");
                 datosVenta.Comando.Parameters.Clear();
                 datosVenta.SetearParametro("@fecha", DateTime.Now);
@@ -72,6 +77,8 @@ namespace negocio
                     datosDetalleVenta.SetearParametro("@cantidad", producto.Cantidad);
                     datosDetalleVenta.SetearParametro("@precioVenta", producto.precio);
                     datosDetalleVenta.EjecutarAccion();
+
+                    DescontarStocK(producto.id, producto.Cantidad);
                 }
 
                 return true;
@@ -84,6 +91,32 @@ namespace negocio
             {
                 datosDetalleVenta.CerrarConexion();
             }
+        }
+
+
+
+        public bool DescontarStocK(int idProducto, int CantidadVendida)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("UPDATE Stock SET cantidad = cantidad - @cantidadV WHERE idProducto = @id");
+                datos.Comando.Parameters.Clear();
+                datos.SetearParametro("@id", idProducto);
+                datos.SetearParametro("@cantidadV", CantidadVendida);
+                datos.EjecutarAccion();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al descontar el stock", ex);
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+
+
         }
 
 

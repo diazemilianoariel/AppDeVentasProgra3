@@ -88,7 +88,7 @@ CREATE TABLE EstadoVenta (
 -- Tabla para Venta a clientes
 CREATE TABLE Ventas (
     id INT PRIMARY KEY IDENTITY(1,1),
-    fecha DATE,
+    fecha datetime,
     monto DECIMAL(10, 2),
     idUsuario INT FOREIGN KEY REFERENCES Usuarios(id),
     EnLocal bit DEFAULT 0 NOT NULL, -- 0 = Venta Online, 1 = Venta En local
