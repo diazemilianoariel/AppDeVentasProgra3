@@ -99,21 +99,18 @@ namespace Front
 
          protected void btnConfirmarCompra_Click(object sender, EventArgs e)
          {
-             // manejar la sesion momstrando un cartel aclaratorio que diga que debe iniciar sesion para poder comprar
-
-             //if (Session["cliente"] == null || !EsAdministradorClienteVendedor((Cliente)Session["cliente"]))
-             //{
+            Cliente cliente = (Cliente)Session["cliente"];
 
 
-
-             //    Response.Redirect("Login.aspx?mensaje=inicie+sesion+o+registrese+para+poder+operar.");
-             //    return;
-             //}
+            if (cliente == null || cliente.idPerfil != 1)
+            {
+                Response.Redirect("Login.aspx?mensaje=inicie+sesion+o+registrese+para+poder+operar.");
+                return;
+            }
 
 
 
-
-             try
+            try
              {
                  List<Producto> carrito = ObtenerCarrito();
 
@@ -122,7 +119,7 @@ namespace Front
                      decimal totalGeneral = carrito.Sum(p => p.SubTotal);
 
 
-                     Cliente cliente = (Cliente)Session["cliente"];
+                    
                      CarritoNegocio carritoNegocio = new CarritoNegocio();
                      bool exito = carritoNegocio.InsertarVenta(carrito, totalGeneral);
 

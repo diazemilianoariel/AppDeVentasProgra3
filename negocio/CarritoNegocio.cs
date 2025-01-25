@@ -21,7 +21,7 @@ namespace negocio
         {
 
             // hay  stock sufuciente ??
-            // se derifica que haya stock suficiente para la venta
+            // se derifica que haya sstock suficiente para la venta
 
 
             int idVenta;

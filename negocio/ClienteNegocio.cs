@@ -11,7 +11,7 @@ namespace negocio
 {
     public class ClienteNegocio
     {
-        
+
 
         public List<Cliente> ListarClientes()
         {
@@ -81,8 +81,45 @@ namespace negocio
             }
         }
 
-        
+        public Cliente ObtenerClientePorEmail(string Email)
+        {
+            Cliente aux = new Cliente();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("select U.Id, U.Nombre, U.Apellido, U.Dni, U.Direccion, U.Telefono, U.Email, U.idPerfil, P.Nombre as nombrePerfil from Usuarios U " +
+                             "inner join Perfiles P on U.idPerfil = P.Id where U.Email = @Email and U.estado = 1");
+                datos.SetearParametro("@Email", Email);
+                datos.EjecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Apellido = (string)datos.Lector["Apellido"];
+                    aux.Dni = (string)datos.Lector["Dni"];
+                    aux.Direccion = (string)datos.Lector["Direccion"];
+                    aux.Telefono = (string)datos.Lector["Telefono"];
+                    aux.Email = (string)datos.Lector["Email"];
+                    aux.idPerfil = (int)datos.Lector["idPerfil"];
+                    aux.nombrePerfil = (string)datos.Lector["nombrePerfil"];
+                    return aux;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
 
+        }
+
+
+
+       
 
 
         public void AgregarCliente(Cliente nuevo)
@@ -275,7 +312,7 @@ namespace negocio
 
                     cliente.idPerfil = (int)datos.Lector["idPerfil"];
 
-                    if(cliente.idPerfil == 1)
+                    if (cliente.idPerfil == 1)
                     {
                         cliente.nombrePerfil = "Cliente";
                     }
@@ -315,6 +352,6 @@ namespace negocio
 
 
 
-      
+
     }
 }

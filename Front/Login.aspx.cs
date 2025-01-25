@@ -35,37 +35,49 @@ namespace Front
         }
         protected void btnIniciarSesion_Click(object sender, EventArgs e)
         {
-            ClienteNegocio negocio = new ClienteNegocio();
+            ClienteNegocio Clientenegocio = new ClienteNegocio();
             Cliente cliente = new Cliente
             {
 
-                
+
                 Email = txtEmail.Text,
                 clave = txtPassword.Text
 
             };
 
-            if (negocio.Loguear(cliente))
+            if (Clientenegocio.Loguear(cliente))
             {
-                Session["cliente"] = cliente;
-                Session["Perfil"] = cliente.idPerfil;
-                // deberia loguearse en la pagina que se esta actualmente 
-                Response.Redirect("Default.aspx");
+                Cliente clienteCompleto = Clientenegocio.ObtenerClientePorEmail(cliente.Email);
+
+                if (clienteCompleto != null)
+                {
+
+                    Session["cliente"] = clienteCompleto;
+                    Session["Perfil"] = clienteCompleto.idPerfil;
+                    // deberia loguearse en la pagina que se esta actualmente 
+                    Response.Redirect("Default.aspx");
+
+                }
+                else
+                {
+                    lblMensaje.Text = "Error al obtener los datos del cliente.";
+                    lblMensaje.Visible = true;
+                }
 
             }
             else
             {
-                Response.Redirect("Login.aspx");
-
+                lblMensaje.Text = "Usuario o contraseña incorrectos.";
+                lblMensaje.Visible = true;
             }
 
 
 
 
-           
+
 
         }
 
-     
+
     }
 }

@@ -36,14 +36,8 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
 
-
-
-
-
-
-
                     <%int idPerfil = (Session["Perfil"] != null) ? (int)Session["Perfil"] : 0;
-                        if (idPerfil == 2 || idPerfil == 4)
+                        if (idPerfil == 2 || idPerfil == 4 || idPerfil == 3)
                         { %>
 
                     <li class="nav-item">
@@ -54,6 +48,8 @@
                         <a class="nav-link" href="Compras.aspx">Compras</a>
 
                     </li>
+
+
 
                     <li class="nav-item">
                         <a class="nav-link" href="Vendedor.aspx">Vendedor</a>
@@ -74,7 +70,6 @@
                         </div>
                     </li>
 
-
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="Proveedores.aspx" id="ProveedoresDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Proveedores
                         </a>
@@ -83,7 +78,6 @@
 
                         </div>
                     </li>
-
 
 
                     <li class="nav-item dropdown">

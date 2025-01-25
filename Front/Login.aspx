@@ -8,12 +8,13 @@
 
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="card p-4 shadow-sm" style="max-width: 400px; width: 100%;">
+            
             <h3 class="text-center mb-4">Iniciar Sesión</h3>
 
 
             <div class="mb-3">
                 <label for="email" class="form-label">Correo Electrónico</label>
-                <asp:TextBox runat="server" CssClass="form-control" ID="txtEmail" type="email" />
+                <asp:TextBox runat="server" CssClass="form-control" ID="txtEmail" Type="Text" />
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
