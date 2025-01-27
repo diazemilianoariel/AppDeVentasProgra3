@@ -19,7 +19,13 @@ namespace Front
 
 
         protected void Page_Load(object sender, EventArgs e)
-        { 
+        {
+
+            if (Session["cliente"] == null || !IDPerfilValido())
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
 
 
 
@@ -30,9 +36,15 @@ namespace Front
 
         }
 
+        public bool IDPerfilValido()
+        {
+            Cliente cliente = (Cliente)Session["cliente"];
+            return cliente.idPerfil == 1 || cliente.idPerfil == 2 || cliente.idPerfil == 3 || cliente.idPerfil == 4;
+        }
 
 
-         
+
+
 
         private void CargarCarrito()
         {
@@ -99,15 +111,6 @@ namespace Front
 
          protected void btnConfirmarCompra_Click(object sender, EventArgs e)
          {
-            Cliente cliente = (Cliente)Session["cliente"];
-
-
-            if (cliente == null || cliente.idPerfil != 1)
-            {
-                Response.Redirect("Login.aspx?mensaje=inicie+sesion+o+registrese+para+poder+operar.");
-                return;
-            }
-
 
 
             try

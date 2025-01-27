@@ -36,30 +36,64 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
 
-                    <%int idPerfil = (Session["Perfil"] != null) ? (int)Session["Perfil"] : 0;
-                        if (idPerfil == 2 || idPerfil == 4 || idPerfil == 3)
+                    <%int idPerfil = (Session["Perfil"] != null) ? (int)Session["Perfil"] : 0;%>
+
+
+
+                    <% if (idPerfil == 2 || idPerfil == 3 || idPerfil == 4)
                         { %>
 
                     <li class="nav-item">
                         <a class="nav-link" href="Ventas.aspx">Ventas</a>
                     </li>
 
+                    <%} %>
+
+
+
+
+                    <% if (idPerfil == 2)
+                        { %>
+
+
                     <li class="nav-item">
                         <a class="nav-link" href="Compras.aspx">Compras</a>
 
                     </li>
 
+                    <%} %>
 
+
+
+                    <% if (idPerfil == 2)
+                        { %>
 
                     <li class="nav-item">
                         <a class="nav-link" href="Vendedor.aspx">Vendedor</a>
 
                     </li>
 
+                    <%} %>
+
+
+
+                    <% if (idPerfil == 2)
+                        { %>
+
                     <li class="nav-item">
                         <a class="nav-link" href="Reportes.aspx">Reportes</a>
 
                     </li>
+
+                    <%} %>
+
+
+
+
+
+                    <% if (idPerfil == 2)
+                        { %>
+
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="Clientes.aspx" id="ClientesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuarios
@@ -70,6 +104,13 @@
                         </div>
                     </li>
 
+
+                    <%} %>
+
+
+
+                    <% if (idPerfil == 2)
+                        { %>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="Proveedores.aspx" id="ProveedoresDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Proveedores
                         </a>
@@ -79,7 +120,18 @@
                         </div>
                     </li>
 
+                    <%} %>
 
+
+
+
+
+
+
+
+
+                    <% if (idPerfil == 2)
+                        { %>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="Productos.aspx" id="productosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos
                         </a>
@@ -91,12 +143,17 @@
                         </div>
                     </li>
 
-
-
-
                     <%} %>
                 </ul>
 
+
+
+
+
+                <% if (true)
+                    { %>
+
+                <%} %>
 
 
                 <div class="ml-auto d-flex">

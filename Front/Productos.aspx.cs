@@ -17,14 +17,14 @@ namespace Front
         {
 
 
-            Cliente cliente = (Cliente)Session["cliente"];
-
-
-            if (cliente.idPerfil != 2)
+            if (Session["cliente"] == null || !IDPerfilValido())
             {
                 Response.Redirect("Login.aspx");
                 return;
             }
+
+
+           
 
             if (!IsPostBack)
             {
@@ -35,7 +35,14 @@ namespace Front
 
         }
 
-       
+        private bool IDPerfilValido()
+        {
+            Cliente cliente = (Cliente)Session["cliente"];
+
+            return cliente.idPerfil == 2 || cliente.idPerfil == 4 || cliente.idPerfil == 3;
+        }
+
+
 
 
         private void CargarDropDownLists()

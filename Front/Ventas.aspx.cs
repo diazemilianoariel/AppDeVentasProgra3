@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using dominio;
@@ -10,11 +11,11 @@ namespace Front
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (Session["cliente"] == null || !EsVendedorAdminSoporte((Cliente)Session["cliente"]))
-            //{
-            //    Response.Redirect("Login.aspx");
-            //    return;
-            //}
+            if (Session["cliente"] == null || !IDPerfilValido())
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
 
             if (!IsPostBack)
             {
@@ -37,10 +38,11 @@ namespace Front
 
         }
 
-        //private bool EsVendedorAdminSoporte(Cliente cliente)
-        //{
-        //    return cliente.idPerfil == 2 || cliente.idPerfil == 3 || cliente.idPerfil == 4;
-        //}
+        private bool IDPerfilValido()
+        {
+            Cliente cliente = (Cliente)Session["cliente"];
+            return cliente.idPerfil == 2 || cliente.idPerfil == 3 || cliente.idPerfil == 4;
+        }
 
         protected void btnAprobar_Click(object sender, EventArgs e)
         {
@@ -58,6 +60,15 @@ namespace Front
 
         protected void btnRechazar_Click(object sender, EventArgs e)
         {
+
+             List<Producto> listaproducto = new List<Producto>();
+
+            listaproducto = (List<Producto>)Session["Carrito"];
+
+            // volver  a insertar todos los productos en la base de datos por que se rechazo
+
+
+
             int idVenta = Convert.ToInt32(((Button)sender).CommandArgument);
             VentaNegocio negocio = new VentaNegocio();
             negocio.RechazarVenta(idVenta);

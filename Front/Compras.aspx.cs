@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+
+using dominio;
+
 
 namespace Front
 {
@@ -12,6 +10,27 @@ namespace Front
         protected void Page_Load(object sender, EventArgs e)
         {
 
+
+             if (Session["cliente"] == null || !IDPerfilValido())
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
+
+
+
+
+          
+
         }
+
+
+
+        public bool IDPerfilValido()
+        {
+            Cliente cliente = (Cliente)Session["cliente"];
+            return cliente.idPerfil == 2;
+        }
+
     }
 }

@@ -18,7 +18,7 @@ namespace Front
 
 
 
-            if (Session["cliente"] == null || !EsAdministradorOSoporte((Cliente)Session["cliente"]))
+            if (Session["cliente"] == null || !IDPerfilValido())
             {
                 Response.Redirect("Login.aspx");
                 return;
@@ -35,10 +35,16 @@ namespace Front
             }
         }
 
-        private bool EsAdministradorOSoporte(Cliente cliente)
+
+        // Verifica si el id de perfil es valido
+        private bool IDPerfilValido()
         {
-            return cliente.nombrePerfil == "Administrador" || cliente.nombrePerfil == "Soporte" || cliente.nombrePerfil == "Vendedor";
+            Cliente cliente = (Cliente)Session["cliente"];
+
+            return cliente.idPerfil == 2 || cliente.idPerfil == 4 || cliente.idPerfil == 3;
         }
+
+
 
         private void CargarGrilla()
         {

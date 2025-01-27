@@ -43,11 +43,13 @@ namespace Front
 
         protected void btnAgregarTipo_Click(object sender, EventArgs e)
         {
+
             TipoNegocio negocio = new TipoNegocio();
             Tipos tipo = new Tipos();
 
             if (TextBoxTipo != null && !string.IsNullOrEmpty(TextBoxTipo.Text))
             {
+
                 tipo.nombre = TextBoxTipo.Text;
                 if (!negocio.buscarTipoNombre(tipo.nombre))
                 {
@@ -61,6 +63,9 @@ namespace Front
                 CargarTipos();
                 TextBoxTipo.Text = string.Empty; // Limpiar el TextBox después de agregar
             }
+
+
+
         }
 
         protected void GridViewTipos_RowCommand(object sender, GridViewCommandEventArgs e)

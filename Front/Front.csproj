@@ -81,22 +81,17 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Buscar.aspx" />
-    <Content Include="Cancel.aspx" />
     <Content Include="Categorias.aspx" />
     <Content Include="Clientes.aspx" />
     <Content Include="Carrito.aspx" />
     <Content Include="Compras.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="DetalleProducto.aspx" />
-    <Content Include="DetalleProveedor.aspx" />
     <Content Include="EstiloCSS\estilo.css" />
-    <Content Include="HomeAdministrador.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Marcas.aspx" />
     <Content Include="Perfiles.aspx" />
     <Content Include="Reportes.aspx" />
-    <Content Include="Return.aspx" />
     <Content Include="Vendedor.aspx" />
     <Content Include="Ventas.aspx" />
     <Content Include="Productos.aspx" />
@@ -105,20 +100,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Buscar.aspx.cs">
-      <DependentUpon>Buscar.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Buscar.aspx.designer.cs">
-      <DependentUpon>Buscar.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Cancel.aspx.cs">
-      <DependentUpon>Cancel.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Cancel.aspx.designer.cs">
-      <DependentUpon>Cancel.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Categorias.aspx.cs">
       <DependentUpon>Categorias.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -161,20 +142,6 @@
     <Compile Include="DetalleProducto.aspx.designer.cs">
       <DependentUpon>DetalleProducto.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DetalleProveedor.aspx.cs">
-      <DependentUpon>DetalleProveedor.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DetalleProveedor.aspx.designer.cs">
-      <DependentUpon>DetalleProveedor.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="HomeAdministrador.aspx.cs">
-      <DependentUpon>HomeAdministrador.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="HomeAdministrador.aspx.designer.cs">
-      <DependentUpon>HomeAdministrador.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -202,13 +169,6 @@
     </Compile>
     <Compile Include="Reportes.aspx.designer.cs">
       <DependentUpon>Reportes.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Return.aspx.cs">
-      <DependentUpon>Return.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Return.aspx.designer.cs">
-      <DependentUpon>Return.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vendedor.aspx.cs">
       <DependentUpon>Vendedor.aspx</DependentUpon>

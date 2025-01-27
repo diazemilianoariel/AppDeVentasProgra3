@@ -27,13 +27,21 @@
 
 
 
-                        <asp:Label ID="LabelNombre" runat="server" AssociatedControlID="TextBoxNombre" CssClass="form-label fw-bold">Nombre</asp:Label>
-                        <asp:TextBox ID="TextBoxNombre" runat="server" CssClass="form-control"></asp:TextBox>
+                        <asp:Label ID="lblNombre" runat="server" AssociatedControlID="TxtNombre" CssClass="form-label fw-bold">Nombre</asp:Label>
+                        <asp:TextBox ID="TxtNombre" runat="server" CssClass="form-control"></asp:TextBox>
 
 
 
                         <asp:Label ID="LabelEstado" runat="server" AssociatedControlID="CheckBoxEstado" CssClass="form-label fw-bold">Activo?</asp:Label>
                         <asp:CheckBox ID="CheckBoxEstado" runat="server" CssClass="form-control"></asp:CheckBox>
+
+                        <asp:Label ID="lblConfirmacion" runat="server" CssClass="alert alert-warning mt-3" Visible="false"></asp:Label>
+
+
+                        <asp:Button ID="btnConfirmarReactivacion" runat="server" Text="ConfirmarReactivación" OnClick="btnConfirmarReactivacion_Click" CssClass="btn btn-primary mt-2" Visible="false" />
+
+
+
 
 
                     </div>
@@ -52,32 +60,60 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
+                <asp:Label ID="LabelMensaje" runat="server" CssClass="form-label fw-bold" Visible="false"></asp:Label>
+
                 <asp:Button ID="BtnAgregar" runat="server" Text="Agregar" CssClass="btn btn-primary" OnClick="BtnAgregar_Click" />
                 <asp:Button ID="BtnModificar" runat="server" Text="Modificar" CssClass="btn btn-warning" OnClick="BtnModificar_Click" />
                 <asp:Button ID="BtnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" OnClick="BtnEliminar_Click" />
                 <asp:Button ID="BtnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-secondary" OnClick="BtnCancelar_Click" />
+
             </div>
         </div>
     </div>
 
 
 
+    <asp:HiddenField ID="HiddenFieldPerfilId" runat="server" />
     <div class="row mt-5">
-        
-        <div class=" row mt-12">
+        <div class="row mt-12">
             <div class="table-responsive">
+                <asp:GridView ID="GridViewPerfiles" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" CssClass="table table-striped">
+                    <Columns>
+                        <asp:BoundField DataField="Id" HeaderText="ID" ReadOnly="True" SortExpression="Id" />
+                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />
 
-                <asp:GridView runat="server">
 
+
+                        <asp:TemplateField HeaderText=" Estado">
+                            <ItemTemplate>
+                                <asp:Label ID="lblEstado" runat="server" Text='<%# Eval("Estado", "{0}") == "True"? "Activo" : "Inactivo"  %>'></asp:Label>
+                            </ItemTemplate>
+                                </asp:TemplateField> 
+
+
+                    
+
+
+                        <asp:TemplateField HeaderText="Seleccionar">
+                            <ItemTemplate>
+                                <asp:Button ID="SeleccionarPerfil" runat="server" Text="Seleccionar" CssClass="btn btn-info" CommandArgument='<%# Eval("Id") %>' OnClick="SeleccionarPerfil_Click" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+
+
+
+
+
+                    </Columns>
                 </asp:GridView>
-             
-
 
             </div>
-
         </div>
-
-
     </div>
+
+
+
+
 
 </asp:Content>
