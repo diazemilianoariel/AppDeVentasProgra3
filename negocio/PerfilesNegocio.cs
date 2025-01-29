@@ -45,7 +45,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select id, nombre, estado from Perfiles where Estado = 1");
+                datos.SetearConsulta("select id, nombre, estado from Perfiles");
                 datos.EjecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -251,6 +251,25 @@ namespace negocio
             }
         }
 
+        public void EliminarPerfil (Perfil perfil)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("delete from Perfiles where id = @id");
+                datos.SetearParametro("@id", perfil.Id);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
 
+
+        }
     }
 }

@@ -8,8 +8,14 @@ using System.Web.UI.WebControls;
 
 namespace Front
 {
+
+
+
+
     public partial class Default : System.Web.UI.Page
     {
+        private DefaultNegocio defaultNegocio = new DefaultNegocio();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -25,16 +31,16 @@ namespace Front
             var masterPage = (MASTER)this.Master;
             masterPage.ActualizarContadorCarrito(totalProductos);
         }
+
+
         private void CargarProductos()
         {
             try
             {
-                ProductoNegocio productoNegocio = new ProductoNegocio();
-                {
-                    List<Producto> listaProductos = productoNegocio.ListarProductos();
+                    List<Producto> listaProductos = defaultNegocio.ListarProductos();
                     rptProductos.DataSource = listaProductos;
                     rptProductos.DataBind();
-                }
+                
             }
             catch (Exception ex)
             {
@@ -47,9 +53,8 @@ namespace Front
             try
             {
                 int idProducto = Convert.ToInt32(((Button)sender).CommandArgument);
-                ProductoNegocio productoNegocio = new ProductoNegocio();
-                Producto producto = productoNegocio.ObtenerProducto(idProducto);
-                {
+                Producto producto = defaultNegocio.ObtenerProducto(idProducto);
+                
                     if (producto != null)
                     {
                         List<Producto> carrito = ObtenerCarrito();
@@ -57,9 +62,11 @@ namespace Front
                         TextBox txtCantidad = (TextBox)item.FindControl("txtCantidad");
                         int cantidad = Convert.ToInt32(txtCantidad.Text);
 
-                        AgregarProductoAlCarrito(carrito, producto, cantidad);
+                        defaultNegocio.AgregarProductosAlCarrito(carrito, producto, cantidad);
+
+
                         Session["Carrito"] = carrito;
-                        MostrarMensaje("Producto agregado al carrito.",false );
+                        MostrarMensaje("Producto agregado al carrito.", false);
                         ActualizarContadorCarrito();
 
 
@@ -73,8 +80,8 @@ namespace Front
 
 
                     }
-                }
             }
+            
             catch (Exception ex)
             {
                 MostrarMensaje("Error al agregar producto al carrito: " + ex.Message, true);
@@ -91,13 +98,11 @@ namespace Front
                 List<Producto> carrito = ObtenerCarrito();
                 if (carrito != null)
                 {
-                    Producto productoEnCarrito = carrito.Find(p => p.id == idProducto);
-                    if (productoEnCarrito != null)
-                    {
-                        carrito.Remove(productoEnCarrito);
-                        Session["Carrito"] = carrito;
-                        MostrarMensaje("Producto eliminado del carrito.", false);
-                    }
+                    defaultNegocio.QuitarProductoDelCarrito(carrito, idProducto);
+                    Session["Carrito"] = carrito;
+                    MostrarMensaje("Producto eliminado del carrito.", false);
+                    ActualizarContadorCarrito();
+
                 }
             }
             catch (Exception ex)
@@ -111,19 +116,7 @@ namespace Front
             return (List<Producto>)Session["Carrito"] ?? new List<Producto>();
         }
 
-        private void AgregarProductoAlCarrito(List<Producto> carrito, Producto producto, int cantidad)
-        {
-            Producto productoEnCarrito = carrito.Find(p => p.id == producto.id);
-            if (productoEnCarrito != null)
-            {
-                productoEnCarrito.Cantidad += cantidad; 
-            }
-            else
-            {
-                producto.Cantidad = cantidad;
-                carrito.Add(producto);
-            }
-        }
+    
 
         private void MostrarMensaje(string mensaje, bool esError = true)
         {
@@ -136,20 +129,11 @@ namespace Front
         {
             try
             {
-                ProductoNegocio productoNegocio = new ProductoNegocio();
-                List<Producto> listaProductos = productoNegocio.ListarProductos();
-                List<Producto> listaFiltrada = new List<Producto>();
-
-                foreach (Producto producto in listaProductos)
-                {
-                    if (producto.nombre.ToLower().Contains(txtBuscar.Text.ToLower()))
-                    {
-                        listaFiltrada.Add(producto);
-                    }
-                }
-
+                List<Producto> listaFiltrada = defaultNegocio.BuscarProductos(txtBuscar.Text);
                 rptProductos.DataSource = listaFiltrada;
                 rptProductos.DataBind();
+
+           
             }
             catch (Exception ex)
             {
@@ -189,6 +173,10 @@ namespace Front
             int idProducto = Convert.ToInt32(((Button)sender).CommandArgument);
             Response.Redirect($"DetalleProducto.aspx?id={idProducto}");
         }
+
+
+
+
 
     
     }

@@ -67,56 +67,57 @@ namespace Front
                     // Verificar si el perfil ya existe
                     if (negocio.ExistePerfil(perfil.Nombre))
                     {
-                        Perfil PerfilInactivo = negocio.ExistePerfilInactivo(perfil.Nombre);
+                        Perfil PerfilExistente = negocio.ObtenerPerfilPoreNombre(perfil.Nombre);
 
-                        if (PerfilInactivo != null)
+                        if (PerfilExistente.Estado)
                         {
-                            // mostrar mensajes de confirmacion 
-                            lblConfirmacion.Text = "El Perfil ya existe pero está inactivo. ¿Desea reactivarlo?";
-                            lblConfirmacion.Visible = true;
-                            btnConfirmarReactivacion.CommandArgument = PerfilInactivo.Id.ToString();
-                            btnConfirmarReactivacion.Visible = true;
+                            MostrarMensaje("El perfil ya existe. No se puede Agregar Perfil con El Mismo Nombre");
+
 
 
                         }
                         else
                         {
-                            negocio.AgregarPerfil(perfil);
-                            // el mensaje de Perfil Agregado  correctamente debe desaparecer luego de unos segundos
-                            MostrarMensaje("Perfil agregado correctamente", false);
 
 
 
+                            // mostrar mensajes de confirmacion 
+                            lblConfirmacion.Text = "El Perfil ya existe pero está inactivo. ¿Desea reactivarlo?";
+                            lblConfirmacion.Visible = true;
+                            btnConfirmarReactivacion.CommandArgument = PerfilExistente.Id.ToString();
+                            btnConfirmarReactivacion.Visible = true;
 
 
-                            CargarPerfiles();
-                            LimpiarCampos();
+
                         }
                     }
 
-                    
 
+
+
+                    else
+                    {
+
+                        negocio.AgregarPerfil(perfil);
+                        // el mensaje de Perfil Agregado  correctamente debe desaparecer luego de unos segundos
+                        MostrarMensaje("Perfil agregado correctamente", false);
+
+                        CargarPerfiles();
+                        LimpiarCampos();
+                    }
                 }
                 else
                 {
-                    // mostrar mensaje de error
                     MostrarMensaje("Error al agregar el perfil.");
                 }
-
-
             }
             catch (Exception ex)
             {
                 Response.Write("Ocurrió un error: " + ex.Message);
 
             }
-
-
-
-
-
-
         }
+        
 
         // modificar 
         protected void BtnModificar_Click(object sender, EventArgs e)
@@ -166,11 +167,22 @@ namespace Front
                     Id = perfilId
                 };
 
-                perfilesNegocio.BajaLogicaPerfiles(perfil);
+                try
+                {
+                    perfilesNegocio.EliminarPerfil(perfil);
 
-                MostrarMensaje("Perfil eliminado exitosamente.", false);
-                CargarPerfiles();
-                LimpiarCampos();
+                    MostrarMensaje("Perfil eliminado exitosamente.", false);
+                    CargarPerfiles();
+                    LimpiarCampos();
+                }
+                catch(Exception ex)
+                {
+                    MostrarMensaje("Ocurrió un error: " + ex.Message);
+                }
+
+
+
+
 
 
 

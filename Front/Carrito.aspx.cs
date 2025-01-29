@@ -81,13 +81,33 @@ namespace Front
             int idProducto = Convert.ToInt32(((Button)item.FindControl("btnQuitar")).CommandArgument);
             List<Producto> carrito = ObtenerCarrito();
             Producto productoEnCarrito = carrito.Find(p => p.id == idProducto);
+
             if (productoEnCarrito != null)
             {
-                int cantidad = Convert.ToInt32(txtCantidad.Text);
-                productoEnCarrito.Cantidad = cantidad; 
-                Session["Carrito"] = carrito;
-                CargarCarrito();
+                try
+                {
+                    int cantidad = Convert.ToInt32(txtCantidad.Text);
+                    if (cantidad <= 0)
+                    {
+                        MostrarMensaje("La cantidad debe ser mayor a cero.");
+                        return;
+                    }
+                    productoEnCarrito.Cantidad = cantidad;
+                    Session["Carrito"] = carrito;
+                    CargarCarrito();
+
+                }
+                catch(Exception Ex)
+                {
+                    MostrarMensaje("La cantidad debe ser un número entero.");
+                }
             }
+        }
+
+        private void MostrarMensaje(string mensaje)
+        {
+            lblMensaje.Text = mensaje;
+            lblMensaje.Visible = true;
         }
 
         private void ActualizarTotalGeneral()
