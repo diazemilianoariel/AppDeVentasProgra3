@@ -54,6 +54,14 @@ namespace negocio
         }
 
 
+        // otro metodo que  traiga la cantidad de producto por ID 
+        public int CantidadProductoEnCarrito(List<Producto> carrito, int idProducto)
+        {
+            Producto productoEnCarrito = carrito.Find(p => p.id == idProducto);
+            return productoEnCarrito != null ? productoEnCarrito.Cantidad : 0;
+        }
+
+
 
 
     }

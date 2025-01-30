@@ -24,6 +24,14 @@ namespace Front
                 ActualizarContadorCarrito();
             }
         }
+
+
+
+
+
+
+
+
         private void ActualizarContadorCarrito()
         {
             List<Producto> carrito = (List<Producto>)Session["Carrito"];
@@ -37,6 +45,8 @@ namespace Front
         {
             try
             {
+                   
+                 
                     List<Producto> listaProductos = defaultNegocio.ListarProductos();
                     rptProductos.DataSource = listaProductos;
                     rptProductos.DataBind();
@@ -147,6 +157,11 @@ namespace Front
             txtBuscar.Text = "";
         }
 
+
+
+
+
+
         protected void btnDisminuir_Click(object sender, EventArgs e)
         {
             Button btnDisminuir = (Button)sender;
@@ -164,9 +179,20 @@ namespace Front
             Button btnAumentar = (Button)sender;
             RepeaterItem item = (RepeaterItem)btnAumentar.NamingContainer;
             TextBox txtCantidad = (TextBox)item.FindControl("txtCantidad");
+            string[] args = btnAumentar.CommandArgument.Split(',');
+            int stockDisponible = Convert.ToInt32(args[1]);
             int cantidad = Convert.ToInt32(txtCantidad.Text);
-            txtCantidad.Text = (cantidad + 1).ToString();
+            
+            if(cantidad < stockDisponible)
+            {
+                txtCantidad.Text = (cantidad + 1).ToString();
+            }
         }
+
+
+
+
+
 
         protected void btnVerDetalle_Click(object sender, EventArgs e)
         {

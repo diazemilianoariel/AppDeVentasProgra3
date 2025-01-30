@@ -20,7 +20,7 @@
                         </div>
                         <div class="col-md-2">
                             <asp:Label Text="Cantidad" runat="server" />
-                            <asp:TextBox ID="txtCantidad" runat="server" Text='<%# Eval("Cantidad") %>' CssClass="form-control text-center" AutoPostBack="true" OnTextChanged="txtCantidad_TextChanged" />
+                            <asp:TextBox ID="txtCantidad" runat="server" Text='<%# Eval("Cantidad") %>' CssClass="form-control text-center" AutoPostBack="true" OnTextChanged="txtCantidad_TextChanged" ReadOnly="true" />
                         </div>
                         <div class="col-md-2">
                             <p>Precio: $<%# Eval("Precio") %></p>

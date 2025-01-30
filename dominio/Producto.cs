@@ -25,6 +25,7 @@ namespace dominio
         public int stock { get; set; }  // propiedad para que el usuario  va a ingresar la cantidad de productos que tiene en stock
 
         public int Cantidad { get; set; }  // propiedad para que el cliente eliga cuantos va a comprar
+
         public string marca { get; set; }
         public string tipo { get; set; }
         public string categoria { get; set; }
