@@ -91,6 +91,7 @@
     <Compile Include="ClienteNegocio.cs" />
     <Compile Include="CompraNegocio.cs" />
     <Compile Include="DefaultNegocio.cs" />
+    <Compile Include="FacturaNegocio.cs" />
     <Compile Include="MarcaNegocio.cs" />
     <Compile Include="PerfilesNegocio.cs" />
     <Compile Include="ProductoNegocio.cs" />

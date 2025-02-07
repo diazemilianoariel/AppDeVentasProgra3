@@ -253,6 +253,9 @@ namespace negocio
 
         }
 
+
+
+
         public void ModificarProducto(Producto producto)
         {
             AccesoDatos accesoDatos = new AccesoDatos();
@@ -266,9 +269,9 @@ namespace negocio
                 accesoDatos.SetearParametro("@descripcion", producto.descripcion);
                 accesoDatos.SetearParametro("@imagen", producto.Imagen);
                 accesoDatos.SetearParametro("@precio", producto.precio);
-                // accesoDatos.SetearParametro("@idMarca", producto.marca);
-                // accesoDatos.SetearParametro("@idTipo", producto.tipo);
-                // accesoDatos.SetearParametro("@idCategoria", producto.categoria);
+                accesoDatos.SetearParametro("@idMarca", producto.marca);
+                accesoDatos.SetearParametro("@idTipo", producto.tipo);
+                accesoDatos.SetearParametro("@idCategoria", producto.categoria);
                 accesoDatos.SetearParametro("@estado", producto.estado);
                 accesoDatos.SetearParametro("@idProducto", producto.id);
 

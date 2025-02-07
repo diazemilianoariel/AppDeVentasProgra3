@@ -228,6 +228,39 @@ namespace negocio
             return lista;
         }
 
+        public List<Producto> ObtenerCarritoPorVenta(int idVenta)
+        {
+            List<Producto> productos = new List<Producto>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("select p.id,p.nombre,p.descripcion,p.precio,dv.cantidad,v.monto as Total from DetalleVentas dv INNER JOIN Ventas v on dv.idVenta = v.id inner join Productos p on dv.idProducto = p.id where dv.idVenta = @idVenta");
+                datos.SetearParametro("@idVenta", idVenta);
+                datos.EjecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    Producto producto = new Producto();
+                    producto.id = (int)datos.Lector["id"];
+                    producto.nombre = (string)datos.Lector["nombre"];
+                    producto.descripcion = (string)datos.Lector["descripcion"];
+                    producto.precio = (decimal)datos.Lector["precio"];
+                    producto.Cantidad = (int)datos.Lector["cantidad"];
+                    productos.Add(producto);
+
+                     
+                }
+                return productos;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
 
 
         public List<Venta> BuscarVentas(string query)

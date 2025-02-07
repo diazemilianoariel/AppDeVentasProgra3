@@ -109,22 +109,20 @@ namespace Front
                         TextBoxPrecio.Text = producto.precio.ToString();
                         TextBoxGanancia.Text = producto.margenGanancia.ToString();
                         TextBoxStock.Text = producto.stock.ToString();
+                        string idCategoria = DropDownListCategoria.SelectedValue;
+                        string idMarca = DropDownListMarca.SelectedValue;
+                        string idTipo = DropDownListTipo.SelectedValue;
+                        string idProveedor = DropDownListProveedor.SelectedValue;
 
-                        ListItem itemMarca = DropDownListMarca.Items.FindByValue(producto.marca);
+                    ListItem itemMarca = DropDownListMarca.Items.FindByValue(producto.marca);
                         if (itemMarca != null)
                         {
                             DropDownListMarca.ClearSelection();
                             itemMarca.Selected = true;
 
                         }
-
-
                         CheckBoxEstado.Checked = producto.estado;
-
-
-
                     }
-                
                
             }
             else

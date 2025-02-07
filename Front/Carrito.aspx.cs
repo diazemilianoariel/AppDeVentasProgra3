@@ -132,6 +132,10 @@ namespace Front
          protected void btnConfirmarCompra_Click(object sender, EventArgs e)
          {
 
+            Cliente cliente = (Cliente)Session["cliente"];
+
+            int idCliente = cliente.Id;
+
 
             try
              {
@@ -144,13 +148,14 @@ namespace Front
 
                     
                      CarritoNegocio carritoNegocio = new CarritoNegocio();
-                     bool exito = carritoNegocio.InsertarVenta(carrito, totalGeneral);
+                     bool exito = carritoNegocio.InsertarVenta(carrito, totalGeneral, idCliente);
 
                      if (exito)
                      {
-                         // Limpiar el carrito
-                         Session["Carrito"] = new List<Producto>();
-                         CargarCarrito();
+                        // Limpiar el carrito
+                        Session["Carrito"] = new List<Producto>();
+
+                        CargarCarrito();
 
                          // Mostrar mensaje de éxito
                          lblMensaje.Text = "Venta generada de manera exitosa.";

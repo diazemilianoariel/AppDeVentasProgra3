@@ -9,6 +9,8 @@ namespace negocio
     public class DefaultNegocio
     {
 
+
+
         public List<Producto> ListarProductos()
         {
             ProductoNegocio productoNegocio = new ProductoNegocio();

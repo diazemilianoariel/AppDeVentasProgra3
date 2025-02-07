@@ -7,18 +7,19 @@ namespace dominio
 {
     public class Factura
     {
+
+
         // esta clase registrará las facturas de las ventas:
-        public int Id { get; set; }
+        public int Id { get; set; } // auutonumerico en la base de atos 
         public int IdVenta { get; set; }
-        public int idCliente { get; set; }
+        public decimal TotalFactura{ get; set; }
+
+        public decimal SubTotalFactura { get; set; }
+
         public DateTime Fecha { get; set; }
-        public decimal TotalFacutra{ get; set; }
-        public decimal subTotalFactura { get; set; }
-        public decimal Iva { get; set; } //   a revisar       
 
 
-        public decimal Descuento { get; set; } // a revisar 
-        
+
 
     }
 }

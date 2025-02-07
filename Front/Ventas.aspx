@@ -13,6 +13,13 @@
     </div>
 
 
+    <div class="row mt-3">
+        <div class="col-md-12 text-center">
+            <asp:Label ID="lblMensaje" runat="server" CssClass="alert" Visible="false"></asp:Label>
+        </div>
+    </div>
+
+
     <div class="row mt-5">
         <div class="col-md-12">
             <h2 class="text-center">Ventas Pendientes</h2>
@@ -35,7 +42,10 @@
                 </Columns>
             </asp:GridView>
         </div>
+
     </div>
+
+
 
 
 

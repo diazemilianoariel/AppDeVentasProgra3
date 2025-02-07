@@ -17,7 +17,7 @@ namespace negocio
         // aca tiene que estar el metodo que inserta una venta que recibe una lista de productos desde el Carrpito
         // 
 
-        public bool InsertarVenta(List<Producto> carrito, decimal totalGeneral)
+        public bool InsertarVenta(List<Producto> carrito, decimal totalGeneral, int idCliente)
         {
 
             // hay  stock sufuciente ??
@@ -34,7 +34,7 @@ namespace negocio
                 datosVenta.SetearConsulta("INSERT INTO Ventas (fecha, idUsuario, monto) OUTPUT INSERTED.id VALUES (@fecha, @idUsuario, @monto)");
                 datosVenta.Comando.Parameters.Clear();
                 datosVenta.SetearParametro("@fecha", DateTime.Now);
-                datosVenta.SetearParametro("@idUsuario", 1); // Cambiar por el ID del usuario actual
+                datosVenta.SetearParametro("@idUsuario", idCliente); // Cambiar por el ID del usuario actual
                 datosVenta.SetearParametro("@monto", totalGeneral);
                 idVenta = (int)datosVenta.EjecutarEscalar();
 

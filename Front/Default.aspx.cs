@@ -72,6 +72,9 @@ namespace Front
                         TextBox txtCantidad = (TextBox)item.FindControl("txtCantidad");
                         int cantidad = Convert.ToInt32(txtCantidad.Text);
 
+
+                        if(producto.stock >= cantidad)
+                    {
                         defaultNegocio.AgregarProductosAlCarrito(carrito, producto, cantidad);
 
 
@@ -84,12 +87,13 @@ namespace Front
 
                         ScriptManager.RegisterStartupScript(this, GetType(), "Redirect", "setTimeout(function() { window.location.href = 'Default.aspx'; }, 2000);", true);
 
-
-
-                        //ScriptManager.RegisterStartupScript(this, GetType(), "UpdatePanel", "setTimeout(function() { __doPostBack('" + updPanelMensaje.UniqueID + "', ''); }, 500);", true);
-
+                    }
+                    else
+                    {
+                        MostrarMensaje("No hay suficiente stock disponible para agregar la cantidad solicitada.", true);
 
                     }
+                }
             }
             
             catch (Exception ex)
