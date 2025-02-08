@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Net.Mail;
 using dominio;
-using MercadoPago.Common;
-using MercadoPago.DataStructures.Preference;
 using negocio;
-using MercadoPago.Resources;
 
 namespace Front
 {
@@ -155,6 +151,17 @@ namespace Front
                         // Limpiar el carrito
                         Session["Carrito"] = new List<Producto>();
 
+                        // es el envio del mail
+                        EmailService emailService = new EmailService();
+                        emailService.EnviarCorreoConfirmacion("arieldiaz_90@hotmail.com", "Estado De tu Compra", "Tu Compra esta en Proceso ");
+
+
+
+
+                        //pfit apbo cimg kzwc
+
+                        // Actualizar la lista de productos en el carrito
+
                         CargarCarrito();
 
                          // Mostrar mensaje de éxito
@@ -256,6 +263,8 @@ namespace Front
         {
             Response.Redirect("Default.aspx");
         }
+
+
 
 
 

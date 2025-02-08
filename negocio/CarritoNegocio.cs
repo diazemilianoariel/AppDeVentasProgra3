@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
 using dominio;
+using System.Net.Mail;
 
 
 
@@ -118,6 +119,14 @@ namespace negocio
 
 
         }
+
+
+
+       
+
+
+    
+
 
 
     }

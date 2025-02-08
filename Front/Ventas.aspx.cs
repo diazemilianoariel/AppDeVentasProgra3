@@ -49,6 +49,8 @@ namespace Front
 
         protected void btnAprobar_Click(object sender, EventArgs e)
         {
+
+
             int idVenta = Convert.ToInt32(((Button)sender).CommandArgument);
             VentaNegocio negocio = new VentaNegocio();
             List<Producto> carrito = negocio.ObtenerCarritoPorVenta(idVenta);
@@ -84,9 +86,11 @@ namespace Front
             FacturaNegocio facturaNegocio = new FacturaNegocio();
             facturaNegocio.GenerarFactura(factura);
 
-            
+            // es el envio del mail
+            EmailService emailService = new EmailService();
+            emailService.EnviarCorreoConfirmacion("arieldiaz_90@hotmail.com", "Estado De tu Compra", "Tu Compra ya a sido Aprobada ");
 
-            Response.Redirect("Factura.aspx");
+
 
             CargarVentas();
         }
@@ -100,6 +104,10 @@ namespace Front
             int idVenta = Convert.ToInt32(((Button)sender).CommandArgument);
             VentaNegocio negocio = new VentaNegocio();
             negocio.RechazarVenta(idVenta);
+
+            // es el envio del mail
+            EmailService emailService = new EmailService();
+            emailService.EnviarCorreoConfirmacion("arieldiaz_90@hotmail.com", "Estado De tu Compra", "Tu Compra ya a sido Rechazada ");
 
             CargarVentas();
         }
