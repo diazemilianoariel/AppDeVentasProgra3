@@ -10,6 +10,49 @@ namespace negocio
     public class VentaNegocio
     {
 
+        public int cantidadVentasHoy()
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("SELECT COUNT(*) as cantidad FROM Ventas WHERE CAST(fecha AS DATE) = CAST(GETDATE() AS DATE)");
+                
+                datos.EjecutarLectura();
+                datos.Lector.Read();
+                return (int)datos.Lector["cantidad"];
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+
+
+        public int cantidadVentaPendiente()
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("select count(*) as cantidad from ventas where idEstadoVenta = 1");
+                datos.EjecutarLectura();
+                datos.Lector.Read();
+                return (int)datos.Lector["cantidad"];
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
         public List<Venta> ListarVentas()
         {
             List<Venta> ventas = new List<Venta>();
@@ -66,7 +109,7 @@ namespace negocio
         }
 
 
-        private List<Producto> ListarProductosPorVenta(int idVenta)
+        public List<Producto> ListarProductosPorVenta(int idVenta)
         {
             List<Producto> productos = new List<Producto>();
             AccesoDatos datos = new AccesoDatos();
@@ -292,6 +335,43 @@ namespace negocio
             return lista;
         }
 
+
+        public Venta ObtenerVentaPorId(int idVenta)
+        {
+            Venta venta = new Venta();
+            Cliente cliente = new Cliente();
+
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("SELECT fecha, idUsuario, U.nombre FROM Ventas v INNER JOIN Usuarios U ON V.idUsuario = U.id WHERE v.id = @idVenta");
+                datos.SetearParametro("@idVenta", idVenta);
+                
+                datos.EjecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    
+                    venta.Fecha = (DateTime)datos.Lector["fecha"];
+                    cliente.Id = (int)datos.Lector["idUsuario"];
+                    cliente.Nombre = (string)datos.Lector["nombre"];
+                    venta.Cliente = cliente;
+
+
+
+
+
+                }
+                return venta;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
 
     }
 }

@@ -31,11 +31,42 @@ namespace Front
 
         private void CargarCompras()
         {
-            
+
+
+
+
             Cliente cliente = (Cliente)Session["cliente"];
             negocio.FacturaNegocio negocio = new negocio.FacturaNegocio();
             gvMisCompras.DataSource = negocio.ListarFacturas(cliente.Id);
             gvMisCompras.DataBind();
+
+
+        }
+
+
+
+        protected void gvMisCompras_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+
+
+
+
+
+            if (e.CommandName == "Seleccionar")
+            {
+
+                string[] argumentos = e.CommandArgument.ToString().Split('|');
+                decimal valorDecimal = Convert.ToDecimal(argumentos[1]);
+
+
+                int IdVenta = Convert.ToInt32(argumentos[0]);
+                Session["IdVenta"] = IdVenta;
+
+
+                Session["TotalFactura"] = valorDecimal;
+
+                Response.Redirect("Factura.aspx");
+            }
 
 
         }

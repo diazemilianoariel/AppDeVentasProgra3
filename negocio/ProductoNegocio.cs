@@ -13,6 +13,32 @@ namespace negocio
     {
 
 
+        public int CantidadProductos()
+        {
+            AccesoDatos accesoDatos = new AccesoDatos();
+            try
+            {
+                accesoDatos.SetearConsulta("SELECT COUNT(*) FROM Productos");
+                accesoDatos.EjecutarLectura();
+                if (accesoDatos.Lector.Read())
+                {
+                    int cantidadUsuarios = accesoDatos.Lector.GetInt32(0);
+
+
+                    return cantidadUsuarios; // lee lo que hay en la unica columna que hay y lo convierte y lo retorna como entero
+                }
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                accesoDatos.CerrarConexion();
+            }
+        }
+
 
         public List<Producto> ListarProductos()
         {

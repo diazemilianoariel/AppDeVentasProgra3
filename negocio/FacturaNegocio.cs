@@ -20,8 +20,8 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("SELECT Facturas.id, idVenta, total , Facturas.fecha from Facturas INNER JOIN Ventas ON Facturas.idVenta = Ventas.id WHERE Ventas.idUsuario = @idC");
-                datos.SetearParametro("idC", idCliente);
+                datos.SetearConsulta("SELECT Facturas.id, idVenta, total , Facturas.fecha from Facturas INNER JOIN Ventas ON Facturas.idVenta = Ventas.id WHERE Ventas.idUsuario = @idCliente");
+                datos.SetearParametro("@idCliente", idCliente);
                 datos.EjecutarLectura();
                 while (datos.Lector.Read())
                 {

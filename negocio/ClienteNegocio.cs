@@ -115,6 +115,9 @@ namespace negocio
 
 
 
+
+
+
        
 
 
@@ -343,6 +346,32 @@ namespace negocio
 
 
 
+
+        }
+
+
+
+        public int CantidadUsuarios()
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("select count(*) as cantidad from Usuarios");
+                datos.EjecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    return (int)datos.Lector["cantidad"];
+                }
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
 
         }
 

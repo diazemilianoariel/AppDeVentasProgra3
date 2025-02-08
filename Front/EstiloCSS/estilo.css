@@ -24,8 +24,75 @@
 }
 
 
+
 .icono-carrito {
     height: 40px; /* Ajusta el tamaño según tus necesidades */
     width: auto;
 }
+
+
+
+
+
+
+/*inicio estilo de factura*/
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+.invoice-container {
+    max-width: 800px;
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    border: 3px solid #ddd;
+    border-radius: 10px;
+}
+
+.logo-box {
+    text-align: center;
+    border: 3px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+}
+
+.invoice-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.contact-info p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.table thead {
+    background: #000;
+    color: #fff;
+}
+
+.table tbody td {
+    height: 35px;
+}
+
+.footer-text {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.observaciones-box {
+    border: 3px solid #ddd;
+    padding: 10px;
+    margin-top: 10px;
+    background: #f8f8f8;
+}
+
+
+.table table-bordered {
+    border: 3px solid #ddd;
+}
+/*fin estilo de factura*/
 

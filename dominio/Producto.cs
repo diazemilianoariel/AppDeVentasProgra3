@@ -21,6 +21,12 @@ namespace dominio
 
         public decimal SubTotal => precio * Cantidad;
 
+        public decimal SubTotalEnFactura
+        {
+            get { return precio * Cantidad; }
+            set { /* No hacer nada, solo para evitar errores de solo lectura */ }
+        }
+
         public string Imagen { get; set; }
         public int stock { get; set; }  // propiedad para que el usuario  va a ingresar la cantidad de productos que tiene en stock
 
@@ -33,6 +39,8 @@ namespace dominio
 
         public decimal margenGanancia { get; set; }
         public bool estado { get; set; }
+
+
 
 
 
