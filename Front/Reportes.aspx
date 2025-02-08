@@ -5,6 +5,9 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
     <style>
         .card-icon {
             font-size: 2rem;
@@ -78,9 +81,6 @@
                     <div class="card-body">
                         <h5 class="card-title">Ventas Última Semana</h5>
                         <canvas id="ventasChart"></canvas>
-                                                <asp:HiddenField ID="hfVentasSemana" runat="server" />
-
-                          
 
                     </div>
                 </div>
@@ -93,8 +93,8 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Clientes por Categoría</h5>
-                        <canvas id="clientesChart"></canvas>
+                        <h5 class="card-title">Productos por Categoría</h5>
+                        <canvas id="ProductosChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -106,44 +106,41 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Historial de Ventas</h5>
-                        <table class="table table-striped">
+                        <table class="table table-striped" id="ventasTable">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Cliente</th>
-                                    <th>Producto</th>
+                                    <th>id</th>
                                     <th>Fecha</th>
                                     <th>Monto</th>
+                                    <th>cliente</th>
                                 </tr>
                             </thead>
+
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Juan Pérez</td>
-                                    <td>Producto A</td>
-                                    <td>2025-02-10</td>
-                                    <td>$150</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Ana Gómez</td>
-                                    <td>Producto B</td>
-                                    <td>2025-02-10</td>
-                                    <td>$200</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Pedro Ruiz</td>
-                                    <td>Producto C</td>
-                                    <td>2025-02-10</td>
-                                    <td>$350</td>
-                                </tr>
+
+
+                                <asp:Repeater ID="rptVentas" runat="server">
+                                    <ItemTemplate>
+                                        <tr>
+                                            <td><%# Eval("IdVenta") %></td>
+                                            <td><%# Eval("Fecha") %></td>
+                                            <td><%# Eval("Monto") %></td>
+                                            <td><%# Eval("Cliente.Nombre") %></td>
+                                        </tr>
+                                    </ItemTemplate>
+                                </asp:Repeater>
                             </tbody>
+
+
                         </table>
                     </div>
                 </div>
             </div>
         </div>
+
+
+
+
     </div>
 
     <!-- Bootstrap JS -->
@@ -152,6 +149,9 @@
     <!-- Chart.js Gráficos -->
     <script>
         // Gráfico de Ventas Última Semana
+
+
+
         var ctx1 = document.getElementById('ventasChart').getContext('2d');
         var ventasChart = new Chart(ctx1, {
             type: 'line',
@@ -168,17 +168,27 @@
         });
 
         // Gráfico de Clientes por Categoría
-        var ctx2 = document.getElementById('clientesChart').getContext('2d');
-        var clientesChart = new Chart(ctx2, {
+
+        var categorias = <%= CategoriasJson%>;
+        var productos =  <%= ProductosJson %>;
+        var ctx2 = document.getElementById('ProductosChart').getContext('2d');
+        var productosChart = new Chart(ctx2, {
             type: 'doughnut',
             data: {
-                labels: ['Frecuentes', 'Ocasionales', 'Nuevos'],
+                labels: categorias,
                 datasets: [{
-                    data: [50, 30, 20],
-                    backgroundColor: ['green', 'yellow', 'red']
+                    data: productos,
+                    backgroundColor: ['green', 'yellow', 'red', 'orange', 'blue', 'purple', 'cyan', 'magenta', 'lime', 'pink', 'teal', 'lavender', 'brown', 'beige', 'maroon', 'mint', 'olive', 'coral', 'navy', 'grey']
                 }]
             }
         });
+
+
+        // Inicializar DataTables
+        $(document).ready(function () {
+            $('#ventasTable').DataTable();
+        });
+
     </script>
 
 

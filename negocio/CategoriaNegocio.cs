@@ -211,5 +211,37 @@ namespace negocio
 
         }
 
+
+
+
+        public Tuple<List<string>, List<int>> CantidadesPorCategoria()
+        {
+            List<string> categorias = new List<string>();
+            List<int> cantidades = new List<int>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("SELECT  C.nombre as nombre, (COUNT(P.idCategoria))  as cantidad FROM Productos P RIGHT JOIN Categorias C ON P.idCategoria = C.id GROUP BY C.nombre");
+                datos.EjecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    categorias.Add((string)datos.Lector["nombre"]);
+                    cantidades.Add((int)datos.Lector["cantidad"]);
+                }
+                return Tuple.Create(categorias, cantidades);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+
+
+
     }
 }

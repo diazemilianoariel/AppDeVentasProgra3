@@ -11,8 +11,20 @@
       "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\reportes.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3DF910B5-5CB0-47DC-8894-659C2DD82C01}|negocio\\negocio.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\negocio\\ventanegocio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3DF910B5-5CB0-47DC-8894-659C2DD82C01}|negocio\\negocio.csproj|solutionrelative:negocio\\ventanegocio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3DF910B5-5CB0-47DC-8894-659C2DD82C01}|negocio\\negocio.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\negocio\\categorianegocio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3DF910B5-5CB0-47DC-8894-659C2DD82C01}|negocio\\negocio.csproj|solutionrelative:negocio\\categorianegocio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\dominio\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|solutionrelative:dominio\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\front\\factura.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\factura.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\dominio\\venta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|solutionrelative:dominio\\venta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,28 +54,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "VentaNegocio.cs",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\negocio\\VentaNegocio.cs",
-              "RelativeDocumentMoniker": "negocio\\VentaNegocio.cs",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\negocio\\VentaNegocio.cs",
-              "RelativeToolTip": "negocio\\VentaNegocio.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAAABUAAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-08T16:15:35.231Z",
+              "DocumentIndex": 4,
+              "Title": "Factura.aspx",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Factura.aspx",
+              "RelativeDocumentMoniker": "Front\\Factura.aspx",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Factura.aspx",
+              "RelativeToolTip": "Front\\Factura.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-02-08T18:14:27.124Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Reportes.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Reportes.aspx.cs",
-              "RelativeDocumentMoniker": "Front\\Reportes.aspx.cs",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Reportes.aspx.cs",
-              "RelativeToolTip": "Front\\Reportes.aspx.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAgwDwAAAAeAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "CategoriaNegocio.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\negocio\\CategoriaNegocio.cs",
+              "RelativeDocumentMoniker": "negocio\\CategoriaNegocio.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\negocio\\CategoriaNegocio.cs",
+              "RelativeToolTip": "negocio\\CategoriaNegocio.cs",
+              "ViewState": "AgIAAHQAAAAAAAAAAAApwNgAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-08T15:29:11.776Z",
+              "WhenOpened": "2025-02-08T17:13:36.22Z",
               "EditorCaption": ""
             },
             {
@@ -76,7 +88,46 @@
               "RelativeToolTip": "Front\\Reportes.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-02-08T15:29:06.181Z",
+              "WhenOpened": "2025-02-08T16:55:21.718Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Cliente.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\dominio\\Cliente.cs",
+              "RelativeDocumentMoniker": "dominio\\Cliente.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\dominio\\Cliente.cs",
+              "RelativeToolTip": "dominio\\Cliente.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAsAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-08T18:22:20.994Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Reportes.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Reportes.aspx.cs",
+              "RelativeDocumentMoniker": "Front\\Reportes.aspx.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Reportes.aspx.cs",
+              "RelativeToolTip": "Front\\Reportes.aspx.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAnwFIAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-08T16:56:22.85Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Venta.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\dominio\\Venta.cs",
+              "RelativeDocumentMoniker": "dominio\\Venta.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\dominio\\Venta.cs",
+              "RelativeToolTip": "dominio\\Venta.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAxwA0AAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-08T18:16:50.33Z",
               "EditorCaption": ""
             }
           ]
