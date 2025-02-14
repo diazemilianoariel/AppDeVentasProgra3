@@ -120,15 +120,29 @@ namespace negocio
 
         }
 
+        public void Devolverstock(int id, int cantidad)
+        {
 
+            // aca se tiene que volver a insertar el stock que se descontó cuando el cliente confimo la compra en la pagina carrito
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("UPDATE Stock SET cantidad = cantidad + @cantidad WHERE idProducto = @id");
+                datos.Comando.Parameters.Clear();
+                datos.SetearParametro("@id", id);
+                datos.SetearParametro("@cantidad", cantidad);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al devolver el stock", ex);
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
 
-       
-
-
-    
-
-
-
+        }
     }
 }
     

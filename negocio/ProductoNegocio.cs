@@ -515,7 +515,29 @@ namespace negocio
 
 
 
-      
+        // este metodo lo usa cuando el admin rechaza la compra del usuario y tiene que volver a insertar el stock que se descontó
+        public void VolverAgregarStock(int idProducto, int cantidad)
+        {
+            AccesoDatos accesoDatos = new AccesoDatos();
+            try
+            {
+                accesoDatos.SetearConsulta("UPDATE Stock SET cantidad = cantidad + @cantidad WHERE idProducto = @idProducto");
+                accesoDatos.SetearParametro("@cantidad", cantidad);
+                accesoDatos.SetearParametro("@idProducto", idProducto);
+                accesoDatos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                accesoDatos.CerrarConexion();
+            }
+        }
+
+
+
 
     }
 

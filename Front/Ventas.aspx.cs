@@ -97,17 +97,29 @@ namespace Front
 
         protected void btnRechazar_Click(object sender, EventArgs e)
         {
-            List<Producto> listaproducto = (List<Producto>)Session["Carrito"];
 
             // volver a insertar todos los productos en la base de datos porque se rechazó
 
             int idVenta = Convert.ToInt32(((Button)sender).CommandArgument);
             VentaNegocio negocio = new VentaNegocio();
             negocio.RechazarVenta(idVenta);
+            List<Producto> carrito = negocio.ObtenerCarritoPorVenta(idVenta);
+
+
+            // aca se tiene que volver a insertar el stock que se descontó cuando el cliente confimo la compra
+
+            foreach (Producto item in carrito)
+            {
+                ProductoNegocio productoNegocio = new ProductoNegocio();
+                productoNegocio.VolverAgregarStock(item.id, item.Cantidad);
+            }
+
+
+
 
             // es el envio del mail
             EmailService emailService = new EmailService();
-            emailService.EnviarCorreoConfirmacion("arieldiaz_90@hotmail.com", "Estado De tu Compra", "Tu Compra ya a sido Rechazada ");
+            emailService.EnviarCorreoConfirmacion("arieldiaz_90@hotmail.com", "Estado De tu Compra", "Tu Compra a sido Rechazada ");
 
             CargarVentas();
         }
