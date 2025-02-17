@@ -24,6 +24,15 @@
                 <h1 class="text-center">Gestion de Productos</h1>
             </div>
         </div>
+
+
+        <div class="row ">
+            <div class="col-md-12 ">
+                <h7 class="text-center">Gestione Sus Productos de Manera Ágil y sencilla, Agregue, Modifique o Elimine los Productos que Desee</h7>
+            </div>
+        </div>
+
+
         <div class="container mt-5">
             <div class="row">
                 <!-- Columna izquierda con los TextBoxes y Labels -->
@@ -84,13 +93,14 @@
         <!-- Botones del ABM -->
         <div class="row mt-3">
             <div class="col-md-12">
-                <div class="d-flex justify-content-between">
-                    <asp:Button ID="btnAgregar" runat="server" CssClass="btn btn-success" Text="Agregar" OnClick="btnAgregar_Click" />
-                    <asp:Button ID="btnModificar" runat="server" CssClass="btn btn-warning" Text="Modificar" OnClick="btnModificar_Click" />
-                    <asp:Button ID="btnEliminar" runat="server" CssClass="btn btn-danger" Text="Eliminar" OnClick="btnEliminar_Click" />
-                    <asp:Button ID="btnCancelar" runat="server" CssClass="btn btn-secondary" Text="Cancelar" OnClick="btnCancelar_Click" />
+                <div class="d-flex justify-content-center-end">
+                    <div class="btn-group" role="group">
+                        <asp:Button ID="btnAgregar" runat="server" CssClass="btn btn-success" Text="Agregar" OnClick="btnAgregar_Click" />
+                        <asp:Button ID="btnModificar" runat="server" CssClass="btn btn-warning" Text="Modificar" OnClick="btnModificar_Click" />
+                        <asp:Button ID="btnEliminar" runat="server" CssClass="btn btn-danger" Text="Eliminar" OnClick="btnEliminar_Click" />
+                        <asp:Button ID="btnCancelar" runat="server" CssClass="btn btn-secondary" Text="Cancelar" OnClick="btnCancelar_Click" />
 
-
+                    </div>
                 </div>
             </div>
         </div>
@@ -100,8 +110,8 @@
 
 
         <!-- Grilla donde van los datos seleccionados -->
-        <div class="row mt-40">
-            <div class="col-md-15">
+        <div class="row mt-5 justify-content-center">
+            <div class="col-md-12">
                 <div class="table-responsive">
                     <asp:GridView ID="GridViewProductos" runat="server" CssClass="table table-striped table-bordered table-dark w-100" AutoGenerateColumns="False" OnRowCommand="GridViewProductos_RowCommand" OnSelectedIndexChanged="GridViewProductos_SelectedIndexChanged">
                         <Columns>
@@ -136,7 +146,5 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 </asp:Content>

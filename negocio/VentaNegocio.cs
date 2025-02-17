@@ -9,7 +9,6 @@ namespace negocio
 {
     public class VentaNegocio
     {
-
         public int cantidadVentasHoy()
         {
             AccesoDatos datos = new AccesoDatos();
@@ -30,8 +29,6 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
-
-
 
         public int cantidadVentaPendiente()
         {
@@ -108,7 +105,6 @@ namespace negocio
 
         }
 
-
         public List<Producto> ListarProductosPorVenta(int idVenta)
         {
             List<Producto> productos = new List<Producto>();
@@ -142,8 +138,6 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
-
-
 
         public List<Venta> ListarVentasPendientes()
         {
@@ -193,7 +187,6 @@ namespace negocio
 
         }
 
-
         public void AprobarVenta(int idVenta)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -217,7 +210,6 @@ namespace negocio
 
         }
 
-
         public void RechazarVenta(int idVenta)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -239,8 +231,6 @@ namespace negocio
 
 
         }
-
-
 
         public List<Venta> BuscarVentasPendientes(string query)
         {
@@ -304,8 +294,6 @@ namespace negocio
             }
         }
 
-
-
         public List<Venta> BuscarVentas(string query)
         {
             List<Venta> lista = new List<Venta>();
@@ -334,7 +322,6 @@ namespace negocio
 
             return lista;
         }
-
 
         public Venta ObtenerVentaPorId(int idVenta)
         {
