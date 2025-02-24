@@ -53,8 +53,10 @@ namespace Front
                 if (proveedores != null && proveedores.Count > 0)
                 {
                     DropDownListProveedor.DataSource = proveedores;
-                    DropDownListProveedor.DataBind(); // Ajusta según el nombre del campo
-                    DropDownListProveedor.DataValueField = "nombre"; // Ajusta según el nombre del campo
+                    DropDownListProveedor.DataBind();
+                    DropDownListProveedor.DataTextField = "nombre"; // Mostrar el nombre del proveedor
+
+                    DropDownListProveedor.DataValueField = "id"; 
                     DropDownListProveedor.DataBind();
                     DropDownListProveedor.Items.Insert(0, new ListItem("Seleccione un proveedor", "0"));
 
@@ -86,8 +88,9 @@ namespace Front
                 if (productos != null && productos.Count > 0)
                 {
                     DropDownListProducto.DataSource = productos;
-                    DropDownListProducto.DataBind(); 
-                    DropDownListProducto.DataValueField = "nombre"; 
+                    DropDownListProducto.DataBind();
+                    DropDownListProducto.DataTextField = "nombre";
+                    DropDownListProducto.DataValueField = "id"; 
                     DropDownListProducto.DataBind();
                     DropDownListProducto.Items.Insert(0, new ListItem("Seleccione un producto", "0"));
                 }
@@ -107,10 +110,75 @@ namespace Front
 
 
         }
+
+
+
         protected void btnRealizarCompra_Click(object sender, EventArgs e)
         {
-            // Lógica para manejar la compra
+            // se cargan los datos del formulario y se los manda al metodo RealizarCompra que va a  hacer los insert correspondientes.
+
+
+
+            CompraNegocio negocio = new CompraNegocio();
+            Compra compra = new Compra();
+
+            ProductoNegocio negocioProducto = new ProductoNegocio();
+            Producto producto = new Producto();
+
+
+            int productoId;
+            if (int.TryParse(DropDownListProducto.SelectedValue, out productoId))
+            {
+                compra.IdProveedor = int.Parse(DropDownListProveedor.SelectedValue);
+                compra.IdProducto = DropDownListProducto.SelectedValue;
+                compra.Cantidad = int.Parse(TextBoxCantidad.Text);
+                compra.Fecha = DateTime.Parse(TextBoxFecha.Text);
+
+                producto = negocioProducto.ObtenerProducto(productoId);
+
+                // Calcular el precio de compra
+                compra.PrecioCompra = producto.precio - (producto.precio * producto.margenGanancia / 100);
+
+                // Calcular el total de la compra
+                compra.Total = compra.Cantidad * compra.PrecioCompra;
+
+               
+                
+                negocio.InsertarCompra(compra);
+
+
+
+            }
+            else
+            {
+                // Manejo de error si el IdProducto no es un entero válido
+                // Mostrar mensaje de error al usuario
+                MostrarMensaje("El ID del producto no es válido.", true);
+            }
+
+
+         
+
+
+
+
+
+
+
+
+
         }
+
+
+        private void MostrarMensaje(string mensaje, bool esError = true)
+        {
+            lblMensaje.Text = mensaje;
+            lblMensaje.CssClass = esError ? "alert alert-danger" : "alert alert-success";
+            lblMensaje.Visible = true;
+        }
+
+
+
 
 
 

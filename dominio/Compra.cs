@@ -9,6 +9,10 @@ namespace dominio
     {
         // esta clase registrará compras a proveedores:
         public int IdCompra { get; set; }
+
+
+
+
         public int IdProveedor { get; set; }
         public DateTime Fecha { get; set; }
         public decimal Total { get; set; }
@@ -17,10 +21,12 @@ namespace dominio
         public string Cliente { get; set; }
 
         // producto
-        public string Producto { get; set; }
+        public string IdProducto { get; set; }
 
         // cantidad
         public int Cantidad { get; set; }
+
+        public decimal PrecioCompra { get; set; }
 
 
     }

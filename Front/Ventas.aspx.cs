@@ -68,19 +68,22 @@ namespace Front
 
 
 
-    
 
 
-            dominio.Factura factura = new dominio.Factura()
-            {
-                IdVenta = idVenta,
-                TotalFactura = carrito.Sum(x => x.precio * x.Cantidad),
-                SubTotalFactura = carrito.Sum(x => x.precio * x.Cantidad),
-                
 
+            dominio.Factura factura = new dominio.Factura();
 
-            };
+            factura.IdVenta = idVenta;
+            factura.TotalFactura = carrito.Sum(x => x.precio * x.Cantidad);
+            factura.SubTotalFactura = carrito.Sum(x => x.precio * x.Cantidad);
+               
+            
+
            
+
+
+
+
 
 
             FacturaNegocio facturaNegocio = new FacturaNegocio();
@@ -94,6 +97,8 @@ namespace Front
 
             CargarVentas();
         }
+
+
 
         protected void btnRechazar_Click(object sender, EventArgs e)
         {
