@@ -239,6 +239,7 @@ namespace Front
                 Direccion = TextBoxDireccionCliente.Text,
                 Telefono = TextBoxTelefonoCliente.Text,
                 Email = TextBoxEmailCliente.Text,
+                clave = TextBoxClaveCliente.Text,
             };
 
             ClienteNegocio negocio = new ClienteNegocio();
