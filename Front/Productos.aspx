@@ -121,10 +121,10 @@
                             <asp:BoundField DataField="precio" HeaderText="Precio" />
                             <asp:BoundField DataField="margenGanancia" HeaderText="margenGanancia" />
                             <asp:BoundField DataField="Stock" HeaderText="Stock" />
-                            <asp:BoundField DataField="Marca" HeaderText="Marca" />
-                            <asp:BoundField DataField="Tipo" HeaderText="Tipo" />
-                            <asp:BoundField DataField="Categoria" HeaderText="Categoría" />
-                            <asp:BoundField DataField="Proveedor" HeaderText="Proveedor" />
+                            <asp:BoundField DataField="Marca.nombre" HeaderText="Marca" />
+                            <asp:BoundField DataField="Tipo.nombre" HeaderText="Tipo" />
+                            <asp:BoundField DataField="Categoria.nombre" HeaderText="Categoría" />
+                            <asp:BoundField DataField="Proveedor.nombre" HeaderText="Proveedor" />
                             <asp:BoundField DataField="Estado" HeaderText="Estado" />
                             <asp:TemplateField>
                                 <ItemTemplate>

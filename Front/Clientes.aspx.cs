@@ -85,6 +85,7 @@ namespace Front
                 TextBoxDireccionCliente.Text = HttpUtility.HtmlDecode(fila.Cells[4].Text);
                 TextBoxTelefonoCliente.Text = HttpUtility.HtmlDecode(fila.Cells[5].Text);
                 TextBoxEmailCliente.Text = HttpUtility.HtmlDecode(fila.Cells[6].Text);
+                TextBoxClaveCliente.Text = HttpUtility.HtmlDecode(fila.Cells[7].Text);
 
                 // Selecciona e perfil de clientee
                 string perfilNombre = fila.Cells[7].Text;
@@ -135,6 +136,7 @@ namespace Front
                 TextBoxDireccionCliente.Text = cliente.Direccion;
                 TextBoxTelefonoCliente.Text = cliente.Telefono;
                 TextBoxEmailCliente.Text = cliente.Email;
+                TextBoxClaveCliente.Text = cliente.clave;
 
                 // Seleccionar el perfil del cliente
                 ListItem item = ddlPerfilCliente.Items.FindByValue(cliente.idPerfil.ToString());

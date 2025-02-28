@@ -1,3 +1,4 @@
+
 CREATE DATABASE TiendaOnline;
 GO
 USE TiendaOnline;
@@ -88,7 +89,7 @@ CREATE TABLE EstadoVenta (
 -- Tabla para Venta a clientes
 CREATE TABLE Ventas (
     id INT PRIMARY KEY IDENTITY(1,1),
-    fecha datetime,
+    fecha DATE,
     monto DECIMAL(10, 2),
     idUsuario INT FOREIGN KEY REFERENCES Usuarios(id),
     EnLocal bit DEFAULT 0 NOT NULL, -- 0 = Venta Online, 1 = Venta En local
@@ -144,6 +145,8 @@ CREATE TABLE Stock (
 );
 
 
+USE TiendaOnline;
+GO
 
 -- Insertar datos en la tabla Marcas
 INSERT INTO Marcas (nombre) VALUES ('Disney');
@@ -159,7 +162,7 @@ INSERT INTO Categorias (nombre) VALUES ('Niñas');
 
 -- Insertar datos en la tabla Productos
 INSERT INTO Productos (nombre, descripcion, precio, imagen, idMarca, idTipo, idCategoria, margenGanancia) VALUES 
-('Peluche Mickey', 'Peluche de Mickey Mouse', 100.00, 'https://http2.mlstatic.com/D_NQ_NP_766265-MLU74210721135_012024-O.webp', 1, 1, 1, 20), 
+('Peluche Mickey', 'Peluche de Mickey Mouse', 100.00, 'https://images.unsplash.com/photo-1533450718592-29d45635f0a9?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8anBnfGVufDB8fDB8fHww', 1, 1, 1, 20), 
 ('Peluche Minnie', 'Peluche de Minnie Mouse', 100.00, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuSw-OdEWAVkZN58ydZ_Mz8CwNzFAEHRHn5g&s', 1, 1, 2, 20),
 ( 'pañales pampers', 'pañales pampers', 100.00, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuSw-OdEWAVkZN58ydZ_Mz8CwNzFAEHRHn5g&s', 1, 1, 1, 20),
 ( 'pañales huggies', 'pañales huggies', 100.00, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuSw-OdEWAVkZN58ydZ_Mz8CwNzFAEHRHn5g&s', 1, 1, 1, 20);
@@ -181,11 +184,11 @@ INSERT INTO Perfiles (nombre) VALUES ('Vendedor'); --3
 
 -- Insertar datos en la tabla Usuarios
 INSERT INTO Usuarios (nombre, apellido, dni, direccion, telefono, email, clave, idPerfil) VALUES 
-('Mariel', 'Torres', '6666666', 'Direccion 5', '345678112', 'Soporte', '555' , 1),
-('Miguel', 'Rodriguez', '12345678', 'Direccion 1', '123456789', 'Admin', '111', 2),
-('Larry', 'Lopez', '12345678', 'Direccion 2', '123456789', 'cliente', '222' , 1),
-('Nazareno', 'Alvarez', '90123456', 'Direccion 3', '012345678', 'cliente2', '333' , 1),
-('Pablo', 'sanchez', '78901234', 'Direccion 4', '901234567', 'vendedor', '444' , 3);
+('Mariel', 'Torres', '6666666', 'Direccion 5', '345678112', 'Mariel3@gmail.com', '12345677' , 1),
+('administrador', 'Admin', '12345678', 'Direccion 1', '123456789', 'Administrador@admin.com', '111111', 2),
+('Larry', 'Cricione', '12345678', 'Direccion 2', '123456789', 'cliente1@gmial.com', '123456' , 1),
+('Nazareno', 'Ligero', '90123456', 'Direccion 3', '012345678', 'cliente2@gmail.com', '123456' , 1),
+('vendedor', 'Apellido 4', '78901234', 'Direccion 4', '901234567', 'vendedor@gmail.com', '123456' , 3);
 
 -- Insertar datos en la tabla EstadoVenta
 INSERT INTO EstadoVenta (nombre) VALUES ('Pendiente');
@@ -217,7 +220,6 @@ INSERT INTO Facturas (idVenta, fecha, total, subTotal) VALUES (2, '2021-01-02', 
 -- Insertar datos en la tabla Stock
 INSERT INTO Stock (idProducto, cantidad, stockMinimo, fechaActualizacion) VALUES (1, 10, 5, '2021-01-01');
 INSERT INTO Stock (idProducto, cantidad, stockMinimo, fechaActualizacion) VALUES (2, 20, 10, '2021-01-02');
-
 
 
 

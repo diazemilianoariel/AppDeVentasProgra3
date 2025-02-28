@@ -59,11 +59,11 @@ namespace Front
                 LabelDescripcionProducto.Text = producto.descripcion;
                 LabelPrecioProducto.Text = producto.precio.ToString();
                 LabelStockProducto.Text = producto.stock.ToString();
-                LabelMarcaProducto.Text = producto.marca;
+                LabelMarcaProducto.Text = producto.Marca.nombre;
                 ImageProducto.ImageUrl = producto.Imagen;
-                LabelTipoProducto.Text = producto.tipo;
-                LabelCategoriaProducto.Text = producto.categoria;
-                LabelProveedorProducto.Text = producto.proveedor;
+                LabelTipoProducto.Text = producto.Tipo.nombre;
+                LabelCategoriaProducto.Text = producto.Categoria.nombre;
+                LabelProveedorProducto.Text = producto.proveedor.Nombre;
                 LabelEstadoProducto.Text = producto.estado.ToString();
 
 
@@ -88,16 +88,17 @@ namespace Front
             Button button = (Button)sender;
             string commnandArgument = button.CommandArgument;
 
-            if(int.TryParse(commnandArgument, out int idProducto))
+            if (int.TryParse(commnandArgument, out int idProducto))
             {
                 Response.Redirect($"DetalleProducto.aspx?id={idProducto}");
             }
             else
             {
-                Response.Redirect("Default.aspx");
-                }
 
-               
+                Response.Redirect("Productos.aspx");
+            }
+
+
 
 
         }

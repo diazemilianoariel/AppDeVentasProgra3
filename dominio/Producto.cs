@@ -32,10 +32,22 @@ namespace dominio
 
         public int Cantidad { get; set; }  // propiedad para que el cliente eliga cuantos va a comprar
 
-        public string marca { get; set; }
-        public string tipo { get; set; }
-        public string categoria { get; set; }
-        public string proveedor { get; set; }  // mmmmm ?
+        public Marca Marca { get; set; }
+        public int idMarca { get; set; }
+
+
+        public Tipos Tipo { get; set; }
+        public int idTipo { get; set; }
+
+
+        public Categoria Categoria { get; set; }
+        public int IdCategoria { get; set; }
+
+
+
+        public Proveedor proveedor { get; set; }  // mmmmm ?
+        public int IdProveedor  { get; set; }
+
 
         public decimal margenGanancia { get; set; }
         public bool estado { get; set; }
@@ -44,17 +56,6 @@ namespace dominio
 
 
 
-
-        /*[id] [int] IDENTITY(1,1) NOT NULL,
-	    [nombre] [nvarchar](50) NULL,
-	    [descripcion] [nvarchar](100) NULL,
-	    [precio] [decimal](10, 2) NULL,
-	    [imagen] [nvarchar](255) NULL,
-	    [idMarca] [int] NULL,
-	    [idTipo] [int] NULL,
-	    [idCategoria] [int] NULL,
-	    [margenGanancia] [decimal](10, 2) NOT NULL,
-	    [estado] [bit] NOT NULL*/
 
 
     }

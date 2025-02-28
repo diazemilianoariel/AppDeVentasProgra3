@@ -95,7 +95,6 @@
     <Content Include="MisCompras.aspx" />
     <Content Include="Perfiles.aspx" />
     <Content Include="Reportes.aspx" />
-    <Content Include="Vendedor.aspx" />
     <Content Include="Ventas.aspx" />
     <Content Include="Productos.aspx" />
     <Content Include="Proveedores.aspx" />
@@ -193,13 +192,6 @@
     </Compile>
     <Compile Include="Reportes.aspx.designer.cs">
       <DependentUpon>Reportes.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Vendedor.aspx.cs">
-      <DependentUpon>Vendedor.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Vendedor.aspx.designer.cs">
-      <DependentUpon>Vendedor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Ventas.aspx.cs">
       <DependentUpon>Ventas.aspx</DependentUpon>

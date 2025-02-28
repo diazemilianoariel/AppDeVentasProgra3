@@ -67,17 +67,6 @@
 
 
 
-                    <% if (idPerfil == 2)
-                        { %>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="Vendedor.aspx">Vendedor</a>
-
-                    </li>
-
-                    <%} %>
-
-
 
                     <% if (idPerfil == 2)
                         { %>

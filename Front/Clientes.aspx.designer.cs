@@ -141,6 +141,24 @@ namespace Front
         protected global::System.Web.UI.WebControls.TextBox TextBoxEmailCliente;
 
         /// <summary>
+        /// Control LabelClaveCliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelClaveCliente;
+
+        /// <summary>
+        /// Control TextBoxClaveCliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBoxClaveCliente;
+
+        /// <summary>
         /// Control lblConfirmacion.
         /// </summary>
         /// <remarks>

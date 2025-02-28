@@ -64,21 +64,21 @@ namespace negocio
                 // Leer los datos obtenidos
                 while (accesoDatos.Lector.Read())
                 {
-                    Producto producto = new Producto();
-
-                    producto.id = accesoDatos.Lector.GetInt32(0);
-                    producto.nombre = accesoDatos.Lector.GetString(1);
-                    producto.descripcion = accesoDatos.Lector.GetString(2);
-                    producto.Imagen = accesoDatos.Lector.GetString(3);
-                    producto.precio = accesoDatos.Lector.GetDecimal(4);
-                    producto.margenGanancia = accesoDatos.Lector.GetDecimal(5);
-                    producto.stock = accesoDatos.Lector.GetInt32(6);
-                    producto.marca = accesoDatos.Lector.GetString(7);
-                    producto.tipo = accesoDatos.Lector.GetString(8);
-                    producto.categoria = accesoDatos.Lector.GetString(9);
-                    producto.estado = accesoDatos.Lector.GetBoolean(10);
-                    producto.proveedor = accesoDatos.Lector.GetString(11);
-
+                    Producto producto = new Producto
+                    {
+                        id = accesoDatos.Lector.GetInt32(0),
+                        nombre = accesoDatos.Lector.GetString(1),
+                        descripcion = accesoDatos.Lector.GetString(2),
+                        Imagen = accesoDatos.Lector.GetString(3),
+                        precio = accesoDatos.Lector.GetDecimal(4),
+                        margenGanancia = accesoDatos.Lector.GetDecimal(5),
+                        stock = accesoDatos.Lector.GetInt32(6),
+                        Marca = new Marca { nombre = accesoDatos.Lector.GetString(7) },
+                        Tipo = new Tipos { nombre = accesoDatos.Lector.GetString(8) },
+                        Categoria = new Categoria { nombre = accesoDatos.Lector.GetString(9) },
+                        estado = accesoDatos.Lector.GetBoolean(10),
+                        proveedor = new Proveedor { Nombre = accesoDatos.Lector.GetString(11) }
+                    };
 
 
 
@@ -109,19 +109,14 @@ namespace negocio
             try
             {
                 // Usar parámetros para evitar inyecciones SQL
-                accesoDatos.SetearConsulta("SELECT P.id, P.nombre, P.descripcion, P.imagen, P.precio, P.margenGanancia, S.cantidad, M.nombre AS Marca, T.nombre AS Tipo, C.nombre AS Categoria, Pr.nombre AS Proveedor, P.estado " +
-                                   "FROM Productos P " +
-                                   "INNER JOIN Stock S ON P.id = S.idProducto " +
-                                   "INNER JOIN Marcas M ON P.idMarca = M.id " +
-                                   "INNER JOIN Tipos T ON P.idTipo = T.id " +
-                                   "INNER JOIN Categorias C ON P.idCategoria = C.id " +
-                                   "INNER JOIN Proveedores_Productos PP ON P.id = PP.idProducto " +
-                                   "INNER JOIN Proveedores Pr ON PP.idProveedor = Pr.id " +
-                                   "WHERE P.id = @id");
-
-
-
-
+                accesoDatos.SetearConsulta(" SELECT P.id, P.nombre, P.descripcion, P.imagen, P.precio, P.margenGanancia, S.cantidad, M.id AS MarcaId, M.nombre AS MarcaNombre, T.id AS TipoId, T.nombre AS TipoNombre, C.id AS CategoriaId, C.nombre AS CategoriaNombre, Pr.id AS ProveedorId, Pr.nombre AS ProveedorNombre, P.estado FROM Productos P " +
+                    "INNER JOIN Stock S ON P.id = S.idProducto " +
+                    "INNER JOIN Marcas M ON P.idMarca = M.id " +
+                    "INNER JOIN Tipos T ON P.idTipo = T.id " +
+                    "INNER JOIN Categorias C ON P.idCategoria = C.id " +
+                    "INNER JOIN Proveedores_Productos PP ON P.id = PP.idProducto " +
+                    "INNER JOIN Proveedores Pr ON PP.idProveedor = Pr.id " +
+                    "WHERE P.id = @id");
                 // Agregar parámetros con los valores correspondientes
                 accesoDatos.SetearParametro("@id", id);
 
@@ -138,11 +133,11 @@ namespace negocio
                     producto.precio = accesoDatos.Lector.GetDecimal(4);
                     producto.margenGanancia = accesoDatos.Lector.GetDecimal(5);
                     producto.stock = accesoDatos.Lector.GetInt32(6);
-                    producto.marca = accesoDatos.Lector.GetString(7);
-                    producto.tipo = accesoDatos.Lector.GetString(8);
-                    producto.categoria = accesoDatos.Lector.GetString(9);
-                    producto.proveedor = accesoDatos.Lector.GetString(10);
-                    producto.estado = accesoDatos.Lector.GetBoolean(11);
+                    producto.Marca = new Marca { id = accesoDatos.Lector.GetInt32(7), nombre = accesoDatos.Lector.GetString(8) };
+                    producto.Tipo = new Tipos { id = accesoDatos.Lector.GetInt32(9), nombre = accesoDatos.Lector.GetString(10) };
+                    producto.Categoria = new Categoria { id = accesoDatos.Lector.GetInt32(11), nombre = accesoDatos.Lector.GetString(12) };
+                    producto.proveedor = new Proveedor { id = accesoDatos.Lector.GetInt32(13), Nombre = accesoDatos.Lector.GetString(14) };
+                    producto.estado = accesoDatos.Lector.GetBoolean(15);
 
 
                 }
@@ -182,6 +177,11 @@ namespace negocio
                 if (count > 0)
                 {
                     throw new Exception("El producto ya existe");
+
+                   
+
+
+
                 }
             }
             catch (Exception ex)
@@ -201,6 +201,9 @@ namespace negocio
 
             try
             {
+
+
+
                 // Insertar en la tabla Productos
                 accesodatos.SetearConsulta("INSERT INTO Productos (nombre, descripcion, imagen, precio, margenGanancia, estado, idMarca, idTipo, idCategoria) " +
                                            "VALUES (@nombre, @descripcion, @imagen, @precio, @margenGanancia, @estado, @idMarca, @idTipo, @idCategoria); " +
@@ -212,12 +215,16 @@ namespace negocio
                 accesodatos.SetearParametro("@precio", producto.precio);
                 accesodatos.SetearParametro("@margenGanancia", producto.margenGanancia);
                 accesodatos.SetearParametro("@estado", producto.estado);
-                accesodatos.SetearParametro("@idMarca", producto.marca);
-                accesodatos.SetearParametro("@idTipo", producto.tipo);
-                accesodatos.SetearParametro("@idCategoria", producto.categoria);
+                accesodatos.SetearParametro("@idMarca", producto.idMarca);
+                accesodatos.SetearParametro("@idTipo", producto.idTipo);
+                accesodatos.SetearParametro("@idCategoria", producto.IdCategoria);
+                
+
+
 
                 // Obtener el ID del producto insertado
                 idProducto = Convert.ToInt32(accesodatos.EjecutarEscalar());
+
             }
             catch (Exception ex)
             {
@@ -234,7 +241,7 @@ namespace negocio
             try
             {
                 // Insertar en la tabla Stock
-                accesodatos = new AccesoDatos();
+                AccesoDatos accesoDatos = new AccesoDatos();
                 accesodatos.SetearConsulta("INSERT INTO Stock (idProducto, cantidad, stockMinimo, fechaActualizacion) " +
                                            "VALUES (@idProducto, @cantidad, @stockMinimo, @fechaActualizacion)");
 
@@ -257,12 +264,12 @@ namespace negocio
             try
             {
                 // Insertar en la tabla Proveedores_Productos
-                accesodatos = new AccesoDatos();
+                AccesoDatos accesoDatos = new AccesoDatos();
                 accesodatos.SetearConsulta("INSERT INTO Proveedores_Productos (idProveedor, idProducto) " +
-                                           "VALUES (@idProveedor, @idProducto)");
+                                           "VALUES (@idProveedor, @idProductoProveedorPorProducto)");
 
-                accesodatos.SetearParametro("@idProveedor", producto.proveedor);
-                accesodatos.SetearParametro("@idProducto", idProducto);
+                accesodatos.SetearParametro("@idProveedor", producto.IdProveedor);
+                accesodatos.SetearParametro("@idProductoProveedorPorProducto", idProducto);
 
                 accesodatos.EjecutarAccion();
             }
@@ -282,28 +289,24 @@ namespace negocio
 
 
 
+
         public void ModificarProducto(Producto producto)
         {
             AccesoDatos accesoDatos = new AccesoDatos();
             try
             {
-                // Usar parámetros para evitar inyecciones SQL
-                accesoDatos.SetearConsulta("UPDATE Productos SET nombre = @nombre, descripcion = @descripcion, imagen = @imagen, precio = @precio,  estado = @estado WHERE id = @idProducto");
+                
+                accesoDatos.SetearConsulta("UPDATE Productos SET nombre = @nombre, descripcion = @descripcion, imagen = @imagen, precio = @precio, estado = @estado WHERE id = @idProducto");
 
-                // Agregar parámetros con los valores correspondientes
                 accesoDatos.SetearParametro("@nombre", producto.nombre);
                 accesoDatos.SetearParametro("@descripcion", producto.descripcion);
                 accesoDatos.SetearParametro("@imagen", producto.Imagen);
                 accesoDatos.SetearParametro("@precio", producto.precio);
-                accesoDatos.SetearParametro("@idMarca", producto.marca);
-                accesoDatos.SetearParametro("@idTipo", producto.tipo);
-                accesoDatos.SetearParametro("@idCategoria", producto.categoria);
                 accesoDatos.SetearParametro("@estado", producto.estado);
                 accesoDatos.SetearParametro("@idProducto", producto.id);
 
                 // Ejecutar la acción de modificación
                 accesoDatos.EjecutarAccion();
-
             }
             catch (Exception ex)
             {
@@ -314,11 +317,10 @@ namespace negocio
                 accesoDatos.CerrarConexion();
             }
 
-
-
-            // modificamos la cantidad de la tabla stock
+            // Modificamos la cantidad de la tabla stock
             try
             {
+                accesoDatos = new AccesoDatos();
                 accesoDatos.SetearConsulta("UPDATE Stock SET cantidad = @cantidad WHERE idProducto = @idProductoCantidad");
 
                 // Agregar parámetros con los valores correspondientes
@@ -327,7 +329,6 @@ namespace negocio
 
                 // Ejecutar la acción de modificación
                 accesoDatos.EjecutarAccion();
-
             }
             catch (Exception ex)
             {
@@ -338,18 +339,21 @@ namespace negocio
                 accesoDatos.CerrarConexion();
             }
 
-            // modificamos el nombre de la marca en su tabla Marcas
+            // Modificamos el nombre de la marca en su tabla Marcas
             try
             {
-                accesoDatos.SetearConsulta("UPDATE Marcas SET nombre = @nombreMarca WHERE id = @idMarca");
+                if (producto.Marca != null)
+                {
+                    accesoDatos = new AccesoDatos();
+                    accesoDatos.SetearConsulta("UPDATE Marcas SET nombre = @nombreMarca WHERE id = @idMarca");
 
-                // Agregar parámetros con los valores correspondientes
-                accesoDatos.SetearParametro("@nombreMarca", producto.marca);
-                accesoDatos.SetearParametro("@idMarca", producto.id);
+                    // Agregar parámetros con los valores correspondientes
+                    accesoDatos.SetearParametro("@nombreMarca", producto.Marca.nombre);
+                    accesoDatos.SetearParametro("@idMarca", producto.idMarca);
 
-                // Ejecutar la acción de modificación
-                accesoDatos.EjecutarAccion();
-
+                    // Ejecutar la acción de modificación
+                    accesoDatos.EjecutarAccion();
+                }
             }
             catch (Exception ex)
             {
@@ -360,19 +364,21 @@ namespace negocio
                 accesoDatos.CerrarConexion();
             }
 
-
-            // modificamos el nombre de Tipo en su tabla Tipos
+            // Modificamos el nombre de Tipo en su tabla Tipos
             try
             {
-                accesoDatos.SetearConsulta("UPDATE Tipos SET nombre = @nombreTipo WHERE id = @idTipo");
+                if (producto.Tipo != null)
+                {
+                    accesoDatos = new AccesoDatos();
+                    accesoDatos.SetearConsulta("UPDATE Tipos SET nombre = @nombreTipo WHERE id = @idTipo");
 
-                // Agregar parámetros con los valores correspondientes
-                accesoDatos.SetearParametro("@nombreTipo", producto.tipo);
-                accesoDatos.SetearParametro("@idTipo", producto.id);
+                    // Agregar parámetros con los valores correspondientes
+                    accesoDatos.SetearParametro("@nombreTipo", producto.Tipo.nombre);
+                    accesoDatos.SetearParametro("@idTipo", producto.idTipo);
 
-                // Ejecutar la acción de modificación
-                accesoDatos.EjecutarAccion();
-
+                    // Ejecutar la acción de modificación
+                    accesoDatos.EjecutarAccion();
+                }
             }
             catch (Exception ex)
             {
@@ -383,20 +389,21 @@ namespace negocio
                 accesoDatos.CerrarConexion();
             }
 
-
-
-            // modificamos el nombre de la categoria en su tabla Categorias
+            // Modificamos el nombre de la categoria en su tabla Categorias
             try
             {
-                accesoDatos.SetearConsulta("UPDATE Categorias SET nombre = @nombreCategoria WHERE id = @idCategoria");
+                if (producto.Categoria != null)
+                {
+                    accesoDatos = new AccesoDatos();
+                    accesoDatos.SetearConsulta("UPDATE Categorias SET nombre = @nombreCategoria WHERE id = @idCategoria");
 
-                // Agregar parámetros con los valores correspondientes
-                accesoDatos.SetearParametro("@nombreCategoria", producto.categoria);
-                accesoDatos.SetearParametro("@idCategoria", producto.id);
+                    // Agregar parámetros con los valores correspondientes
+                    accesoDatos.SetearParametro("@nombreCategoria", producto.Categoria.nombre);
+                    accesoDatos.SetearParametro("@idCategoria", producto.IdCategoria);
 
-                // Ejecutar la acción de modificación
-                accesoDatos.EjecutarAccion();
-
+                    // Ejecutar la acción de modificación
+                    accesoDatos.EjecutarAccion();
+                }
             }
             catch (Exception ex)
             {
@@ -407,19 +414,21 @@ namespace negocio
                 accesoDatos.CerrarConexion();
             }
 
-
-            // modificamos el nombre del proveedor en su tabla Proveedores
+            // Modificamos el nombre del proveedor en su tabla Proveedores
             try
             {
-                accesoDatos.SetearConsulta("UPDATE Proveedores SET nombre = @nombreProveedor WHERE id = @idProveedor");
+                if (producto.proveedor != null)
+                {
+                    accesoDatos = new AccesoDatos();
+                    accesoDatos.SetearConsulta("UPDATE Proveedores SET nombre = @nombreProveedor WHERE id = @idProveedor");
 
-                // Agregar parámetros con los valores correspondientes
-                accesoDatos.SetearParametro("@nombreProveedor", producto.proveedor);
-                accesoDatos.SetearParametro("@idProveedor", producto.id);
+                    // Agregar parámetros con los valores correspondientes
+                    accesoDatos.SetearParametro("@nombreProveedor", producto.proveedor.Nombre);
+                    accesoDatos.SetearParametro("@idProveedor", producto.IdProveedor);
 
-                // Ejecutar la acción de modificación
-                accesoDatos.EjecutarAccion();
-
+                    // Ejecutar la acción de modificación
+                    accesoDatos.EjecutarAccion();
+                }
             }
             catch (Exception ex)
             {
@@ -429,26 +438,84 @@ namespace negocio
             {
                 accesoDatos.CerrarConexion();
             }
-
-
-
-
         }
+
 
 
         public void EliminarProducto(int id)
         {
-            AccesoDatos accesoDatos = new AccesoDatos();
+
             try
             {
-                // Usar parámetros para evitar inyecciones SQL
-                accesoDatos.SetearConsulta("DELETE FROM Productos WHERE id = @id");
+                AccesoDatos accesoDatos = new AccesoDatos();
 
-                // Agregar parámetros con los valores correspondientes
+                // Eliminar las referencias en la tabla DetalleCompras
+                accesoDatos.SetearConsulta("DELETE FROM DetalleCompras WHERE idProducto = @id");
                 accesoDatos.SetearParametro("@id", id);
-
-                // Ejecutar la acción de eliminación
                 accesoDatos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                AccesoDatos accesoDatos = new AccesoDatos();
+
+                accesoDatos.CerrarConexion();
+            }
+
+
+            try
+            {
+                AccesoDatos accesoDatos = new AccesoDatos();
+
+                // Eliminar las referencias en la tabla Stock
+                accesoDatos.SetearConsulta("DELETE FROM Stock WHERE idProducto = @id");
+                accesoDatos.SetearParametro("@id", id);
+                accesoDatos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                AccesoDatos accesoDatos = new AccesoDatos();
+
+                accesoDatos.CerrarConexion();
+            }
+
+            try
+            {
+                AccesoDatos accesoDatos = new AccesoDatos();
+
+                // Eliminar las referencias en la tabla DetalleVentas
+                accesoDatos.SetearConsulta("DELETE FROM DetalleVentas WHERE idProducto = @id");
+                accesoDatos.SetearParametro("@id", id);
+                accesoDatos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                AccesoDatos accesoDatos = new AccesoDatos();
+
+                accesoDatos.CerrarConexion();
+            }
+
+
+            try
+            {
+               AccesoDatos accesoDatos = new AccesoDatos();
+                // Eliminar las referencias en la tabla Proveedores_Productos
+                accesoDatos.SetearConsulta("DELETE FROM Proveedores_Productos WHERE idProducto = @id");
+                accesoDatos.SetearParametro("@id", id);
+                accesoDatos.EjecutarAccion();
+
+              
 
             }
             catch (Exception ex)
@@ -457,6 +524,29 @@ namespace negocio
             }
             finally
             {
+                AccesoDatos accesoDatos = new AccesoDatos();
+                accesoDatos.CerrarConexion();
+            }
+
+
+
+            try
+            {
+
+                AccesoDatos accesoDatos = new AccesoDatos();
+                // Eliminar el producto de la tabla Productos
+                accesoDatos.SetearConsulta("DELETE FROM Productos WHERE id = @id");
+                accesoDatos.SetearParametro("@id", id);
+                accesoDatos.EjecutarAccion();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                AccesoDatos accesoDatos = new AccesoDatos();
                 accesoDatos.CerrarConexion();
             }
         }
@@ -492,11 +582,11 @@ namespace negocio
                     producto.precio = accesoDatos.Lector.GetDecimal(4);
                     producto.margenGanancia = accesoDatos.Lector.GetDecimal(5);
                     producto.stock = accesoDatos.Lector.GetInt32(6);
-                    producto.marca = accesoDatos.Lector.GetString(7);
-                    producto.tipo = accesoDatos.Lector.GetString(8);
-                    producto.categoria = accesoDatos.Lector.GetString(9);
+                    producto.Marca.nombre = accesoDatos.Lector.GetString(7);
+                    producto.Marca.nombre = accesoDatos.Lector.GetString(8);
+                    producto.Marca.nombre = accesoDatos.Lector.GetString(9);
                     producto.estado = accesoDatos.Lector.GetBoolean(10);
-                    producto.proveedor = accesoDatos.Lector.GetString(11);
+                    producto.Marca.nombre = accesoDatos.Lector.GetString(11);
 
                     lista.Add(producto);
                 }

@@ -28,14 +28,17 @@
                     <asp:Label ID="LabelIdCliente" runat="server" AssociatedControlID="TextBoxIdCliente" CssClass="form-label">ID</asp:Label>
                     <asp:TextBox ID="TextBoxIdCliente" runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
                 </div>
+
                 <div class="mb-3">
                     <asp:Label ID="LabelNombreCliente" runat="server" AssociatedControlID="TextBoxNombreCliente" CssClass="form-label">Nombre</asp:Label>
                     <asp:TextBox ID="TextBoxNombreCliente" runat="server" CssClass="form-control"></asp:TextBox>
                 </div>
+
                 <div class="mb-3">
                     <asp:Label ID="LabelApellidoCliente" runat="server" AssociatedControlID="TextBoxApellidoCliente" CssClass="form-label">Apellido</asp:Label>
                     <asp:TextBox ID="TextBoxApellidoCliente" runat="server" CssClass="form-control"></asp:TextBox>
                 </div>
+
                 <div class="mb-3">
                     <asp:Label ID="LabelDniCliente" runat="server" AssociatedControlID="TextBoxDniCliente" CssClass="form-label">Dni</asp:Label>
                     <asp:TextBox ID="TextBoxDniCliente" runat="server" CssClass="form-control"></asp:TextBox>
@@ -49,13 +52,21 @@
                     <asp:Label ID="LabelDireccionCliente" runat="server" AssociatedControlID="TextBoxDireccionCliente" CssClass="form-label">Direccion</asp:Label>
                     <asp:TextBox ID="TextBoxDireccionCliente" runat="server" CssClass="form-control"></asp:TextBox>
                 </div>
+
                 <div class="mb-3">
                     <asp:Label ID="LabelTelefonoCliente" runat="server" AssociatedControlID="TextBoxTelefonoCliente" CssClass="form-label">Telefono</asp:Label>
                     <asp:TextBox ID="TextBoxTelefonoCliente" runat="server" CssClass="form-control"></asp:TextBox>
                 </div>
+
                 <div class="mb-3">
                     <asp:Label ID="LabelEmailCliente" runat="server" AssociatedControlID="TextBoxEmailCliente" CssClass="form-label">Email</asp:Label>
                     <asp:TextBox ID="TextBoxEmailCliente" runat="server" CssClass="form-control"></asp:TextBox>
+                </div>
+
+
+                <div class="mb-3">
+                    <asp:Label ID="LabelClaveCliente" runat="server" AssociatedControlID="TextBoxClaveCliente" CssClass="form-label">Clave</asp:Label>
+                    <asp:TextBox ID="TextBoxClaveCliente" runat="server" CssClass="form-control"></asp:TextBox>
                 </div>
 
 
@@ -64,12 +75,12 @@
 
 
                 <div class="mb-3">
-                
+
 
 
 
                     <asp:Label ID="LabelPerfilCliente" runat="server" AssociatedControlID="ddlPerfilCliente" CssClass="form-label">Perfiles</asp:Label>
-                     <asp:DropDownList ID="ddlPerfilCliente" runat="server" CssClass="form-control"></asp:DropDownList>
+                    <asp:DropDownList ID="ddlPerfilCliente" runat="server" CssClass="form-control"></asp:DropDownList>
 
 
                 </div>
@@ -81,15 +92,15 @@
 
 
 
-        <!-- Botones -->
+    <!-- Botones -->
 
-        <div class="d-flex justify-content-between mt-4 col-6 mb-4">
-            <asp:Button ID="btnActivarCliente" runat="server" OnClick="btnActivarCliente_Click" Style="display: none;" />
-            <asp:Button ID="btnAgregarCliente" runat="server" CssClass="btn btn-success" Text="Agregar" OnClick="btnAgregarCliente_Click" />
-            <asp:Button ID="btnModificarCliente" runat="server" CssClass="btn btn-warning" Text="Modificar" OnClick="btnModificarCliente_Click" />
-            <asp:Button ID="btnEliminarCliente" runat="server" CssClass="btn btn-danger" Text="Eliminar" OnClick="btnEliminarCliente_Click" />
-            <asp:Button ID="btnCancelarCliente" runat="server" CssClass="btn btn-secondary" Text="Cancelar" OnClick="btnCancelarCliente_Click" />
-        </div>
+    <div class="d-flex justify-content-between mt-4 col-6 mb-4">
+        <asp:Button ID="btnActivarCliente" runat="server" OnClick="btnActivarCliente_Click" Style="display: none;" />
+        <asp:Button ID="btnAgregarCliente" runat="server" CssClass="btn btn-success" Text="Agregar" OnClick="btnAgregarCliente_Click" />
+        <asp:Button ID="btnModificarCliente" runat="server" CssClass="btn btn-warning" Text="Modificar" OnClick="btnModificarCliente_Click" />
+        <asp:Button ID="btnEliminarCliente" runat="server" CssClass="btn btn-danger" Text="Eliminar" OnClick="btnEliminarCliente_Click" />
+        <asp:Button ID="btnCancelarCliente" runat="server" CssClass="btn btn-secondary" Text="Cancelar" OnClick="btnCancelarCliente_Click" />
+    </div>
 
     <!-- Tabla de Clientes -->
     <div>
@@ -105,6 +116,7 @@
                         <asp:BoundField DataField="direccion" HeaderText="Dirección" />
                         <asp:BoundField DataField="telefono" HeaderText="Telefono" />
                         <asp:BoundField DataField="email" HeaderText="Email" />
+                        <asp:BoundField DataField="clave" HeaderText="Clave" />
                         <asp:BoundField DataField="nombrePerfil" HeaderText="Perfil" />
                         <asp:TemplateField>
                             <ItemTemplate>

@@ -16,7 +16,7 @@ namespace negocio
             {
                 try
                 {
-                    datos.SetearConsulta("select U.id, U.Nombre, U.apellido, U.dni, U.direccion, U.telefono, U.email, P.nombre as Perfil from Usuarios U INNER JOIN Perfiles P on U.idPerfil = P.id where U.estado = 1");
+                    datos.SetearConsulta("select U.id, U.Nombre, U.apellido, U.dni, U.direccion, U.telefono, U.email, U.clave, P.nombre as Perfil from Usuarios U INNER JOIN Perfiles P on U.idPerfil = P.id where U.estado = 1");
                     datos.EjecutarLectura();
                     while (datos.Lector.Read())
                     {
@@ -29,6 +29,7 @@ namespace negocio
                             Direccion = (string)datos.Lector["direccion"],
                             Telefono = (string)datos.Lector["telefono"],
                             Email = (string)datos.Lector["email"],
+                            clave = (string)datos.Lector["clave"],
                             nombrePerfil = (string)datos.Lector["Perfil"]
                         };
                         lista.Add(aux);
@@ -51,7 +52,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select Id, Nombre, apellido, dni, direccion, telefono, email from Clientes where Id = @id");
+                datos.SetearConsulta("select Id, Nombre, apellido, dni, direccion, telefono, email, clave from Clientes where Id = @id");
                 datos.SetearParametro("@id", id);
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())
@@ -63,6 +64,7 @@ namespace negocio
                     aux.Direccion = (string)datos.Lector["Direccion"];
                     aux.Telefono = (string)datos.Lector["Telefono"];
                     aux.Email = (string)datos.Lector["Email"];
+                    aux.clave = (string)datos.Lector["clave"];
                     return aux;
                 }
                 return null;
@@ -83,7 +85,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select U.Id, U.Nombre, U.Apellido, U.Dni, U.Direccion, U.Telefono, U.Email, U.idPerfil, P.Nombre as nombrePerfil from Usuarios U " +
+                datos.SetearConsulta("select U.Id, U.Nombre, U.Apellido, U.Dni, U.Direccion, U.Telefono, U.Email, U.clave, U.idPerfil, P.Nombre as nombrePerfil from Usuarios U " +
                              "inner join Perfiles P on U.idPerfil = P.Id where U.Email = @Email and U.estado = 1");
                 datos.SetearParametro("@Email", Email);
                 datos.EjecutarLectura();
@@ -96,6 +98,7 @@ namespace negocio
                     aux.Direccion = (string)datos.Lector["Direccion"];
                     aux.Telefono = (string)datos.Lector["Telefono"];
                     aux.Email = (string)datos.Lector["Email"];
+                    aux.clave = (string)datos.Lector["clave"];
                     aux.idPerfil = (int)datos.Lector["idPerfil"];
                     aux.nombrePerfil = (string)datos.Lector["nombrePerfil"];
                     return aux;
@@ -113,12 +116,6 @@ namespace negocio
 
         }
 
-
-
-
-
-
-       
 
 
         public void AgregarCliente(Cliente nuevo)
@@ -150,22 +147,31 @@ namespace negocio
 
         public void ModificarCliente(Cliente modificado)
         {
+            if (string.IsNullOrEmpty(modificado.clave))
+            {
+                throw new ArgumentException("La clave no puede estar vacía.");
+            }
+
+
+
+
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("update Usuarios set Nombre = @Nombre, Apellido = @Apellido, Dni = @Dni, Direccion = @Direccion, Telefono = @Telefono, Email = @Email where Id = @Id");
+                datos.SetearConsulta("update Usuarios set Nombre = @Nombre, Apellido = @Apellido, Dni = @Dni, Direccion = @Direccion, Telefono = @Telefono, Email = @Email, Clave = @Clave where Id = @Id");
                 datos.SetearParametro("@Nombre", modificado.Nombre);
                 datos.SetearParametro("@Apellido", modificado.Apellido);
                 datos.SetearParametro("@Dni", modificado.Dni);
                 datos.SetearParametro("@Direccion", modificado.Direccion);
                 datos.SetearParametro("@Telefono", modificado.Telefono);
                 datos.SetearParametro("@Email", modificado.Email);
+                datos.SetearParametro("@Clave", modificado.clave);
                 datos.SetearParametro("@Id", modificado.Id);
                 datos.EjecutarAccion();
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("Error al modificar cliente", ex);
             }
             finally
             {
@@ -203,7 +209,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select Id, Nombre, Apellido, Dni, Direccion, Telefono, Email from Usuarios where Dni = @Dni and estado = 0");
+                datos.SetearConsulta("select Id, Nombre, Apellido, Dni, Direccion, Telefono, Email, clave from Usuarios where Dni = @Dni and estado = 0");
                 datos.SetearParametro("@Dni", dni);
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())
@@ -216,6 +222,7 @@ namespace negocio
                     aux.Direccion = (string)datos.Lector["Direccion"];
                     aux.Telefono = (string)datos.Lector["Telefono"];
                     aux.Email = (string)datos.Lector["Email"];
+                    aux.clave = (string)datos.Lector["clave"];
                 }
                 return aux;
             }

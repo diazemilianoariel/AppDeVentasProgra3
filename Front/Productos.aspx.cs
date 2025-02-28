@@ -24,7 +24,7 @@ namespace Front
             }
 
 
-           
+
 
             if (!IsPostBack)
             {
@@ -91,39 +91,58 @@ namespace Front
             if (e.CommandName == "Seleccionar")
             {
                 int index = Convert.ToInt32(e.CommandArgument);
+                GridViewRow row = GridViewProductos.Rows[index];
 
-               
-                    GridViewRow row = GridViewProductos.Rows[index];
-                    if (row != null && row.Cells.Count > 0) // Asegurarse de que la fila y la celda existen
+                if (row != null && row.Cells.Count > 0) // Asegurarse de que la fila y la celda existen
+                {
+                    int id = Convert.ToInt32(row.Cells[0].Text);
+
+                    ProductoNegocio negocio = new ProductoNegocio();
+                    Producto producto = negocio.ObtenerProducto(id);
+
+                    // Asignar los valores a los TextBoxes
+                    TextBoxId.Text = producto.id.ToString();
+                    TextBoxNombre.Text = producto.nombre;
+                    TextBoxDescripcion.Text = producto.descripcion;
+                    TextBoxImagen.Text = producto.Imagen;
+                    TextBoxPrecio.Text = producto.precio.ToString();
+                    TextBoxGanancia.Text = producto.margenGanancia.ToString();
+                    TextBoxStock.Text = producto.stock.ToString();
+
+                    // Asignar los valores a los DropDownList
+                    ListItem itemMarca = DropDownListMarca.Items.FindByValue(producto.idMarca.ToString());
+                    if (itemMarca != null)
                     {
-                        int id = Convert.ToInt32(row.Cells[0].Text);
-
-                        ProductoNegocio negocio = new ProductoNegocio();
-                        Producto producto = negocio.ObtenerProducto(id);
-
-                        // Asignar los valores a los TextBoxes
-                        TextBoxId.Text = producto.id.ToString();
-                        TextBoxNombre.Text = producto.nombre;
-                        TextBoxDescripcion.Text = producto.descripcion;
-                        TextBoxImagen.Text = producto.Imagen;
-                        TextBoxPrecio.Text = producto.precio.ToString();
-                        TextBoxGanancia.Text = producto.margenGanancia.ToString();
-                        TextBoxStock.Text = producto.stock.ToString();
-                        string idCategoria = DropDownListCategoria.SelectedValue;
-                        string idMarca = DropDownListMarca.SelectedValue;
-                        string idTipo = DropDownListTipo.SelectedValue;
-                        string idProveedor = DropDownListProveedor.SelectedValue;
-
-                    ListItem itemMarca = DropDownListMarca.Items.FindByValue(producto.marca);
-                        if (itemMarca != null)
-                        {
-                            DropDownListMarca.ClearSelection();
-                            itemMarca.Selected = true;
-
-                        }
-                        CheckBoxEstado.Checked = producto.estado;
+                        DropDownListMarca.ClearSelection();
+                        itemMarca.Selected = true;
                     }
-               
+
+                    ListItem itemTipo = DropDownListTipo.Items.FindByValue(producto.idTipo.ToString());
+                    if (itemTipo != null)
+                    {
+                        DropDownListTipo.ClearSelection();
+                        itemTipo.Selected = true;
+                    }
+
+                    ListItem itemCategoria = DropDownListCategoria.Items.FindByValue(producto.IdCategoria.ToString());
+                    if (itemCategoria != null)
+                    {
+                        DropDownListCategoria.ClearSelection();
+                        itemCategoria.Selected = true;
+                    }
+
+                    ListItem itemProveedor = DropDownListProveedor.Items.FindByValue(producto.IdProveedor.ToString());
+                    if (itemProveedor != null)
+                    {
+                        DropDownListProveedor.ClearSelection();
+                        itemProveedor.Selected = true;
+                    }
+
+
+
+                    CheckBoxEstado.Checked = producto.estado;
+                }
+
             }
             else
             {
@@ -176,9 +195,10 @@ namespace Front
                 TextBoxPrecio.Text = producto.precio.ToString();
                 TextBoxGanancia.Text = producto.margenGanancia.ToString();
                 TextBoxStock.Text = producto.stock.ToString();
-                ListItem itemMarca = DropDownListMarca.Items.FindByValue(producto.marca);
-                ListItem itemTipo = DropDownListTipo.Items.FindByValue(producto.tipo);
-                ListItem itemCategoria = DropDownListCategoria.Items.FindByValue(producto.categoria);
+                ListItem itemMarca = DropDownListMarca.Items.FindByValue(producto.Marca.nombre);
+                ListItem itemTipo = DropDownListTipo.Items.FindByValue(producto.Tipo.nombre);
+                ListItem itemCategoria = DropDownListCategoria.Items.FindByValue(producto.Categoria.nombre);
+                ListItem itemProveedor = DropDownListProveedor.Items.FindByValue(producto.proveedor.Nombre);
                 CheckBoxEstado.Checked = producto.estado;
 
             }
@@ -208,6 +228,20 @@ namespace Front
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
+            ProductoNegocio negocio = new ProductoNegocio();
+            List<Producto> productos = negocio.ListarProductos();
+
+            if (productos.Any(p => p.nombre.Equals(TextBoxNombre.Text, StringComparison.OrdinalIgnoreCase)))
+            {
+                // Mostrar ventana emergente
+                string script = "alert('El producto ya existe. Por favor, seleccione el producto existente y modifíquelo.');";
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+                return;
+            }
+
+
+
+
             Producto producto = new Producto
             {
                 nombre = TextBoxNombre.Text,
@@ -216,14 +250,14 @@ namespace Front
                 margenGanancia = Convert.ToDecimal(TextBoxGanancia.Text),
                 Imagen = TextBoxImagen.Text,
                 stock = Convert.ToInt32(TextBoxStock.Text),
-                marca = DropDownListMarca.SelectedValue,
-                tipo = DropDownListTipo.SelectedValue,
-                categoria = DropDownListCategoria.SelectedValue,
-                proveedor = DropDownListProveedor.SelectedValue,
+                idMarca = Convert.ToInt32(DropDownListMarca.SelectedValue),
+                idTipo = Convert.ToInt32(DropDownListTipo.SelectedValue),
+                IdCategoria = Convert.ToInt32(DropDownListCategoria.SelectedValue),
+                IdProveedor = Convert.ToInt32(DropDownListProveedor.SelectedValue),
                 estado = CheckBoxEstado.Checked
             };
 
-            ProductoNegocio negocio = new ProductoNegocio();
+            
             negocio.AgregarProducto(producto);
 
             CargarGrilla();
@@ -259,7 +293,13 @@ namespace Front
             producto.margenGanancia = Convert.ToDecimal(TextBoxGanancia.Text);
             producto.Imagen = TextBoxImagen.Text;
             producto.stock = Convert.ToInt32(TextBoxStock.Text);
-            
+            producto.idMarca = Convert.ToInt32(DropDownListMarca.SelectedValue);
+            producto.idTipo = Convert.ToInt32(DropDownListTipo.SelectedValue);
+            producto.IdCategoria = Convert.ToInt32(DropDownListCategoria.SelectedValue);
+            producto.IdProveedor = Convert.ToInt32(DropDownListProveedor.SelectedValue);
+            producto.estado = CheckBoxEstado.Checked;
+
+
 
             ProductoNegocio negocio = new ProductoNegocio();
             negocio.ModificarProducto(producto);
@@ -273,6 +313,9 @@ namespace Front
         {
             ProductoNegocio negocio = new ProductoNegocio();
             negocio.EliminarProducto(Convert.ToInt32(TextBoxId.Text));
+            CargarGrilla();
+            LimpiarCampos();
+
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
@@ -284,7 +327,7 @@ namespace Front
             TextBoxGanancia.Text = "";
             TextBoxImagen.Text = "";
             TextBoxStock.Text = "";
-          
+
         }
 
         protected void BtnVerDetalle_Click(object sender, EventArgs e)
