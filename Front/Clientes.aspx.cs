@@ -87,8 +87,9 @@ namespace Front
                 TextBoxEmailCliente.Text = HttpUtility.HtmlDecode(fila.Cells[6].Text);
                 TextBoxClaveCliente.Text = HttpUtility.HtmlDecode(fila.Cells[7].Text);
 
+
                 // Selecciona e perfil de clientee
-                string perfilNombre = fila.Cells[7].Text;
+                string perfilNombre = fila.Cells[8].Text;
                 ListItem item = ddlPerfilCliente.Items.FindByText(perfilNombre);
                 if (item != null)
                 {
