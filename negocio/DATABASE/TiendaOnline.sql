@@ -447,8 +447,8 @@ INSERT INTO DetalleVentas (idVenta, idProducto, cantidad, precioVenta) VALUES (1
 INSERT INTO DetalleVentas (idVenta, idProducto, cantidad, precioVenta) VALUES (2, 2, 2, 100.00);
 
 -- Insertar datos en la tabla Compras
-INSERT INTO Compras (idProveedor, fecha, total) VALUES (1, '2021-01-01', 100.00);
-INSERT INTO Compras (idProveedor, fecha, total) VALUES (2, '2021-01-02', 200.00);
+--INSERT INTO Compras (idProveedor, fecha, total) VALUES (1, '2021-01-01', 100.00);
+--INSERT INTO Compras (idProveedor, fecha, total) VALUES (2, '2021-01-02', 200.00);
 
 -- Insertar datos en la tabla DetalleCompras
 INSERT INTO DetalleCompras (idCompra, idProducto, cantidad, precioCompra) VALUES (1, 1, 1, 100.00);
