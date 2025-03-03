@@ -16,17 +16,11 @@ namespace Front
 
             if (!IsPostBack)
             {
-                string mensaje = Request.QueryString["mensaje"];
-                if (!string.IsNullOrEmpty(mensaje))
-                {
-                    lblMensaje.Text = mensaje;
-                    lblMensaje.Visible = true;
-                }
-                else
-                {
-                    lblMensaje.Text = "inicie sesion o registrese para poder operar.";
-                    lblMensaje.Visible = true;
-                }
+               
+                    
+                    lblMensaje.Visible = false;
+                
+              
 
             }
 
@@ -35,6 +29,15 @@ namespace Front
         }
         protected void btnIniciarSesion_Click(object sender, EventArgs e)
         {
+
+            if (string.IsNullOrEmpty(txtEmail.Text) || string.IsNullOrEmpty(txtPassword.Text))
+            {
+                lblMensaje.Text = "Por favor, ingrese su correo electrónico y contraseña.";
+                lblMensaje.Visible = true;
+                return;
+            }
+
+
             ClienteNegocio Clientenegocio = new ClienteNegocio();
             Cliente cliente = new Cliente
             {
@@ -77,6 +80,8 @@ namespace Front
 
 
         }
+
+
 
 
     }

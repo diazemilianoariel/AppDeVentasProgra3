@@ -25,8 +25,11 @@
             </div>
             <asp:Button Text="Iniciar Sesión" CssClass="btn btn-primary w-100" ID="btnIniciarSesion" runat="server" OnClick="btnIniciarSesion_Click" />
             <div class="mt-3 text-center">
-                <p>¿No tienes una cuenta? <a href="#">Regístrate aquí</a></p>
+                <p>¿No tienes una cuenta? <a href="RegistroUsuariosNuevos.aspx">Regístrate aquí</a></p>
             </div>
+
+
+
             <div class="row">
                 <div class="col-md-12">
                     <asp:Label ID="lblMensaje" runat="server" Text="" Visible="false" CssClass="alert alert-danger"></asp:Label>

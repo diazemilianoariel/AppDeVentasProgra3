@@ -94,6 +94,7 @@
     <Content Include="Marcas.aspx" />
     <Content Include="MisCompras.aspx" />
     <Content Include="Perfiles.aspx" />
+    <Content Include="RegistroUsuariosNuevos.aspx" />
     <Content Include="Reportes.aspx" />
     <Content Include="Ventas.aspx" />
     <Content Include="Productos.aspx" />
@@ -185,6 +186,13 @@
     </Compile>
     <Compile Include="Perfiles.aspx.designer.cs">
       <DependentUpon>Perfiles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RegistroUsuariosNuevos.aspx.cs">
+      <DependentUpon>RegistroUsuariosNuevos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegistroUsuariosNuevos.aspx.designer.cs">
+      <DependentUpon>RegistroUsuariosNuevos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reportes.aspx.cs">
       <DependentUpon>Reportes.aspx</DependentUpon>
