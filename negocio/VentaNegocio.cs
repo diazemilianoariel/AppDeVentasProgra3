@@ -139,6 +139,8 @@ namespace negocio
             }
         }
 
+       
+
         public List<Venta> ListarVentasPendientes()
         {
             List<Venta> ventas = new List<Venta>();
@@ -300,14 +302,28 @@ namespace negocio
             AccesoDatos accesoDatos = new AccesoDatos();
             try
             {
-                accesoDatos.SetearConsulta("SELECT * FROM Ventas WHERE idVenta LIKE @query OR Cliente.id LIKE @query OR nombreestadoventa LIKE @query");
-                accesoDatos.SetearParametro("@query", "%" + query + "%");
+                accesoDatos.SetearConsulta("SELECT v.id, v.fecha, v.idUsuario, u.nombre, u.apellido, u.direccion, u.telefono, u.email, v.enLocal, e.nombre as nombreestadoventa, v.idEstadoVenta FROM Ventas v INNER JOIN Usuarios u ON v.idUsuario = u.id INNER JOIN EstadoVenta e ON v.idEstadoVenta = e.id WHERE v.id = @query");
+                accesoDatos.SetearParametro("@query", query);
                 accesoDatos.EjecutarLectura();
 
                 while (accesoDatos.Lector.Read())
                 {
                     Venta venta = new Venta();
-                    // Asignar valores a las propiedades de venta
+                    venta.IdVenta = (int)accesoDatos.Lector["id"];
+                    venta.Fecha = (DateTime)accesoDatos.Lector["fecha"];
+                    venta.Cliente = new Cliente
+                    {
+                        Id = (int)accesoDatos.Lector["idUsuario"],
+                        Nombre = (string)accesoDatos.Lector["nombre"],
+                        Apellido = (string)accesoDatos.Lector["apellido"],
+                        Direccion = (string)accesoDatos.Lector["direccion"],
+                        Telefono = (string)accesoDatos.Lector["telefono"],
+                        Email = (string)accesoDatos.Lector["email"]
+                    };
+                    venta.EnLocal = (bool)accesoDatos.Lector["enLocal"];
+                    venta.idEstadoVenta = (int)accesoDatos.Lector["idEstadoVenta"];
+                    venta.nombreEstadoVenta = (string)accesoDatos.Lector["nombreestadoventa"];
+                    venta.Productos = ListarProductosPorVenta(venta.IdVenta);
                     lista.Add(venta);
                 }
             }
@@ -359,6 +375,8 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
+
+        
 
     }
 }

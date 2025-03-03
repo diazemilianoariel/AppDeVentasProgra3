@@ -261,6 +261,9 @@ namespace negocio
                 accesodatos.CerrarConexion();
             }
 
+
+
+
             try
             {
                 // Insertar en la tabla Proveedores_Productos
@@ -296,13 +299,19 @@ namespace negocio
             try
             {
                 
-                accesoDatos.SetearConsulta("UPDATE Productos SET nombre = @nombre, descripcion = @descripcion, imagen = @imagen, precio = @precio, estado = @estado WHERE id = @idProducto");
+                accesoDatos.SetearConsulta("UPDATE Productos SET nombre = @nombre, descripcion = @descripcion, imagen = @imagen, precio = @precio, estado = @estado, idMarca = @idMarca, idCategoria = @idCategoria, idTipo = @idTipo  WHERE id = @idProducto");
 
                 accesoDatos.SetearParametro("@nombre", producto.nombre);
                 accesoDatos.SetearParametro("@descripcion", producto.descripcion);
                 accesoDatos.SetearParametro("@imagen", producto.Imagen);
                 accesoDatos.SetearParametro("@precio", producto.precio);
                 accesoDatos.SetearParametro("@estado", producto.estado);
+                accesoDatos.SetearParametro("@idMarca", producto.idMarca);
+                accesoDatos.SetearParametro("@idTipo", producto.idTipo);
+                accesoDatos.SetearParametro("@idCategoria", producto.IdCategoria);
+              
+
+
                 accesoDatos.SetearParametro("@idProducto", producto.id);
 
                 // Ejecutar la acción de modificación
@@ -339,96 +348,23 @@ namespace negocio
                 accesoDatos.CerrarConexion();
             }
 
-            // Modificamos el nombre de la marca en su tabla Marcas
-            try
-            {
-                if (producto.Marca != null)
-                {
-                    accesoDatos = new AccesoDatos();
-                    accesoDatos.SetearConsulta("UPDATE Marcas SET nombre = @nombreMarca WHERE id = @idMarca");
 
-                    // Agregar parámetros con los valores correspondientes
-                    accesoDatos.SetearParametro("@nombreMarca", producto.Marca.nombre);
-                    accesoDatos.SetearParametro("@idMarca", producto.idMarca);
 
-                    // Ejecutar la acción de modificación
-                    accesoDatos.EjecutarAccion();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                accesoDatos.CerrarConexion();
-            }
-
-            // Modificamos el nombre de Tipo en su tabla Tipos
-            try
-            {
-                if (producto.Tipo != null)
-                {
-                    accesoDatos = new AccesoDatos();
-                    accesoDatos.SetearConsulta("UPDATE Tipos SET nombre = @nombreTipo WHERE id = @idTipo");
-
-                    // Agregar parámetros con los valores correspondientes
-                    accesoDatos.SetearParametro("@nombreTipo", producto.Tipo.nombre);
-                    accesoDatos.SetearParametro("@idTipo", producto.idTipo);
-
-                    // Ejecutar la acción de modificación
-                    accesoDatos.EjecutarAccion();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                accesoDatos.CerrarConexion();
-            }
-
-            // Modificamos el nombre de la categoria en su tabla Categorias
-            try
-            {
-                if (producto.Categoria != null)
-                {
-                    accesoDatos = new AccesoDatos();
-                    accesoDatos.SetearConsulta("UPDATE Categorias SET nombre = @nombreCategoria WHERE id = @idCategoria");
-
-                    // Agregar parámetros con los valores correspondientes
-                    accesoDatos.SetearParametro("@nombreCategoria", producto.Categoria.nombre);
-                    accesoDatos.SetearParametro("@idCategoria", producto.IdCategoria);
-
-                    // Ejecutar la acción de modificación
-                    accesoDatos.EjecutarAccion();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                accesoDatos.CerrarConexion();
-            }
 
             // Modificamos el nombre del proveedor en su tabla Proveedores
             try
             {
-                if (producto.proveedor != null)
-                {
+             
                     accesoDatos = new AccesoDatos();
-                    accesoDatos.SetearConsulta("UPDATE Proveedores SET nombre = @nombreProveedor WHERE id = @idProveedor");
+                    accesoDatos.SetearConsulta("UPDATE Proveedores_Productos SET idProveedor = @idProveedor WHERE idProducto = @idProducto");
 
                     // Agregar parámetros con los valores correspondientes
-                    accesoDatos.SetearParametro("@nombreProveedor", producto.proveedor.Nombre);
                     accesoDatos.SetearParametro("@idProveedor", producto.IdProveedor);
+                    accesoDatos.SetearParametro("@idProducto", producto.id);
 
                     // Ejecutar la acción de modificación
                     accesoDatos.EjecutarAccion();
-                }
+                
             }
             catch (Exception ex)
             {

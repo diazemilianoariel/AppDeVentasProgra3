@@ -68,6 +68,15 @@ namespace Front
                     CargarCategorias();
                 TextBoxCategoria.Text = string.Empty; // Limpiar el TextBox después de agregar
             }
+            else
+            {
+               
+                    // Mostrar ventana emergente
+                    string script = "alert('por favor proporcione un nuevo nombre de categoria.');";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+                    return;
+                
+            }
         }
 
         protected void GridViewCategorias_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -113,9 +122,19 @@ namespace Front
 
 
 
+                    }
+
+
+
                 }
-
-
+                else
+                {
+                    
+                        // Mostrar ventana emergente
+                        string script = "alert('por favor proporcione un nombre y luego precione editar.');";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+                        return;
+                    
 
                 }
             }

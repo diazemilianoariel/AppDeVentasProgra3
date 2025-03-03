@@ -184,8 +184,11 @@ namespace Front
                 }
                 else
                 {
-                    // Mostrar mensaje de error
-                    Response.Write("Por favor, complete todos los campos.");
+                    // Mostrar ventana emergente
+                    string script = "alert('por favor complete todos los campos.');";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+                    return;
+
                 }
             }
             catch (Exception ex)
@@ -211,6 +214,16 @@ namespace Front
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
+
+            if (string.IsNullOrEmpty(TextBoxNombre.Text))
+            {
+                // Mostrar ventana emergente
+                string script = "alert('por favor seleccione un Proveedor para modificar.');";
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+                return;
+            }
+
+
             Proveedor proveedor = new Proveedor
             {
 
@@ -230,6 +243,13 @@ namespace Front
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(TextBoxNombre.Text))
+            {
+                // Mostrar ventana emergente
+                string script = "alert('porfavor seleccione un elemento para eliiminar.');";
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+                return;
+            }
 
             ProveedoresNegocio negocio = new ProveedoresNegocio();
             negocio.EliminarProveedor(Convert.ToInt32(TextBoxId.Text));

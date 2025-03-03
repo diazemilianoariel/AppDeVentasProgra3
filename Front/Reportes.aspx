@@ -100,6 +100,8 @@
             </div>
         </div>
 
+
+
         <!-- Tabla de Reportes -->
         <div class="row mt-4">
             <div class="col-md-12">
@@ -113,6 +115,7 @@
                                     <th>Fecha</th>
                                     <th>Monto</th>
                                     <th>cliente</th>
+                                    <th>Facturas</th>
                                 </tr>
                             </thead>
 
@@ -126,6 +129,11 @@
                                             <td><%# Eval("Fecha") %></td>
                                             <td><%# Eval("Monto") %></td>
                                             <td><%# Eval("Cliente.Nombre") %></td>
+
+
+                                            <td>
+                                                ver factura
+                                            </td>
                                         </tr>
                                     </ItemTemplate>
                                 </asp:Repeater>
@@ -137,10 +145,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
     </div>
 
     <!-- Bootstrap JS -->

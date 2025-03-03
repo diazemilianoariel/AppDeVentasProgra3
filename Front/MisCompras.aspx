@@ -35,7 +35,7 @@
                     <asp:TemplateField HeaderText="Acciones">
 
                         <ItemTemplate>
-                            <asp:Button ID="btnSeleccionar" runat="server" Text="Seleccionar" CommandName="Seleccionar" CommandArgument='<%#Eval("IdVenta") +  "|" + Eval("TotalFactura") %>' CssClass="btn btn-primary" />
+                            <asp:Button ID="btnSeleccionar" runat="server" Text="ver Factura" CommandName="VerFactura" CommandArgument='<%#Eval("IdVenta") +  "|" + Eval("TotalFactura") %>' CssClass="btn btn-primary" />
                         </ItemTemplate>
                     </asp:TemplateField>
 

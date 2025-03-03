@@ -185,8 +185,12 @@ namespace Front
                 }
                 else
                 {
-                    // Mostrar mensaje de error
-                    Response.Write("Por favor, complete todos los campos.");
+                    
+                        // Mostrar ventana emergente
+                        string script = "alert(' todos los campos son obligatorios.');";
+                        ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+                        return;
+                    
                 }
             }
             catch (Exception ex)
@@ -230,17 +234,32 @@ namespace Front
 
         protected void btnModificarCliente_Click(object sender, EventArgs e)
         {
-            Cliente cliente = new Cliente
+
+            if (string.IsNullOrEmpty(TextBoxNombreCliente.Text))
             {
-                Id = Convert.ToInt32(TextBoxIdCliente.Text),
-                Nombre = TextBoxNombreCliente.Text,
-                Apellido = TextBoxApellidoCliente.Text,
-                Dni = TextBoxDniCliente.Text,
-                Direccion = TextBoxDireccionCliente.Text,
-                Telefono = TextBoxTelefonoCliente.Text,
-                Email = TextBoxEmailCliente.Text,
-                clave = TextBoxClaveCliente.Text,
-            };
+                // Mostrar ventana emergente
+                string script = "alert('porfavor seleccione un elemento para modificar.');";
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+                return;
+            }
+
+
+            Cliente cliente = new Cliente();
+
+            cliente.Id = Convert.ToInt32(TextBoxIdCliente.Text);
+            cliente.Nombre = TextBoxNombreCliente.Text;
+            cliente.Apellido = TextBoxApellidoCliente.Text;
+            cliente.Dni = TextBoxDniCliente.Text;
+            cliente.Direccion = TextBoxDireccionCliente.Text;
+            cliente.Telefono = TextBoxTelefonoCliente.Text;
+            cliente.Email = TextBoxEmailCliente.Text;
+            cliente.clave = TextBoxClaveCliente.Text;
+            cliente.idPerfil = int.Parse(ddlPerfilCliente.SelectedValue);
+
+
+
+
+
 
             ClienteNegocio negocio = new ClienteNegocio();
             negocio.ModificarCliente(cliente);
@@ -251,6 +270,16 @@ namespace Front
 
         protected void btnEliminarCliente_Click(object sender, EventArgs e)
         {
+
+            if (string.IsNullOrEmpty(TextBoxNombreCliente.Text))
+            {
+                // Mostrar ventana emergente
+                string script = "alert('porfavor seleccione un elemento para eliminar.');";
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+                return;
+            }
+
+
             ClienteNegocio negocio = new ClienteNegocio();
             negocio.EliminarCliente(Convert.ToInt32(TextBoxIdCliente.Text));
             CargarGrillaClientes();

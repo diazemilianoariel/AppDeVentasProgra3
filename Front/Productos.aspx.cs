@@ -35,6 +35,8 @@ namespace Front
 
         }
 
+
+
         private bool IDPerfilValido()
         {
             Cliente cliente = (Cliente)Session["cliente"];
@@ -110,28 +112,29 @@ namespace Front
                     TextBoxStock.Text = producto.stock.ToString();
 
                     // Asignar los valores a los DropDownList
-                    ListItem itemMarca = DropDownListMarca.Items.FindByValue(producto.idMarca.ToString());
+                    ListItem itemMarca = DropDownListMarca.Items.FindByText(producto.Marca.nombre);
                     if (itemMarca != null)
                     {
                         DropDownListMarca.ClearSelection();
                         itemMarca.Selected = true;
+
                     }
 
-                    ListItem itemTipo = DropDownListTipo.Items.FindByValue(producto.idTipo.ToString());
+                    ListItem itemTipo = DropDownListTipo.Items.FindByText(producto.Tipo.nombre);
                     if (itemTipo != null)
                     {
                         DropDownListTipo.ClearSelection();
                         itemTipo.Selected = true;
                     }
 
-                    ListItem itemCategoria = DropDownListCategoria.Items.FindByValue(producto.IdCategoria.ToString());
+                    ListItem itemCategoria = DropDownListCategoria.Items.FindByText(producto.Categoria.nombre);
                     if (itemCategoria != null)
                     {
                         DropDownListCategoria.ClearSelection();
                         itemCategoria.Selected = true;
                     }
 
-                    ListItem itemProveedor = DropDownListProveedor.Items.FindByValue(producto.IdProveedor.ToString());
+                    ListItem itemProveedor = DropDownListProveedor.Items.FindByText(producto.proveedor.Nombre);
                     if (itemProveedor != null)
                     {
                         DropDownListProveedor.ClearSelection();
@@ -228,6 +231,14 @@ namespace Front
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(TextBoxNombre.Text))
+            {
+                // Mostrar ventana emergente
+                string script = "alert('porfavor complete Todos los campos.');";
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+                return;
+            }
+
             ProductoNegocio negocio = new ProductoNegocio();
             List<Producto> productos = negocio.ListarProductos();
 
@@ -264,6 +275,9 @@ namespace Front
             LimpiarCampos();
         }
 
+
+
+
         private void LimpiarCampos()
         {
             TextBoxNombre.Text = string.Empty;
@@ -284,6 +298,18 @@ namespace Front
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
+
+
+
+            if (string.IsNullOrEmpty(TextBoxNombre.Text))
+            {
+                // Mostrar ventana emergente
+                string script = "alert('porfavor seleccione un elemento para modificar.');";
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+                return;
+            }
+
+
             Producto producto = new Producto();
 
             producto.id = Convert.ToInt32(TextBoxId.Text);
@@ -293,6 +319,8 @@ namespace Front
             producto.margenGanancia = Convert.ToDecimal(TextBoxGanancia.Text);
             producto.Imagen = TextBoxImagen.Text;
             producto.stock = Convert.ToInt32(TextBoxStock.Text);
+
+
             producto.idMarca = Convert.ToInt32(DropDownListMarca.SelectedValue);
             producto.idTipo = Convert.ToInt32(DropDownListTipo.SelectedValue);
             producto.IdCategoria = Convert.ToInt32(DropDownListCategoria.SelectedValue);
@@ -311,6 +339,16 @@ namespace Front
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
+
+
+            if(string.IsNullOrEmpty(TextBoxId.Text))
+            {
+                // Mostrar ventana emergente
+                string script = "alert('no se  seleccionó ningun elemento.');";
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+                return;
+            }
+
             ProductoNegocio negocio = new ProductoNegocio();
             negocio.EliminarProducto(Convert.ToInt32(TextBoxId.Text));
             CargarGrilla();

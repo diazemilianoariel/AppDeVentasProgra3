@@ -70,7 +70,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <asp:Label ID="LabelMarca" runat="server" AssociatedControlID="DropDownListMarca" CssClass="form-label fw-bold">Marca</asp:Label>
-                        <asp:DropDownList ID="DropDownListMarca" runat="server" CssClass="form-control"></asp:DropDownList>
+                        <asp:DropDownList ID="DropDownListMarca" runat="server" CssClass="form-control"   ></asp:DropDownList>
 
                         <asp:Label ID="LabelTipo" runat="server" AssociatedControlID="DropDownListTipo" CssClass="form-label fw-bold">Tipo</asp:Label>
                         <asp:DropDownList ID="DropDownListTipo" runat="server" CssClass="form-control"></asp:DropDownList>

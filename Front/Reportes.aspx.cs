@@ -29,8 +29,9 @@ namespace Front
 
             if (!IsPostBack)
             {
-                CargarTarjetas();
                 cargarDatosPanel();
+                CargarTarjetas();
+                
             }
 
 
@@ -59,7 +60,7 @@ namespace Front
 
 
             
-            // Datos forzados (se pueden reemplazar con datos de BD luego)
+           
             List<string> categorias = new List<string>();
             List<int> cantidades = new List<int>();
             var resultado = categorianegocio.CantidadesPorCategoria();
@@ -87,6 +88,16 @@ namespace Front
 
 
         }
+
+
+
+
+        protected void rptVentas_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+          
+        }
+
+      
 
 
 

@@ -56,7 +56,7 @@ namespace Front
             List<Producto> carrito = negocio.ObtenerCarritoPorVenta(idVenta);
 
 
-            if (carrito ==  null || carrito.Count == 0)
+            if (carrito == null || carrito.Count == 0)
             {
                 MostrarMensaje("El carrito esta vacío.", true);
                 return;
@@ -76,10 +76,10 @@ namespace Front
             factura.IdVenta = idVenta;
             factura.TotalFactura = carrito.Sum(x => x.precio * x.Cantidad);
             factura.SubTotalFactura = carrito.Sum(x => x.precio * x.Cantidad);
-               
-            
 
-           
+
+
+
 
 
 
@@ -146,12 +146,24 @@ namespace Front
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            string query = txtBuscar.Text.Trim();
-            VentaNegocio negocio = new VentaNegocio();
-         
 
-            gvVentas.DataSource = negocio.BuscarVentas(query);
-            gvVentas.DataBind();
+
+            string query = txtBuscar.Text.Trim();
+       
+
+            if (string.IsNullOrEmpty(query))
+            {
+                Response.Redirect(Request.RawUrl);
+           
+
+            }
+            else
+            {
+                VentaNegocio negocio = new VentaNegocio();
+                gvVentas.DataSource = negocio.BuscarVentas(query);
+                gvVentas.DataBind();
+            }
+               
         }
 
 

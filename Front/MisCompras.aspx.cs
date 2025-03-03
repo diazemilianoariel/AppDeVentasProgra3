@@ -52,7 +52,7 @@ namespace Front
 
 
 
-            if (e.CommandName == "Seleccionar")
+            if (e.CommandName == "VerFactura")
             {
 
                 string[] argumentos = e.CommandArgument.ToString().Split('|');

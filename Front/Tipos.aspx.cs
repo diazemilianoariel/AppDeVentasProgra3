@@ -93,6 +93,14 @@ namespace Front
                     // Limpiar el TextBoxTipo después de actualizar
                     TextBoxTipo.Text = string.Empty;
                 }
+                else
+                {
+                    // Mostrar ventana emergente
+                    string script = "alert('por favor proporcione un nombre y luego precione editar.');";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+                    return;
+
+                }
             }
             else if (e.CommandName == "Eliminar")
             {

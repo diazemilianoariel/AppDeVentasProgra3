@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="logo-box">
-                    <p>Tienda Khapyja</p>
+                    <p>Tienda elicomer</p>
                     <img src="https://png.pngtree.com/png-clipart/20190611/original/pngtree-wolf-logo-png-image_2306634.jpg" alt="Logo" class="img-fluid" style="max-width: 200px;" />
                 </div>
             </div>

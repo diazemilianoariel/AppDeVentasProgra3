@@ -7,7 +7,7 @@
 
     <div class="row mt-3">
         <div class="col-md-12 text-center">
-            <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control d-inline-block w-50" placeholder="Buscar por ID de Venta, Cliente, Estado..."></asp:TextBox>
+            <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control d-inline-block w-50" placeholder="Buscar por Id..."></asp:TextBox>
             <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
         </div>
     </div>

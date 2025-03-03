@@ -147,6 +147,8 @@ namespace negocio
 
         public void ModificarCliente(Cliente modificado)
         {
+
+
             if (string.IsNullOrEmpty(modificado.clave))
             {
                 throw new ArgumentException("La clave no puede estar vacía.");
@@ -158,7 +160,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("update Usuarios set Nombre = @Nombre, Apellido = @Apellido, Dni = @Dni, Direccion = @Direccion, Telefono = @Telefono, Email = @Email, Clave = @Clave where Id = @Id");
+                datos.SetearConsulta("update Usuarios set Nombre = @Nombre, Apellido = @Apellido, Dni = @Dni, Direccion = @Direccion, Telefono = @Telefono, Email = @Email, Clave = @Clave, idPerfil = @idPerfil where Id = @Id");
                 datos.SetearParametro("@Nombre", modificado.Nombre);
                 datos.SetearParametro("@Apellido", modificado.Apellido);
                 datos.SetearParametro("@Dni", modificado.Dni);
@@ -166,6 +168,7 @@ namespace negocio
                 datos.SetearParametro("@Telefono", modificado.Telefono);
                 datos.SetearParametro("@Email", modificado.Email);
                 datos.SetearParametro("@Clave", modificado.clave);
+                datos.SetearParametro("@idPerfil", modificado.idPerfil);
                 datos.SetearParametro("@Id", modificado.Id);
                 datos.EjecutarAccion();
             }
@@ -256,8 +259,6 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
-
-
 
 
         public List<Perfil> ListarPerfiles()
@@ -381,6 +382,9 @@ namespace negocio
             }
 
         }
+
+
+
 
 
 

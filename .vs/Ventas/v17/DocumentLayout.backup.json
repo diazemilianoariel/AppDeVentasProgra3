@@ -3,24 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3DF910B5-5CB0-47DC-8894-659C2DD82C01}|negocio\\negocio.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\negocio\\database\\tiendaonline.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}",
-      "RelativeMoniker": "D:0:0:{3DF910B5-5CB0-47DC-8894-659C2DD82C01}|negocio\\negocio.csproj|solutionrelative:negocio\\database\\tiendaonline.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}"
+      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\front\\ventas.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\ventas.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3DF910B5-5CB0-47DC-8894-659C2DD82C01}|negocio\\negocio.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\negocio\\clientenegocio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3DF910B5-5CB0-47DC-8894-659C2DD82C01}|negocio\\negocio.csproj|solutionrelative:negocio\\clientenegocio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\front\\ventas.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\ventas.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\front\\clientes.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\clientes.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\front\\clientes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\clientes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3DF910B5-5CB0-47DC-8894-659C2DD82C01}|negocio\\negocio.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\negocio\\database\\tiendaonline.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame",
-      "RelativeMoniker": "D:0:0:{3DF910B5-5CB0-47DC-8894-659C2DD82C01}|negocio\\negocio.csproj|solutionrelative:negocio\\database\\tiendaonline.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame"
+      "AbsoluteMoniker": "D:0:0:{3DF910B5-5CB0-47DC-8894-659C2DD82C01}|negocio\\negocio.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\negocio\\ventanegocio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3DF910B5-5CB0-47DC-8894-659C2DD82C01}|negocio\\negocio.csproj|solutionrelative:negocio\\ventanegocio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 652,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,51 +42,41 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "TiendaOnline.sql ",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\negocio\\DATABASE\\TiendaOnline.sql",
-              "RelativeDocumentMoniker": "negocio\\DATABASE\\TiendaOnline.sql",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\negocio\\DATABASE\\TiendaOnline.sql",
-              "RelativeToolTip": "negocio\\DATABASE\\TiendaOnline.sql",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2025-03-01T13:02:19.187Z",
+              "DocumentIndex": 2,
+              "Title": "VentaNegocio.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\negocio\\VentaNegocio.cs",
+              "RelativeDocumentMoniker": "negocio\\VentaNegocio.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\negocio\\VentaNegocio.cs",
+              "RelativeToolTip": "negocio\\VentaNegocio.cs",
+              "ViewState": "AgIAADsBAAAAAAAAAAAjwFMBAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-03T03:38:00.766Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Clientes.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Clientes.aspx.cs",
-              "RelativeDocumentMoniker": "Front\\Clientes.aspx.cs",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Clientes.aspx.cs",
-              "RelativeToolTip": "Front\\Clientes.aspx.cs",
-              "ViewState": "AgIAAJYAAAAAAAAAAAAmwPkAAAAJAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "Ventas.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Ventas.aspx.cs",
+              "RelativeDocumentMoniker": "Front\\Ventas.aspx.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Ventas.aspx.cs",
+              "RelativeToolTip": "Front\\Ventas.aspx.cs",
+              "ViewState": "AgIAAJAAAAAAAAAAAAApwJMAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-28T20:51:33.919Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Clientes.aspx",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Clientes.aspx",
-              "RelativeDocumentMoniker": "Front\\Clientes.aspx",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Clientes.aspx",
-              "RelativeToolTip": "Front\\Clientes.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-02-28T20:14:25.681Z"
+              "WhenOpened": "2025-03-03T03:32:31.363Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "ClienteNegocio.cs",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\negocio\\ClienteNegocio.cs",
-              "RelativeDocumentMoniker": "negocio\\ClienteNegocio.cs",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\negocio\\ClienteNegocio.cs",
-              "RelativeToolTip": "negocio\\ClienteNegocio.cs",
-              "ViewState": "AgIAAAkAAAAgMzMzM7MqwLYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-28T20:21:48.907Z",
+              "Title": "Ventas.aspx",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Ventas.aspx",
+              "RelativeDocumentMoniker": "Front\\Ventas.aspx",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Ventas.aspx",
+              "RelativeToolTip": "Front\\Ventas.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-03-03T03:25:53.711Z",
               "EditorCaption": ""
             }
           ]
