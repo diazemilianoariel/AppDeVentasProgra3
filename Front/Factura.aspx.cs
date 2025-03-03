@@ -68,11 +68,23 @@ namespace Front
 
         }
 
+        protected void btnVolver_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("MisCompras.aspx");
+        }
+
+        protected void btnImprimir_Click(object sender, EventArgs e)
+        {
+            // aca  en realidad deberia mandarse por mail si es que necesito mandar la factura nuevamente al cliente
+            // pero como no tengo un servidor de correo configurado, lo que hago es abrir una nueva ventana con la factura
+
+        }
 
 
-        
 
-      
+
+
+
 
 
 

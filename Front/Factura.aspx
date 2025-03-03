@@ -99,4 +99,10 @@
         </div>
     </div>
 
+ 
+    <asp:Button ID="btnVolver" runat="server" Text="Volver a mis compras" CssClass="btn btn-primary" OnClick="btnVolver_Click" />
+
+    <asp:Button ID="btnImprimir" runat="server" Text="Imprimir Factura" CssClass="btn btn-success" OnClick="btnImprimir_Click" />
+
+
 </asp:Content>
