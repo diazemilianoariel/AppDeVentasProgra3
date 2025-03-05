@@ -45,12 +45,12 @@ namespace Front
         {
             try
             {
-                   
-                 
-                    List<Producto> listaProductos = defaultNegocio.ListarProductos();
-                    rptProductos.DataSource = listaProductos;
-                    rptProductos.DataBind();
-                
+
+
+                List<Producto> listaProductos = defaultNegocio.ListarProductos();
+                rptProductos.DataSource = listaProductos;
+                rptProductos.DataBind();
+
             }
             catch (Exception ex)
             {
@@ -64,16 +64,16 @@ namespace Front
             {
                 int idProducto = Convert.ToInt32(((Button)sender).CommandArgument);
                 Producto producto = defaultNegocio.ObtenerProducto(idProducto);
-                
-                    if (producto != null)
-                    {
-                        List<Producto> carrito = ObtenerCarrito();
-                        RepeaterItem item = (RepeaterItem)((Button)sender).NamingContainer;
-                        TextBox txtCantidad = (TextBox)item.FindControl("txtCantidad");
-                        int cantidad = Convert.ToInt32(txtCantidad.Text);
+
+                if (producto != null)
+                {
+                    List<Producto> carrito = ObtenerCarrito();
+                    RepeaterItem item = (RepeaterItem)((Button)sender).NamingContainer;
+                    TextBox txtCantidad = (TextBox)item.FindControl("txtCantidad");
+                    int cantidad = Convert.ToInt32(txtCantidad.Text);
 
 
-                        if(producto.stock >= cantidad)
+                    if (producto.stock >= cantidad)
                     {
                         defaultNegocio.AgregarProductosAlCarrito(carrito, producto, cantidad);
 
@@ -95,14 +95,14 @@ namespace Front
                     }
                 }
             }
-            
+
             catch (Exception ex)
             {
                 MostrarMensaje("Error al agregar producto al carrito: " + ex.Message, true);
             }
         }
 
-   
+
 
         protected void btnQuitarCarrito_Click(object sender, EventArgs e)
         {
@@ -130,7 +130,7 @@ namespace Front
             return (List<Producto>)Session["Carrito"] ?? new List<Producto>();
         }
 
-    
+
 
         private void MostrarMensaje(string mensaje, bool esError = true)
         {
@@ -139,21 +139,31 @@ namespace Front
             lblMensaje.Visible = true;
         }
 
-        protected void btnBuscar_Click(object sender, EventArgs e)
+        protected void txtBuscar_TextChanged(object sender, EventArgs e)
         {
             try
             {
-                List<Producto> listaFiltrada = defaultNegocio.BuscarProductos(txtBuscar.Text);
+                string busqueda = txtBuscar.Text.Trim();
+                List<Producto> listaFiltrada;
+
+                if (string.IsNullOrEmpty(busqueda))
+                {
+                    listaFiltrada = defaultNegocio.ListarProductos();
+                }
+                else
+                {
+                    listaFiltrada = defaultNegocio.BuscarProductos(busqueda);
+                }
+
                 rptProductos.DataSource = listaFiltrada;
                 rptProductos.DataBind();
-
-           
             }
             catch (Exception ex)
             {
                 MostrarMensaje("Error al buscar productos: " + ex.Message, true);
             }
         }
+
 
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
@@ -186,8 +196,8 @@ namespace Front
             string[] args = btnAumentar.CommandArgument.Split(',');
             int stockDisponible = Convert.ToInt32(args[1]);
             int cantidad = Convert.ToInt32(txtCantidad.Text);
-            
-            if(cantidad < stockDisponible)
+
+            if (cantidad < stockDisponible)
             {
                 txtCantidad.Text = (cantidad + 1).ToString();
             }
@@ -208,6 +218,6 @@ namespace Front
 
 
 
-    
+
     }
 }

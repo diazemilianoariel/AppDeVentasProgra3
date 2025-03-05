@@ -385,6 +385,30 @@ namespace negocio
         }
 
 
+        public string RecuperarContraseña(string email)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("select Clave from Usuarios where Email = @Email");
+                datos.SetearParametro("@Email", email);
+                datos.EjecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    return (string)datos.Lector["Clave"];
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
 
 
 

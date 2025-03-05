@@ -2,6 +2,7 @@
 
 using negocio;
 using System;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 
@@ -158,6 +159,14 @@ namespace Front
 
         protected void BtnEliminar_Click(object sender, EventArgs e)
         {
+            //if (string.IsNullOrEmpty(TextBoxNombre.Text))
+            //{
+            //    // Mostrar ventana emergente
+            //    string script = "alert('porfavor complete Todos los campos.');";
+            //    ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+            //    return;
+            //}
+
             // aca se debe seleccionar el perfil a eliminar y llamar al metodo bajaLogicaPerfil
             if (int.TryParse(HiddenFieldPerfilId.Value, out int perfilId))
             {

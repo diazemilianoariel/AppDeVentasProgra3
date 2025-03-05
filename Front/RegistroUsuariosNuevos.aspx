@@ -42,9 +42,12 @@
                         <label for="txtClave" class="form-label">Contraseña</label>
                         <asp:TextBox ID="txtClave" runat="server" CssClass="form-control" TextMode="Password" />
                     </div>
-                    <div class="text-center">
+                    <div class="text-center d-flex justify-content-between">
                         <asp:Button ID="btnRegistrar" runat="server" CssClass="btn btn-primary" Text="Registrar" OnClick="btnRegistrar_Click" />
+                         <asp:Button ID="btnVolverLogin" runat="server" CssClass="btn btn-primary" Text="Volver" OnClick="btnVolverLogin_Click" />
                     </div>
+
+                   
                 </div>
             </div>
         </div>

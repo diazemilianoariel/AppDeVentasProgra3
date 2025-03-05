@@ -68,6 +68,14 @@ namespace Front
 
         }
 
+
+        protected void btnVolverLogin_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Login.aspx");
+        }
+
+
+
         private void LimpiarCampos()
         {
             txtNombre.Text = string.Empty;

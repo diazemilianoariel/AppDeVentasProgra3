@@ -32,7 +32,7 @@ namespace Front
 
             if (string.IsNullOrEmpty(txtEmail.Text) || string.IsNullOrEmpty(txtPassword.Text))
             {
-                lblMensaje.Text = "Por favor, ingrese su correo electrónico y contraseña.";
+                lblMensaje.Text = "correo electrónico y contraseña son requeridos.";
                 lblMensaje.Visible = true;
                 return;
             }

@@ -17,14 +17,13 @@
     <h1>Catálogo de Productos</h1>
 
     <!-- Filtros de búsqueda -->
-    <div class="filters">
+    <div class="filters mb-4 ">
         <div class="row">
             <div class="col-md-8">
-                <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control" Placeholder="Buscar productos..."></asp:TextBox>
+                <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control" Placeholder="Buscar productos..." AutoPostBack="true" OnTextChanged="txtBuscar_TextChanged"></asp:TextBox>
+
             </div>
-            <div class="col-md-4">
-                <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
-            </div>
+
         </div>
     </div>
 
@@ -60,7 +59,7 @@
                                         </div>
 
 
-                                        <asp:TextBox ID="txtCantidad" runat="server" Text="1" CssClass="form-control text-center"  ReadOnly="true"/>
+                                        <asp:TextBox ID="txtCantidad" runat="server" Text="1" CssClass="form-control text-center" ReadOnly="true" />
 
 
 

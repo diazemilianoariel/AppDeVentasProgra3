@@ -20,9 +20,14 @@
                 <label for="password" class="form-label">Contraseña</label>
                 <asp:TextBox runat="server" CssClass="form-control" ID="txtPassword" type="password" />
             </div>
+
+
             <div class="mb-3 text-end">
-                <a href="#" class="link-primary">¿Olvidaste tu contraseña?</a>
+                <a href="ContraseñaRecupero.aspx" class="link-primary">¿Olvidaste tu contraseña?</a>
             </div>
+
+
+
             <asp:Button Text="Iniciar Sesión" CssClass="btn btn-primary w-100" ID="btnIniciarSesion" runat="server" OnClick="btnIniciarSesion_Click" />
             <div class="mt-3 text-center">
                 <p>¿No tienes una cuenta? <a href="RegistroUsuariosNuevos.aspx">Regístrate aquí</a></p>
@@ -30,9 +35,9 @@
 
 
 
-            <div class="row">
-                <div class="col-md-12">
-                    <asp:Label ID="lblMensaje" runat="server" Text="" Visible="false" CssClass="alert alert-danger"></asp:Label>
+            <div class="row mt-3">
+                <div class="col-md-12 text-center">
+                    <asp:Label ID="lblMensaje" runat="server" Text="" Visible="false" CssClass="alert alert-danger d-inline-block"></asp:Label>
                 </div>
             </div>
 
