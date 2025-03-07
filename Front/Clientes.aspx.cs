@@ -162,9 +162,9 @@ namespace Front
                         Dni = TextBoxDniCliente.Text,
                         Direccion = TextBoxDireccionCliente.Text,
                         Telefono = TextBoxTelefonoCliente.Text,
-                        idPerfil = int.Parse(ddlPerfilCliente.SelectedValue),
-                        clave = TextBoxDniCliente.Text,
-                        Email = TextBoxEmailCliente.Text
+                        Email = TextBoxEmailCliente.Text,
+                        clave = TextBoxClaveCliente.Text,
+                        idPerfil = int.Parse(ddlPerfilCliente.SelectedValue)
                     };
 
                     Cliente clienteInactivo = negocio.ExisteClienteInactivo(cliente.Dni);
@@ -303,6 +303,9 @@ namespace Front
             TextBoxDireccionCliente.Text = "";
             TextBoxTelefonoCliente.Text = "";
             TextBoxEmailCliente.Text = "";
+            TextBoxClaveCliente.Text = "";
+            ddlPerfilCliente.ClearSelection();
+
 
 
 

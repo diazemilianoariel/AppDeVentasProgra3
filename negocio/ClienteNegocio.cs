@@ -132,7 +132,7 @@ namespace negocio
                 datos.SetearParametro("@Email", nuevo.Email);
                 datos.SetearParametro("@Clave", nuevo.clave);
                 datos.SetearParametro("@idPerfil", nuevo.idPerfil);
-                datos.SetearParametro("@estado", nuevo.estado);
+                datos.SetearParametro("@estado", 1);
                 datos.EjecutarAccion();
             }
             catch (Exception ex)
