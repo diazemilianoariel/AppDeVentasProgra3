@@ -12,7 +12,7 @@
 
 
         <div class="col-md-12">
-            <h2 class="text-center">Mis COmpras</h2>
+            <h2 class="text-center">Mis Compras</h2>
 
 
             <asp:GridView ID="gvMisCompras" runat="server" AutoGenerateColumns="false" CssClass="table table-striped" OnRowCommand="gvMisCompras_RowCommand">

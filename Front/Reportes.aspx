@@ -132,7 +132,9 @@
 
 
                                             <td>
-                                                ver factura
+                                                <a href="#"  class ="btn btn-primary " >Ver Factura</a>
+                                             
+
                                             </td>
                                         </tr>
                                     </ItemTemplate>

@@ -81,7 +81,7 @@
                         <asp:Label ID="LabelProveedor" runat="server" AssociatedControlID="DropDownListProveedor" CssClass="form-label fw-bold">Proveedor</asp:Label>
                         <asp:DropDownList ID="DropDownListProveedor" runat="server" CssClass="form-control"></asp:DropDownList>
 
-                        <asp:Label ID="LabelEstado" runat="server" AssociatedControlID="CheckBoxEstado" CssClass="form-label fw-bold">Estado</asp:Label>
+                        <asp:Label ID="LabelEstado" runat="server" AssociatedControlID="CheckBoxEstado" CssClass="form-label fw-bold">Producto Disponible</asp:Label>
                         <asp:CheckBox ID="CheckBoxEstado" runat="server" CssClass="form-control" Checked="true"></asp:CheckBox>
                     </div>
                 </div>

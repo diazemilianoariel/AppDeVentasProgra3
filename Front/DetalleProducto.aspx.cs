@@ -18,8 +18,22 @@ namespace Front
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
+            if (Session["cliente"] == null || !IDPerfilValido())
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
+
+
+
+
             if (!IsPostBack)
             {
+
+
+
                 // Obtén el ID del producto de la query string
                 string productoId = Request.QueryString["id"];
                 if (!string.IsNullOrEmpty(productoId))
@@ -31,8 +45,19 @@ namespace Front
                 {
                     MostrarError("Debe seleccionar un producto.");
                 }
+
+
             }
 
+
+
+
+        }
+
+        public bool IDPerfilValido()
+        {
+            Cliente cliente = (Cliente)Session["cliente"];
+            return cliente.idPerfil == 2;
         }
 
         private void MostrarError(string v)
@@ -85,6 +110,9 @@ namespace Front
         protected void btnVolver_Click(object sender, EventArgs e)
         {
 
+
+          
+
             Button button = (Button)sender;
             string commnandArgument = button.CommandArgument;
 
@@ -93,9 +121,12 @@ namespace Front
                 Response.Redirect($"DetalleProducto.aspx?id={idProducto}");
             }
             else
-            {
+           {
 
-                Response.Redirect("Default.aspx");
+
+
+
+               Response.Redirect("Productos.aspx");
             }
 
 

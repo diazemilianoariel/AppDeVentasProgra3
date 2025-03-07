@@ -3,16 +3,44 @@
   "WorkspaceRootPath": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\front\\detalleproducto.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\detalleproducto.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\front\\compras.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\compras.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\front\\default.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\default.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\front\\miscompras.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\miscompras.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\front\\categorias.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\categorias.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\front\\clientes.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\clientes.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3DF910B5-5CB0-47DC-8894-659C2DD82C01}|negocio\\negocio.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\negocio\\clientenegocio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3DF910B5-5CB0-47DC-8894-659C2DD82C01}|negocio\\negocio.csproj|solutionrelative:negocio\\clientenegocio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\front\\miscompras.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\miscompras.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\front\\clientes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\clientes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\front\\reportes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\reportes.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\front\\reportes.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\reportes.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appdeventasprogra3\\front\\compras.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\compras.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 652,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,41 +70,132 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ClienteNegocio.cs",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\negocio\\ClienteNegocio.cs",
-              "RelativeDocumentMoniker": "negocio\\ClienteNegocio.cs",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\negocio\\ClienteNegocio.cs",
-              "RelativeToolTip": "negocio\\ClienteNegocio.cs",
-              "ViewState": "AgIAAIQAAAAAAAAAAAAhwJEAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T18:56:30.891Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Clientes.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Clientes.aspx.cs",
-              "RelativeDocumentMoniker": "Front\\Clientes.aspx.cs",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Clientes.aspx.cs",
-              "RelativeToolTip": "Front\\Clientes.aspx.cs",
-              "ViewState": "AgIAALsAAAAAAAAAAAAhwMcAAAAIAAAAAAAAAA==",
+              "Title": "DetalleProducto.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\DetalleProducto.aspx.cs",
+              "RelativeDocumentMoniker": "Front\\DetalleProducto.aspx.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\DetalleProducto.aspx.cs",
+              "RelativeToolTip": "Front\\DetalleProducto.aspx.cs",
+              "ViewState": "AgIAAGkAAAAAAAAAAAAgwHEAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T18:49:57.645Z",
+              "WhenOpened": "2025-03-07T20:10:16.469Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Clientes.aspx",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Clientes.aspx",
-              "RelativeDocumentMoniker": "Front\\Clientes.aspx",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Clientes.aspx",
-              "RelativeToolTip": "Front\\Clientes.aspx",
+              "Title": "Default.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Default.aspx.cs",
+              "RelativeDocumentMoniker": "Front\\Default.aspx.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Default.aspx.cs",
+              "RelativeToolTip": "Front\\Default.aspx.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAwwCgAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T20:10:07.23Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Clientes.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Clientes.aspx.cs",
+              "RelativeDocumentMoniker": "Front\\Clientes.aspx.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Clientes.aspx.cs",
+              "RelativeToolTip": "Front\\Clientes.aspx.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABcAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T20:09:58.368Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Categorias.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Categorias.aspx.cs",
+              "RelativeDocumentMoniker": "Front\\Categorias.aspx.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Categorias.aspx.cs",
+              "RelativeToolTip": "Front\\Categorias.aspx.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwBUAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T20:09:43.942Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Compras.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Compras.aspx.cs",
+              "RelativeDocumentMoniker": "Front\\Compras.aspx.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Compras.aspx.cs",
+              "RelativeToolTip": "Front\\Compras.aspx.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAYwA8AAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T19:56:03.334Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Compras.aspx",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Compras.aspx",
+              "RelativeDocumentMoniker": "Front\\Compras.aspx",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Compras.aspx",
+              "RelativeToolTip": "Front\\Compras.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-03-07T18:49:52.203Z",
+              "WhenOpened": "2025-03-07T19:56:00.215Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MisCompras.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\MisCompras.aspx.cs",
+              "RelativeDocumentMoniker": "Front\\MisCompras.aspx.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\MisCompras.aspx.cs",
+              "RelativeToolTip": "Front\\MisCompras.aspx.cs",
+              "ViewState": "AgIAAC4AAAAAnMzMzMzgvzMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T19:37:57.117Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MisCompras.aspx",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\MisCompras.aspx",
+              "RelativeDocumentMoniker": "Front\\MisCompras.aspx",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\MisCompras.aspx",
+              "RelativeToolTip": "Front\\MisCompras.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-03-07T19:37:14.612Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Reportes.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Reportes.aspx.cs",
+              "RelativeDocumentMoniker": "Front\\Reportes.aspx.cs",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Reportes.aspx.cs",
+              "RelativeToolTip": "Front\\Reportes.aspx.cs",
+              "ViewState": "AgIAAD0AAAAAAAAAAAA0wG4AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T19:36:34.157Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Reportes.aspx",
+              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Reportes.aspx",
+              "RelativeDocumentMoniker": "Front\\Reportes.aspx",
+              "ToolTip": "C:\\Users\\programador\\Desktop\\AppDeVentasProgra3\\Front\\Reportes.aspx",
+              "RelativeToolTip": "Front\\Reportes.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-03-07T19:36:30.522Z",
               "EditorCaption": ""
             }
           ]

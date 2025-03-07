@@ -27,6 +27,14 @@ namespace Front
         protected void Page_Load(object sender, EventArgs e)
         {
 
+
+            if (Session["cliente"] == null || !IDPerfilValido())
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
+
+
             if (!IsPostBack)
             {
                 cargarDatosPanel();
@@ -40,6 +48,13 @@ namespace Front
 
 
 
+        }
+
+
+        public bool IDPerfilValido()
+        {
+            Cliente cliente = (Cliente)Session["cliente"];
+            return cliente.idPerfil == 2;
         }
 
 
@@ -92,12 +107,24 @@ namespace Front
 
 
 
-        protected void rptVentas_ItemCommand(object source, RepeaterCommandEventArgs e)
+
+        protected void rptVentas_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-          
+
+
+
+
+
+
+
+
+           
+         
         }
 
-      
+
+
+
 
 
 
