@@ -143,6 +143,8 @@ namespace negocio
 
         public List<Venta> ListarVentasPendientes()
         {
+
+
             List<Venta> ventas = new List<Venta>();
             AccesoDatos datos = new AccesoDatos();
 

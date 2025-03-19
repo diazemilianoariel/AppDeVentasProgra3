@@ -156,19 +156,149 @@ namespace negocio
         }
 
 
+        /* public void AgregarProducto(Producto producto)
+         {
+             AccesoDatos accesodatos = new AccesoDatos();
+             int idProducto;
+
+
+
+             try
+             {
+                 // Verificar si el producto ya existe
+                 accesodatos.SetearConsulta("SELECT COUNT(*) " +
+                                            "FROM Productos " +
+                                            "WHERE nombre = @nombree AND descripcion = @descripcionn");
+                 accesodatos.SetearParametro("@nombree", producto.nombre);
+                 accesodatos.SetearParametro("@descripcionn", producto.descripcion);
+
+                 int count = Convert.ToInt32(accesodatos.EjecutarEscalar());
+
+                 if (count > 0)
+                 {
+                     throw new Exception("El producto ya existe");
+
+
+
+
+
+                 }
+             }
+             catch (Exception ex)
+             {
+                 throw ex;
+
+
+             }
+             finally
+             {
+                 accesodatos.CerrarConexion();
+             }
+
+
+
+
+
+             try
+             {
+
+
+
+                 // Insertar en la tabla Productos
+                 accesodatos.SetearConsulta("INSERT INTO Productos (nombre, descripcion, imagen, precio, margenGanancia, estado, idMarca, idTipo, idCategoria) " +
+                                            "VALUES (@nombre, @descripcion, @imagen, @precio, @margenGanancia, @estado, @idMarca, @idTipo, @idCategoria); " +
+                                            "SELECT SCOPE_IDENTITY();");
+
+                 accesodatos.SetearParametro("@nombre", producto.nombre);
+                 accesodatos.SetearParametro("@descripcion", producto.descripcion);
+                 accesodatos.SetearParametro("@imagen", producto.Imagen);
+                 accesodatos.SetearParametro("@precio", producto.precio);
+                 accesodatos.SetearParametro("@margenGanancia", producto.margenGanancia);
+                 accesodatos.SetearParametro("@estado", producto.estado);
+                 accesodatos.SetearParametro("@idMarca", producto.idMarca);
+                 accesodatos.SetearParametro("@idTipo", producto.idTipo);
+                 accesodatos.SetearParametro("@idCategoria", producto.IdCategoria);
+
+
+
+
+                 // Obtener el ID del producto insertado
+                 idProducto = Convert.ToInt32(accesodatos.EjecutarEscalar());
+
+             }
+             catch (Exception ex)
+             {
+                 throw ex;
+             }
+             finally
+             {
+                 accesodatos.CerrarConexion();
+             }
+
+
+
+
+             try
+             {
+                 // Insertar en la tabla Stock
+                 AccesoDatos accesoDatos = new AccesoDatos();
+                 accesodatos.SetearConsulta("INSERT INTO Stock (idProducto, cantidad, stockMinimo, fechaActualizacion) " +
+                                            "VALUES (@idProducto, @cantidad, @stockMinimo, @fechaActualizacion)");
+
+                 accesodatos.SetearParametro("@idProducto", idProducto);
+                 accesodatos.SetearParametro("@cantidad", producto.stock);
+                 accesodatos.SetearParametro("@stockMinimo", 5);
+                 accesodatos.SetearParametro("@fechaActualizacion", DateTime.Now);
+
+                 accesodatos.EjecutarAccion();
+             }
+             catch (Exception ex)
+             {
+                 throw ex;
+             }
+             finally
+             {
+                 accesodatos.CerrarConexion();
+             }
+
+
+
+
+             try
+             {
+                 // Insertar en la tabla Proveedores_Productos
+                 AccesoDatos accesoDatos = new AccesoDatos();
+                 accesodatos.SetearConsulta("INSERT INTO Proveedores_Productos (idProveedor, idProducto) " +
+                                            "VALUES (@idProveedor, @idProductoProveedorPorProducto)");
+
+                 accesodatos.SetearParametro("@idProveedor", producto.IdProveedor);
+                 accesodatos.SetearParametro("@idProductoProveedorPorProducto", idProducto);
+
+                 accesodatos.EjecutarAccion();
+             }
+             catch (Exception ex)
+             {
+                 throw ex;
+             }
+             finally
+             {
+                 accesodatos.CerrarConexion();
+             }
+
+
+
+         }*/
+
+
         public void AgregarProducto(Producto producto)
         {
             AccesoDatos accesodatos = new AccesoDatos();
             int idProducto;
 
-
-
             try
             {
                 // Verificar si el producto ya existe
-                accesodatos.SetearConsulta("SELECT COUNT(*) " +
-                                           "FROM Productos " +
-                                           "WHERE nombre = @nombree AND descripcion = @descripcionn");
+                accesodatos.SetearConsulta("SELECT COUNT(*) FROM Productos WHERE nombre = @nombree AND descripcion = @descripcionn");
                 accesodatos.SetearParametro("@nombree", producto.nombre);
                 accesodatos.SetearParametro("@descripcionn", producto.descripcion);
 
@@ -177,33 +307,19 @@ namespace negocio
                 if (count > 0)
                 {
                     throw new Exception("El producto ya existe");
-
-                   
-
-
-
                 }
             }
             catch (Exception ex)
             {
                 throw ex;
-
-
             }
             finally
             {
                 accesodatos.CerrarConexion();
             }
 
-
-
-
-
             try
             {
-
-
-
                 // Insertar en la tabla Productos
                 accesodatos.SetearConsulta("INSERT INTO Productos (nombre, descripcion, imagen, precio, margenGanancia, estado, idMarca, idTipo, idCategoria) " +
                                            "VALUES (@nombre, @descripcion, @imagen, @precio, @margenGanancia, @estado, @idMarca, @idTipo, @idCategoria); " +
@@ -218,13 +334,9 @@ namespace negocio
                 accesodatos.SetearParametro("@idMarca", producto.idMarca);
                 accesodatos.SetearParametro("@idTipo", producto.idTipo);
                 accesodatos.SetearParametro("@idCategoria", producto.IdCategoria);
-                
-
-
 
                 // Obtener el ID del producto insertado
                 idProducto = Convert.ToInt32(accesodatos.EjecutarEscalar());
-
             }
             catch (Exception ex)
             {
@@ -235,13 +347,9 @@ namespace negocio
                 accesodatos.CerrarConexion();
             }
 
-
-
-
             try
             {
                 // Insertar en la tabla Stock
-                AccesoDatos accesoDatos = new AccesoDatos();
                 accesodatos.SetearConsulta("INSERT INTO Stock (idProducto, cantidad, stockMinimo, fechaActualizacion) " +
                                            "VALUES (@idProducto, @cantidad, @stockMinimo, @fechaActualizacion)");
 
@@ -261,13 +369,9 @@ namespace negocio
                 accesodatos.CerrarConexion();
             }
 
-
-
-
             try
             {
                 // Insertar en la tabla Proveedores_Productos
-                AccesoDatos accesoDatos = new AccesoDatos();
                 accesodatos.SetearConsulta("INSERT INTO Proveedores_Productos (idProveedor, idProducto) " +
                                            "VALUES (@idProveedor, @idProductoProveedorPorProducto)");
 
@@ -284,12 +388,7 @@ namespace negocio
             {
                 accesodatos.CerrarConexion();
             }
-
-
-
         }
-
-
 
 
 

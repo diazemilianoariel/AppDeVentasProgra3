@@ -76,7 +76,7 @@ namespace negocio
                     datosDetalleVenta.SetearParametro("@idVenta", idVenta);
                     datosDetalleVenta.SetearParametro("@idProducto", producto.id);
                     datosDetalleVenta.SetearParametro("@cantidad", producto.Cantidad);
-                    datosDetalleVenta.SetearParametro("@precioVenta", producto.precio);
+                    datosDetalleVenta.SetearParametro("@precioVenta", producto.precioVenta);
                     datosDetalleVenta.EjecutarAccion();
 
                     DescontarStocK(producto.id, producto.Cantidad);

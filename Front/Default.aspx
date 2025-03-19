@@ -47,7 +47,7 @@
                                 <img src='<%# Eval("Imagen") %>' alt='<%# Eval("Nombre") %>' class="card-img-top product-image" style="height: 200px; object-fit: cover;" />
                                 <div class="card-body">
                                     <h5 class="card-title"><%# Eval("Nombre") %></h5>
-                                    <p class="card-text">Precio: $<%# Eval("Precio") %></p>
+                                    <p class="card-text">Precio: $<%# Eval("precioVenta") %></p>
 
 
                                     <p class="card-text">Stock Disponible: <%# Eval("Stock") %></p>

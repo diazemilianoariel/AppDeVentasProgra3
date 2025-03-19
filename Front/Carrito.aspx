@@ -23,7 +23,7 @@
                             <asp:TextBox ID="txtCantidad" runat="server" Text='<%# Eval("Cantidad") %>' CssClass="form-control text-center" AutoPostBack="true" OnTextChanged="txtCantidad_TextChanged" ReadOnly="true" />
                         </div>
                         <div class="col-md-2">
-                            <p>Precio: $<%# Eval("Precio") %></p>
+                            <p>Precio: $<%# Eval("precioVenta") %></p>
                         </div>
                         <div class="col-md-2">
                             <p>Subtotal: $<%# Eval("Subtotal") %></p>

@@ -19,11 +19,16 @@ namespace dominio
         [Range(0, 9999999999999999.99)]
         public decimal precio { get; set; }
 
-        public decimal SubTotal => precio * Cantidad;
+
+
+
+        public decimal precioVenta => Math.Round(precio + (precio * (margenGanancia / 100)), 2);
+
+        public decimal SubTotal => precioVenta * Cantidad;
 
         public decimal SubTotalEnFactura
         {
-            get { return precio * Cantidad; }
+            get { return precioVenta * Cantidad; }
             set { /* No hacer nada, solo para evitar errores de solo lectura */ }
         }
 
@@ -49,6 +54,7 @@ namespace dominio
         public int IdProveedor  { get; set; }
 
 
+        [Range(0, 1)]
         public decimal margenGanancia { get; set; }
         public bool estado { get; set; }
 
