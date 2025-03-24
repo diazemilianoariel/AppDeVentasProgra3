@@ -53,6 +53,7 @@ namespace Front
 
             int idVenta = Convert.ToInt32(((Button)sender).CommandArgument);
             VentaNegocio negocio = new VentaNegocio();
+            ClienteNegocio clienteNegocio = new ClienteNegocio();
             List<Producto> carrito = negocio.ObtenerCarritoPorVenta(idVenta);
 
 
@@ -65,33 +66,26 @@ namespace Front
 
             negocio.AprobarVenta(idVenta);
 
-
-
-
-
-
-
             dominio.Factura factura = new dominio.Factura();
 
             factura.IdVenta = idVenta;
-            factura.TotalFactura = carrito.Sum(x => x.precio * x.Cantidad);
-            factura.SubTotalFactura = carrito.Sum(x => x.precio * x.Cantidad);
-
-
-
-
-
-
-
-
+            factura.TotalFactura = carrito.Sum(x => x.precioVenta * x.Cantidad);
+            factura.SubTotalFactura = carrito.Sum(x => x.precioVenta * x.Cantidad);
 
 
             FacturaNegocio facturaNegocio = new FacturaNegocio();
             facturaNegocio.GenerarFactura(factura);
 
+
+
             // es el envio del mail
+
+            Venta venta = negocio.ObtenerVentaPorId(idVenta);
+
+            Cliente clientequecompro = clienteNegocio.ObtenerCliente(venta.Cliente.Id);
+
             EmailService emailService = new EmailService();
-            emailService.EnviarCorreoConfirmacion("arieldiaz_90@hotmail.com", "Estado De tu Compra", "Tu Compra ya a sido Aprobada ");
+            emailService.EnviarCorreoConfirmacion(clientequecompro.Email, "Estado De tu Compra", "Tu Compra ya a sido Aprobada ");
 
 
 
@@ -104,11 +98,22 @@ namespace Front
         {
 
             // volver a insertar todos los productos en la base de datos porque se rechazó
+            VentaNegocio negocio = new VentaNegocio();
+            ClienteNegocio clienteNegocio = new ClienteNegocio();
 
             int idVenta = Convert.ToInt32(((Button)sender).CommandArgument);
-            VentaNegocio negocio = new VentaNegocio();
             negocio.RechazarVenta(idVenta);
             List<Producto> carrito = negocio.ObtenerCarritoPorVenta(idVenta);
+
+
+            Venta venta = negocio.ObtenerVentaPorId(idVenta);
+
+            Cliente clientequecompro = clienteNegocio.ObtenerCliente(venta.Cliente.Id);
+
+
+
+
+
 
 
             // aca se tiene que volver a insertar el stock que se descontó cuando el cliente confimo la compra
@@ -121,10 +126,9 @@ namespace Front
 
 
 
-
             // es el envio del mail
             EmailService emailService = new EmailService();
-            emailService.EnviarCorreoConfirmacion("arieldiaz_90@hotmail.com", "Estado De tu Compra", "Tu Compra a sido Rechazada ");
+            emailService.EnviarCorreoConfirmacion(clientequecompro.Email, "Estado De tu Compra", "Tu Compra a sido Rechazada ");
 
             CargarVentas();
         }

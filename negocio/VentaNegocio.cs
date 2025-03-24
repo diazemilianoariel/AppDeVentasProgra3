@@ -57,7 +57,7 @@ namespace negocio
 
             try
             {
-                datos.SetearConsulta("select v.id, v.fecha, v.idUsuario, U.nombre, U.apellido, U.dni, U.email, U.telefono, U.direccion, v.enLocal, E.nombre as nombreestadoventa, v.idEstadoVenta from ventas v inner join Usuarios U on v.idUsuario = U.id INNER JOIN EstadoVenta E on v.idEstadoVenta = E.id where v.idEstadoVenta != 1");
+                datos.SetearConsulta("select v.id, v.fecha, v.idUsuario, U.nombre, U.apellido, U.dni, U.email, U.telefono, U.direccion, v.enLocal, E.nombre as nombreestadoventa, v.idEstadoVenta, v.monto from ventas v inner join Usuarios U on v.idUsuario = U.id INNER JOIN EstadoVenta E on v.idEstadoVenta = E.id where v.idEstadoVenta != 1");
                 datos.EjecutarLectura();
 
 
@@ -69,6 +69,7 @@ namespace negocio
                     Venta aux = new Venta();
                     aux.IdVenta = (int)datos.Lector["id"];
                     aux.Fecha = (DateTime)datos.Lector["fecha"];
+                    aux.Monto = (decimal)datos.Lector["monto"];
 
                     aux.Cliente = new Cliente();
                     aux.Cliente.Id = (int)datos.Lector["id"];
@@ -85,6 +86,8 @@ namespace negocio
 
                     // Cargar los productos de la venta
                     aux.Productos = ListarProductosPorVenta(aux.IdVenta);
+
+
 
 
                     ventas.Add(aux);
@@ -112,7 +115,7 @@ namespace negocio
 
             try
             {
-                datos.SetearConsulta("select p.id, p.nombre, p.descripcion, p.precio, dv.cantidad from DetalleVentas dv inner join Productos p on dv.idProducto = p.id where dv.idVenta = @idVenta");
+                datos.SetearConsulta("select p.id, p.nombre, p.descripcion, p.precio, p.margenGanancia, dv.cantidad from DetalleVentas dv inner join Productos p on dv.idProducto = p.id where dv.idVenta = @idVenta");
                 datos.SetearParametro("@idVenta", idVenta);
                 datos.EjecutarLectura();
 
@@ -123,6 +126,7 @@ namespace negocio
                     producto.nombre = (string)datos.Lector["nombre"];
                     producto.descripcion = (string)datos.Lector["descripcion"];
                     producto.precio = (decimal)datos.Lector["precio"];
+                    producto.margenGanancia = (decimal)datos.Lector["margenGanancia"];
                     producto.Cantidad = (int)datos.Lector["cantidad"];
                     productos.Add(producto);
                 }
@@ -271,7 +275,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select p.id,p.nombre,p.descripcion,p.precio,dv.cantidad,v.monto as Total from DetalleVentas dv INNER JOIN Ventas v on dv.idVenta = v.id inner join Productos p on dv.idProducto = p.id where dv.idVenta = @idVenta");
+                datos.SetearConsulta("select p.id, p.nombre, p.descripcion, p.precio, dv.cantidad, p.margenGanancia from DetalleVentas dv inner join Productos p on dv.idProducto = p.id where dv.idVenta = @idVenta");
                 datos.SetearParametro("@idVenta", idVenta);
                 datos.EjecutarLectura();
                 while (datos.Lector.Read())
@@ -282,9 +286,9 @@ namespace negocio
                     producto.descripcion = (string)datos.Lector["descripcion"];
                     producto.precio = (decimal)datos.Lector["precio"];
                     producto.Cantidad = (int)datos.Lector["cantidad"];
+                    producto.margenGanancia = (decimal)datos.Lector["margenGanancia"];
+                 
                     productos.Add(producto);
-
-                     
                 }
                 return productos;
             }

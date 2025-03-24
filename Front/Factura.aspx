@@ -73,7 +73,7 @@
                             <td><%# Eval("Id") %></td>
                             <td><%# Eval("Nombre") %></td>
                             <td><%# Eval("cantidad") %></td>
-                            <td><%# Eval("Precio", "{0:C}") %></td>
+                            <td><%# Eval("PrecioVenta", "{0:C}") %></td>
                             <td><%# Eval("SubTotalEnFactura", "{0:C}") %></td>
                         </tr>
                     </ItemTemplate>

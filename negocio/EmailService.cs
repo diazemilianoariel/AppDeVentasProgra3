@@ -15,7 +15,7 @@ namespace negocio
             try
             {
                 string email = "arielemilianodiaz@gmail.com"; // Tu correo de Gmail
-                string password = "pfit apbo cimg kzwc"; // La contraseña de aplicación de Google
+                string password = "pfcm bhcd kakp wcor"; // La contraseña de aplicación de Google
 
                 using (MailMessage mail = new MailMessage())
                 {

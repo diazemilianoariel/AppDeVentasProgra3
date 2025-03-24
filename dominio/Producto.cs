@@ -19,11 +19,14 @@ namespace dominio
         [Range(0, 9999999999999999.99)]
         public decimal precio { get; set; }
 
+        private decimal _precioVenta;
 
 
-
-        public decimal precioVenta => Math.Round(precio + (precio * (margenGanancia / 100)), 2);
-
+        public decimal precioVenta
+        {
+            get => Math.Round(precio + (precio * (margenGanancia / 100)), 2);
+            set => _precioVenta = value;
+        }
         public decimal SubTotal => precioVenta * Cantidad;
 
         public decimal SubTotalEnFactura

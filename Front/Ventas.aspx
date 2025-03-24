@@ -55,8 +55,8 @@
             <asp:GridView ID="gvVentas" runat="server" AutoGenerateColumns="False" CssClass="table table-striped">
                 <Columns>
                     <asp:BoundField DataField="idVenta" HeaderText="ID Venta" />
-                    <asp:BoundField DataField="Fecha" HeaderText="Fecha" />
-                    <asp:BoundField DataField="Monto" HeaderText="Monto" />
+                    <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" />
+                    <asp:BoundField DataField="Monto" HeaderText="Monto" DataFormatString="{0:N2}" />
                     <asp:BoundField DataField="Cliente.id" HeaderText="ID Usuario" />
                     <asp:BoundField DataField="EnLocal" HeaderText="En Local" />
                     <asp:BoundField DataField="idEstadoVenta" HeaderText="Id Estado" />

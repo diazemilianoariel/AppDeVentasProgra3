@@ -153,7 +153,7 @@ namespace Front
 
                         // es el envio del mail
                         EmailService emailService = new EmailService();
-                        emailService.EnviarCorreoConfirmacion("arieldiaz_90@hotmail.com", "Estado De tu Compra", "Tu Compra esta en Proceso ");
+                        emailService.EnviarCorreoConfirmacion(cliente.Email, "Estado De tu Compra", "Tu Compra esta en Proceso ");
 
 
 

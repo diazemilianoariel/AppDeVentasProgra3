@@ -52,7 +52,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select Id, Nombre, apellido, dni, direccion, telefono, email, clave from Clientes where Id = @id");
+                datos.SetearConsulta("select Id, Nombre, apellido, dni, direccion, telefono, email, clave from Usuarios where Id = @id");
                 datos.SetearParametro("@id", id);
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())

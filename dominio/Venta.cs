@@ -13,7 +13,12 @@ namespace dominio
 
         public int IdVenta { get; set; }
         public DateTime Fecha { get; set; }
-        public decimal Monto => CalcularMonto();
+        private decimal _monto;
+        public decimal Monto
+        {
+            get => _monto;
+            set => _monto = value;
+        }
         public Cliente Cliente { get; set; }
 
         public bool EnLocal { get; set; }
@@ -43,9 +48,14 @@ namespace dominio
             decimal total = 0;
             foreach (var producto in Productos)
             {
-                total += producto.SubTotal;
+                total += producto.precioVenta * producto.Cantidad;
             }
             return total;
+        }
+
+        public decimal MontoCalculado
+        {
+            get { return CalcularMonto(); }
         }
 
 
