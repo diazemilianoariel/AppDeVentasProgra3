@@ -397,7 +397,7 @@ namespace negocio
             AccesoDatos accesoDatos = new AccesoDatos();
             try
             {
-                
+
                 accesoDatos.SetearConsulta("UPDATE Productos SET nombre = @nombre, descripcion = @descripcion, imagen = @imagen, precio = @precio, estado = @estado, idMarca = @idMarca, idCategoria = @idCategoria, idTipo = @idTipo  WHERE id = @idProducto");
 
                 accesoDatos.SetearParametro("@nombre", producto.nombre);
@@ -405,10 +405,10 @@ namespace negocio
                 accesoDatos.SetearParametro("@imagen", producto.Imagen);
                 accesoDatos.SetearParametro("@precio", producto.precio);
                 accesoDatos.SetearParametro("@estado", producto.estado);
-                accesoDatos.SetearParametro("@idMarca", producto.idMarca);
-                accesoDatos.SetearParametro("@idTipo", producto.idTipo);
-                accesoDatos.SetearParametro("@idCategoria", producto.IdCategoria);
-              
+                accesoDatos.SetearParametro("@idMarca", producto.Marca.id);
+                accesoDatos.SetearParametro("@idTipo", producto.Tipo.id);
+                accesoDatos.SetearParametro("@idCategoria", producto.Categoria.id);
+
 
 
                 accesoDatos.SetearParametro("@idProducto", producto.id);
@@ -453,17 +453,17 @@ namespace negocio
             // Modificamos el nombre del proveedor en su tabla Proveedores
             try
             {
-             
-                    accesoDatos = new AccesoDatos();
-                    accesoDatos.SetearConsulta("UPDATE Proveedores_Productos SET idProveedor = @idProveedor WHERE idProducto = @idProducto");
 
-                    // Agregar parámetros con los valores correspondientes
-                    accesoDatos.SetearParametro("@idProveedor", producto.IdProveedor);
-                    accesoDatos.SetearParametro("@idProducto", producto.id);
+                accesoDatos = new AccesoDatos();
+                accesoDatos.SetearConsulta("UPDATE Proveedores_Productos SET idProveedor = @idProveedor WHERE idProducto = @idProducto");
 
-                    // Ejecutar la acción de modificación
-                    accesoDatos.EjecutarAccion();
-                
+                // Agregar parámetros con los valores correspondientes
+                accesoDatos.SetearParametro("@idProveedor", producto.proveedor.id);
+                accesoDatos.SetearParametro("@idProducto", producto.id);
+
+                // Ejecutar la acción de modificación
+                accesoDatos.EjecutarAccion();
+
             }
             catch (Exception ex)
             {
@@ -474,6 +474,7 @@ namespace negocio
                 accesoDatos.CerrarConexion();
             }
         }
+
 
 
 
