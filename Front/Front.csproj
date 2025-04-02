@@ -84,7 +84,6 @@
     <Content Include="Categorias.aspx" />
     <Content Include="Clientes.aspx" />
     <Content Include="Carrito.aspx" />
-    <Content Include="Compras.aspx" />
     <Content Include="ContraseñaRecupero.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="DetalleProducto.aspx" />
@@ -124,13 +123,6 @@
     </Compile>
     <Compile Include="Carrito.aspx.designer.cs">
       <DependentUpon>Carrito.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Compras.aspx.cs">
-      <DependentUpon>Compras.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Compras.aspx.designer.cs">
-      <DependentUpon>Compras.aspx</DependentUpon>
     </Compile>
     <Compile Include="ContraseñaRecupero.aspx.cs">
       <DependentUpon>ContraseñaRecupero.aspx</DependentUpon>
