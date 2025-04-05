@@ -331,9 +331,11 @@ namespace negocio
                 accesodatos.SetearParametro("@precio", producto.precio);
                 accesodatos.SetearParametro("@margenGanancia", producto.margenGanancia);
                 accesodatos.SetearParametro("@estado", producto.estado);
-                accesodatos.SetearParametro("@idMarca", producto.idMarca);
-                accesodatos.SetearParametro("@idTipo", producto.idTipo);
-                accesodatos.SetearParametro("@idCategoria", producto.IdCategoria);
+                accesodatos.SetearParametro("@idMarca", producto.Marca.id);
+                accesodatos.SetearParametro("@idTipo", producto.Tipo.id);
+                accesodatos.SetearParametro("@idCategoria", producto.Categoria.id);
+
+
 
                 // Obtener el ID del producto insertado
                 idProducto = Convert.ToInt32(accesodatos.EjecutarEscalar());
@@ -375,7 +377,7 @@ namespace negocio
                 accesodatos.SetearConsulta("INSERT INTO Proveedores_Productos (idProveedor, idProducto) " +
                                            "VALUES (@idProveedor, @idProductoProveedorPorProducto)");
 
-                accesodatos.SetearParametro("@idProveedor", producto.IdProveedor);
+                accesodatos.SetearParametro("@idProveedor", producto.proveedor.id);
                 accesodatos.SetearParametro("@idProductoProveedorPorProducto", idProducto);
 
                 accesodatos.EjecutarAccion();

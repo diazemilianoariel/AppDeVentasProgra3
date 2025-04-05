@@ -86,7 +86,7 @@
     <Content Include="Carrito.aspx" />
     <Content Include="ContraseñaRecupero.aspx" />
     <Content Include="Default.aspx" />
-    <Content Include="DetalleProducto.aspx" />
+    <Content Include="Productos\DetalleProducto.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="EstiloCSS\estilo.css" />
     <Content Include="Factura.aspx" />
@@ -94,6 +94,8 @@
     <Content Include="Marcas.aspx" />
     <Content Include="MisCompras.aspx" />
     <Content Include="Perfiles.aspx" />
+    <Content Include="Productos\ProductoAgregar.aspx" />
+    <Content Include="Productos\ProductoEliminar.aspx" />
     <Content Include="Productos\ProductoModificar.aspx" />
     <Content Include="RegistroUsuariosNuevos.aspx" />
     <Content Include="Reportes.aspx" />
@@ -139,11 +141,11 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DetalleProducto.aspx.cs">
+    <Compile Include="Productos\DetalleProducto.aspx.cs">
       <DependentUpon>DetalleProducto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="DetalleProducto.aspx.designer.cs">
+    <Compile Include="Productos\DetalleProducto.aspx.designer.cs">
       <DependentUpon>DetalleProducto.aspx</DependentUpon>
     </Compile>
     <Compile Include="Error.aspx.cs">
@@ -187,6 +189,20 @@
     </Compile>
     <Compile Include="Perfiles.aspx.designer.cs">
       <DependentUpon>Perfiles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Productos\ProductoAgregar.aspx.cs">
+      <DependentUpon>ProductoAgregar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Productos\ProductoAgregar.aspx.designer.cs">
+      <DependentUpon>ProductoAgregar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Productos\ProductoEliminar.aspx.cs">
+      <DependentUpon>ProductoEliminar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Productos\ProductoEliminar.aspx.designer.cs">
+      <DependentUpon>ProductoEliminar.aspx</DependentUpon>
     </Compile>
     <Compile Include="Productos\ProductoModificar.aspx.cs">
       <DependentUpon>ProductoModificar.aspx</DependentUpon>

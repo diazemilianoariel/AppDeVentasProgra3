@@ -71,7 +71,7 @@ namespace Front
                     int productId = Convert.ToInt32(e.CommandArgument);
 
                     //redireccionr a otra pagina
-                    Response.Redirect("Productos/ProductoDetalle.aspx?id=" + productId);
+                    Response.Redirect("Productos/DetalleProducto.aspx?id=" + productId);
                 }
 
             }

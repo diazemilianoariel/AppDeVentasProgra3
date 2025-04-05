@@ -109,29 +109,8 @@ namespace Front
 
         protected void btnVolver_Click(object sender, EventArgs e)
         {
-
-
-          
-
-            Button button = (Button)sender;
-            string commnandArgument = button.CommandArgument;
-
-            if (int.TryParse(commnandArgument, out int idProducto))
-            {
-                Response.Redirect($"DetalleProducto.aspx?id={idProducto}");
-            }
-            else
-           {
-
-
-
-
-               Response.Redirect("Productos.aspx");
-            }
-
-
-
-
+            // Redirigir a la página anterior o a la lista de productos
+            Response.Redirect("../Productos.aspx");
         }
 
 
