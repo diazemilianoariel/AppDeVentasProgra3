@@ -2,73 +2,60 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="estilos.css" rel="stylesheet" />
+    <style>
+        body {
+            background-image: url('https://www.shutterstock.com/shutterstock/photos/2369360047/display_1500/stock-photo-mockup-wall-in-the-children-s-room-on-wall-cream-color-background-d-rendering-2369360047.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+  
     <div class="container mt-5">
-        <h2 class="text-center">Gestión de Categorías</h2>
         <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <h4>Agregar Nueva Categoría</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="TextBoxNombreCategoria">Nombre de la Categoría</label>
-                            <asp:TextBox ID="TextBoxCategoria" runat="server" CssClass="form-control"></asp:TextBox>
-
-                            <div>
-                                <asp:Label ID="lblError" runat="server" CssClass="text-danger d-none"></asp:Label>
-                            </div>
-
-                        </div>
-
-
-
-
-                        <div class="form-group text-right">
-                            <asp:Button ID="btnAgregarCategoria" runat="server" Text="Agregar Categoría" CssClass="btn btn-success" OnClick="btnAgregarCategoria_Click" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header bg-secondary text-white">
-                        <h4>Lista de Categorías</h4>
-                    </div>
-                    <div class="card-body">
-                        <asp:GridView ID="GridViewCategorias" runat="server" CssClass="table table-hover table-bordered" AutoGenerateColumns="False" OnRowCommand="GridViewCategorias_RowCommand">
-                            <Columns>
-                                <asp:BoundField DataField="id" HeaderText="ID" HeaderStyle-CssClass="bg-secondary text-white" ItemStyle-CssClass="text-center" />
-                                <asp:BoundField DataField="nombre" HeaderText="Nombre" HeaderStyle-CssClass="bg-secondary text-white" ItemStyle-CssClass="text-center" />
-                                <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-secondary text-white" ItemStyle-CssClass="text-center">
-                                    <ItemTemplate>
-
-                                        <div class="btn-group" role="group">
-
-
-                                            <asp:Button ID="btnEditar" runat="server" Text="Editar" CommandName="Editar" CommandArgument='<%# Container.DataItemIndex %>' CssClass="btn btn-warning btn-sm" />
-
-                                            <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CommandName="Eliminar" CommandArgument='<%# Container.DataItemIndex %>' CssClass="btn btn-danger btn-sm" />
-                                        </div>
-                                        <asp:Panel ID="editSection" runat="server" CssClass="mt-2" Style="display: none;">
-                                            <div class="form-group">
-                                                <label for="TextBoxNuevoNombreCategoria">Nuevo Nombre</label>
-                                                <asp:TextBox ID="TextBoxNuevaCategoria" runat="server" CssClass="form-control"></asp:TextBox>
-                                            </div>
-                                            <%--  <div class="form-group text-right">
-                                                <asp:Button ID="btnActualizarCategoria" runat="server" Text="Actualizar" CssClass="btn btn-warning btn-sm" OnClick="btnActualizarCategoria_Click" />
-                                            </div>--%>
-                                        </asp:Panel>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                        </asp:GridView>
-                    </div>
-                </div>
+            <div class="col-md-12">
+                <h1 class="text-center">Gestión de Categorías</h1>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h7 class="text-center">Gestione Sus Categorías de Manera Ágil y sencilla, Agregue, Modifique o Elimine las Categorías que Desee</h7>
+            </div>
+        </div>
+
+        <div class="row mt-6 justify-content-center">
+            <a href="CategoriasABM/CategoriaAgregar.aspx" class="btn btn-primary">Nuevo</a>
+        </div>
+
+
+
+        <div class="col-md-10 mt-5">
+   
+            <div class="table-responsive">
+                <asp:GridView ID="GridViewCategorias" runat="server" CssClass="table table-striped table-bordered table-dark w-100" AutoGenerateColumns="False" OnRowCommand="GridViewCategorias_RowCommand">
+                    <Columns>
+                        <asp:BoundField DataField="id" HeaderText="ID" />
+                        <asp:BoundField DataField="nombre" HeaderText="Nombre" />
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                <div class="text-right">
+                                    <asp:Button ID="btnModificar" runat="server" Text="Modificar" CommandName="Modificar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-success btn-sm" />
+                                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CommandName="Eliminar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-danger btn-sm" />
+                                </div>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
+            </div>
+        </div>
+
     </div>
+
+
+
 </asp:Content>

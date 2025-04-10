@@ -98,7 +98,7 @@
     <Compile Include="Proveedor.cs" />
     <Compile Include="Proveedores_Productos.cs" />
     <Compile Include="Stock.cs" />
-    <Compile Include="TIpo.cs" />
+    <Compile Include="Tipos.cs" />
     <Compile Include="Venta.cs" />
   </ItemGroup>
   <ItemGroup>

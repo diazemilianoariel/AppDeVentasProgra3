@@ -9,6 +9,8 @@ namespace negocio
 {
     public class VentaNegocio
     {
+
+
         public int cantidadVentasHoy()
         {
             AccesoDatos datos = new AccesoDatos();

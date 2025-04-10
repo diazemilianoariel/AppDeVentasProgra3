@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MASTER.Master" AutoEventWireup="true" CodeBehind="Productos.aspx.cs" Inherits="Front.producto" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <%--     <link href="ColumnaLateral.css" rel="stylesheet" />--%>
+  
     <link href="estilos.css" rel="stylesheet" />
     <style>
         body {

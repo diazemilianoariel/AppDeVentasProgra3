@@ -117,13 +117,7 @@ namespace Front
             lblTotalGeneral.Text = totalGeneral.ToString("F2");
         }
 
-        //private bool EsAdministradorClienteVendedor(Cliente cliente)
-        //{
-        //   return cliente.idPerfil == 1 || // Cliente
-        //  cliente.idPerfil == 2 || // Administrador
-        //  cliente.idPerfil == 3 || // Vendedor
-        //  cliente.idPerfil == 4;   // Soporte
-        //}
+        
 
          protected void btnConfirmarCompra_Click(object sender, EventArgs e)
          {
@@ -192,72 +186,6 @@ namespace Front
 
          }
 
-
-      /*  protected void btnConfirmarCompra_Click(object sender, EventArgs e)
-        {
-            if (Session["cliente"] == null || !EsAdministradorClienteVendedor((Cliente)Session["cliente"]))
-            {
-                Response.Redirect("Login.aspx?mensaje=inicie+sesion+o+registrese+para+poder+operar.");
-                return;
-            }
-
-            try
-            {
-                List<Producto> carrito = ObtenerCarrito();
-
-                if (carrito.Count > 0)
-                {
-                    decimal totalGeneral = carrito.Sum(p => p.SubTotal);
-                    Cliente cliente = (Cliente)Session["cliente"];
-
-                    //  credenciales de Mercado Pago tokennn
-                    MercadoPago.SDK.AccessToken = ConfigurationManager.AppSettings["MercadoPagoAccessToken"];
-
-                    // Crear la preferencia de pago
-                    Preference preference = new Preference();
-
-                    foreach (var producto in carrito)
-                    {
-                        preference.Items.Add(new Item()
-                        {
-                            Title = producto.nombre,
-                            Quantity = producto.Cantidad,
-                            CurrencyId = CurrencyId.ARS,
-                            UnitPrice = producto.precio
-                        });
-                    }
-
-                    preference.Payer = new Payer()
-                    {
-                        Email = cliente.Email
-                    };
-
-                    preference.BackUrls = new BackUrls()
-                    {
-                        Success = "https://tusitio.com/Return.aspx",
-                        Failure = "https://tusitio.com/Cancel.aspx",
-                        Pending = "https://tusitio.com/Pending.aspx"
-                    };
-
-                    preference.AutoReturn = AutoReturnType.approved;
-
-                    preference.Save();
-
-                    // Redirigir al usuario a la URL de aprobación de Mercado Pago
-                    Response.Redirect(preference.InitPoint);
-                }
-                else
-                {
-                    lblMensaje.Text = "El carrito está vacío.";
-                    lblMensaje.Visible = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                lblMensaje.Text = "Ocurrió un error: " + ex.Message;
-                lblMensaje.Visible = true;
-            }
-        }*/
 
         protected void btnVolverHome_Click(object sender, EventArgs e)
         {

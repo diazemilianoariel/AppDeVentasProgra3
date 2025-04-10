@@ -82,10 +82,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Categorias.aspx" />
+    <Content Include="CategoriasABM\CategoriaAgregar.aspx" />
+    <Content Include="CategoriasABM\CategoriaEliminar.aspx" />
+    <Content Include="CategoriasABM\CategoriaModificar.aspx" />
     <Content Include="Clientes.aspx" />
     <Content Include="Carrito.aspx" />
     <Content Include="ContraseñaRecupero.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="MarcasABM\MarcaAgregar.aspx" />
+    <Content Include="MarcasABM\MarcaEliminar.aspx" />
+    <Content Include="MarcasABM\MarcaModificar.aspx" />
     <Content Include="Productos\DetalleProducto.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="EstiloCSS\estilo.css" />
@@ -99,6 +105,9 @@
     <Content Include="Productos\ProductoModificar.aspx" />
     <Content Include="RegistroUsuariosNuevos.aspx" />
     <Content Include="Reportes.aspx" />
+    <Content Include="TiposABM\TipoAgregar.aspx" />
+    <Content Include="TiposABM\TipoEliminar.aspx" />
+    <Content Include="TiposABM\TipoModificar.aspx" />
     <Content Include="Ventas.aspx" />
     <Content Include="Productos.aspx" />
     <Content Include="Proveedores.aspx" />
@@ -112,6 +121,27 @@
     </Compile>
     <Compile Include="Categorias.aspx.designer.cs">
       <DependentUpon>Categorias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CategoriasABM\CategoriaAgregar.aspx.cs">
+      <DependentUpon>CategoriaAgregar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CategoriasABM\CategoriaAgregar.aspx.designer.cs">
+      <DependentUpon>CategoriaAgregar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CategoriasABM\CategoriaEliminar.aspx.cs">
+      <DependentUpon>CategoriaEliminar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CategoriasABM\CategoriaEliminar.aspx.designer.cs">
+      <DependentUpon>CategoriaEliminar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CategoriasABM\CategoriaModificar.aspx.cs">
+      <DependentUpon>CategoriaModificar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CategoriasABM\CategoriaModificar.aspx.designer.cs">
+      <DependentUpon>CategoriaModificar.aspx</DependentUpon>
     </Compile>
     <Compile Include="Clientes.aspx.cs">
       <DependentUpon>Clientes.aspx</DependentUpon>
@@ -140,6 +170,27 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MarcasABM\MarcaAgregar.aspx.cs">
+      <DependentUpon>MarcaAgregar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MarcasABM\MarcaAgregar.aspx.designer.cs">
+      <DependentUpon>MarcaAgregar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MarcasABM\MarcaEliminar.aspx.cs">
+      <DependentUpon>MarcaEliminar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MarcasABM\MarcaEliminar.aspx.designer.cs">
+      <DependentUpon>MarcaEliminar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MarcasABM\MarcaModificar.aspx.cs">
+      <DependentUpon>MarcaModificar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MarcasABM\MarcaModificar.aspx.designer.cs">
+      <DependentUpon>MarcaModificar.aspx</DependentUpon>
     </Compile>
     <Compile Include="Productos\DetalleProducto.aspx.cs">
       <DependentUpon>DetalleProducto.aspx</DependentUpon>
@@ -225,6 +276,27 @@
     <Compile Include="Reportes.aspx.designer.cs">
       <DependentUpon>Reportes.aspx</DependentUpon>
     </Compile>
+    <Compile Include="TiposABM\TipoAgregar.aspx.cs">
+      <DependentUpon>TipoAgregar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TiposABM\TipoAgregar.aspx.designer.cs">
+      <DependentUpon>TipoAgregar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TiposABM\TipoEliminar.aspx.cs">
+      <DependentUpon>TipoEliminar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TiposABM\TipoEliminar.aspx.designer.cs">
+      <DependentUpon>TipoEliminar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TiposABM\TipoModificar.aspx.cs">
+      <DependentUpon>TipoModificar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TiposABM\TipoModificar.aspx.designer.cs">
+      <DependentUpon>TipoModificar.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Ventas.aspx.cs">
       <DependentUpon>Ventas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -282,6 +354,7 @@
       <Name>negocio</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

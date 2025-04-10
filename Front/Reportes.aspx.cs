@@ -61,43 +61,24 @@ namespace Front
 
         public void CargarTarjetas()
         {
-
-
             litVentasHoy.Text = ventanegocio.cantidadVentasHoy().ToString();
-            litPedidosPendientes.Text = ventanegocio.cantidadVentaPendiente().ToString();
-            litUsuariosRegistrados.Text = clienteNegocio.CantidadUsuarios().ToString();
-            litCantidadProductos.Text = productonegocio.CantidadProductos().ToString();
 
+            litPedidosPendientes.Text = ventanegocio.cantidadVentaPendiente().ToString();
+
+            litUsuariosRegistrados.Text = clienteNegocio.CantidadUsuarios().ToString();
+
+            litCantidadProductos.Text = productonegocio.CantidadProductos().ToString();
         }
 
         public void cargarDatosPanel()
-        {
-
-
-            
-           
-            List<string> categorias = new List<string>();
-            List<int> cantidades = new List<int>();
-            var resultado = categorianegocio.CantidadesPorCategoria();
-
-             categorias = resultado.Item1;
-             cantidades = resultado.Item2;
-
-          
-            // Convertir a JSON para usar en el script
-            CategoriasJson = new JavaScriptSerializer().Serialize(categorias);
-            ProductosJson = new JavaScriptSerializer().Serialize(cantidades);
-
-
-
-            /// tabla ultima 
-             Venta venta = new Venta();
-
+        { 
+             
+     
 
             List<Venta> ventas = ventanegocio.ListarVentas();
 
             rptVentas.DataSource = ventas;
-            rptVentas.DataBind();
+            rptVentas.DataBind(); 
 
 
 
@@ -107,20 +88,6 @@ namespace Front
 
 
 
-
-        protected void rptVentas_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-
-
-
-
-
-
-
-
-           
-         
-        }
 
 
 

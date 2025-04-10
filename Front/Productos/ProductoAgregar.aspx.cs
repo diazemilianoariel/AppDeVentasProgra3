@@ -41,11 +41,12 @@ namespace Front.Productos
             return cliente.nombrePerfil == "Administrador" || cliente.nombrePerfil == "Soporte" || cliente.nombrePerfil == "Vendedor";
         }
 
-
-
-
         protected void ButtonGuardar_Click(object sender, EventArgs e)
         {
+
+            // hacer la validacion 
+
+
             ProductoNegocio productoNegocio = new ProductoNegocio();
             var producto = new Producto
             {
