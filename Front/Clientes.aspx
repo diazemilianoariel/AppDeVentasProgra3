@@ -47,6 +47,8 @@
                         <asp:BoundField DataField="email" HeaderText="Email" />
                         <asp:BoundField DataField="clave" HeaderText="Clave" />
                         <asp:BoundField DataField="nombrePerfil" HeaderText="Perfil" />
+                        <asp:BoundField DataField="estado" HeaderText="Estado" />
+
 
                         <asp:TemplateField>
                             <ItemTemplate>

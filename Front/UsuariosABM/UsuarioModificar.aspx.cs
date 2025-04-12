@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using dominio;
+using negocio;
 
 namespace Front.UsuariosABM
 {
@@ -11,7 +13,82 @@ namespace Front.UsuariosABM
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["cliente"] == null || !IDPerfilValido())
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
+            if (!IsPostBack)
+            {
+                int usuarioId = Convert.ToInt32(Request.QueryString["id"]);
+                CargarDatosUsuario(usuarioId);
 
+
+                CargarPerfiles();
+
+            }
+
+        }
+
+        // Verifica si el id de perfil es valido
+        private bool IDPerfilValido()
+        {
+            Cliente cliente = (Cliente)Session["cliente"];
+            return cliente.idPerfil == 2 || cliente.idPerfil == 4 || cliente.idPerfil == 3;
+        }
+
+        private void CargarDatosUsuario(int usuarioId)
+        {
+            ClienteNegocio clienteNegocio = new ClienteNegocio();
+            Cliente usuario = new Cliente();
+            usuario = clienteNegocio.ObtenerCliente(usuarioId);
+            if (usuario != null)
+            {
+                TextBoxNombre.Text = usuario.Nombre;
+                TextBoxApellido.Text = usuario.Apellido;
+                TextBoxDni.Text = usuario.Dni;
+                TextBoxDireccion.Text = usuario.Direccion;
+                TextBoxTelefono.Text = usuario.Telefono;
+                TextBoxEmail.Text = usuario.Email;
+                TextBoxClave.Text = usuario.clave;
+                ddlPerfilCliente.SelectedValue = usuario.idPerfil.ToString();
+                CheckBoxEstado.Checked = usuario.estado;
+
+
+
+            }
+        }
+
+        private void CargarPerfiles()
+        {
+            ClienteNegocio negocio = new ClienteNegocio();
+            ddlPerfilCliente.DataSource = negocio.ListarPerfiles();
+            ddlPerfilCliente.DataValueField = "id";
+            ddlPerfilCliente.DataTextField = "nombre";
+            ddlPerfilCliente.DataBind();
+        }
+
+
+        protected void ButtonGuardar_Click(object sender, EventArgs e)
+        {
+            ClienteNegocio clienteNegocio = new ClienteNegocio();
+            Cliente usuario = new Cliente();
+            usuario.Nombre = TextBoxNombre.Text;
+            usuario.Apellido = TextBoxApellido.Text;
+            usuario.Dni = TextBoxDni.Text;
+            usuario.Direccion = TextBoxDireccion.Text;
+            usuario.Telefono = TextBoxTelefono.Text;
+            usuario.Email = TextBoxEmail.Text;
+            usuario.idPerfil = int.Parse(ddlPerfilCliente.SelectedValue);
+            usuario.estado = CheckBoxEstado.Checked;
+          
+            clienteNegocio.ModificarCliente(usuario);
+        }
+
+
+        protected void ButtonCancelar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("../Clientes.aspx");
         }
     }
 }

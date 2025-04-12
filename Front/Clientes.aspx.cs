@@ -28,7 +28,6 @@ namespace Front
             {
 
 
-                CargarPerfiles();
                 CargarGrillaClientes();
 
             }
@@ -41,33 +40,13 @@ namespace Front
         }
 
 
-        private void CargarPerfiles()
-        {
-
-            //ClienteNegocio negocio = new ClienteNegocio();
-            //ddlPerfilCliente.DataSource = negocio.ListarPerfiles();
-            //ddlPerfilCliente.DataValueField = "id";
-            //ddlPerfilCliente.DataTextField = "nombre";
-
-            //ddlPerfilCliente.DataBind();
-
-        }
-
-
-
-
-
+    
         private void CargarGrillaClientes()
         {
             ClienteNegocio negocio = new ClienteNegocio();
             GridViewClientes.DataSource = negocio.ListarClientes();
             GridViewClientes.DataBind();
         }
-
-
-
-
-
 
 
         protected void GridViewClientes_RowCommand(object sender, GridViewCommandEventArgs e)

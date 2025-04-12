@@ -16,22 +16,23 @@ namespace negocio
             {
                 try
                 {
-                    datos.SetearConsulta("select U.id, U.Nombre, U.apellido, U.dni, U.direccion, U.telefono, U.email, U.clave, P.nombre as Perfil from Usuarios U INNER JOIN Perfiles P on U.idPerfil = P.id where U.estado = 1");
+                    datos.SetearConsulta("select U.id, U.Nombre, U.apellido, U.dni, U.direccion, U.telefono, U.email, U.clave, P.nombre as Perfil, U.estado from Usuarios U INNER JOIN Perfiles P on U.idPerfil = P.id where U.estado = 1");
                     datos.EjecutarLectura();
                     while (datos.Lector.Read())
                     {
-                        Cliente aux = new Cliente
-                        {
-                            Id = (int)datos.Lector["id"],
-                            Nombre = (string)datos.Lector["Nombre"],
-                            Apellido = (string)datos.Lector["apellido"],
-                            Dni = (string)datos.Lector["dni"],
-                            Direccion = (string)datos.Lector["direccion"],
-                            Telefono = (string)datos.Lector["telefono"],
-                            Email = (string)datos.Lector["email"],
-                            clave = (string)datos.Lector["clave"],
-                            nombrePerfil = (string)datos.Lector["Perfil"]
-                        };
+                        Cliente aux = new Cliente();
+
+                        aux.Id = (int)datos.Lector["Id"];
+                        aux.Nombre = (string)datos.Lector["Nombre"];
+                        aux.Apellido = (string)datos.Lector["Apellido"];
+                        aux.Dni = (string)datos.Lector["Dni"];
+                        aux.Direccion = (string)datos.Lector["Direccion"];
+                        aux.Telefono = (string)datos.Lector["Telefono"];
+                        aux.Email = (string)datos.Lector["Email"];
+                        aux.clave = (string)datos.Lector["clave"];
+                        aux.nombrePerfil = (string)datos.Lector["Perfil"];
+                        aux.estado = (bool)datos.Lector["estado"];
+
                         lista.Add(aux);
                     }
                     return lista;
@@ -52,7 +53,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select Id, Nombre, apellido, dni, direccion, telefono, email, clave from Usuarios where Id = @id");
+                datos.SetearConsulta("select U.Id, U.Nombre, U.apellido, U.dni, U.direccion, U.telefono, U.email, U.clave, U.idPerfil, P.nombre as 'Perfil', U.estado from Usuarios U INNER JOIN Perfiles p on U.idPerfil = p.id where U.id = @id");
                 datos.SetearParametro("@id", id);
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())
@@ -65,6 +66,9 @@ namespace negocio
                     aux.Telefono = (string)datos.Lector["Telefono"];
                     aux.Email = (string)datos.Lector["Email"];
                     aux.clave = (string)datos.Lector["clave"];
+                    aux.idPerfil = (int)datos.Lector["idPerfil"];
+                    aux.nombrePerfil = (string)datos.Lector["Perfil"];
+                    aux.estado = (bool)datos.Lector["estado"];
                     return aux;
                 }
                 return null;
@@ -289,6 +293,36 @@ namespace negocio
                 {
                     throw new Exception("Error al listar Perfils", ex);
                 }
+            }
+        }
+
+        // metodo para obtener perdil por id 
+        public Perfil ObtenerPerfil(int idPerfil)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("select id, Nombre, estado from Perfiles where id = @id");
+                datos.SetearParametro("@id", idPerfil);
+                datos.EjecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    return new Perfil
+                    {
+                        Id = (int)datos.Lector["id"],
+                        Nombre = (string)datos.Lector["Nombre"],
+                        Estado = (bool)datos.Lector["estado"]
+                    };
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
             }
         }
 
