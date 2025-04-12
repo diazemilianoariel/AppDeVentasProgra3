@@ -16,7 +16,7 @@ namespace negocio
             AccesoDatos accesoDatos = new AccesoDatos();
             try
             {
-                accesoDatos.SetearConsulta("SELECT id, nombre, direccion, telefono, email FROM Proveedores where estado = 1");
+                accesoDatos.SetearConsulta("SELECT id, nombre, direccion, telefono, email, estado FROM Proveedores where estado = 1");
                 accesoDatos.EjecutarLectura();
 
                 while (accesoDatos.Lector.Read())
@@ -29,7 +29,7 @@ namespace negocio
                     proveedor.Direccion = accesoDatos.Lector["Direccion"].ToString();
                     proveedor.Telefono = accesoDatos.Lector["Telefono"].ToString();
                     proveedor.Email = accesoDatos.Lector["Email"].ToString();
-
+                    proveedor.estado = (bool)accesoDatos.Lector["estado"];
                     lista.Add(proveedor);
                 }
 
@@ -53,7 +53,7 @@ namespace negocio
             Proveedor proveedor = new Proveedor();
             try
             {
-                accesoDatos.SetearConsulta("SELECT id, nombre, direccion, telefono, email FROM Proveedores WHERE id = @id");
+                accesoDatos.SetearConsulta("SELECT id, nombre, direccion, telefono, email,estado FROM Proveedores WHERE id = @id");
                 accesoDatos.SetearParametro("@id", id);
                 accesoDatos.EjecutarLectura();
 
@@ -64,6 +64,7 @@ namespace negocio
                     proveedor.Direccion = accesoDatos.Lector.GetString(2);
                     proveedor.Telefono = accesoDatos.Lector.GetString(3);
                     proveedor.Email = accesoDatos.Lector.GetString(4);
+                    proveedor.estado = accesoDatos.Lector.GetBoolean(5);
                 }
 
                 return proveedor;
@@ -106,12 +107,13 @@ namespace negocio
             try
             {
 
-                accesoDatos.SetearConsulta("UPDATE Proveedores SET nombre = @nombre, direccion = @direccion, telefono = @telefono, email = @correo WHERE id = @id");
-                accesoDatos.SetearParametro("@id", proveedor.id);
+                accesoDatos.SetearConsulta("UPDATE Proveedores SET nombre = @nombre, direccion = @direccion, telefono = @telefono, email = @correo, estado = @estado WHERE id = @id");
                 accesoDatos.SetearParametro("@nombre", proveedor.Nombre);
                 accesoDatos.SetearParametro("@direccion", proveedor.Direccion);
                 accesoDatos.SetearParametro("@telefono", proveedor.Telefono);
                 accesoDatos.SetearParametro("@correo", proveedor.Email);
+                accesoDatos.SetearParametro("@estado", proveedor.estado);
+                accesoDatos.SetearParametro("@id", proveedor.id);
                 accesoDatos.EjecutarAccion();
             }
             catch (Exception ex)

@@ -44,12 +44,12 @@ namespace Front
         private void CargarPerfiles()
         {
 
-            ClienteNegocio negocio = new ClienteNegocio();
-            ddlPerfilCliente.DataSource = negocio.ListarPerfiles();
-            ddlPerfilCliente.DataValueField = "id";
-            ddlPerfilCliente.DataTextField = "nombre";
+            //ClienteNegocio negocio = new ClienteNegocio();
+            //ddlPerfilCliente.DataSource = negocio.ListarPerfiles();
+            //ddlPerfilCliente.DataValueField = "id";
+            //ddlPerfilCliente.DataTextField = "nombre";
 
-            ddlPerfilCliente.DataBind();
+            //ddlPerfilCliente.DataBind();
 
         }
 
@@ -66,266 +66,29 @@ namespace Front
 
 
 
-        
+
 
 
 
         protected void GridViewClientes_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "Seleccionar")
+                int UsuarioId = Convert.ToInt32(e.CommandArgument);
+            if (e.CommandName == "Modificar")
             {
-                int index = Convert.ToInt32(e.CommandArgument);
-                GridViewRow fila = GridViewClientes.Rows[index];
-
-                // Asignar 
-                TextBoxIdCliente.Text = HttpUtility.HtmlDecode(fila.Cells[0].Text);
-                TextBoxNombreCliente.Text = HttpUtility.HtmlDecode(fila.Cells[1].Text);
-                TextBoxApellidoCliente.Text = HttpUtility.HtmlDecode(fila.Cells[2].Text);
-                TextBoxDniCliente.Text = HttpUtility.HtmlDecode(fila.Cells[3].Text);
-                TextBoxDireccionCliente.Text = HttpUtility.HtmlDecode(fila.Cells[4].Text);
-                TextBoxTelefonoCliente.Text = HttpUtility.HtmlDecode(fila.Cells[5].Text);
-                TextBoxEmailCliente.Text = HttpUtility.HtmlDecode(fila.Cells[6].Text);
-                TextBoxClaveCliente.Text = HttpUtility.HtmlDecode(fila.Cells[7].Text);
-
-
-                // Selecciona e perfil de clientee
-                string perfilNombre = fila.Cells[8].Text;
-                ListItem item = ddlPerfilCliente.Items.FindByText(perfilNombre);
-                if (item != null)
-                {
-                    ddlPerfilCliente.ClearSelection();
-                    item.Selected = true;
-                }
-                else
-                {
-                    // manejar algo en caso de eror 
-                    ddlPerfilCliente.ClearSelection();
-                    ddlPerfilCliente.Items.Clear();
-                        
-
-                }
+                Response.Redirect("UsuariosABM/UsuarioModificar.aspx?id=" + UsuarioId);
 
 
 
 
 
             }
-        }
-
-
-     
-
-
-
-
-
-        protected void GridViewClientes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GridViewRow fila = GridViewClientes.SelectedRow;
-            if (fila != null && fila.Cells.Count > 1)
+            if (e.CommandName == "Eliminar")
             {
-                int id = Convert.ToInt32(fila.Cells[1].Text);
-
-                ClienteNegocio negocio = new ClienteNegocio();
-                Cliente cliente = negocio.ObtenerCliente(id);
-
-                // Asignar los valores a los TextBoxes
-                TextBoxIdCliente.Text = cliente.Id.ToString();
-                TextBoxNombreCliente.Text = cliente.Nombre;
-                TextBoxApellidoCliente.Text = cliente.Apellido;
-                TextBoxDniCliente.Text = cliente.Dni;
-                TextBoxDireccionCliente.Text = cliente.Direccion;
-                TextBoxTelefonoCliente.Text = cliente.Telefono;
-                TextBoxEmailCliente.Text = cliente.Email;
-                TextBoxClaveCliente.Text = cliente.clave;
-
-                // Seleccionar el perfil del cliente
-                ListItem item = ddlPerfilCliente.Items.FindByValue(cliente.idPerfil.ToString());
+                Response.Redirect("UsuariosABM/UsuarioModificar.aspx?id=" + UsuarioId);
 
 
 
             }
         }
-
-
-        protected void btnAgregarCliente_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (ValidarCampos())
-                {
-                    ClienteNegocio negocio = new ClienteNegocio();
-                    Cliente cliente = new Cliente
-                    {
-                        Nombre = TextBoxNombreCliente.Text,
-                        Apellido = TextBoxApellidoCliente.Text,
-                        Dni = TextBoxDniCliente.Text,
-                        Direccion = TextBoxDireccionCliente.Text,
-                        Telefono = TextBoxTelefonoCliente.Text,
-                        Email = TextBoxEmailCliente.Text,
-                        clave = TextBoxClaveCliente.Text,
-                        idPerfil = int.Parse(ddlPerfilCliente.SelectedValue)
-                    };
-
-                    Cliente clienteInactivo = negocio.ExisteClienteInactivo(cliente.Dni);
-                    if (clienteInactivo != null)
-                    {
-                        // Mostrar mensaje de confirmación
-                        lblConfirmacion.Text = "El cliente ya existe pero está inactivo. ¿Desea reactivarlo?";
-                        lblConfirmacion.Visible = true;
-                        btnConfirmarReactivacion.CommandArgument = clienteInactivo.Id.ToString();
-                        btnConfirmarReactivacion.Visible = true;
-                    }
-                    else
-                    {
-                        negocio.AgregarCliente(cliente);
-                        CargarGrillaClientes();
-                        LimpiarCampos();
-                    }
-                }
-                else
-                {
-                    
-                        // Mostrar ventana emergente
-                        string script = "alert(' todos los campos son obligatorios.');";
-                        ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
-                        return;
-                    
-                }
-            }
-            catch (Exception ex)
-            {
-                Response.Write("Ocurrió un error: " + ex.Message);
-            }
-        }
-
-        protected void btnConfirmarReactivacion_Click(object sender, EventArgs e)
-        {
-            int id = Convert.ToInt32(((Button)sender).CommandArgument);
-            ClienteNegocio negocio = new ClienteNegocio();
-            negocio.ActivarCliente(id);
-            Response.Write("Cliente reactivado exitosamente.");
-            CargarGrillaClientes();
-            LimpiarCampos();
-            lblConfirmacion.Visible = false;
-            btnConfirmarReactivacion.Visible = false;
-        }
-
-
-
-
-
-        protected void btnActivarCliente_Click(object sender, EventArgs e)
-        {
-            if (int.TryParse(Request["__EVENTARGUMENT"], out int id))
-            {
-                ClienteNegocio negocio = new ClienteNegocio();
-                negocio.ActivarCliente(id);
-                CargarGrillaClientes();
-                LimpiarCampos();
-            }
-            else
-            {
-                Response.Write("ID de cliente no válido.");
-            }
-        }
-
-
-
-        protected void btnModificarCliente_Click(object sender, EventArgs e)
-        {
-
-            if (string.IsNullOrEmpty(TextBoxNombreCliente.Text))
-            {
-                // Mostrar ventana emergente
-                string script = "alert('porfavor seleccione un elemento para modificar.');";
-                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
-                return;
-            }
-
-
-            Cliente cliente = new Cliente();
-
-            cliente.Id = Convert.ToInt32(TextBoxIdCliente.Text);
-            cliente.Nombre = TextBoxNombreCliente.Text;
-            cliente.Apellido = TextBoxApellidoCliente.Text;
-            cliente.Dni = TextBoxDniCliente.Text;
-            cliente.Direccion = TextBoxDireccionCliente.Text;
-            cliente.Telefono = TextBoxTelefonoCliente.Text;
-            cliente.Email = TextBoxEmailCliente.Text;
-            cliente.clave = TextBoxClaveCliente.Text;
-            cliente.idPerfil = int.Parse(ddlPerfilCliente.SelectedValue);
-
-
-
-
-
-
-            ClienteNegocio negocio = new ClienteNegocio();
-            negocio.ModificarCliente(cliente);
-            CargarGrillaClientes();
-            LimpiarCampos();
-
-        }
-
-        protected void btnEliminarCliente_Click(object sender, EventArgs e)
-        {
-
-            if (string.IsNullOrEmpty(TextBoxNombreCliente.Text))
-            {
-                // Mostrar ventana emergente
-                string script = "alert('porfavor seleccione un elemento para eliminar.');";
-                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
-                return;
-            }
-
-
-            ClienteNegocio negocio = new ClienteNegocio();
-            negocio.EliminarCliente(Convert.ToInt32(TextBoxIdCliente.Text));
-            CargarGrillaClientes();
-            LimpiarCampos();
-
-        }
-
-        protected void btnCancelarCliente_Click(object sender, EventArgs e)
-        {
-            LimpiarCampos();
-        }
-
-
-        private void LimpiarCampos()
-        {
-
-            TextBoxIdCliente.Text = "";
-            TextBoxNombreCliente.Text = "";
-            TextBoxApellidoCliente.Text = "";
-            TextBoxDniCliente.Text = "";
-            TextBoxDireccionCliente.Text = "";
-            TextBoxTelefonoCliente.Text = "";
-            TextBoxEmailCliente.Text = "";
-            TextBoxClaveCliente.Text = "";
-            ddlPerfilCliente.ClearSelection();
-
-
-
-
-
-        }
-
-        private bool ValidarCampos()
-        {
-            return
-                   !string.IsNullOrEmpty(TextBoxNombreCliente.Text) &&
-                   !string.IsNullOrEmpty(TextBoxApellidoCliente.Text) &&
-                   !string.IsNullOrEmpty(TextBoxDniCliente.Text) &&
-                   !string.IsNullOrEmpty(TextBoxDireccionCliente.Text) &&
-                   !string.IsNullOrEmpty(TextBoxTelefonoCliente.Text) &&
-                   !string.IsNullOrEmpty(TextBoxEmailCliente.Text);
-        }
-
-
-     
-
-
     }
 }

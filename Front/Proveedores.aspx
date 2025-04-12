@@ -2,14 +2,15 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="estilos.css" rel="stylesheet" />
-     <style>
-     body {
-         background-image: url('https://www.shutterstock.com/shutterstock/photos/1130074277/display_1500/stock-vector-abstract-marble-trendy-texture-in-pastel-and-gold-colors-trendy-chic-background-made-in-vector-1130074277.jpg');
-         background-size: cover;
-         background-repeat: no-repeat;
-         background-attachment: fixed;
-     }
- </style>
+    <style>
+        body {
+            background-image: url('https://www.shutterstock.com/shutterstock/photos/2369360047/display_1500/stock-photo-mockup-wall-in-the-children-s-room-on-wall-cream-color-background-d-rendering-2369360047.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
+
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -19,81 +20,48 @@
                 <h1 class="text-center">Gestión de Proveedores</h1>
             </div>
         </div>
-        <div class="container mt-5">
-            <div class="row">
-                <!-- Columna izquierda con los TextBoxes y Labels -->
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <asp:Label ID="LabelID" runat="server" AssociatedControlID="TextBoxId" CssClass="form-label">ID Proveedor</asp:Label>
-                        <asp:TextBox ID="TextBoxId" runat="server" CssClass="form-control" ReadOnly="true" Visible="true"></asp:TextBox>
 
-                        <asp:Label ID="LabelNombre" runat="server" AssociatedControlID="TextBoxNombre" CssClass="form-label fw-bold">Nombre</asp:Label>
-                        <asp:TextBox ID="TextBoxNombre" runat="server" CssClass="form-control"></asp:TextBox>
-
-                        <asp:Label ID="LabelDireccion" runat="server" AssociatedControlID="TextBoxDireccion" CssClass="form-label fw-bold">Dirección</asp:Label>
-                        <asp:TextBox ID="TextBoxDireccion" runat="server" CssClass="form-control"></asp:TextBox>
-
-                        <asp:Label ID="LabelTelefono" runat="server" AssociatedControlID="TextBoxTelefono" CssClass="form-label fw-bold">Teléfono</asp:Label>
-                        <asp:TextBox ID="TextBoxTelefono" runat="server" CssClass="form-control"></asp:TextBox>
-
-                        <asp:Label ID="LabelEmail" runat="server" AssociatedControlID="TextBoxEmail" CssClass="form-label fw-bold">Email</asp:Label>
-                        <asp:TextBox ID="TextBoxEmail" runat="server" CssClass="form-control"></asp:TextBox>
-                    </div>
-                </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h7 class="text-center">Gestione Sus Proveedores de Manera Ágil y sencilla, Agregue, Modifique o Elimine los Proveedores que Desee</h7>
             </div>
+        </div>
 
-            <!-- Mensaje de confirmación para reactivar proveedor -->
-            <div class="row mt-3">
-                <div class="col-md-12">
-                    <asp:Label ID="lblConfirmacionReactivacion" runat="server" CssClass="alert alert-warning" Text="El proveedor ya existe pero está inactivo. ¿Desea reactivarlo?" Visible="false"></asp:Label>
-                    <asp:Button ID="btnConfirmarReactivacion" runat="server" CssClass="btn btn-primary" Text="Reactivar" OnClick="btnConfirmarReactivacion_Click" Visible="false" />
-                </div>
-            </div>
+        <!-- Botón para agregar nuevo proveedor -->
+        <div class="row mt-5 justify-content-center">
+            <a href="ProveedoresABM/ProveedorAgregar.aspx" class="btn btn-primary">Nuevo</a>
+        </div>
+
+        <!-- Tabla de proveedores -->
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <asp:GridView ID="GridViewProveedores" runat="server" CssClass="table table-striped table-bordered table-dark w-100" AutoGenerateColumns="False" OnRowCommand="GridViewProveedores_RowCommand">
+                        <Columns>
+                            <asp:BoundField DataField="id" HeaderText="ID" />
+                            <asp:BoundField DataField="nombre" HeaderText="Nombre" />
+                            <asp:BoundField DataField="direccion" HeaderText="Dirección" />
+                            <asp:BoundField DataField="telefono" HeaderText="Teléfono" />
+                            <asp:BoundField DataField="email" HeaderText="Email" />
+                            <asp:BoundField DataField="estado" HeaderText="Estado" />
 
 
-            <!-- Botones del ABM -->
-            <div class="row mt-3">
-                <div class="col-md-12">
-                    <div class="d-flex justify-content-between">
-                        <asp:Button ID="btnAgregar" runat="server" CssClass="btn btn-success" Text="Agregar" OnClick="btnAgregar_Click" />
-                        <asp:Button ID="btnModificar" runat="server" CssClass="btn btn-warning" Text="Modificar" OnClick="btnModificar_Click" />
-                        <asp:Button ID="btnEliminar" runat="server" CssClass="btn btn-danger" Text="Eliminar" OnClick="btnEliminar_Click" />
-                        <asp:Button ID="btnCancelar" runat="server" CssClass="btn btn-secondary" Text="Cancelar" OnClick="btnCancelar_Click" />
-                    </div>
-                </div>
-            </div>
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:Button ID="btnModificar" runat="server" Text="Modificar" CommandName="Modificar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-success btn-sm" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
 
-            <!-- Grilla donde van los datos seleccionados -->
-
-            <div class="row mt-5">
-                <div class="col-md-12">
-                    <h2 class="text-center">Lista de Proveedores</h2>
-                    <div class="table-responsive">
-                        <asp:GridView ID="GridViewProveedores" runat="server" CssClass="table table-striped table-bordered table-hover" AutoGenerateColumns="False" OnRowCommand="GridViewProveedores_RowCommand">
-                            <Columns>
-                                <asp:BoundField DataField="id" HeaderText="ID" />
-                                <asp:BoundField DataField="nombre" HeaderText="Nombre" />
-                                <asp:BoundField DataField="direccion" HeaderText="Dirección" />
-                                <asp:BoundField DataField="telefono" HeaderText="Teléfono" />
-                                <asp:BoundField DataField="email" HeaderText="Email" />
-
-                                <%--<asp:TemplateField>
-                                    <ItemTemplate>
-                                        <asp:Button ID="btnVerDetalle" runat="server" Text="Ver Detalle" CommandName="VerDetalle" CommandArgument='<%#Container.DataItemIndex %>' CssClass="btn btn-info" OnClick="BtnVerDetalle_Click" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>--%>
-
-                                <asp:TemplateField>
-                                    <ItemTemplate>
-                                        <asp:Button ID="btnSeleccionar" runat="server" Text="Seleccionar" CommandName="Seleccionar" CommandArgument='<%# Container.DataItemIndex %>' CssClass="btn btn-primary" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-
-                            </Columns>
-                        </asp:GridView>
-                    </div>
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CommandName="Eliminar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-danger btn-sm" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
                 </div>
             </div>
         </div>
     </div>
+
 </asp:Content>
