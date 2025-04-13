@@ -38,43 +38,7 @@ namespace Front
            GridViewCategorias.DataBind();
         }
 
-        protected void btnAgregarCategoria_Click(object sender, EventArgs e)
-        {
-        //    CategoriaNegocio negocio = new CategoriaNegocio();
-        //    Categoria categoria = new Categoria();
-
-        //    if (TextBoxCategoria != null && !string.IsNullOrEmpty(TextBoxCategoria.Text))
-        //    {
-        //        categoria.nombre = TextBoxCategoria.Text;
-        //        if (!negocio.buscarCategoriaNombre(categoria.nombre)){
-
-
-        //            categoria.nombre = TextBoxCategoria.Text;
-        //            negocio.AgregarCategoria(categoria);
-
-        //        }
-        //        else
-        //        {
-        //            negocio.altaLogica(categoria.nombre);
-        //        }
-        //            CargarCategorias();
-        //        TextBoxCategoria.Text = string.Empty; // Limpiar el TextBox después de agregar
-        //    }
-        //    else
-        //    {
-               
-        //            // Mostrar ventana emergente
-        //            string script = "alert('por favor proporcione un nuevo nombre de categoria.');";
-        //            ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
-        //            return;
-                
-        //    }
-        }
-
-
-
-
-
+        
         protected void GridViewCategorias_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "Modificar")

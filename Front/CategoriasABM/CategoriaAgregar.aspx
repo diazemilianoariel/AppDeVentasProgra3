@@ -31,6 +31,8 @@
                     <asp:CheckBox ID="CheckBoxEstado" runat="server" CssClass="form-control" />
                 </div>
 
+                <asp:Label ID="LabelError" runat="server" CssClass="text-danger"></asp:Label>
+
 
             </div>
 

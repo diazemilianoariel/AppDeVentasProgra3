@@ -42,7 +42,7 @@ namespace Front.CategoriasABM
             if (categoria != null)
             {
                 LabelNombreCategoria.Text = categoria.nombre;
-                LabelEstadoCategoria.Text = categoria.estado.ToString();
+                LabelEstadoCategoria.Text = categoria.estado ? "Activo" : "Inactivo";
 
 
             }
@@ -62,7 +62,7 @@ namespace Front.CategoriasABM
         {
             int categoriaId = Convert.ToInt32(Request.QueryString["id"]);
             CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
-            categoriaNegocio.bajaLogica(categoriaId);
+            categoriaNegocio.bajaFisica(categoriaId);
             Response.Redirect("../Categorias.aspx");
         }
 

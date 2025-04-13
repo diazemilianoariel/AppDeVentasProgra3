@@ -45,32 +45,41 @@ namespace Front.Productos
 
         protected void ButtonGuardar_Click(object sender, EventArgs e)
         {
-
-            // hacer la validacion 
-
-
-            ProductoNegocio productoNegocio = new ProductoNegocio();
-            var producto = new Producto
+            try
             {
-                nombre = TextBoxNombre.Text,
-                descripcion = TextBoxDescripcion.Text,
-                precio = Convert.ToDecimal(TextBoxPrecio.Text),
-                margenGanancia = Convert.ToDecimal(TextBoxGanancia.Text),
-                stock = Convert.ToInt32(TextBoxStock.Text),
-                Imagen = TextBoxImagen.Text,
-                Marca = new Marca { id = Convert.ToInt32(DropDownListMarca.SelectedValue) },
-                Tipo = new Tipos { id = Convert.ToInt32(DropDownListTipo.SelectedValue) },
-                Categoria = new Categoria { id = Convert.ToInt32(DropDownListCategoria.SelectedValue) },
-                proveedor = new Proveedor { id = Convert.ToInt32(DropDownListProveedor.SelectedValue) },
-                estado = CheckBoxEstado.Checked
-            };
 
-            // Implementa la lógica para agregar el producto en la base de datos
-            productoNegocio.AgregarProducto(producto);
+           
+                ProductoNegocio productoNegocio = new ProductoNegocio();
+                var producto = new Producto
+                {
+                    nombre = TextBoxNombre.Text,
+                    descripcion = TextBoxDescripcion.Text,
+                    precio = Convert.ToDecimal(TextBoxPrecio.Text),
+                    margenGanancia = Convert.ToDecimal(TextBoxGanancia.Text),
+                    stock = Convert.ToInt32(TextBoxStock.Text),
+                    Imagen = TextBoxImagen.Text,
+                    Marca = new Marca { id = Convert.ToInt32(DropDownListMarca.SelectedValue) },
+                    Tipo = new Tipos { id = Convert.ToInt32(DropDownListTipo.SelectedValue) },
+                    Categoria = new Categoria { id = Convert.ToInt32(DropDownListCategoria.SelectedValue) },
+                    proveedor = new Proveedor { id = Convert.ToInt32(DropDownListProveedor.SelectedValue) },
+                    estado = CheckBoxEstado.Checked
+                };
 
-            // Redirige a la página de lista de productos
-            Response.Redirect("../Productos.aspx");
+                // Implementa la lógica para agregar el producto en la base de datos
+                productoNegocio.AgregarProducto(producto);
+
+                // Redirige a la página de lista de productos
+                Response.Redirect("../Productos.aspx");
+            }
+            catch (FormatException)
+            {
+                // Manejar errores de formato
+                LabelError.Text = "Error en el formato de los datos ingresados. Por favor, revise los campos.";
+                LabelError.Visible = true;
+            }
+          
         }
+
 
         protected void ButtonCancelar_Click(object sender, EventArgs e)
         {
@@ -108,6 +117,8 @@ namespace Front.Productos
             DropDownListProveedor.DataValueField = "id";
             DropDownListProveedor.DataBind();
         }
+
+       
     }
 
 }

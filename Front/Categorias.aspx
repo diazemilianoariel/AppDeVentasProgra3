@@ -14,7 +14,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-  
+
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
@@ -35,12 +35,17 @@
 
 
         <div class="col-md-10 mt-5">
-   
+
             <div class="table-responsive">
                 <asp:GridView ID="GridViewCategorias" runat="server" CssClass="table table-striped table-bordered table-dark w-100" AutoGenerateColumns="False" OnRowCommand="GridViewCategorias_RowCommand">
                     <Columns>
                         <asp:BoundField DataField="id" HeaderText="ID" />
                         <asp:BoundField DataField="nombre" HeaderText="Nombre" />
+                        <asp:TemplateField HeaderText="Estado Categoria">
+                            <ItemTemplate>
+                                <%# Convert.ToBoolean(Eval("estado")) ? "Activo" : "Inactivo" %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                         <asp:TemplateField>
                             <ItemTemplate>
                                 <div class="text-right">

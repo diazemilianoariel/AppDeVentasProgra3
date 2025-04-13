@@ -24,7 +24,7 @@
                     <asp:Label ID="LabelNombre" runat="server" CssClass="form-label fw-bold">Nombre:</asp:Label>
                     <asp:TextBox ID="TextBoxNombre" runat="server" CssClass="form-control"></asp:TextBox>
 
-                    <asp:Label ID="LabelEstado" runat="server" CssClass="form-label fw-bold">Producto Disponible:</asp:Label>
+                    <asp:Label ID="LabelEstado" runat="server" CssClass="form-label fw-bold">Categoría Disponible:</asp:Label>
                     <asp:CheckBox ID="CheckBoxEstado" runat="server" CssClass="form-control" />
                 </div>
             </div>

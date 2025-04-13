@@ -9,14 +9,14 @@ using System.Web.UI.WebControls;
 
 namespace Front.CategoriasABM
 {
-	public partial class CategoriaAgregar : System.Web.UI.Page
-	{
-		protected void Page_Load(object sender, EventArgs e)
-		{
+    public partial class CategoriaAgregar : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
 
             if (!IsPostBack)
             {
-                
+
 
 
                 // Verificar si el usuario tiene permisos para acceder a esta página
@@ -39,19 +39,37 @@ namespace Front.CategoriasABM
 
         protected void ButtonGuardar_Click(object sender, EventArgs e)
         {
-            CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
-
-            var categoria = new Categoria
+            try
             {
-                nombre = TextBoxNombre.Text,
-                estado = CheckBoxEstado.Checked
-            };
+                // Validar campos requeridos
+                if (string.IsNullOrWhiteSpace(TextBoxNombre.Text))
+                {
+                    // Mostrar un mensaje de error al usuario
+                    LabelError.Text = "El campo 'Nombre' es obligatorio.";
+                    LabelError.Visible = true;
+                    return;
+                }
 
-            // Implementa la lógica para agregar el producto en la base de datos
-            categoriaNegocio.AgregarCategoria(categoria);
+                CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
 
-            // Redirige a la página de lista de productos
-            Response.Redirect("../Categorias.aspx");
+                var categoria = new Categoria
+                {
+                    nombre = TextBoxNombre.Text,
+                    estado = CheckBoxEstado.Checked
+                };
+
+                // Implementa la lógica para agregar la categoría en la base de datos
+                categoriaNegocio.AgregarCategoria(categoria);
+
+                // Redirige a la página de lista de categorías
+                Response.Redirect("../Categorias.aspx");
+            }
+            catch (Exception ex)
+            {
+                // Manejar cualquier error inesperado
+                LabelError.Text = "Ocurrió un error al guardar la categoría. Intente nuevamente.";
+                LabelError.Visible = true;
+            }
         }
 
 

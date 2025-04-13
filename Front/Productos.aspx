@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MASTER.Master" AutoEventWireup="true" CodeBehind="Productos.aspx.cs" Inherits="Front.producto" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-  
+
     <link href="estilos.css" rel="stylesheet" />
     <style>
         body {
@@ -54,7 +54,11 @@
                             <asp:BoundField DataField="Tipo.nombre" HeaderText="Tipo" />
                             <asp:BoundField DataField="Categoria.nombre" HeaderText="Categoría" />
                             <asp:BoundField DataField="Proveedor.nombre" HeaderText="Proveedor" />
-                            <asp:BoundField DataField="Estado" HeaderText="Estado" />
+                            <asp:TemplateField HeaderText="Disponibilidad">
+                                <ItemTemplate>
+                                    <%# Convert.ToBoolean(Eval("Estado")) ? "Disponible" : "No disponible" %>
+                                </ItemTemplate>
+                            </asp:TemplateField>
 
 
                             <asp:TemplateField>

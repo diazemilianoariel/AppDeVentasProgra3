@@ -28,7 +28,13 @@ namespace Front.CategoriasABM
         private void CargarDatosCategoria(int categoriaId)
         {
             // Implementa la lógica para obtener los datos del producto de la base de datos
-            var categoria = categoriaNegocio.BuscarCategoria(categoriaId);
+            CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+            Categoria categoria = new Categoria();
+
+            categoria = categoriaNegocio.BuscarCategoria(categoriaId);
+
+
+            
             if (categoria != null)
             {
                 LabelId.Text = categoria.id.ToString();
