@@ -58,72 +58,72 @@ namespace Front
             }
         }
 
-        protected void btnAgregarCarrito_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int idProducto = Convert.ToInt32(((Button)sender).CommandArgument);
-                Producto producto = defaultNegocio.ObtenerProducto(idProducto);
+        //protected void btnAgregarCarrito_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        int idProducto = Convert.ToInt32(((Button)sender).CommandArgument);
+        //        Producto producto = defaultNegocio.ObtenerProducto(idProducto);
 
-                if (producto != null)
-                {
-                    List<Producto> carrito = ObtenerCarrito();
-                    RepeaterItem item = (RepeaterItem)((Button)sender).NamingContainer;
-                    TextBox txtCantidad = (TextBox)item.FindControl("txtCantidad");
-                    int cantidad = Convert.ToInt32(txtCantidad.Text);
-
-
-                    if (producto.stock >= cantidad)
-                    {
-                        defaultNegocio.AgregarProductosAlCarrito(carrito, producto, cantidad);
+        //        if (producto != null)
+        //        {
+        //            List<Producto> carrito = ObtenerCarrito();
+        //            RepeaterItem item = (RepeaterItem)((Button)sender).NamingContainer;
+        //            TextBox txtCantidad = (TextBox)item.FindControl("txtCantidad");
+        //            int cantidad = Convert.ToInt32(txtCantidad.Text);
 
 
-                        Session["Carrito"] = carrito;
-                        MostrarMensaje("Producto agregado al carrito.", false);
-                        ActualizarContadorCarrito();
+        //            if (producto.stock >= cantidad)
+        //            {
+        //                defaultNegocio.AgregarProductosAlCarrito(carrito, producto, cantidad);
 
 
-                        ScriptManager.RegisterStartupScript(this, GetType(), "ScrollToMessage", "scrollToMessage();", true);
-
-                        ScriptManager.RegisterStartupScript(this, GetType(), "Redirect", "setTimeout(function() { window.location.href = 'Default.aspx'; }, 2000);", true);
-
-                    }
-                    else
-                    {
-                        MostrarMensaje("No hay suficiente stock disponible para agregar la cantidad solicitada.", true);
-
-                    }
-                }
-            }
-
-            catch (Exception ex)
-            {
-                MostrarMensaje("Error al agregar producto al carrito: " + ex.Message, true);
-            }
-        }
+        //                Session["Carrito"] = carrito;
+        //                MostrarMensaje("Producto agregado al carrito.", false);
+        //                ActualizarContadorCarrito();
 
 
+        //                ScriptManager.RegisterStartupScript(this, GetType(), "ScrollToMessage", "scrollToMessage();", true);
 
-        protected void btnQuitarCarrito_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int idProducto = Convert.ToInt32(((Button)sender).CommandArgument);
-                List<Producto> carrito = ObtenerCarrito();
-                if (carrito != null)
-                {
-                    defaultNegocio.QuitarProductoDelCarrito(carrito, idProducto);
-                    Session["Carrito"] = carrito;
-                    MostrarMensaje("Producto eliminado del carrito.", false);
-                    ActualizarContadorCarrito();
+        //                ScriptManager.RegisterStartupScript(this, GetType(), "Redirect", "setTimeout(function() { window.location.href = 'Default.aspx'; }, 2000);", true);
 
-                }
-            }
-            catch (Exception ex)
-            {
-                MostrarMensaje("Error al quitar producto del carrito: " + ex.Message, true);
-            }
-        }
+        //            }
+        //            else
+        //            {
+        //                MostrarMensaje("No hay suficiente stock disponible para agregar la cantidad solicitada.", true);
+
+        //            }
+        //        }
+        //    }
+
+        //    catch (Exception ex)
+        //    {
+        //        MostrarMensaje("Error al agregar producto al carrito: " + ex.Message, true);
+        //    }
+        //}
+
+
+
+        //protected void btnQuitarCarrito_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        int idProducto = Convert.ToInt32(((Button)sender).CommandArgument);
+        //        List<Producto> carrito = ObtenerCarrito();
+        //        if (carrito != null)
+        //        {
+        //            defaultNegocio.QuitarProductoDelCarrito(carrito, idProducto);
+        //            Session["Carrito"] = carrito;
+        //            MostrarMensaje("Producto eliminado del carrito.", false);
+        //            ActualizarContadorCarrito();
+
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MostrarMensaje("Error al quitar producto del carrito: " + ex.Message, true);
+        //    }
+        //}
 
         private List<Producto> ObtenerCarrito()
         {
@@ -176,32 +176,32 @@ namespace Front
 
 
 
-        protected void btnDisminuir_Click(object sender, EventArgs e)
-        {
-            Button btnDisminuir = (Button)sender;
-            RepeaterItem item = (RepeaterItem)btnDisminuir.NamingContainer;
-            TextBox txtCantidad = (TextBox)item.FindControl("txtCantidad");
-            int cantidad = Convert.ToInt32(txtCantidad.Text);
-            if (cantidad > 1)
-            {
-                txtCantidad.Text = (cantidad - 1).ToString();
-            }
-        }
+        //protected void btnDisminuir_Click(object sender, EventArgs e)
+        //{
+        //    Button btnDisminuir = (Button)sender;
+        //    RepeaterItem item = (RepeaterItem)btnDisminuir.NamingContainer;
+        //    TextBox txtCantidad = (TextBox)item.FindControl("txtCantidad");
+        //    int cantidad = Convert.ToInt32(txtCantidad.Text);
+        //    if (cantidad > 1)
+        //    {
+        //        txtCantidad.Text = (cantidad - 1).ToString();
+        //    }
+        //}
 
-        protected void btnAumentar_Click(object sender, EventArgs e)
-        {
-            Button btnAumentar = (Button)sender;
-            RepeaterItem item = (RepeaterItem)btnAumentar.NamingContainer;
-            TextBox txtCantidad = (TextBox)item.FindControl("txtCantidad");
-            string[] args = btnAumentar.CommandArgument.Split(',');
-            int stockDisponible = Convert.ToInt32(args[1]);
-            int cantidad = Convert.ToInt32(txtCantidad.Text);
+        //protected void btnAumentar_Click(object sender, EventArgs e)
+        //{
+        //    Button btnAumentar = (Button)sender;
+        //    RepeaterItem item = (RepeaterItem)btnAumentar.NamingContainer;
+        //    TextBox txtCantidad = (TextBox)item.FindControl("txtCantidad");
+        //    string[] args = btnAumentar.CommandArgument.Split(',');
+        //    int stockDisponible = Convert.ToInt32(args[1]);
+        //    int cantidad = Convert.ToInt32(txtCantidad.Text);
 
-            if (cantidad < stockDisponible)
-            {
-                txtCantidad.Text = (cantidad + 1).ToString();
-            }
-        }
+        //    if (cantidad < stockDisponible)
+        //    {
+        //        txtCantidad.Text = (cantidad + 1).ToString();
+        //    }
+        //}
 
 
 
@@ -211,7 +211,7 @@ namespace Front
         protected void btnVerDetalle_Click(object sender, EventArgs e)
         {
             int idProducto = Convert.ToInt32(((Button)sender).CommandArgument);
-            Response.Redirect($"DetalleProducto.aspx?id={idProducto}");
+            Response.Redirect($"Productos/DetalleProducto.aspx?id={idProducto}");
         }
 
 

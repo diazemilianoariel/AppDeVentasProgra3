@@ -18,13 +18,14 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select id, nombre from Tipos where estado = 1");
+                datos.SetearConsulta("select id, nombre, estado from Tipos");
                 datos.EjecutarLectura();
                 while (datos.Lector.Read())
                 {
                     Tipos aux = new Tipos();
                     aux.id = (int)datos.Lector["id"];
                     aux.nombre = (string)datos.Lector["nombre"];
+                    aux.estado = (bool)datos.Lector["estado"];
                     tipos.Add(aux);
                 }
                 return tipos;
@@ -45,13 +46,14 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select id, nombre from Tipos where id = @id");
+                datos.SetearConsulta("select id, nombre, estado from Tipos where id = @id");
                 datos.SetearParametro("@id", id);
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())
                 {
                     aux.id = (int)datos.Lector["id"];
                     aux.nombre = (string)datos.Lector["nombre"];
+                    aux.estado = (bool)datos.Lector["estado"];
                     return aux;
                 }
                 else
@@ -93,9 +95,11 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("update Tipos set nombre = @nombre where id = @id");
+                datos.SetearConsulta("update Tipos set nombre = @nombre, estado = @estado where id = @id");
                 datos.SetearParametro("@nombre", tipo.nombre);
+                datos.SetearParametro("@estado", tipo.estado);
                 datos.SetearParametro("@id", tipo.id);
+                
                 datos.EjecutarAccion();
             }
             catch (Exception ex)
@@ -114,6 +118,27 @@ namespace negocio
             try
             {
                 datos.SetearConsulta("update Tipos set estado = 0 where id = @id");
+                datos.SetearParametro("@id", id);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+
+
+        public void bajaFisica(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("delete from Tipos where id = @id");
                 datos.SetearParametro("@id", id);
                 datos.EjecutarAccion();
             }

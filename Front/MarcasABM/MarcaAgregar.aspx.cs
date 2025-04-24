@@ -11,6 +11,10 @@ namespace Front.MarcasABM
 {
     public partial class MarcaAgregar : System.Web.UI.Page
     {
+
+
+
+        MarcaNegocio marcaNegocio = new MarcaNegocio();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -37,22 +41,63 @@ namespace Front.MarcasABM
         }
 
 
+
+
         protected void ButtonGuardar_Click(object sender, EventArgs e)
         {
-            MarcaNegocio marcaNegocio = new MarcaNegocio();
+            LabelErrorMarcaExistente.Text = "";
+            LabelError.Text = "";
 
 
-            var marca = new Marca
+            string NombreNuevo = TextBoxNombre.Text;
+            List<Marca> listaDeMarca = new List<Marca>();
+            listaDeMarca = marcaNegocio.ListarMarcas();
+
+
+            // Verificar si el nombre ya existe
+            foreach (var categoria in listaDeMarca)
             {
-                nombre = TextBoxNombre.Text,
-                estado = CheckBoxEstado.Checked
-            };
+                if (categoria.nombre.Equals(NombreNuevo, StringComparison.OrdinalIgnoreCase))
+                {
+                    LabelErrorMarcaExistente.Text = "El nombre de la Marca ya existe.";
+                    LabelErrorMarcaExistente.Visible = true;
+                    return;
+                }
+            }
 
-            // Implementa la lógica para agregar el producto en la base de datos
-            marcaNegocio.AgregarMarca(marca);
 
-            // Redirige a la página de lista de productos
-            Response.Redirect("../Marcas.aspx");
+
+            try
+            {
+                // Validar campos requeridos
+                if (string.IsNullOrWhiteSpace(TextBoxNombre.Text))
+                {
+                    // Mostrar un mensaje de error al usuario
+                    LabelError.Text = "El campo 'Nombre' es obligatorio.";
+                    LabelError.Visible = true;
+                    return;
+                }
+
+
+
+                var marca = new Marca
+                {
+                    nombre = TextBoxNombre.Text,
+                    estado = CheckBoxEstado.Checked
+                };
+
+                // Implementa la lógica para agregar la marca en la base de datos
+                marcaNegocio.AgregarMarca(marca);
+
+                // Redirige a la página de lista de marcas
+                Response.Redirect("../Marcas.aspx");
+            }
+            catch (Exception)
+            {
+                // Manejar cualquier error inesperado
+                LabelError.Text = "Ocurrió un error al guardar la marca. Intente nuevamente.";
+                LabelError.Visible = true;
+            }
 
         }
 

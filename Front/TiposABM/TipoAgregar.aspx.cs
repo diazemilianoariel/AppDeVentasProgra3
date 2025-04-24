@@ -11,6 +11,8 @@ namespace Front.TiposABM
 {
     public partial class TipoAgregar : System.Web.UI.Page
     {
+
+        TipoNegocio tipoNegocio = new TipoNegocio();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -38,21 +40,60 @@ namespace Front.TiposABM
 
         protected void ButtonGuardar_Click(object sender, EventArgs e)
         {
-            
-            TipoNegocio tipoNegocio = new TipoNegocio();
+
+            // Verificar si el usuario tiene permisos para acceder a esta página
+            LabelErrorTipoExistente.Text = "";
+            LabelError.Text = "";
+
+            string NombreNuevo = TextBoxNombre.Text;
+            List<Tipos> listaDeTipos = new List<Tipos>();
+            listaDeTipos = tipoNegocio.ListarTipos();
 
 
-            var Tipo = new Tipos
+            // Verificar si el nombre ya existe
+            foreach (var tipo in listaDeTipos)
             {
-                nombre = TextBoxNombre.Text,
-                estado = CheckBoxEstado.Checked
-            };
+                if (tipo.nombre.Equals(NombreNuevo, StringComparison.OrdinalIgnoreCase))
+                {
+                    LabelErrorTipoExistente.Text = "El nombre de la categoría ya existe.";
+                    LabelErrorTipoExistente.Visible = true;
+                    return;
+                }
+            }
 
-            // Implementa la lógica para agregar el producto en la base de datos
-            tipoNegocio.AgregarTipo(Tipo);
 
-            // Redirige a la página de lista de productos
-            Response.Redirect("../Tipos.aspx");
+
+            try
+            {
+                // Validar campos requeridos
+                if (string.IsNullOrWhiteSpace(TextBoxNombre.Text))
+                {
+                    // Mostrar un mensaje de error al usuario
+                    LabelError.Text = "El campo 'Nombre' es obligatorio.";
+                    LabelError.Visible = true;
+                    return;
+                }
+
+                TipoNegocio tipoNegocio = new TipoNegocio();
+
+                var Tipo = new Tipos
+                {
+                    nombre = TextBoxNombre.Text,
+                    estado = CheckBoxEstado.Checked
+                };
+
+                // Implementa la lógica para agregar el tipo en la base de datos
+                tipoNegocio.AgregarTipo(Tipo);
+
+                // Redirige a la página de lista de tipos
+                Response.Redirect("../Tipos.aspx");
+            }
+            catch (Exception ex)
+            {
+                // Manejar cualquier error inesperado
+                LabelError.Text = "Ocurrió un error al guardar el tipo. Intente nuevamente.";
+                LabelError.Visible = true;
+            }
         }
 
 

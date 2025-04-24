@@ -6,6 +6,8 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container mt-5">
+
+
         <div class="card mb-4 border-0 shadow-lg">
             <div class="row g-0">
                 <div class="col-lg-5 d-flex align-items-center">
@@ -54,9 +56,18 @@
 
                         <asp:Button ID="btnVolver" runat="server" Text="Volver" CssClass="btn btn-primary mt-3" OnClick="btnVolver_Click" />
 
+
+                        <asp:Button ID="btnAgregarCarrito" runat="server" Text="Agregar al Carrito" CommandArgument='<%# Eval("Id") %>' OnClick="btnAgregarCarrito_Click" CssClass="btn btn-success" />
+
+                     <%--   <asp:Button ID="btnQuitarCarrito" runat="server" Text="Quitar del Carrito" CommandArgument='<%# Eval("Id") %>' OnClick="btnQuitarCarrito_Click" CssClass="btn btn-danger" />--%>
+
+
                     </div>
                 </div>
             </div>
         </div>
+
+
+
     </div>
 </asp:Content>

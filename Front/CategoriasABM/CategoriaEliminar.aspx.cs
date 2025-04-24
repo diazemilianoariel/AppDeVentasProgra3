@@ -62,7 +62,7 @@ namespace Front.CategoriasABM
         {
             int categoriaId = Convert.ToInt32(Request.QueryString["id"]);
             CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
-            categoriaNegocio.bajaFisica(categoriaId);
+            categoriaNegocio.bajaLogica(categoriaId);
             Response.Redirect("../Categorias.aspx");
         }
 

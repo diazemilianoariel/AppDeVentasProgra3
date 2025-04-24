@@ -28,6 +28,10 @@ namespace Front
         {
 
 
+
+
+
+
             if (Session["cliente"] == null || !IDPerfilValido())
             {
                 Response.Redirect("Login.aspx");
@@ -37,7 +41,9 @@ namespace Front
 
             if (!IsPostBack)
             {
-                cargarDatosPanel();
+                PaginaActual = 1; // Inicializa la página actual en 1
+                lblPaginaActual.Text = PaginaActual.ToString(); 
+                CargarDatosPanel();
                 CargarTarjetas();
                 
             }
@@ -51,11 +57,20 @@ namespace Front
         }
 
 
+        private int PaginaActual
+        {
+            get { return (int)(ViewState["PaginaActual"] ?? 1); }
+            set { ViewState["PaginaActual"] = value; }
+        }
+
+
         public bool IDPerfilValido()
         {
             Cliente cliente = (Cliente)Session["cliente"];
             return cliente.idPerfil == 2;
         }
+
+        private int TamañoPagina = 10;
 
 
 
@@ -70,20 +85,58 @@ namespace Front
             litCantidadProductos.Text = productonegocio.CantidadProductos().ToString();
         }
 
-        public void cargarDatosPanel()
-        { 
+        //public void cargarDatosPanel()
+        //{ 
              
      
 
-            List<Venta> ventas = ventanegocio.ListarVentas();
+        //    List<Venta> ventas = ventanegocio.ListarVentas();
 
-            rptVentas.DataSource = ventas;
-            rptVentas.DataBind(); 
-
-
+        //    rptVentas.DataSource = ventas;
+        //    rptVentas.DataBind(); 
 
 
+
+
+        //}
+
+
+        private void CargarDatosPanel()
+        {
+            List<Venta> ventas = ventanegocio.ListarVentas(); // Método que obtiene la lista de ventas
+            int totalVentas = ventas.Count;
+
+            // Aplica la paginación
+            var ventasPaginadas = ventas.Skip((PaginaActual - 1) * TamañoPagina).Take(TamañoPagina).ToList();
+
+            rptVentas.DataSource = ventasPaginadas;
+            rptVentas.DataBind();
+
+            // Actualiza el estado de los botones de paginación
+            btnAnterior.Enabled = PaginaActual > 1;
+            btnSiguiente.Enabled = (PaginaActual * TamañoPagina) < totalVentas;
         }
+
+
+        protected void btnAnterior_Click(object sender, EventArgs e)
+        {
+
+            if (PaginaActual > 1)
+            {
+                PaginaActual--;
+                CargarDatosPanel(); // Recarga los datos de la página actual
+                lblPaginaActual.Text = PaginaActual.ToString(); // Actualiza el número de página
+            }
+        }
+
+        protected void btnSiguiente_Click(object sender, EventArgs e)
+        {
+            PaginaActual++;
+            CargarDatosPanel();
+            lblPaginaActual.Text = PaginaActual.ToString();
+        }
+
+
 
 
 

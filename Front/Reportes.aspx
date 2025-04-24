@@ -85,8 +85,8 @@
 
 
 
-  
-       <!-- Tabla de Reportes -->
+
+        <!-- Tabla de Reportes -->
         <div class="row mt-4">
             <div class="col-md-12">
                 <div class="card">
@@ -112,7 +112,7 @@
                                             <td><%# Eval("Monto") %></td>
                                             <td><%# Eval("Cliente.Nombre") %></td>
                                             <td>
-                                                <a href="#"  class ="btn btn-primary " >Ver Factura</a>
+                                                <a href="#" class="btn btn-primary ">Ver Factura</a>
                                             </td>
                                         </tr>
                                     </ItemTemplate>
@@ -125,6 +125,18 @@
                 </div>
             </div>
         </div>
+
+        <div class="pagination">
+            <asp:Button ID="btnAnterior" runat="server" Text="Anterior" OnClick="btnAnterior_Click" CssClass="btn btn-secondary" />
+            <asp:Label ID="lblPaginaActual" runat="server" Text="1" CssClass="mx-2"></asp:Label>
+            <asp:Button ID="btnSiguiente" runat="server" Text="Siguiente" OnClick="btnSiguiente_Click" CssClass="btn btn-secondary" />
+        </div>
+
+
+
+
+
+
     </div>
 
     <!-- Bootstrap JS -->

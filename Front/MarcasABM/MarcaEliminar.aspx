@@ -19,7 +19,8 @@
 
                 <div class="mb-2">
                     <strong>Estado: </strong>
-                    <asp:Label ID="LabelEstadoMarca" runat="server" CssClass="text-secondary"></asp:Label>
+                    <asp:Label ID="LabelEstadoMarca" runat="server" CssClass="text-secondary"
+                        Text='<%# Convert.ToBoolean(Eval("estado")) ? "Activo" : "Inactivo" %>'></asp:Label>
                 </div>
                 <asp:Label ID="LabelError" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
 

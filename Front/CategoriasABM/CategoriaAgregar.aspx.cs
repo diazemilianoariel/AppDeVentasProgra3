@@ -11,6 +11,9 @@ namespace Front.CategoriasABM
 {
     public partial class CategoriaAgregar : System.Web.UI.Page
     {
+
+
+        CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -39,6 +42,28 @@ namespace Front.CategoriasABM
 
         protected void ButtonGuardar_Click(object sender, EventArgs e)
         {
+
+            LabelErrorCategoriaExistente.Text = "";
+            LabelError.Text = "";
+
+            string NombreNuevo = TextBoxNombre.Text;
+            List<Categoria> listaDeCategorias = new List<Categoria>();
+            listaDeCategorias = categoriaNegocio.ListarCategorias();
+
+
+            // Verificar si el nombre ya existe
+            foreach (var categoria in listaDeCategorias)
+            {
+                if (categoria.nombre.Equals(NombreNuevo, StringComparison.OrdinalIgnoreCase))
+                {
+                    LabelErrorCategoriaExistente.Text = "El nombre de la categoría ya existe.";
+                    LabelErrorCategoriaExistente.Visible = true;
+                    return;
+                }
+            }
+
+
+
             try
             {
                 // Validar campos requeridos
@@ -50,7 +75,7 @@ namespace Front.CategoriasABM
                     return;
                 }
 
-                CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+                
 
                 var categoria = new Categoria
                 {

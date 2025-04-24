@@ -39,12 +39,12 @@ namespace Front.MarcasABM
         protected void ButtonGuardar_Click(object sender, EventArgs e)
         {
             int marcaId = Convert.ToInt32(LabelId.Text);
-            var marca = new Marca
-            {
-                id = marcaId,
-                nombre = TextBoxNombre.Text,
-                estado = CheckBoxEstado.Checked
-            };
+            Marca marca = new Marca();
+
+            marca.id = marcaId;
+            marca.nombre = TextBoxNombre.Text;
+            marca.estado = CheckBoxEstado.Checked;
+            
             // Implementa la lógica para actualizar el producto en la base de datos
             marcaNegocio.ActualizarMarca(marca);
             // Redirige a la página de lista de productos después de guardar

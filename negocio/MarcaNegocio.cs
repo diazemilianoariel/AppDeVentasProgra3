@@ -13,15 +13,16 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select id, nombre from Marcas where estado = 1");
+                datos.SetearConsulta("select id, nombre, estado from Marcas ");
                 datos.EjecutarLectura();
                 while (datos.Lector.Read())
                 {
-                    Marca aux = new Marca
-                    {
-                        id = (int)datos.Lector["id"],
-                        nombre = (string)datos.Lector["nombre"]
-                    };
+                    Marca aux = new Marca();
+
+                    aux.id = (int)datos.Lector["id"];
+                    aux.nombre = (string)datos.Lector["nombre"];
+                    aux.estado = (bool)datos.Lector["estado"];
+
                     marcas.Add(aux);
                 }
                 return marcas;
@@ -42,13 +43,14 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select id, nombre from Marcas where id = @id");
+                datos.SetearConsulta("select id, nombre, estado from Marcas where id = @id");
                 datos.SetearParametro("@id", id);
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())
                 {
                     aux.id = (int)datos.Lector["id"];
                     aux.nombre = (string)datos.Lector["nombre"];
+                    aux.estado = (bool)datos.Lector["estado"];
                     return aux;
                 }
                 else
@@ -118,8 +120,9 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("update Marcas set nombre = @nombre where id = @id");
+                datos.SetearConsulta("update Marcas set nombre = @nombre, estado = @estado where id = @id");
                 datos.SetearParametro("@nombre", marca.nombre);
+                datos.SetearParametro("@estado", marca.estado);
                 datos.SetearParametro("@id", marca.id);
                 datos.EjecutarAccion();
             }
@@ -139,6 +142,26 @@ namespace negocio
             try
             {
                 datos.SetearConsulta("update Marcas set estado = 0 where id = @id");
+                datos.SetearParametro("@id", id);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+
+        public void bajaFisica(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("delete from Marcas where id = @id");
                 datos.SetearParametro("@id", id);
                 datos.EjecutarAccion();
             }

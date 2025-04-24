@@ -41,7 +41,7 @@ namespace Front.MarcasABM
             if (marca != null)
             {
                 LabelNombreMarca.Text = marca.nombre;
-                LabelEstadoMarca.Text = marca.estado.ToString();
+                LabelEstadoMarca.Text = marca.estado ? "Activo" : "Inactivo";
             }
             else
             {

@@ -41,6 +41,14 @@
                     <Columns>
                         <asp:BoundField DataField="id" HeaderText="ID" />
                         <asp:BoundField DataField="nombre" HeaderText="Nombre" />
+
+                        <asp:TemplateField HeaderText="Estado Tipos">
+                            <ItemTemplate>
+                                <%# Convert.ToBoolean(Eval("estado")) ? "Activo" : "Inactivo" %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+
                         <asp:TemplateField>
                             <ItemTemplate>
                                 <div class="text-right">

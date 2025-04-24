@@ -56,10 +56,15 @@ namespace Front
 
         public bool IDPerfilValido()
         {
+
             Cliente cliente = (Cliente)Session["cliente"];
-            return cliente.idPerfil == 2;
+
+            return  cliente.nombrePerfil == "Administrador" || cliente.nombrePerfil == "Soporte" || cliente.nombrePerfil == "Vendedor";
         }
 
+
+
+        
         private void MostrarError(string v)
         {
             LabelError.Text = mensaje;
@@ -112,6 +117,90 @@ namespace Front
             // Redirigir a la página anterior o a la lista de productos
             Response.Redirect("../Productos.aspx");
         }
+
+
+
+
+
+        private void ActualizarContadorCarrito()
+        {
+            List<Producto> carrito = (List<Producto>)Session["Carrito"];
+            int totalProductos = carrito != null ? carrito.Sum(p => p.Cantidad) : 0;
+            var masterPage = (MASTER)this.Master;
+            masterPage.ActualizarContadorCarrito(totalProductos);
+        }
+
+        protected void btnAgregarCarrito_Click(object sender, EventArgs e)
+        {
+
+            DefaultNegocio defaultNegocio = new DefaultNegocio();
+
+            try
+            {
+               
+                int idProducto = Convert.ToInt32(Request.QueryString["id"]);
+
+                Producto producto = defaultNegocio.ObtenerProducto(idProducto);
+
+                if (producto != null)
+                {
+                    List<Producto> carrito = (List<Producto>)Session["Carrito"] ?? new List<Producto>();
+               //     RepeaterItem item = (RepeaterItem)((Button)sender).NamingContainer;
+                 //   TextBox txtCantidad = (TextBox)item.FindControl("txtCantidad");
+                    int cantidad = 1;
+
+
+                    if (producto.stock >= cantidad)
+                    {
+                        defaultNegocio.AgregarProductosAlCarrito(carrito, producto, cantidad);
+
+
+                        Session["Carrito"] = carrito;
+                        //MostrarMensaje("Producto agregado al carrito.", false);
+                        ActualizarContadorCarrito();
+
+
+                        ScriptManager.RegisterStartupScript(this, GetType(), "ScrollToMessage", "scrollToMessage();", true);
+
+                        ScriptManager.RegisterStartupScript(this, GetType(), "Redirect", "setTimeout(function() { window.location.href = 'Default.aspx'; }, 2000);", true);
+
+                    }
+                    else
+                    {
+                       // MostrarMensaje("No hay suficiente stock disponible para agregar la cantidad solicitada.", true);
+
+                    }
+                }
+            }
+
+            catch (Exception )
+            {
+              //  MostrarMensaje("Error al agregar producto al carrito: " + ex.Message, true);
+            }
+        }
+
+
+
+        //protected void btnQuitarCarrito_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        int idProducto = Convert.ToInt32(((Button)sender).CommandArgument);
+        //        List<Producto> carrito = ObtenerCarrito();
+        //        if (carrito != null)
+        //        {
+        //            defaultNegocio.QuitarProductoDelCarrito(carrito, idProducto);
+        //            Session["Carrito"] = carrito;
+        //            MostrarMensaje("Producto eliminado del carrito.", false);
+        //            ActualizarContadorCarrito();
+
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MostrarMensaje("Error al quitar producto del carrito: " + ex.Message, true);
+        //    }
+        //}
 
 
     }

@@ -22,7 +22,22 @@ namespace Front.CategoriasABM
                 CargarDatosCategoria(categoriaId);
             }
 
+            // Verificar si el usuario tiene permisos para acceder a esta página
+            if (Session["cliente"] == null || !EsAdministradorOSoporte((Cliente)Session["cliente"]))
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
+
         }
+
+
+        private bool EsAdministradorOSoporte(Cliente cliente)
+        {
+            return cliente.nombrePerfil == "Administrador" || cliente.nombrePerfil == "Soporte" || cliente.nombrePerfil == "Vendedor";
+        }
+
+
 
 
         private void CargarDatosCategoria(int categoriaId)
@@ -34,17 +49,47 @@ namespace Front.CategoriasABM
             categoria = categoriaNegocio.BuscarCategoria(categoriaId);
 
 
-            
+
             if (categoria != null)
             {
                 LabelId.Text = categoria.id.ToString();
                 TextBoxNombre.Text = categoria.nombre;
                 CheckBoxEstado.Checked = categoria.estado;
+
+                // Guardar el nombre original en un HiddenField
+                HiddenFieldNombreOriginal.Value = categoria.nombre;
+
             }
+
         }
 
         protected void ButtonGuardar_Click(object sender, EventArgs e)
         {
+            // Validar que el campo 'Nombre' no esté vacío
+            if (string.IsNullOrWhiteSpace(TextBoxNombre.Text))
+            {
+                LabelError.Text = "El campo 'Nombre' es obligatorio.";
+                LabelError.Visible = true;
+                return;
+            }
+
+            // Verificar si el nombre fue modificado
+            if (!TextBoxNombre.Text.Equals(HiddenFieldNombreOriginal.Value, StringComparison.OrdinalIgnoreCase))
+            {
+                // Validar si el nombre ya existe
+                List<Categoria> listaDeCategorias = categoriaNegocio.ListarCategorias();
+                foreach (var categoria2 in listaDeCategorias)
+                {
+                    if (categoria2.nombre.Equals(TextBoxNombre.Text, StringComparison.OrdinalIgnoreCase))
+                    {
+                        LabelErrorCategoriaExistente.Text = "El nombre de la categoría ya existe.";
+                        LabelErrorCategoriaExistente.Visible = true;
+                        return;
+                    }
+                }
+            }
+
+            // Actualizar la categoría
             int categoriaId = Convert.ToInt32(LabelId.Text);
             var categoria = new Categoria
             {
@@ -53,15 +98,12 @@ namespace Front.CategoriasABM
                 estado = CheckBoxEstado.Checked
             };
 
-
-
-            // Implementa la lógica para actualizar el producto en la base de datos
             categoriaNegocio.ActualizarCategoria(categoria);
 
-
-            // Redirige a la página de lista de productos después de guardar
+            // Redirige a la página de lista de categorías
             Response.Redirect("../Categorias.aspx");
         }
+
 
         protected void ButtonCancelar_Click(object sender, EventArgs e)
         {

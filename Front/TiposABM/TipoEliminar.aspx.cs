@@ -42,7 +42,9 @@ namespace Front.TiposABM
             if (tipo != null)
             {
                 LabelNombreTipo.Text = tipo.nombre;
-                LabelEstadoTipo.Text = tipo.estado.ToString();
+                LabelEstadoTipo.Text = tipo.estado ? "Activo" : "Inactivo";
+
+
             }
             else
             {

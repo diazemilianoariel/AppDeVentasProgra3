@@ -23,6 +23,8 @@
                 <div class="form-group">
                     <asp:Label ID="LabelNombre" runat="server" CssClass="form-label fw-bold">Nombre:</asp:Label>
                     <asp:TextBox ID="TextBoxNombre" runat="server" CssClass="form-control"></asp:TextBox>
+                    <asp:Label ID="LabelError" runat="server" CssClass="text-danger"></asp:Label>
+                    <asp:Label ID="LabelErrorCategoriaExistente" runat="server" CssClass="text-danger"></asp:Label>
 
                 </div>
 
@@ -31,7 +33,6 @@
                     <asp:CheckBox ID="CheckBoxEstado" runat="server" CssClass="form-control" />
                 </div>
 
-                <asp:Label ID="LabelError" runat="server" CssClass="text-danger"></asp:Label>
 
 
             </div>
