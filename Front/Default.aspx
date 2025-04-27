@@ -10,6 +10,21 @@
         }
     </script>
 
+
+    <link rel="stylesheet" type="text/css" href="~/EstiloCSS/estilo.css" />
+
+    <style>
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .product-card:hover {
+                transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Agrega una sombra */
+                cursor: pointer; /* Cambia el cursor a una mano */
+            }
+    </style>
+
 </asp:Content>
 
 
@@ -46,40 +61,20 @@
 
                     <ItemTemplate>
                         <div class="col-md-4 mb-4">
-                            <div class="card h-100">
-                                <img src='<%# Eval("Imagen") %>' alt='<%# Eval("Nombre") %>' class="card-img-top product-image" style="height: 200px; object-fit: cover;" />
-                                <div class="card-body">
-                                    <h5 class="card-title"><%# Eval("Nombre") %></h5>
-                                    <p class="card-text">Precio: $<%# Eval("precioVenta") %></p>
+                            <a href='Productos/DetalleProducto.aspx?id=<%# Eval("Id") %>' class="text-decoration-none">
+                                <div class="card h-100 product-card">
+                                    <img src='<%# Eval("Imagen") %>' alt='<%# Eval("Nombre") %>' class="card-img-top product-image" style="height: 200px; object-fit: cover;" />
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%# Eval("Nombre") %></h5>
+                                        <p class="card-text">Precio: $<%# Eval("precioVenta") %></p>
+                                        <p class="card-text">Stock Disponible: <%# Eval("Stock") %></p>
 
-
-                                    <p class="card-text">Stock Disponible: <%# Eval("Stock") %></p>
-
-                                    <div class="input-group">
-
-                                       <%-- <div class="input-group-prepend">
-                                            <asp:Button ID="btnDisminuir" runat="server" Text="-" CommandArgument='<%# Eval("Id") %>' OnClick="btnDisminuir_Click" CssClass="btn btn-outline-secondary" />
-                                        </div>--%>
-
-
-                                       <%-- <asp:TextBox ID="txtCantidad" runat="server" Text="1" CssClass="form-control text-center" ReadOnly="true" />--%>
-
-
-
-                                        <%--<div class="input-group-append">
-                                            <asp:Button ID="btnAumentar" runat="server" Text="+" CommandArgument='<%# Eval("Id") + "," + Eval("Stock") %>' OnClick="btnAumentar_Click" CssClass="btn btn-outline-secondary" />
-                                        </div>--%>
 
                                     </div>
-                                </div>
 
 
-                                <div class="card-footer text-center">
-                                    <%--<asp:Button ID="btnAgregarCarrito" runat="server" Text="Agregar al Carrito" CommandArgument='<%# Eval("Id") %>' OnClick="btnAgregarCarrito_Click" CssClass="btn btn-success" />--%>
-                                    <asp:Button ID="btnVerDetalle" runat="server" Text="Ver Detalle" CommandArgument='<%# Eval("Id") %>' OnClick="btnVerDetalle_Click" CssClass="btn btn-info" />
-                                   <%-- <asp:Button ID="btnQuitarCarrito" runat="server" Text="Quitar del Carrito" CommandArgument='<%# Eval("Id") %>' OnClick="btnQuitarCarrito_Click" CssClass="btn btn-danger" />--%>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </ItemTemplate>
 

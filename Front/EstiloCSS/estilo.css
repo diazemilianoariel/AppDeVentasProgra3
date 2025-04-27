@@ -1,4 +1,18 @@
-﻿.card-fixed-size {
+﻿
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Agrega una sombra */
+    cursor: pointer; /* Cambia el cursor a una mano */
+}
+
+
+
+
+.card-fixed-size {
     width: 100%;
     height: 220px; /* Ajusta la altura según tus necesidades */
     display: flex;
