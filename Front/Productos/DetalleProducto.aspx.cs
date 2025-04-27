@@ -3,10 +3,12 @@ using negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Services.Description;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web;
+using System.Net.Mail;
+using System.Net;
+
 
 
 
@@ -22,7 +24,7 @@ namespace Front
 
             if (Session["cliente"] == null || !IDPerfilValido())
             {
-                Response.Redirect("Login.aspx");
+                Response.Redirect("../Login.aspx");
                 return;
             }
 
@@ -44,6 +46,8 @@ namespace Front
                 else
                 {
                     MostrarError("Debe seleccionar un producto.");
+                    return;
+
                 }
 
 
@@ -87,7 +91,7 @@ namespace Front
 
                 LabelNombreProducto.Text = producto.nombre;
                 LabelDescripcionProducto.Text = producto.descripcion;
-                LabelPrecioProducto.Text = producto.precio.ToString();
+                LabelPrecioProducto.Text = producto.precioVenta.ToString();
                 LabelStockProducto.Text = producto.stock.ToString();
                 LabelMarcaProducto.Text = producto.Marca.nombre;
                 ImageProducto.ImageUrl = producto.Imagen;
@@ -115,7 +119,7 @@ namespace Front
         protected void btnVolver_Click(object sender, EventArgs e)
         {
             // Redirigir a la página anterior o a la lista de productos
-            Response.Redirect("../Productos.aspx");
+            Response.Redirect("../Default.aspx");
         }
 
 
@@ -145,9 +149,10 @@ namespace Front
                 if (producto != null)
                 {
                     List<Producto> carrito = (List<Producto>)Session["Carrito"] ?? new List<Producto>();
-               //     RepeaterItem item = (RepeaterItem)((Button)sender).NamingContainer;
-                 //   TextBox txtCantidad = (TextBox)item.FindControl("txtCantidad");
-                    int cantidad = 1;
+                    //     RepeaterItem item = (RepeaterItem)((Button)sender).NamingContainer;
+                    //   TextBox txtCantidad = (TextBox)item.FindControl("txtCantidad");
+                    int cantidad = Convert.ToInt32(txtCantidad.Text);
+
 
 
                     if (producto.stock >= cantidad)
@@ -167,7 +172,7 @@ namespace Front
                     }
                     else
                     {
-                       // MostrarMensaje("No hay suficiente stock disponible para agregar la cantidad solicitada.", true);
+                        MostrarError("No hay suficiente stock disponible para agregar la cantidad solicitada.");
 
                     }
                 }
@@ -175,32 +180,52 @@ namespace Front
 
             catch (Exception )
             {
-              //  MostrarMensaje("Error al agregar producto al carrito: " + ex.Message, true);
+
+                // MostrarMensaje("Error al agregar el producto al carrito: " + ex.Message, true);
+                MostrarError("Ocurrió un error al agregar el producto al carrito. Por favor, inténtelo de nuevo.");
+
             }
         }
 
 
 
-        //protected void btnQuitarCarrito_Click(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        int idProducto = Convert.ToInt32(((Button)sender).CommandArgument);
-        //        List<Producto> carrito = ObtenerCarrito();
-        //        if (carrito != null)
-        //        {
-        //            defaultNegocio.QuitarProductoDelCarrito(carrito, idProducto);
-        //            Session["Carrito"] = carrito;
-        //            MostrarMensaje("Producto eliminado del carrito.", false);
-        //            ActualizarContadorCarrito();
+        protected void btnDisminuir_Click(object sender, EventArgs e)
+        {
+            int cantidad = Convert.ToInt32(txtCantidad.Text);
 
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MostrarMensaje("Error al quitar producto del carrito: " + ex.Message, true);
-        //    }
+            if (cantidad > 1)
+            {
+                txtCantidad.Text = (cantidad - 1).ToString();
+            }
+        }
+
+        protected void btnAumentar_Click(object sender, EventArgs e)
+        {
+            int stockDisponible = Convert.ToInt32(LabelStockProducto.Text); // Obtén el stock disponible
+            int cantidad = Convert.ToInt32(txtCantidad.Text);
+
+            if (cantidad < stockDisponible)
+            {
+                txtCantidad.Text = (cantidad + 1).ToString();
+            }
+        }
+
+
+
+
+        //protected void btnQuitarDelCarrito(object sender, EventArgs e)
+        //{
+
+
+
+
+
+
+
         //}
+
+
+
 
 
     }

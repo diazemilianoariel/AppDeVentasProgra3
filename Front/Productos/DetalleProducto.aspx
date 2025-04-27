@@ -2,6 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -57,11 +58,25 @@
                         <asp:Button ID="btnVolver" runat="server" Text="Volver" CssClass="btn btn-primary mt-3" OnClick="btnVolver_Click" />
 
 
-                        <asp:Button ID="btnAgregarCarrito" runat="server" Text="Agregar al Carrito" CommandArgument='<%# Eval("Id") %>' OnClick="btnAgregarCarrito_Click" CssClass="btn btn-success" />
+                       <%-- <asp:Button ID="btnAgregarCarrito" runat="server" Text="Agregar al Carrito" CommandArgument='<%# Eval("Id") %>' OnClick="btnAgregarCarrito_Click" CssClass="btn btn-success" />--%>
 
-                     <%--   <asp:Button ID="btnQuitarCarrito" runat="server" Text="Quitar del Carrito" CommandArgument='<%# Eval("Id") %>' OnClick="btnQuitarCarrito_Click" CssClass="btn btn-danger" />--%>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <asp:Button ID="btnDisminuir" runat="server" Text="-" OnClick="btnDisminuir_Click" CssClass="btn btn-outline-secondary" />
+                            </div>
+
+                            <asp:TextBox ID="txtCantidad" runat="server" Text="1" CssClass="form-control text-center" ReadOnly="true" />
 
 
+                            <div class="input-group-append">
+                                <asp:Button ID="btnAumentar" runat="server" Text="+" OnClick="btnAumentar_Click" CssClass="btn btn-outline-secondary" />
+                            </div>
+                               <asp:Button ID="btnAgregarCarrito" runat="server" Text="Agregar al Carrito" OnClick="btnAgregarCarrito_Click" CssClass="btn btn-success" />
+
+
+                        </div>
+
+                        <%--  <asp:Button ID="btnQuitarCarrito" runat="server" Text="Quitar del Carrito" CommandArgument='<%# Eval("Id") %>' OnClick="btnQuitarDelCarrito_Click" CssClass="btn btn-danger" />--%>
                     </div>
                 </div>
             </div>

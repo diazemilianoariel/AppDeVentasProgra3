@@ -12,6 +12,9 @@
 
 </asp:Content>
 
+
+
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <h1>Catálogo de Productos</h1>

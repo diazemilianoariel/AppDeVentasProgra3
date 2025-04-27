@@ -123,6 +123,33 @@ namespace Front
         protected global::System.Web.UI.WebControls.Button btnVolver;
 
         /// <summary>
+        /// Control btnDisminuir.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDisminuir;
+
+        /// <summary>
+        /// Control txtCantidad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCantidad;
+
+        /// <summary>
+        /// Control btnAumentar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAumentar;
+
+        /// <summary>
         /// Control btnAgregarCarrito.
         /// </summary>
         /// <remarks>

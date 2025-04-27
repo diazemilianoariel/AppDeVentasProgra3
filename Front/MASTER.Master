@@ -23,12 +23,12 @@
 
         <!-- Aquí tu contenido principal -->
         <header class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="Default.aspx">
+            <a class="navbar-brand" href="../Default.aspx">
                 <img src="IconoHomee.png" alt="Pañalera Logo" class="icono-home" />
 
             </a>
 
-            <a class="navbar-brand" href="Carrito.aspx">
+            <a class="navbar-brand" href="../Carrito.aspx">
                 <img src="IconoCarrito.png" alt="Pañalera Logo" class="icono-carrito" />
                 <span class="badge badge-pill badge-danger" id="ActualizarCarrito" runat="server">0</span>
 
@@ -148,13 +148,10 @@
                 <%} %>
 
 
+
+
+
                 <div class="ml-auto d-flex">
-
-
-
-
-
-
                     <% var clientee = Session["cliente"];
                         if (clientee == null)
                         {
