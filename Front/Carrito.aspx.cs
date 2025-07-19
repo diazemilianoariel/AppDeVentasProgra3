@@ -3,44 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Net.Mail;
 using dominio;
 using negocio;
 
 namespace Front
 {
+    // CORRECCIÓN 1: El nombre de la clase ahora es "CompraParcial" para coincidir con el archivo .aspx
     public partial class CompraParcial : System.Web.UI.Page
     {
         public List<Producto> ListaArticulos = new List<Producto>();
 
-
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (Session["cliente"] == null || !IDPerfilValido())
+            // Se lee "usuario" de la sesión.
+            if (Session["usuario"] == null || !IDPerfilValido())
             {
                 Response.Redirect("Login.aspx");
                 return;
             }
 
-
-
             if (!IsPostBack)
             {
                 CargarCarrito();
             }
-
         }
 
         public bool IDPerfilValido()
         {
-            Cliente cliente = (Cliente)Session["cliente"];
-            return cliente.idPerfil == 1 || cliente.idPerfil == 2 || cliente.idPerfil == 3 || cliente.idPerfil == 4;
+            Usuario usuario = (Usuario)Session["usuario"];
+            if (usuario != null && usuario.Perfil != null)
+            {
+                // CORRECCIÓN 2: Se usa "soporte" con minúscula para coincidir con tu enum.
+                return usuario.Perfil.Id == (int)TipoPerfil.Cliente ||
+                       usuario.Perfil.Id == (int)TipoPerfil.Administrador ||
+                       usuario.Perfil.Id == (int)TipoPerfil.Vendedor ||
+                       usuario.Perfil.Id == (int)TipoPerfil.soporte;
+            }
+            return false;
         }
-
-
-
-
 
         private void CargarCarrito()
         {
@@ -49,8 +49,6 @@ namespace Front
             rptCarrito.DataBind();
             ActualizarTotalGeneral();
         }
-
-
 
         private List<Producto> ObtenerCarrito()
         {
@@ -86,14 +84,14 @@ namespace Front
                     if (cantidad <= 0)
                     {
                         MostrarMensaje("La cantidad debe ser mayor a cero.");
+                        txtCantidad.Text = productoEnCarrito.Cantidad.ToString();
                         return;
                     }
                     productoEnCarrito.Cantidad = cantidad;
                     Session["Carrito"] = carrito;
                     CargarCarrito();
-
                 }
-                catch(Exception Ex)
+                catch (Exception)
                 {
                     MostrarMensaje("La cantidad debe ser un número entero.");
                 }
@@ -112,90 +110,63 @@ namespace Front
             decimal totalGeneral = 0;
             foreach (Producto producto in carrito)
             {
-                totalGeneral += producto.SubTotal;
+                // Asumo que tienes una propiedad SubTotal en Producto que calcula (Precio * Cantidad)
+                totalGeneral += producto.precio * producto.Cantidad;
             }
             lblTotalGeneral.Text = totalGeneral.ToString("F2");
         }
 
-        
-
-         protected void btnConfirmarCompra_Click(object sender, EventArgs e)
-         {
-
-            Cliente cliente = (Cliente)Session["cliente"];
-
-            int idCliente = cliente.Id;
-
+        protected void btnConfirmarCompra_Click(object sender, EventArgs e)
+        {
+            Usuario usuario = (Usuario)Session["usuario"];
+            int idUsuario = usuario.Id;
 
             try
-             {
-                 List<Producto> carrito = ObtenerCarrito();
+            {
+                List<Producto> carrito = ObtenerCarrito();
+                if (carrito.Count > 0)
+                {
+                    decimal totalGeneral = carrito.Sum(p => p.precio * p.Cantidad);
 
-                 if (carrito.Count > 0)
-                 {
-                     decimal totalGeneral = carrito.Sum(p => p.SubTotal);
+                    CarritoNegocio carritoNegocio = new CarritoNegocio();
+                    bool exito = carritoNegocio.InsertarVenta(carrito, totalGeneral, idUsuario);
 
-
-                    
-                     CarritoNegocio carritoNegocio = new CarritoNegocio();
-                     bool exito = carritoNegocio.InsertarVenta(carrito, totalGeneral, idCliente);
-
-                     if (exito)
-                     {
-                        // Limpiar el carrito
+                    if (exito)
+                    {
                         Session["Carrito"] = new List<Producto>();
 
-                        // es el envio del mail
                         EmailService emailService = new EmailService();
-                        emailService.EnviarCorreoConfirmacion(cliente.Email, "Estado De tu Compra", "Tu Compra esta en Proceso ");
-
-
-
-
-                        //pfit apbo cimg kzwc
-
-                        // Actualizar la lista de productos en el carrito
+                        emailService.EnviarCorreoConfirmacion(usuario.Email, "Estado De tu Compra", "Tu Compra esta en Proceso ");
 
                         CargarCarrito();
 
-                         // Mostrar mensaje de éxito
-                         lblMensaje.Text = "Venta generada de manera exitosa.";
-                         lblMensaje.Visible = true;
+                        lblMensaje.Text = "Venta generada de manera exitosa.";
+                        lblMensaje.Visible = true;
 
-                         // Redirigir a la página de inicio después de unos segundos
-                         ScriptManager.RegisterStartupScript(this, GetType(), "Redirect", "setTimeout(function() { window.location.href = 'Default.aspx'; }, 3000);", true);
-                     }
-                     else
-                     {
-                         lblMensaje.Text = "Error al confirmar la compra. Por favor, inténtelo de nuevo.";
-                         lblMensaje.Visible = true;
-                     }
-                 }
-                 else
-                 {
-                     lblMensaje.Text = "El carrito está vacío.";
-                     lblMensaje.Visible = true;
-                 }
-             }
-             catch (Exception ex)
-             {
-                 lblMensaje.Text = "Ocurrió un error: " + ex.Message;
-                 lblMensaje.Visible = true;
-             }
-
-
-         }
-
+                        ScriptManager.RegisterStartupScript(this, GetType(), "Redirect", "setTimeout(function() { window.location.href = 'Default.aspx'; }, 3000);", true);
+                    }
+                    else
+                    {
+                        lblMensaje.Text = "Error al confirmar la compra. Por favor, inténtelo de nuevo.";
+                        lblMensaje.Visible = true;
+                    }
+                }
+                else
+                {
+                    lblMensaje.Text = "El carrito está vacío.";
+                    lblMensaje.Visible = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Ocurrió un error: " + ex.Message;
+                lblMensaje.Visible = true;
+            }
+        }
 
         protected void btnVolverHome_Click(object sender, EventArgs e)
         {
             Response.Redirect("Default.aspx");
         }
-
-
-
-
-
-
     }
 }

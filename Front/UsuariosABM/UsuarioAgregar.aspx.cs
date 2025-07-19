@@ -13,7 +13,7 @@ namespace Front.UsuariosABM
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["cliente"] == null || !EsAdministradorOSoporte((Cliente)Session["cliente"]))
+            if (Session["cliente"] == null || !EsAdministradorOSoporte((Usuario)Session["cliente"]))
             {
                 Response.Redirect("Login.aspx");
                 return;
@@ -26,14 +26,14 @@ namespace Front.UsuariosABM
 
         }
 
-        private bool EsAdministradorOSoporte(Cliente cliente)
+        private bool EsAdministradorOSoporte(Usuario cliente)
         {
             return cliente.idPerfil == 2 || cliente.idPerfil == 3 || cliente.idPerfil == 4;
         }
 
         private void CargarPerfiles()
         {
-            ClienteNegocio negocio = new ClienteNegocio();
+            UsuarioNegocio negocio = new UsuarioNegocio();
             ddlPerfilCliente.DataSource = negocio.ListarPerfiles();
             ddlPerfilCliente.DataValueField = "id";
             ddlPerfilCliente.DataTextField = "nombre";
@@ -44,8 +44,8 @@ namespace Front.UsuariosABM
 
         protected void ButtonGuardar_Click(object sender, EventArgs e)
         {
-           ClienteNegocio clienteNegocio = new ClienteNegocio();
-           Cliente cliente = new Cliente();
+           UsuarioNegocio clienteNegocio = new UsuarioNegocio();
+           Usuario cliente = new Usuario();
 
             cliente.Nombre = TextBoxNombreCliente.Text;
             cliente.Apellido = TextBoxApellidoCliente.Text;

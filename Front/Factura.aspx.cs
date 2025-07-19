@@ -27,8 +27,8 @@ namespace Front
 
         private void CargarFacturas()
         {
-            Cliente cliente;
-            cliente = (Cliente)Session["cliente"];
+            Usuario cliente;
+            cliente = (Usuario)Session["cliente"];
 
             if(cliente == null)
             {

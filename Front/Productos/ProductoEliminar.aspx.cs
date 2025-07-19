@@ -72,7 +72,7 @@ namespace Front.Productos
 
             // Verifica si el cliente tiene un perfil válido
 
-            Cliente cliente = (Cliente)Session["cliente"];
+            Usuario cliente = (Usuario)Session["cliente"];
             return cliente.idPerfil == 2 || cliente.idPerfil == 4 || cliente.idPerfil == 3;
         }
 

@@ -33,14 +33,14 @@ namespace Front.UsuariosABM
         // Verifica si el id de perfil es valido
         private bool IDPerfilValido()
         {
-            Cliente cliente = (Cliente)Session["cliente"];
+            Usuario cliente = (Usuario)Session["cliente"];
             return cliente.idPerfil == 2 || cliente.idPerfil == 4 || cliente.idPerfil == 3;
         }
 
         private void CargarDatosUsuario(int usuarioId)
         {
-            ClienteNegocio clienteNegocio = new ClienteNegocio();
-            Cliente usuario = new Cliente();
+            UsuarioNegocio clienteNegocio = new UsuarioNegocio();
+            Usuario usuario = new Usuario();
             usuario = clienteNegocio.ObtenerCliente(usuarioId);
             if (usuario != null)
             {
@@ -61,7 +61,7 @@ namespace Front.UsuariosABM
 
         private void CargarPerfiles()
         {
-            ClienteNegocio negocio = new ClienteNegocio();
+            UsuarioNegocio negocio = new UsuarioNegocio();
             ddlPerfilCliente.DataSource = negocio.ListarPerfiles();
             ddlPerfilCliente.DataValueField = "id";
             ddlPerfilCliente.DataTextField = "nombre";
@@ -71,8 +71,8 @@ namespace Front.UsuariosABM
 
         protected void ButtonGuardar_Click(object sender, EventArgs e)
         {
-            ClienteNegocio clienteNegocio = new ClienteNegocio();
-            Cliente usuario = new Cliente();
+            UsuarioNegocio clienteNegocio = new UsuarioNegocio();
+            Usuario usuario = new Usuario();
             usuario.Nombre = TextBoxNombre.Text;
             usuario.Apellido = TextBoxApellido.Text;
             usuario.Dni = TextBoxDni.Text;

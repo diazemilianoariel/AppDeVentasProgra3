@@ -1,220 +1,111 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MASTER.Master.cs" Inherits="Front.MASTER" %>
+<%@ Import Namespace="dominio" %>
 
 <!DOCTYPE html>
 <html>
-
-
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="~/EstiloCSS/estilo.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
-
-
-
 <body>
-
     <form id="form1" runat="server">
-
-        <!-- Aquí tu contenido principal -->
         <header class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="../Default.aspx">
-                <img src="IconoHomee.png" alt="Pañalera Logo" class="icono-home" />
+            <asp:HyperLink ID="hlHome" runat="server" CssClass="navbar-brand" NavigateUrl="~/Default.aspx">
+                <asp:Image ID="imgHome" runat="server" ImageUrl="~/IconoHomee.png" alt="Pañalera Logo" CssClass="icono-home" />
+            </asp:HyperLink>
 
-            </a>
-
-            <a class="navbar-brand" href="../Carrito.aspx">
-                <img src="IconoCarrito.png" alt="Pañalera Logo" class="icono-carrito" />
+            <asp:HyperLink ID="hlCart" runat="server" CssClass="navbar-brand" NavigateUrl="~/Carrito.aspx">
+                <asp:Image ID="imgCart" runat="server" ImageUrl="~/IconoCarrito.png" alt="Carrito" CssClass="icono-carrito" />
                 <span class="badge badge-pill badge-danger" id="ActualizarCarrito" runat="server">0</span>
-
-
-
-
-            </a>
+            </asp:HyperLink>
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
+                    
+                    <%-- Obtenemos  usuario de la sesión una sola vez --%>
+                    <% var usuario = Session["usuario"] as Usuario; %>
 
-                    <%int idPerfil = (Session["Perfil"] != null) ? (int)Session["Perfil"] : 0;%>
+                    <%-- Menú de Ventas (Visible para Admin y Vendedor) --%>
+                    <% if (usuario != null && (usuario.Perfil.Id == (int)TipoPerfil.Administrador || usuario.Perfil.Id == (int)TipoPerfil.Vendedor)) { %>
+                        <li class="nav-item">
+                            <asp:HyperLink CssClass="nav-link" NavigateUrl="~/Ventas.aspx" runat="server">Ventas</asp:HyperLink>
+                        </li>
+                    <% } %>
 
+                    <%-- Menú de Reportes (Solo para Admin) --%>
+                    <% if (usuario != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador) { %>
+                        <li class="nav-item">
+                            <asp:HyperLink CssClass="nav-link" NavigateUrl="~/Reportes.aspx" runat="server">Reportes</asp:HyperLink>
+                        </li>
+                    <% } %>
 
+                    <%-- Menú de Mis Compras (Solo para Clientes) --%>
+                    <% if (usuario != null && usuario.Perfil.Id == (int)TipoPerfil.Cliente) { %>
+                        <li class="nav-item">
+                            <asp:HyperLink CssClass="nav-link" NavigateUrl="~/MisCompras.aspx" runat="server">Mis Compras</asp:HyperLink>
+                        </li>
+                    <% } %>
 
-                    <% if (idPerfil == 2 || idPerfil == 3 || idPerfil == 4)
-                        { %>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="Ventas.aspx">Ventas</a>
-                    </li>
-
-                    <%} %>
-
-
-
-
-
-
-                    <% if (idPerfil == 2)
-                        { %>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="Reportes.aspx">Reportes</a>
-
-                    </li>
-
-                    <%} %>
-
-
-                    <% if (idPerfil == 1 || idPerfil == 2)
-                        { %>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="MisCompras.aspx">Mis Compras</a>
-
-                    </li>
-
-                    <%} %>
-
-
-
-
-
-                    <% if (idPerfil == 2)
-                        { %>
-
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="Clientes.aspx" id="ClientesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuarios
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="ClientesDropdown">
-                            <a class="dropdown-item" href="../Clientes.aspx">Usuarios</a>
-                            <a class="dropdown-item" href="../Perfiles.aspx">Perfiles</a>
-                        </div>
-                    </li>
-
-
-                    <%} %>
-
-
-
-                    <% if (idPerfil == 2)
-                        { %>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="Proveedores.aspx" id="ProveedoresDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Proveedores
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="ProveedoresDropdown">
-                            <a class="dropdown-item" href="../Proveedores.aspx">Proveedores</a>
-
-                        </div>
-                    </li>
-
-                    <%} %>
-
-
-
-
-
-
-
-
-
-                    <% if (idPerfil == 2)
-                        { %>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="Productos.aspx" id="productosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="productosDropdown">
-                            <a class="dropdown-item" href="../Productos.aspx">Productos</a>
-                            <a class="dropdown-item" href="../Categorias.aspx">Categoría</a>
-                            <a class="dropdown-item" href="../Marcas.aspx">Marca</a>
-                            <a class="dropdown-item" href="../Tipos.aspx">Tipo</a>
-                        </div>
-                    </li>
-
-                    <%} %>
+                    <%-- Menús de Gestión (Solo para Admin) --%>
+                    <% if (usuario != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador) { %>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="ClientesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuarios</a>
+                            <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="ClientesDropdown">
+                                <asp:HyperLink CssClass="dropdown-item" NavigateUrl="~/Clientes.aspx" runat="server">Usuarios</asp:HyperLink>
+                                <asp:HyperLink CssClass="dropdown-item" NavigateUrl="~/Perfiles.aspx" runat="server">Perfiles</asp:HyperLink>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="ProveedoresDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Proveedores</a>
+                            <div class="dropdown-menu" aria-labelledby="ProveedoresDropdown">
+                                <asp:HyperLink CssClass="dropdown-item" NavigateUrl="~/Proveedores.aspx" runat="server">Proveedores</asp:HyperLink>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="productosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos</a>
+                            <div class="dropdown-menu" aria-labelledby="productosDropdown">
+                                <asp:HyperLink CssClass="dropdown-item" NavigateUrl="~/Productos.aspx" runat="server">Productos</asp:HyperLink>
+                                <asp:HyperLink CssClass="dropdown-item" NavigateUrl="~/Categorias.aspx" runat="server">Categoría</asp:HyperLink>
+                                <asp:HyperLink CssClass="dropdown-item" NavigateUrl="~/Marcas.aspx" runat="server">Marca</asp:HyperLink>
+                                <asp:HyperLink CssClass="dropdown-item" NavigateUrl="~/Tipos.aspx" runat="server">Tipo</asp:HyperLink>
+                            </div>
+                        </li>
+                    <% } %>
                 </ul>
 
-
-
-
-
-                <% if (true)
-                    { %>
-
-                <%} %>
-
-
-
-
-
-                <div class="ml-auto d-flex">
-                    <% var clientee = Session["cliente"];
-                        if (clientee == null)
-                        {
-                    %>
-
-                    <a href="Login.aspx" class="btn btn-primary mr-2">Entrar <i class="bi bi-box-arrow-in-right"></i></a>
-
-
-
-                    <%
-                        }%>
-
-
-                    <% var cliente = Session["cliente"];
-                        if (cliente != null)
-                        {
-                    %>
-
-
-                    <asp:Label ID="lblNombre" runat="server" Text="" CssClass="text-white" class="form-label me-2">
-                            
-
-                    </asp:Label>
-
-
-
-                    <asp:LinkButton ID="btnLogout" runat="server" CssClass="btn btn-primary ms-5" OnClick="BtnLogout_Click">Salir <i class="bi bi-box-arrow-right" ></i></asp:LinkButton>
-
-
-
-                    <%
-                        }%>
+                <div class="ml-auto d-flex align-items-center">
+                    <%--  Verifica usuario existe en  sesión --%>
+                    <% if (usuario == null) { %>
+                        <%-- Si no hay usuario, mostramos el botón  Entrar --%>
+                        <asp:HyperLink ID="hlLogin" runat="server" NavigateUrl="~/Login.aspx" CssClass="btn btn-primary mr-2">Entrar <i class="bi bi-box-arrow-in-right"></i></asp:HyperLink>
+                    <% } else { %>
+                        <%-- Si hay usuario, mostramos su nombre y  botón de Salir --%>
+                        <asp:Label ID="lblNombre" runat="server" Text='<%# "Bienvenido " + ((Usuario)Session["usuario"]).Nombre %>' CssClass="text-white mr-3"></asp:Label>
+                        <asp:LinkButton ID="btnLogout" runat="server" CssClass="btn btn-danger" OnClick="BtnLogout_Click">Salir <i class="bi bi-box-arrow-right"></i></asp:LinkButton>
+                    <% } %>
                 </div>
-
-
-
-
-
-                <%--  <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar" name="query" id="query" runat="server">
-                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Buscar</button>--%>
             </div>
         </header>
 
-        <main class="container">
-
+        <main class="container my-4">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
-
-
         </main>
 
-
-
-        <footer class="bg-dark text-white text-center p-3">
+        <footer class="bg-dark text-white text-center p-3 mt-auto">
             &copy; 2024 Mi Negocio. Todos los derechos reservados.
         </footer>
     </form>
 
-    <!-- Bootstrap JS, Popper.js, y jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
-
 </html>

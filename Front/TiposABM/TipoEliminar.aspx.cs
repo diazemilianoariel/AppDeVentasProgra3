@@ -30,7 +30,7 @@ namespace Front.TiposABM
 
         private bool IDPerfilValido()
         {
-            Cliente cliente = (Cliente)Session["cliente"];
+            Usuario cliente = (Usuario)Session["cliente"];
             return cliente.nombrePerfil == "Administrador" || cliente.nombrePerfil == "Soporte" || cliente.nombrePerfil == "Vendedor";
         }
 

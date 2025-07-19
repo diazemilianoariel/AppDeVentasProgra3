@@ -39,7 +39,7 @@ namespace Front
 
         private bool IDPerfilValido()
         {
-            Cliente cliente = (Cliente)Session["cliente"];
+            Usuario cliente = (Usuario)Session["cliente"];
             return cliente.idPerfil == 2 || cliente.idPerfil == 4;
         }
 

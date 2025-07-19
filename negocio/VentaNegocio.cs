@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+
 using dominio;
-using negocio;
+
 
 namespace negocio
 {
     public class VentaNegocio
     {
+
+
+
 
 
         public int cantidadVentasHoy()
@@ -52,47 +54,54 @@ namespace negocio
             }
         }
 
-        public List<Venta> ListarVentas()
+        public List<Venta> ListarVentas( String filtro = "")
         {
             List<Venta> ventas = new List<Venta>();
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.SetearConsulta("select v.id, v.fecha, v.idUsuario, U.nombre, U.apellido, U.dni, U.email, U.telefono, U.direccion, v.enLocal, E.nombre as nombreestadoventa, v.idEstadoVenta, v.monto from ventas v inner join Usuarios U on v.idUsuario = U.id INNER JOIN EstadoVenta E on v.idEstadoVenta = E.id where v.idEstadoVenta != 1");
+
+                string consulta = "SELECT v.id, v.fecha, v.idUsuario, U.nombre, U.apellido, U.dni, U.email, U.telefono, U.direccion, v.enLocal, E.nombre as nombreestadoventa, v.idEstadoVenta, v.monto FROM ventas v INNER JOIN Usuarios U ON v.idUsuario = U.id INNER JOIN EstadoVenta E ON v.idEstadoVenta = E.id WHERE v.idEstadoVenta != 1 ";
+
+                if (!string.IsNullOrEmpty(filtro))
+                {
+                    consulta += "AND (U.nombre LIKE @filtro OR U.apellido LIKE @filtro OR U.email LIKE @filtro)";
+                    datos.SetearParametro("@filtro", "%" + filtro + "%");
+                }
+
+
+                consulta += " ORDER BY v.fecha DESC";
+                datos.SetearConsulta(consulta);
                 datos.EjecutarLectura();
+
+               
 
 
                 while (datos.Lector.Read())
                 {
 
-
-
                     Venta aux = new Venta();
                     aux.IdVenta = (int)datos.Lector["id"];
                     aux.Fecha = (DateTime)datos.Lector["fecha"];
                     aux.Monto = (decimal)datos.Lector["monto"];
+                    aux.EnLocal = (bool)datos.Lector["enLocal"];
+                    aux.idEstadoVenta = (int)datos.Lector["idEstadoVenta"];
+                    aux.nombreEstadoVenta = (string)datos.Lector["nombreestadoventa"];
 
-                    aux.Cliente = new Cliente();
-                    aux.Cliente.Id = (int)datos.Lector["id"];
+                    aux.Cliente = new Usuario();
+                   
+                    aux.Cliente.Id = (int)datos.Lector["idUsuario"];
                     aux.Cliente.Nombre = (string)datos.Lector["nombre"];
                     aux.Cliente.Apellido = (string)datos.Lector["apellido"];
                     aux.Cliente.Dni = (string)datos.Lector["dni"];
                     aux.Cliente.Email = (string)datos.Lector["email"];
                     aux.Cliente.Telefono = (string)datos.Lector["telefono"];
                     aux.Cliente.Direccion = (string)datos.Lector["direccion"];
-                    aux.EnLocal = (bool)datos.Lector["enLocal"];
-                    aux.idEstadoVenta = (int)datos.Lector["idEstadoVenta"];
-                    aux.nombreEstadoVenta = (string)datos.Lector["nombreestadoventa"];
-
-
-                    // Cargar los productos de la venta
-                    aux.Productos = ListarProductosPorVenta(aux.IdVenta);
-
-
-
 
                     ventas.Add(aux);
+
+
                 }
 
                 return ventas;
@@ -117,7 +126,8 @@ namespace negocio
 
             try
             {
-                datos.SetearConsulta("select p.id, p.nombre, p.descripcion, p.precio, p.margenGanancia, dv.cantidad from DetalleVentas dv inner join Productos p on dv.idProducto = p.id where dv.idVenta = @idVenta");
+                datos.SetearConsulta("SELECT p.id, p.nombre, p.descripcion, dv.precioUnitario, dv.cantidad, p.imagen FROM DetalleVentas dv INNER JOIN Productos p ON dv.idProducto = p.id WHERE dv.idVenta = @idVenta");
+
                 datos.SetearParametro("@idVenta", idVenta);
                 datos.EjecutarLectura();
 
@@ -127,9 +137,11 @@ namespace negocio
                     producto.id = (int)datos.Lector["id"];
                     producto.nombre = (string)datos.Lector["nombre"];
                     producto.descripcion = (string)datos.Lector["descripcion"];
-                    producto.precio = (decimal)datos.Lector["precio"];
-                    producto.margenGanancia = (decimal)datos.Lector["margenGanancia"];
+                    producto.precio = (decimal)datos.Lector["precioUnitario"];
                     producto.Cantidad = (int)datos.Lector["cantidad"];
+                    if (datos.Lector["imagen"] != DBNull.Value)
+                        producto.Imagen = (string)datos.Lector["imagen"];
+
                     productos.Add(producto);
                 }
 
@@ -147,7 +159,7 @@ namespace negocio
 
        
 
-        public List<Venta> ListarVentasPendientes()
+        public List<Venta> ListarVentasPendientes(string filtro = "")
         {
 
 
@@ -156,29 +168,43 @@ namespace negocio
 
             try
             {
-                datos.SetearConsulta("select v.id, v.fecha, v.idUsuario, U.nombre, U.apellido, U.dni, U.email, U.telefono, U.direccion, v.enLocal, E.nombre as nombreestadoventa, v.idEstadoVenta from ventas v inner join Usuarios U on v.idUsuario = U.id INNER JOIN EstadoVenta E on v.idEstadoVenta = E.id where v.idEstadoVenta = 1");
+                string consulta = "SELECT v.id, v.fecha, v.idUsuario, U.nombre, U.apellido, U.dni, U.email, U.telefono, U.direccion, v.enLocal, E.nombre as nombreestadoventa, v.idEstadoVenta, v.monto FROM ventas v INNER JOIN Usuarios U ON v.idUsuario = U.id INNER JOIN EstadoVenta E ON v.idEstadoVenta = E.id WHERE v.idEstadoVenta = 1 ";
+
+                if (!string.IsNullOrEmpty(filtro))
+                {
+                    consulta += "AND (U.nombre LIKE @filtro OR U.apellido LIKE @filtro OR U.email LIKE @filtro)";
+                    datos.SetearParametro("@filtro", "%" + filtro + "%");
+                }
+
+                consulta += " ORDER BY v.fecha ASC";
+                datos.SetearConsulta(consulta);
                 datos.EjecutarLectura();
+
+
+          
 
 
                 while (datos.Lector.Read())
                 {
 
-
-
                     Venta aux = new Venta();
                     aux.IdVenta = (int)datos.Lector["id"];
                     aux.Fecha = (DateTime)datos.Lector["fecha"];
-                    aux.Cliente = new Cliente();
-                    aux.Cliente.Id = (int)datos.Lector["id"];
+                    aux.Monto = (decimal)datos.Lector["monto"];
+                    aux.EnLocal = (bool)datos.Lector["enLocal"];
+                    aux.idEstadoVenta = (int)datos.Lector["idEstadoVenta"];
+                    aux.nombreEstadoVenta = (string)datos.Lector["nombreestadoventa"];
+
+                    aux.Cliente = new Usuario();
+                   
+                    aux.Cliente.Id = (int)datos.Lector["idUsuario"];
                     aux.Cliente.Nombre = (string)datos.Lector["nombre"];
                     aux.Cliente.Apellido = (string)datos.Lector["apellido"];
                     aux.Cliente.Dni = (string)datos.Lector["dni"];
                     aux.Cliente.Email = (string)datos.Lector["email"];
                     aux.Cliente.Telefono = (string)datos.Lector["telefono"];
                     aux.Cliente.Direccion = (string)datos.Lector["direccion"];
-                    aux.EnLocal = (bool)datos.Lector["enLocal"];
-                    aux.idEstadoVenta = (int)datos.Lector["idEstadoVenta"];
-                    aux.nombreEstadoVenta = (string)datos.Lector["nombreestadoventa"];
+
                     ventas.Add(aux);
                 }
 
@@ -319,7 +345,7 @@ namespace negocio
                     Venta venta = new Venta();
                     venta.IdVenta = (int)accesoDatos.Lector["id"];
                     venta.Fecha = (DateTime)accesoDatos.Lector["fecha"];
-                    venta.Cliente = new Cliente
+                    venta.Cliente = new Usuario
                     {
                         Id = (int)accesoDatos.Lector["idUsuario"],
                         Nombre = (string)accesoDatos.Lector["nombre"],
@@ -350,29 +376,41 @@ namespace negocio
         public Venta ObtenerVentaPorId(int idVenta)
         {
             Venta venta = new Venta();
-            Cliente cliente = new Cliente();
+            Usuario cliente = new Usuario();
 
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("SELECT fecha, idUsuario, U.nombre FROM Ventas v INNER JOIN Usuarios U ON V.idUsuario = U.id WHERE v.id = @idVenta");
+                datos.SetearConsulta("SELECT v.id, v.fecha, v.idUsuario, U.nombre, U.apellido, U.dni, U.email, U.telefono, U.direccion, v.enLocal, E.nombre as nombreestadoventa, v.idEstadoVenta, v.monto FROM ventas v INNER JOIN Usuarios U ON v.idUsuario = U.id INNER JOIN EstadoVenta E ON v.idEstadoVenta = E.id WHERE v.id = @idVenta");
                 datos.SetearParametro("@idVenta", idVenta);
                 
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())
                 {
-                    
-                    venta.Fecha = (DateTime)datos.Lector["fecha"];
-                    cliente.Id = (int)datos.Lector["idUsuario"];
-                    cliente.Nombre = (string)datos.Lector["nombre"];
-                    venta.Cliente = cliente;
 
+                    Venta aux = new Venta();
+                    aux.IdVenta = (int)datos.Lector["id"];
+                    aux.Fecha = (DateTime)datos.Lector["fecha"];
+                    aux.Monto = (decimal)datos.Lector["monto"];
+                    aux.EnLocal = (bool)datos.Lector["enLocal"];
+                    aux.idEstadoVenta = (int)datos.Lector["idEstadoVenta"];
+                    aux.nombreEstadoVenta = (string)datos.Lector["nombreestadoventa"];
 
+                    aux.Cliente = new Usuario();
+                    aux.Cliente.Id = (int)datos.Lector["idUsuario"];
+                    aux.Cliente.Nombre = (string)datos.Lector["nombre"];
+                    aux.Cliente.Apellido = (string)datos.Lector["apellido"];
+                    aux.Cliente.Dni = (string)datos.Lector["dni"];
+                    aux.Cliente.Email = (string)datos.Lector["email"];
+                    aux.Cliente.Telefono = (string)datos.Lector["telefono"];
+                    aux.Cliente.Direccion = (string)datos.Lector["direccion"];
 
-
+                    // Cargar los productos de la venta
+                    aux.Productos = ListarProductosPorVenta(aux.IdVenta);
+                    return aux;
 
                 }
-                return venta;
+                return null;
             }
             catch (Exception ex)
             {
@@ -385,6 +423,75 @@ namespace negocio
         }
 
         
+
+        public decimal CalcularMontoPendiente()
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("SELECT SUM(ISNULL(monto, 0)) FROM Ventas WHERE idEstadoVenta = 1");
+                object result = datos.EjecutarEscalar();
+                if (result != DBNull.Value)
+                {
+                    return Convert.ToDecimal(result);
+                }
+                return 0;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+
+        }
+
+
+        public int ContarVentasPorEstado(int idEstado)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("SELECT COUNT(*) FROM Ventas WHERE idEstadoVenta = @idEstado");
+                datos.SetearParametro("@idEstado", idEstado);
+                return (int)datos.EjecutarEscalar();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+
+        public decimal CalcularIngresosTotales()
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("SELECT SUM(ISNULL(monto, 0)) FROM Ventas WHERE idEstadoVenta = 2"); // Estado 2 = Aprobado
+                object result = datos.EjecutarEscalar();
+                if (result != DBNull.Value)
+                {
+                    return Convert.ToDecimal(result);
+                }
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
 
     }
 }

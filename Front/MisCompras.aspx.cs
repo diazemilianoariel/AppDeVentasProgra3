@@ -35,7 +35,7 @@ namespace Front
 
 
 
-            Cliente cliente = (Cliente)Session["cliente"];
+            Usuario cliente = (Usuario)Session["cliente"];
             negocio.FacturaNegocio negocio = new negocio.FacturaNegocio();
             gvMisCompras.DataSource = negocio.ListarFacturas(cliente.Id);
             gvMisCompras.DataBind();

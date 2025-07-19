@@ -4,13 +4,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-    <script type="text/javascript">
-        function actualizarContadorCarrito(totalProductos) {
-            document.getElementById('<%= ((Front.MASTER)Master).CartCountClientID %>').innerText = totalProductos;
-        }
-    </script>
-
-
     <link rel="stylesheet" type="text/css" href="~/EstiloCSS/estilo.css" />
 
     <style>
@@ -61,20 +54,16 @@
 
                     <ItemTemplate>
                         <div class="col-md-4 mb-4">
-                            <a href='Productos/DetalleProducto.aspx?id=<%# Eval("Id") %>' class="text-decoration-none">
+                            <asp:HyperLink NavigateUrl='<%# "~/Productos/DetalleProducto.aspx?id=" + Eval("Id") %>' runat="server" CssClass="text-decoration-none">
                                 <div class="card h-100 product-card">
                                     <img src='<%# Eval("Imagen") %>' alt='<%# Eval("Nombre") %>' class="card-img-top product-image" style="height: 200px; object-fit: cover;" />
                                     <div class="card-body">
                                         <h5 class="card-title"><%# Eval("Nombre") %></h5>
                                         <p class="card-text">Precio: $<%# Eval("precioVenta") %></p>
                                         <p class="card-text">Stock Disponible: <%# Eval("Stock") %></p>
-
-
                                     </div>
-
-
                                 </div>
-                            </a>
+                            </asp:HyperLink>
                         </div>
                     </ItemTemplate>
 

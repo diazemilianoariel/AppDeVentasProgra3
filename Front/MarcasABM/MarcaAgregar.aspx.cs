@@ -24,7 +24,7 @@ namespace Front.MarcasABM
 
 
                 // Verificar si el usuario tiene permisos para acceder a esta página
-                if (Session["cliente"] == null || !EsAdministradorOSoporte((Cliente)Session["cliente"]))
+                if (Session["cliente"] == null || !EsAdministradorOSoporte((Usuario)Session["cliente"]))
                 {
                     Response.Redirect("Login.aspx");
                     return;
@@ -35,7 +35,7 @@ namespace Front.MarcasABM
         }
 
 
-        private bool EsAdministradorOSoporte(Cliente cliente)
+        private bool EsAdministradorOSoporte(Usuario cliente)
         {
             return cliente.nombrePerfil == "Administrador" || cliente.nombrePerfil == "Soporte" || cliente.nombrePerfil == "Vendedor";
         }

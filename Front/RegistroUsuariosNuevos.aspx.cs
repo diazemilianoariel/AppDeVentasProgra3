@@ -37,7 +37,7 @@ namespace Front
 
 
 
-            Cliente nuevoCliente = new Cliente
+            Usuario nuevoCliente = new Usuario
             {
                 Nombre = txtNombre.Text,
                 Apellido = txtApellido.Text,
@@ -49,7 +49,7 @@ namespace Front
                 idPerfil = 1, // Perfil de usuario siempre será cliente
                 estado = true // Estado activo
             };
-            ClienteNegocio clienteNegocio = new ClienteNegocio();
+            UsuarioNegocio clienteNegocio = new UsuarioNegocio();
             try
             {
                 clienteNegocio.AgregarCliente(nuevoCliente);

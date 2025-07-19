@@ -19,7 +19,7 @@ namespace dominio
             get => _monto;
             set => _monto = value;
         }
-        public Cliente Cliente { get; set; }
+        public Usuario Cliente { get; set; }
 
         public bool EnLocal { get; set; }
 
@@ -35,7 +35,7 @@ namespace dominio
             Productos = new List<Producto>();
         }
 
-        public Venta(int idVenta, DateTime fecha, Cliente cliente)
+        public Venta(int idVenta, DateTime fecha, Usuario cliente)
         {
             IdVenta = idVenta;
             Fecha = fecha;

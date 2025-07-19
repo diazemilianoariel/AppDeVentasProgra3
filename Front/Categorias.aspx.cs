@@ -13,7 +13,8 @@ namespace Front
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["cliente"] == null || !EsAdministradorOSoporte((Cliente)Session["cliente"]))
+            Usuario usuario = Session["usuario"] as Usuario;
+            if (usuario == null || !EsPerfilValido(usuario))
             {
                 Response.Redirect("Login.aspx");
                 return;
@@ -25,9 +26,15 @@ namespace Front
             }
         }
 
-        private bool EsAdministradorOSoporte(Cliente cliente)
+        private bool EsPerfilValido(Usuario usuario)
         {
-            return cliente.nombrePerfil == "Administrador" || cliente.nombrePerfil == "Soporte" || cliente.nombrePerfil == "Vendedor";
+            if (usuario.Perfil != null)
+            {
+                return usuario.Perfil.Id == (int)TipoPerfil.Administrador ||
+                       usuario.Perfil.Id == (int)TipoPerfil.soporte;
+                       
+            }
+            return false;
         }
 
 

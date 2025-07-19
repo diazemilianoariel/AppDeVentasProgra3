@@ -23,9 +23,9 @@
     </div>
 
 
-    <!-- Botón para agregar nuevo proveedor -->
+
     <div class="row mt-5 justify-content-center">
-        <a href="UsuariosABM/UsuarioAgregar.aspx" class="btn btn-primary">Nuevo</a>
+        <asp:HyperLink NavigateUrl="~/UsuariosABM/UsuarioAgregar.aspx" runat="server" CssClass="btn btn-primary">Nuevo Usuario</asp:HyperLink>
     </div>
 
 
@@ -33,43 +33,46 @@
 
 
     <!-- Tabla de Clientes -->
-        
-            <h4 class="text-center mb-4">Lista de Usuarios</h4>
-           
-                <asp:GridView ID="GridViewClientes" runat="server" CssClass="table table-striped table-bordered table-dark w-100" AutoGenerateColumns="False" OnRowCommand="GridViewClientes_RowCommand">
-                    <Columns>
-                        <asp:BoundField DataField="id" HeaderText="ID" />
-                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
-                        <asp:BoundField DataField="apellido" HeaderText="Apellido" />
-                        <asp:BoundField DataField="dni" HeaderText="DNI" />
-                        <asp:BoundField DataField="direccion" HeaderText="Dirección" />
-                        <asp:BoundField DataField="telefono" HeaderText="Telefono" />
-                        <asp:BoundField DataField="email" HeaderText="Email" />
-                        <asp:BoundField DataField="clave" HeaderText="Clave" />
-                        <asp:BoundField DataField="nombrePerfil" HeaderText="Perfil" />
-                        <asp:BoundField DataField="estado" HeaderText="Estado" />
+
+     <div class="mt-4">
+        <h4 class="text-center mb-4">Lista de Usuarios</h4>
+        <asp:GridView ID="GridViewClientes" runat="server" CssClass="table table-striped table-bordered table-dark w-100" AutoGenerateColumns="False" OnRowCommand="GridViewClientes_RowCommand">
+            <Columns>
+                <asp:BoundField DataField="id" HeaderText="ID" />
+                <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                <asp:BoundField DataField="apellido" HeaderText="Apellido" />
+                <asp:BoundField DataField="dni" HeaderText="DNI" />
+                <asp:BoundField DataField="direccion" HeaderText="Dirección" />
+                <asp:BoundField DataField="telefono" HeaderText="Telefono" />
+                <asp:BoundField DataField="email" HeaderText="Email" />
+             
+                <%-- <asp:BoundField DataField="clave" HeaderText="Clave" /> --%>
+                
+              
+                <asp:BoundField DataField="Perfil.Nombre" HeaderText="Perfil" />
+                
+                <asp:BoundField DataField="estado" HeaderText="Estado" />
+
+                <asp:TemplateField>
+                    <ItemTemplate>
+                        <asp:Button ID="btnModificar" runat="server" Text="Modificar" CommandName="Modificar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-success btn-sm" />
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <ItemTemplate>
+                        <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CommandName="Eliminar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-danger btn-sm" />
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
+    </div>
 
 
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <asp:Button ID="btnModificar" runat="server" Text="Modificar" CommandName="Modificar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-success btn-sm" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CommandName="Eliminar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-danger btn-sm" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-                </asp:GridView>
-
-            
-       
-   
 
 
-<%--    <!-- Bootstrap JS (Opcional, para interactividad como tooltips) -->
+
+
+    <%--    <!-- Bootstrap JS (Opcional, para interactividad como tooltips) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>--%>
 </asp:Content>
 

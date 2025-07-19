@@ -13,76 +13,53 @@ namespace Front
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (!IsPostBack)
             {
-               
-                    
-                    lblMensaje.Visible = false;
-                
-              
-
+                lblMensaje.Visible = false;
             }
-
-
-
         }
+
         protected void btnIniciarSesion_Click(object sender, EventArgs e)
         {
-
             if (string.IsNullOrEmpty(txtEmail.Text) || string.IsNullOrEmpty(txtPassword.Text))
             {
-                lblMensaje.Text = "correo electrónico y contraseña son requeridos.";
+                lblMensaje.Text = "Correo electrónico y contraseña son requeridos.";
                 lblMensaje.Visible = true;
                 return;
             }
 
-
-            ClienteNegocio Clientenegocio = new ClienteNegocio();
-            Cliente cliente = new Cliente
+            UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+           
+            Usuario usuario = new Usuario
             {
-
-
                 Email = txtEmail.Text,
                 clave = txtPassword.Text
-
             };
 
-            if (Clientenegocio.Loguear(cliente))
+            if (usuarioNegocio.Loguear(usuario))
             {
-                Cliente clienteCompleto = Clientenegocio.ObtenerClientePorEmail(cliente.Email);
+              
+                Usuario usuarioCompleto = usuarioNegocio.ObtenerUsuarioPorEmail(usuario.Email);
 
-                if (clienteCompleto != null)
+                if (usuarioCompleto != null)
                 {
+                  
+                    Session.Add("usuario", usuarioCompleto);
 
-                    Session["cliente"] = clienteCompleto;
-                    Session["Perfil"] = clienteCompleto.idPerfil;
-                    // deberia loguearse en la pagina que se esta actualmente 
-                    Response.Redirect("Default.aspx");
-
+                    Response.Redirect("Default.aspx", false);
                 }
                 else
                 {
-                    lblMensaje.Text = "Error al obtener los datos del cliente.";
+                
+                    lblMensaje.Text = "Error al obtener los datos del usuario.";
                     lblMensaje.Visible = true;
                 }
-
             }
             else
             {
                 lblMensaje.Text = "Usuario o contraseña incorrectos.";
                 lblMensaje.Visible = true;
             }
-
-
-
-
-
-
         }
-
-
-
-
     }
 }

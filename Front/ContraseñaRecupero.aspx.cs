@@ -27,7 +27,7 @@ namespace Front
 
         protected void btnRecuperar_Click(object sender, EventArgs e)
         {
-            ClienteNegocio clienteNegocio = new ClienteNegocio();
+            UsuarioNegocio clienteNegocio = new UsuarioNegocio();
             string email = txtEmail.Text;
             string clave = clienteNegocio.RecuperarContraseña(email);
             if (clave != null)
@@ -53,7 +53,7 @@ namespace Front
 
             MailMessage mail = new MailMessage();
             mail.To.Add(email);
-            mail.From = new MailAddress("arieldiaz_90@hotmail.com");//mail del que envia
+            mail.From = new MailAddress(remitente);//mail del que envia
             mail.Subject = "Recuperacion de contraseña";
             mail.Body = "Su contraseña es: " + clave;
             mail.IsBodyHtml = true;

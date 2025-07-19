@@ -17,7 +17,7 @@ namespace Front
     public partial class Reportes : System.Web.UI.Page
     {
         CategoriaNegocio categorianegocio = new CategoriaNegocio();
-        ClienteNegocio clienteNegocio = new ClienteNegocio();
+        UsuarioNegocio clienteNegocio = new UsuarioNegocio();
         ProductoNegocio productonegocio = new ProductoNegocio();
         VentaNegocio ventanegocio = new VentaNegocio();
 
@@ -66,7 +66,7 @@ namespace Front
 
         public bool IDPerfilValido()
         {
-            Cliente cliente = (Cliente)Session["cliente"];
+            Usuario cliente = (Usuario)Session["cliente"];
             return cliente.idPerfil == 2;
         }
 

@@ -175,3 +175,5 @@ C:\Users\programador\Desktop\AppVentasProgra3Bis\AppDeVentasProgra3\Front\obj\De
 C:\Users\programador\Desktop\AppVentasProgra3Bis\AppDeVentasProgra3\Front\obj\Debug\Front.csproj.Up2Date
 C:\Users\programador\Desktop\AppVentasProgra3Bis\AppDeVentasProgra3\Front\obj\Debug\Front.dll
 C:\Users\programador\Desktop\AppVentasProgra3Bis\AppDeVentasProgra3\Front\obj\Debug\Front.pdb
+C:\Users\programador\Documents\TUP 2025\PROGRA 3 RECUPERATORIO\AppVentasProgra3Bis\AppDeVentasProgra3\Front\obj\Debug\Front.csproj.AssemblyReference.cache
+C:\Users\programador\Documents\TUP 2025\PROGRA 3 RECUPERATORIO\AppVentasProgra3Bis\AppDeVentasProgra3\Front\obj\Debug\Front.csproj.CoreCompileInputs.cache

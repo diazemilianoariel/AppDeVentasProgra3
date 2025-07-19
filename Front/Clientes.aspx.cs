@@ -15,9 +15,9 @@ namespace Front
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Usuario usuario = Session["usuario"] as Usuario;
 
-
-            if (Session["cliente"] == null || !EsAdministradorOSoporte((Cliente)Session["cliente"]))
+            if (usuario == null || !EsAdmin(usuario))
             {
                 Response.Redirect("Login.aspx");
                 return;
@@ -28,23 +28,25 @@ namespace Front
             {
 
 
-                CargarGrillaClientes();
+                CargarGrillaUsuarios();
 
             }
 
         }
 
-        private bool EsAdministradorOSoporte(Cliente cliente)
+        // Método de validación corregido y específico para esta página
+        private bool EsAdmin(Usuario usuario)
         {
-            return cliente.idPerfil == 2 || cliente.idPerfil == 3 || cliente.idPerfil == 4;
+            // Según el plan, solo los Administradores pueden gestionar usuarios.
+            return usuario != null && usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
         }
 
 
-    
-        private void CargarGrillaClientes()
+
+        private void CargarGrillaUsuarios()
         {
-            ClienteNegocio negocio = new ClienteNegocio();
-            GridViewClientes.DataSource = negocio.ListarClientes();
+            UsuarioNegocio negocio = new UsuarioNegocio();
+            GridViewClientes.DataSource = negocio.ListarUsuarios();
             GridViewClientes.DataBind();
         }
 
@@ -63,7 +65,7 @@ namespace Front
             }
             if (e.CommandName == "Eliminar")
             {
-                Response.Redirect("UsuariosABM/UsuarioModificar.aspx?id=" + UsuarioId);
+                Response.Redirect("UsuariosABM/UsuarioEliminar.aspx?id=" + UsuarioId);
 
 
 

@@ -16,25 +16,48 @@ namespace Front.CategoriasABM
         CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                int categoriaId = Convert.ToInt32(Request.QueryString["id"]);
-                CargarDatosCategoria(categoriaId);
-            }
 
+            Usuario usuario = Session["cliente"] as Usuario;
             // Verificar si el usuario tiene permisos para acceder a esta página
-            if (Session["cliente"] == null || !EsAdministradorOSoporte((Cliente)Session["cliente"]))
+            if (Session["usuario"] == null || !IDPerfilValido())
             {
                 Response.Redirect("Login.aspx");
                 return;
             }
 
+
+            if (!IsPostBack)
+            {
+
+                if (Request.QueryString["id"] != null)
+                {
+                    int categoriaId = Convert.ToInt32(Request.QueryString["id"]);
+                    CargarDatosCategoria(categoriaId);
+                }
+                else
+                {
+                    // Manejar el caso donde no se proporciona un ID.
+                    LabelError.Text = "No se especificó ninguna categoría para modificar.";
+                    LabelError.Visible = true;
+                    ButtonGuardar.Visible = false;
+                }
+            }
+
+
+        
         }
 
 
-        private bool EsAdministradorOSoporte(Cliente cliente)
+        private bool IDPerfilValido()
         {
-            return cliente.nombrePerfil == "Administrador" || cliente.nombrePerfil == "Soporte" || cliente.nombrePerfil == "Vendedor";
+            Usuario usuario = Session["usuario"] as Usuario;
+            if (usuario != null && usuario.Perfil != null)
+            {
+                return usuario.Perfil.Id == (int)TipoPerfil.Administrador ||
+                       usuario.Perfil.Id == (int)TipoPerfil.soporte;
+            }
+            return false;
+
         }
 
 
@@ -42,66 +65,68 @@ namespace Front.CategoriasABM
 
         private void CargarDatosCategoria(int categoriaId)
         {
-            // Implementa la lógica para obtener los datos del producto de la base de datos
-            CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
-            Categoria categoria = new Categoria();
-
-            categoria = categoriaNegocio.BuscarCategoria(categoriaId);
-
-
-
+            
+            Categoria categoria = categoriaNegocio.BuscarCategoria(categoriaId);
             if (categoria != null)
             {
                 LabelId.Text = categoria.id.ToString();
                 TextBoxNombre.Text = categoria.nombre;
                 CheckBoxEstado.Checked = categoria.estado;
 
-                // Guardar el nombre original en un HiddenField
+              
                 HiddenFieldNombreOriginal.Value = categoria.nombre;
 
+            }
+            else
+            {
+                LabelError.Text = "No se encontró la categoría especificada.";
+                LabelError.Visible = true;
+                ButtonGuardar.Visible = false;
             }
 
         }
 
         protected void ButtonGuardar_Click(object sender, EventArgs e)
         {
-            // Validar que el campo 'Nombre' no esté vacío
-            if (string.IsNullOrWhiteSpace(TextBoxNombre.Text))
+            try
             {
-                LabelError.Text = "El campo 'Nombre' es obligatorio.";
-                LabelError.Visible = true;
-                return;
-            }
-
-            // Verificar si el nombre fue modificado
-            if (!TextBoxNombre.Text.Equals(HiddenFieldNombreOriginal.Value, StringComparison.OrdinalIgnoreCase))
-            {
-                // Validar si el nombre ya existe
-                List<Categoria> listaDeCategorias = categoriaNegocio.ListarCategorias();
-                foreach (var categoria2 in listaDeCategorias)
+                if (string.IsNullOrWhiteSpace(TextBoxNombre.Text))
                 {
-                    if (categoria2.nombre.Equals(TextBoxNombre.Text, StringComparison.OrdinalIgnoreCase))
+                    LabelError.Text = "El campo 'Nombre' es obligatorio.";
+                    LabelError.Visible = true;
+                    return;
+                }
+
+                // Si el nombre cambió, verificamos que no exista ya.
+                if (!TextBoxNombre.Text.Equals(HiddenFieldNombreOriginal.Value, StringComparison.OrdinalIgnoreCase))
+                {
+                    List<Categoria> listaDeCategorias = categoriaNegocio.ListarCategorias();
+                    if (listaDeCategorias.Any(cat => cat.nombre.Equals(TextBoxNombre.Text, StringComparison.OrdinalIgnoreCase)))
                     {
                         LabelErrorCategoriaExistente.Text = "El nombre de la categoría ya existe.";
                         LabelErrorCategoriaExistente.Visible = true;
                         return;
                     }
                 }
+
+                var categoria = new Categoria
+                {
+                    id = Convert.ToInt32(LabelId.Text),
+                    nombre = TextBoxNombre.Text,
+                    estado = CheckBoxEstado.Checked
+                };
+
+                categoriaNegocio.ActualizarCategoria(categoria);
+                Response.Redirect("../Categorias.aspx");
             }
-
-            // Actualizar la categoría
-            int categoriaId = Convert.ToInt32(LabelId.Text);
-            var categoria = new Categoria
+            catch (Exception ex)
             {
-                id = categoriaId,
-                nombre = TextBoxNombre.Text,
-                estado = CheckBoxEstado.Checked
-            };
-
-            categoriaNegocio.ActualizarCategoria(categoria);
-
-            // Redirige a la página de lista de categorías
-            Response.Redirect("../Categorias.aspx");
+                LabelError.Text = "Ocurrió un error al guardar la categoría.";
+                LabelError.Visible = true;
+                
+                // mensaje en la consola de desarrollo.
+                Console.WriteLine(ex.Message);
+            }
         }
 
 

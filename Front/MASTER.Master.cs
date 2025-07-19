@@ -28,7 +28,7 @@ namespace Front
 
             }
 
-            Cliente cliente = (Cliente)Session["cliente"];
+            Usuario cliente = (Usuario)Session["cliente"];
             if (cliente != null)
             {
                 lblNombre.Text = "Bienvenido " +cliente.Nombre  ;

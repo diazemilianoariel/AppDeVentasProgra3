@@ -13,25 +13,50 @@ namespace Front.CategoriasABM
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            Usuario usuario = Session["usuario"] as Usuario;
+            if (Session["usuario"] == null || !IDPerfilValido())
             {
-                int categoriaId = Convert.ToInt32(Request.QueryString["id"]);
-                CargarDatosCategoria(categoriaId);
-            }
-
-            if (Session["cliente"] == null || !IDPerfilValido())
-            {
-                Response.Redirect("Login.aspx");
+                Response.Redirect("../Login.aspx");
                 return;
             }
+
+
+
+            if (!IsPostBack)
+            {
+                if (Request.QueryString["id"] != null)
+                {
+                    int categoriaId = Convert.ToInt32(Request.QueryString["id"]);
+                    CargarDatosCategoria(categoriaId);
+                }
+                else
+                {
+                    // Manejar el caso donde no se proporciona un ID.
+                    LabelError.Text = "No se especificó ninguna categoría para eliminar.";
+                    LabelError.Visible = true;
+                    btnConfirmar.Visible = false;
+
+                }
+            }
+
+
+
+
+        
 
 
 
         }
         private bool IDPerfilValido()
         {
-            Cliente cliente = (Cliente)Session["cliente"];
-            return cliente.nombrePerfil == "Administrador" || cliente.nombrePerfil == "Soporte" || cliente.nombrePerfil == "Vendedor";
+            Usuario usuario = Session["usuario"] as Usuario;
+            if (usuario != null && usuario.Perfil != null)
+            {
+                return usuario.Perfil.Id == (int)TipoPerfil.Administrador ||
+                       usuario.Perfil.Id == (int)TipoPerfil.soporte ;
+            }
+            return false;
+
         }
 
         private void CargarDatosCategoria(int categoriaId)
@@ -53,17 +78,27 @@ namespace Front.CategoriasABM
 
                 LabelError.Text = "Categoría no encontrada.";
                 LabelError.Visible = true;
-
+                btnConfirmar.Visible = false;
             }
         }
 
 
         protected void btnConfirmar_Click(object sender, EventArgs e)
         {
-            int categoriaId = Convert.ToInt32(Request.QueryString["id"]);
-            CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
-            categoriaNegocio.bajaLogica(categoriaId);
-            Response.Redirect("../Categorias.aspx");
+            try
+            {
+                int categoriaId = Convert.ToInt32(Request.QueryString["id"]);
+                CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+                categoriaNegocio.bajaLogica(categoriaId);
+                Response.Redirect("../Categorias.aspx");
+            }
+            catch (Exception ex)
+            {
+                LabelError.Text = "Ocurrió un error al eliminar la categoría.";
+                LabelError.Visible = true;
+              
+               
+            }
         }
 
 
