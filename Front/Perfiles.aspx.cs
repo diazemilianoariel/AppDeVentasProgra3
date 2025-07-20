@@ -14,10 +14,10 @@ namespace Front
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Usuario usuario = Session["usuario"] as Usuario;
 
-
-
-            if (Session["cliente"] == null || !IDPerfilValido())
+            
+            if (usuario == null || !EsAdmin(usuario))
             {
                 Response.Redirect("Login.aspx");
                 return;
@@ -37,38 +37,29 @@ namespace Front
             GridViewPerfiles.DataBind();
         }
 
-        private bool IDPerfilValido()
+        private bool EsAdmin(Usuario usuario)
         {
-            Usuario cliente = (Usuario)Session["cliente"];
-            return cliente.idPerfil == 2 || cliente.idPerfil == 4;
+            // Según el plan, solo los Administradores pueden gestionar Perfiles.
+            return usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
         }
 
         protected void MostrarMensaje(string mensaje, bool esError = true)
         {
-            //LabelMensaje.Text = mensaje;
-            //LabelMensaje.ForeColor = esError ? System.Drawing.Color.Red : System.Drawing.Color.Green;
-            //LabelMensaje.Visible = true;
+            
+
         }
 
         protected void GridViewPerfiles_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            int perfilId = Convert.ToInt32(e.CommandArgument);
+
             if (e.CommandName == "Modificar")
             {
-                int perfilId = Convert.ToInt32(e.CommandArgument);
                 Response.Redirect("PerfilesABM/PerfilModificar.aspx?id=" + perfilId);
-
-
-
             }
-            else
+            else if (e.CommandName == "Eliminar")
             {
-                if (e.CommandName == "Eliminar")
-                {
-
-                int perfilId = Convert.ToInt32(e.CommandArgument);
                 Response.Redirect("PerfilesABM/PerfilEliminar.aspx?id=" + perfilId);
-                }
-
             }
         }
 

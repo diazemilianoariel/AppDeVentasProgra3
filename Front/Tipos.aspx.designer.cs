@@ -11,7 +11,7 @@ namespace Front
 {
 
 
-    public partial class Tipo
+    public partial class Tipos
     {
 
         /// <summary>

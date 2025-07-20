@@ -69,7 +69,7 @@ namespace Front.CategoriasABM
             Categoria categoria = categoriaNegocio.BuscarCategoria(categoriaId);
             if (categoria != null)
             {
-                LabelId.Text = categoria.id.ToString();
+                LabelId.Text = categoria.Id.ToString();
                 TextBoxNombre.Text = categoria.nombre;
                 CheckBoxEstado.Checked = categoria.estado;
 
@@ -111,7 +111,7 @@ namespace Front.CategoriasABM
 
                 var categoria = new Categoria
                 {
-                    id = Convert.ToInt32(LabelId.Text),
+                    Id = Convert.ToInt32(LabelId.Text),
                     nombre = TextBoxNombre.Text,
                     estado = CheckBoxEstado.Checked
                 };

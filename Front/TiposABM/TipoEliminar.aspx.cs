@@ -13,26 +13,41 @@ namespace Front.TiposABM
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            Usuario usuario = Session["usuario"] as Usuario;
+            if(usuario == null || !EsAdmin(usuario))
+            {
+                Response.Redirect("../Login.aspx");
+            }
+
+
             if (!IsPostBack)
             {
-                int tipoId = Convert.ToInt32(Request.QueryString["id"]);
-                CargarDatosTipo(tipoId);
+                if (Request.QueryString["id"] != null)
+                {
+                    int tipoId = Convert.ToInt32(Request.QueryString["id"]);
+                    CargarDatosTipo(tipoId);
+                }
+                else
+                {
+                    Response.Redirect("../Tipos.aspx");
+
+                }
             }
 
-            if (Session["cliente"] == null || !IDPerfilValido())
-            {
-                Response.Redirect("Login.aspx");
-                return;
-            }
+          
 
         }
 
 
-        private bool IDPerfilValido()
+        private bool EsAdmin(Usuario usuario)
         {
-            Usuario cliente = (Usuario)Session["cliente"];
-            return cliente.nombrePerfil == "Administrador" || cliente.nombrePerfil == "Soporte" || cliente.nombrePerfil == "Vendedor";
+            // Según el plan, solo los Administradores pueden gestionar Tipos.
+            return usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
         }
+
+
+
 
         private void CargarDatosTipo(int tipoId)
         {
@@ -52,16 +67,27 @@ namespace Front.TiposABM
                 // Puedes redirigir a otra página o mostrar un mensaje de error
                 LabelError.Text = "Tipo no encontrado.";
                 LabelError.Visible = true;
+                btnConfirmar.Visible = false;
             }
         }
 
 
         protected void btnConfirmar_Click(object sender, EventArgs e)
         {
-            int tipoId = Convert.ToInt32(Request.QueryString["id"]);
-            TipoNegocio tipoNegocio = new TipoNegocio();
-            tipoNegocio.bajaLogica(tipoId);
-            Response.Redirect("../Tipos.aspx");
+            try
+            {
+                int tipoId = Convert.ToInt32(Request.QueryString["id"]);
+                TipoNegocio tipoNegocio = new TipoNegocio();
+                tipoNegocio.bajaLogica(tipoId); // Asumo que es baja lógica
+                Response.Redirect("../Tipos.aspx");
+            }
+            catch (Exception ex)
+            {
+                LabelError.Text = "Ocurrió un error al eliminar el tipo." + ex.Message;
+                LabelError.Visible = true;
+               
+                
+            }
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)

@@ -15,33 +15,30 @@ namespace Front
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Usuario usuario = Session["usuario"] as Usuario;
 
-
-
-            if (Session["cliente"] == null || !IDPerfilValido())
+            
+            if (usuario == null || !EsAdmin(usuario))
             {
                 Response.Redirect("Login.aspx");
                 return;
             }
 
-
             if (!IsPostBack)
             {
-
-
-
                 CargarGrilla();
-
             }
+
+
+
         }
 
 
-        // Verifica si el id de perfil es valido
-        private bool IDPerfilValido()
+      
+        private bool EsAdmin(Usuario usuario)
         {
-            Usuario cliente = (Usuario)Session["cliente"];
-
-            return cliente.idPerfil == 2 || cliente.idPerfil == 4 || cliente.idPerfil == 3;
+            // solo los Administradores pueden gestionar Proveedores.
+            return usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
         }
 
 

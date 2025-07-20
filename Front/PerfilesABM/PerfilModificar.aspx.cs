@@ -15,24 +15,45 @@ namespace Front.PerfilesABM
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["cliente"] == null || !IDPerfilValido())
+           
+            Usuario usuario = Session["usuario"] as Usuario;
+            if(Session ["usuario"] == null && !EsAdmin(usuario))
             {
-                Response.Redirect("Login.aspx");
-                return;
+                Response.Redirect("../Login.aspx");
             }
+
+
+
             if (!IsPostBack)
             {
-                int perfilId = Convert.ToInt32(Request.QueryString["id"]);
-                CargarDatosPerfil(perfilId);
+                if (Request.QueryString["id"] != null)
+                {
+                    int perfilId = Convert.ToInt32(Request.QueryString["id"]);
+                    CargarDatosPerfil(perfilId);
+                }
+                else
+                {
+                    // Manejar el caso donde no se proporciona un ID.
+                    LabelError.Text = "No se especificó ningún perfil para modificar.";
+                    LabelError.Visible = true;
+                    ButtonGuardar.Visible = false;
+                }
+
             }
 
         }
 
-        private bool IDPerfilValido()
+
+        private bool EsAdmin(Usuario usuario)
         {
-            Usuario cliente = (Usuario)Session["cliente"];
-            return cliente.idPerfil == 2 || cliente.idPerfil == 4;
+            if (usuario != null && usuario.Perfil != null)
+            {
+                return usuario.Perfil.Id == (int)TipoPerfil.Administrador;
+            }
+            return false;
         }
+
+
 
         private void CargarDatosPerfil(int perfilId)
         {

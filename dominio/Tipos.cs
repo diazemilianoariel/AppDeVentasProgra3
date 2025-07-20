@@ -9,7 +9,7 @@ namespace dominio
 {
     public class Tipos
     {
-       public int id { get; set; }
+       public int Id { get; set; }
         [StringLength(50)]
         public string nombre { get; set; }
 

@@ -33,15 +33,6 @@ namespace Front.TiposABM
         protected global::System.Web.UI.WebControls.TextBox TextBoxNombre;
 
         /// <summary>
-        /// Control LabelError.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelError;
-
-        /// <summary>
         /// Control LabelErrorTipoExistente.
         /// </summary>
         /// <remarks>
@@ -49,6 +40,15 @@ namespace Front.TiposABM
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LabelErrorTipoExistente;
+
+        /// <summary>
+        /// Control CheckBoxEstado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox CheckBoxEstado;
 
         /// <summary>
         /// Control LabelEstado.
@@ -60,13 +60,13 @@ namespace Front.TiposABM
         protected global::System.Web.UI.WebControls.Label LabelEstado;
 
         /// <summary>
-        /// Control CheckBoxEstado.
+        /// Control LabelError.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CheckBoxEstado;
+        protected global::System.Web.UI.WebControls.Label LabelError;
 
         /// <summary>
         /// Control ButtonGuardar.

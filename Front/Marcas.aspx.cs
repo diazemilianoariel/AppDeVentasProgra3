@@ -18,8 +18,8 @@ namespace Front
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (Session["cliente"] == null || !EsAdministradorOSoporte((Usuario)Session["cliente"]))
+            Usuario usuario = Session["usuario"] as Usuario;
+            if (usuario == null || !EsAdmin(usuario))
             {
                 Response.Redirect("Login.aspx");
                 return;
@@ -33,9 +33,10 @@ namespace Front
         }
 
 
-        private bool EsAdministradorOSoporte(Usuario cliente)
+        private bool EsAdmin(Usuario usuario)
         {
-            return cliente.nombrePerfil == "Administrador" || cliente.nombrePerfil == "Soporte" || cliente.nombrePerfil == "Vendedor";
+            //  solo los Administradores pueden gestionar Marcas.
+            return usuario != null && usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
         }
 
         private void CargarMarcas()

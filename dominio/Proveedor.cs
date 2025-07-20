@@ -9,7 +9,7 @@ namespace dominio
     {
         // será un proveedor de productos de una tienda de venta: 
         // nombre, dirección, teléfono, email, productos que provee
-        public int id { get; set; }
+        public int Id { get; set; }
         public string Nombre { get; set; }
         public string Direccion { get; set; }
         public string Telefono { get; set; }

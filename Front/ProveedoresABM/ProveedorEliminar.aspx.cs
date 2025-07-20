@@ -13,31 +13,39 @@ namespace Front.ProveedoresABM
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           
-            if (!IsPostBack)
-            {
-                int proveedorId = Convert.ToInt32(Request.QueryString["id"]);
-                CargarDatosProveedor(proveedorId);
-            }
 
-            if (Session["cliente"] == null || !IDPerfilValido())
+            Usuario usuario = Session["usuario"] as Usuario;
+            if (usuario == null || !EsAdmin(usuario))
             {
-                Response.Redirect("Login.aspx");
+
+                Response.Redirect("../Login.aspx");
                 return;
             }
 
+            if (!IsPostBack)
+            {
+
+                if (Request.QueryString["id"] != null)
+                {
+                    int proveedorId = Convert.ToInt32(Request.QueryString["id"]);
+                    CargarDatosProveedor(proveedorId);
+                }
+                else
+                {
+                    Response.Redirect("../Proveedores.aspx");
+                }
+            }
         }
 
-        // Verifica si el id de perfil es valido
-        private bool IDPerfilValido()
+
+        private bool EsAdmin(Usuario usuario)
         {
-            Usuario cliente = (Usuario)Session["cliente"];
-            return cliente.idPerfil == 2 || cliente.idPerfil == 4 || cliente.idPerfil == 3;
+
+            return usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
         }
 
         private void CargarDatosProveedor(int proveedorId)
         {
-            // Implementa la lógica para obtener los datos del proveedor de la base de datos
             ProveedoresNegocio proveedorNegocio = new ProveedoresNegocio();
             var proveedor = proveedorNegocio.ObtenerProveedor(proveedorId);
             if (proveedor != null)
@@ -46,34 +54,36 @@ namespace Front.ProveedoresABM
                 LabelDireccionProveedor.Text = proveedor.Direccion;
                 LabelTelefonoProveedor.Text = proveedor.Telefono;
                 LabelEmailProveedor.Text = proveedor.Email;
-                LabelEstadoProveedor.Text = proveedor.estado.ToString();
+                //  Se muestra un texto más amigable para el estado.
+                LabelEstadoProveedor.Text = proveedor.estado ? "Activo" : "Inactivo";
             }
             else
             {
-                // Manejar el caso en que no se encuentra el producto
-                LabelNombreProveedor.Text = "Proveedor no encontrado";
-                LabelDireccionProveedor.Text = "";
-                LabelTelefonoProveedor.Text = "";
-                LabelEmailProveedor.Text = "";
-                LabelEstadoProveedor.Text = "";
-
-
+                LabelError.Text = "Proveedor no encontrado.";
+                LabelError.Visible = true;
+                btnConfirmar.Visible = false;
             }
-
         }
 
         protected void btnConfirmar_Click(object sender, EventArgs e)
         {
-            // Lógica para eliminar el proveedor
-            int proveedorId = Convert.ToInt32(Request.QueryString["id"]);
-            ProveedoresNegocio proveedorNegocio = new ProveedoresNegocio();
-            proveedorNegocio.EliminarProveedor(proveedorId);
-            Response.Redirect("../Proveedores.aspx");
+            try
+            {
+                int proveedorId = Convert.ToInt32(Request.QueryString["id"]);
+                ProveedoresNegocio proveedorNegocio = new ProveedoresNegocio();
+                proveedorNegocio.EliminarProveedor(proveedorId); // Asumo que es baja lógica
+                Response.Redirect("../Proveedores.aspx");
+            }
+            catch (Exception ex)
+            {
+                LabelError.Text = "Ocurrió un error al eliminar el proveedor.";
+                LabelError.Visible = true;
+
+            }
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-            // Lógica para cancelar la eliminación y redirigir a la página de proveedores
             Response.Redirect("../Proveedores.aspx");
         }
     }

@@ -13,55 +13,76 @@ namespace Front.UsuariosABM
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["cliente"] == null || !EsAdministradorOSoporte((Usuario)Session["cliente"]))
+            Usuario usuarioLogueado = Session["usuario"] as Usuario;
+            if (usuarioLogueado == null || !EsAdmin(usuarioLogueado))
             {
-                Response.Redirect("Login.aspx");
+                // CORRECCIÓN: La ruta de redirección debe subir un nivel.
+                Response.Redirect("../Login.aspx");
                 return;
             }
+
             if (!IsPostBack)
             {
+                // Solo si el usuario tiene permisos, cargamos los perfiles.
                 CargarPerfiles();
-               
             }
 
         }
 
-        private bool EsAdministradorOSoporte(Usuario cliente)
+        private bool EsAdmin(Usuario usuario)
         {
-            return cliente.idPerfil == 2 || cliente.idPerfil == 3 || cliente.idPerfil == 4;
+            // Según el plan, solo los Administradores pueden gestionar Usuarios.
+            return usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
         }
 
         private void CargarPerfiles()
         {
-            UsuarioNegocio negocio = new UsuarioNegocio();
-            ddlPerfilCliente.DataSource = negocio.ListarPerfiles();
-            ddlPerfilCliente.DataValueField = "id";
-            ddlPerfilCliente.DataTextField = "nombre";
-            ddlPerfilCliente.DataBind();
+            try
+            {
+                UsuarioNegocio negocio = new UsuarioNegocio();
+                ddlPerfil.DataSource = negocio.ListarPerfiles();
+                ddlPerfil.DataValueField = "id";
+                ddlPerfil.DataTextField = "nombre";
+                ddlPerfil.DataBind();
+            }
+            catch (Exception ex)
+            {
+                // Manejar error al cargar perfiles
+            }
         }
 
        
 
         protected void ButtonGuardar_Click(object sender, EventArgs e)
         {
-           UsuarioNegocio clienteNegocio = new UsuarioNegocio();
-           Usuario cliente = new Usuario();
+            try
+            {
+                UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+                Usuario nuevoUsuario = new Usuario();
 
-            cliente.Nombre = TextBoxNombreCliente.Text;
-            cliente.Apellido = TextBoxApellidoCliente.Text;
-            cliente.Dni = TextBoxDniCliente.Text;
-            cliente.Direccion = TextBoxDireccionCliente.Text;
-            cliente.Telefono = TextBoxTelefonoCliente.Text;
-            cliente.Email = TextBoxEmailCliente.Text;
-            cliente.clave = TextBoxClaveCliente.Text;
-            cliente.idPerfil = int.Parse(ddlPerfilCliente.SelectedValue);
-            cliente.estado = true;
-            clienteNegocio.AgregarCliente(cliente);
+                nuevoUsuario.Nombre = TextBoxNombre.Text;
+                nuevoUsuario.Apellido = TextBoxApellido.Text;
+                nuevoUsuario.Dni = TextBoxDni.Text;
+                nuevoUsuario.Direccion = TextBoxDireccion.Text;
+                nuevoUsuario.Telefono = TextBoxTelefono.Text;
+                nuevoUsuario.Email = TextBoxEmail.Text;
+                nuevoUsuario.clave = TextBoxClave.Text;
 
-            // Redirige a la página de lista de Usuarios
-            Response.Redirect("../Clientes.aspx");
+                // CORRECCIÓN: Se asigna el objeto Perfil completo.
+                nuevoUsuario.Perfil = new Perfil();
+                nuevoUsuario.Perfil.Id = int.Parse(ddlPerfil.SelectedValue);
 
+                nuevoUsuario.estado = true; // Por defecto, los nuevos usuarios están activos.
 
+                usuarioNegocio.AgregarUsuario(nuevoUsuario);
+
+                Response.Redirect("../Clientes.aspx");
+            }
+            catch (Exception ex)
+            {
+                
+                LabelError.Text = "Error al guardar el usuario: " + ex.Message;
+            }
 
         }
 

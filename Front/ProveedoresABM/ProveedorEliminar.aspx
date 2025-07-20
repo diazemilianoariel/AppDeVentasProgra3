@@ -16,18 +16,18 @@
                     <asp:Label ID="LabelNombreProveedor" runat="server" CssClass="text-secondary"></asp:Label>
                 </div>
                 <div class="mb-2">
-                    <strong>Direccion: </strong>
+                    <strong>Dirección: </strong>
                     <asp:Label ID="LabelDireccionProveedor" runat="server" CssClass="text-secondary"></asp:Label>
                 </div>
                 <div class="mb-2">
-                    <strong>Telefono: </strong>
-                    <asp:Label ID="LabelTelefonoProveedor" runat="server" CssClass="text-success fs-4"></asp:Label>
+                    <strong>Teléfono: </strong>
+                    <asp:Label ID="LabelTelefonoProveedor" runat="server" CssClass="text-secondary"></asp:Label>
                 </div>
                 <div class="mb-2">
-                    <strong>Stock: </strong>
+                    <%--El texto ahora es "Email" en lugar de "Stock" --%>
+                    <strong>Email: </strong>
                     <asp:Label ID="LabelEmailProveedor" runat="server" CssClass="text-secondary"></asp:Label>
                 </div>
-
                 <div class="mb-2">
                     <strong>Estado: </strong>
                     <asp:Label ID="LabelEstadoProveedor" runat="server" CssClass="text-secondary"></asp:Label>
@@ -35,12 +35,10 @@
 
                 <asp:Label ID="LabelError" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
 
-
-                <div class="d-flex justify-content-between mt-4">
-                    <asp:Button ID="btnConfirmar" runat="server" Text="Confirmar" CssClass="btn btn-danger" OnClick="btnConfirmar_Click" />
-                    <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-secondary" OnClick="btnCancelar_Click" />
+                <div class="d-flex justify-content-end mt-4">
+                    <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-secondary mr-2" />
+                    <asp:Button ID="btnConfirmar" runat="server" Text="Confirmar Eliminación" CssClass="btn btn-danger" OnClick="btnConfirmar_Click" />
                 </div>
             </div>
         </div>
-    </div>
 </asp:Content>

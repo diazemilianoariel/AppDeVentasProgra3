@@ -24,7 +24,7 @@ namespace negocio
                     Proveedor proveedor = new Proveedor();
 
 
-                    proveedor.id = (int)accesoDatos.Lector["id"];
+                    proveedor.Id = (int)accesoDatos.Lector["id"];
                     proveedor.Nombre = accesoDatos.Lector["Nombre"].ToString();
                     proveedor.Direccion = accesoDatos.Lector["Direccion"].ToString();
                     proveedor.Telefono = accesoDatos.Lector["Telefono"].ToString();
@@ -59,7 +59,7 @@ namespace negocio
 
                 if (accesoDatos.Lector.Read())
                 {
-                    proveedor.id = accesoDatos.Lector.GetInt32(0);
+                    proveedor.Id = accesoDatos.Lector.GetInt32(0);
                     proveedor.Nombre = accesoDatos.Lector.GetString(1);
                     proveedor.Direccion = accesoDatos.Lector.GetString(2);
                     proveedor.Telefono = accesoDatos.Lector.GetString(3);
@@ -113,7 +113,7 @@ namespace negocio
                 accesoDatos.SetearParametro("@telefono", proveedor.Telefono);
                 accesoDatos.SetearParametro("@correo", proveedor.Email);
                 accesoDatos.SetearParametro("@estado", proveedor.estado);
-                accesoDatos.SetearParametro("@id", proveedor.id);
+                accesoDatos.SetearParametro("@id", proveedor.Id);
                 accesoDatos.EjecutarAccion();
             }
             catch (Exception ex)
@@ -184,7 +184,7 @@ namespace negocio
                 {
                     proveedor = new Proveedor
                     {
-                        id = accesoDatos.Lector.GetInt32(0),
+                        Id = accesoDatos.Lector.GetInt32(0),
                         Nombre = accesoDatos.Lector.GetString(1),
                         Direccion = accesoDatos.Lector.GetString(2),
                         Telefono = accesoDatos.Lector.GetString(3),

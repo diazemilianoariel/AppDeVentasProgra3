@@ -15,15 +15,6 @@ namespace Front.ProveedoresABM
     {
 
         /// <summary>
-        /// Control LabelNombre.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelNombre;
-
-        /// <summary>
         /// Control TextBoxNombre.
         /// </summary>
         /// <remarks>
@@ -31,15 +22,6 @@ namespace Front.ProveedoresABM
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TextBoxNombre;
-
-        /// <summary>
-        /// Control LabelDireccion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelDireccion;
 
         /// <summary>
         /// Control TextBoxDireccion.
@@ -51,15 +33,6 @@ namespace Front.ProveedoresABM
         protected global::System.Web.UI.WebControls.TextBox TextBoxDireccion;
 
         /// <summary>
-        /// Control LabelTelefono.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelTelefono;
-
-        /// <summary>
         /// Control TextBoxTelefono.
         /// </summary>
         /// <remarks>
@@ -69,15 +42,6 @@ namespace Front.ProveedoresABM
         protected global::System.Web.UI.WebControls.TextBox TextBoxTelefono;
 
         /// <summary>
-        /// Control LabelEmail.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelEmail;
-
-        /// <summary>
         /// Control TextBoxEmail.
         /// </summary>
         /// <remarks>
@@ -85,15 +49,6 @@ namespace Front.ProveedoresABM
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TextBoxEmail;
-
-        /// <summary>
-        /// Control LabelEstado.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelEstado;
 
         /// <summary>
         /// Control CheckBoxEstado.

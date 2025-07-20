@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MASTER.Master" AutoEventWireup="true" CodeBehind="Tipos.aspx.cs" Inherits="Front.Tipo" ValidateRequest="false" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MASTER.Master" AutoEventWireup="true" CodeBehind="Tipos.aspx.cs" Inherits="Front.Tipos" ValidateRequest="false" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
@@ -14,57 +14,43 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
     <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="text-center">Gestión de Tipos</h1>
+        <div class="text-center">
+            <h1 class="mb-3">Gestión de Tipos</h1>
+            <p class="text-muted">Gestione Sus Tipos de Manera Ágil y sencilla, Agregue, Modifique o Elimine los Tipos que Desee.</p>
+        </div>
+
+        <div class="row mt-4 justify-content-center">
+            <%--  asp:HyperLink para consistencia en las rutas --%>
+            <asp:HyperLink NavigateUrl="~/TiposABM/TipoAgregar.aspx" runat="server" CssClass="btn btn-primary">Nuevo Tipo</asp:HyperLink>
+        </div>
+
+        <div class="row mt-4 justify-content-center">
+            <div class="col-md-10">
+                <div class="table-responsive">
+                    <asp:GridView ID="GridViewTipos" runat="server" CssClass="table table-striped table-bordered table-dark w-100" AutoGenerateColumns="False" OnRowCommand="GridViewTipos_RowCommand">
+                        <Columns>
+                            <asp:BoundField DataField="id" HeaderText="ID" />
+                            <asp:BoundField DataField="nombre" HeaderText="Nombre" />
+                            <asp:TemplateField HeaderText="Estado Tipos">
+                                <ItemTemplate>
+                                    <%# Convert.ToBoolean(Eval("estado")) ? "Activo" : "Inactivo" %>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <div class="text-right">
+                                        <asp:Button ID="btnModificar" runat="server" Text="Modificar" CommandName="Modificar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-success btn-sm" />
+                                        <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CommandName="Eliminar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-danger btn-sm" />
+                                    </div>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+                </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <h7 class="text-center">Gestione Sus TIpos de Manera Ágil y sencilla, Agregue, Modifique o Elimine los Tipos que Desee</h7>
-            </div>
-        </div>
-
-        <div class="row mt-6 justify-content-center">
-            <a href="TiposABM/TipoAgregar.aspx" class="btn btn-primary">Nuevo</a>
-        </div>
-
-
-
-        <div class="col-md-10 mt-5">
-
-            <div class="table-responsive">
-                <asp:GridView ID="GridViewTipos" runat="server" CssClass="table table-striped table-bordered table-dark w-100" AutoGenerateColumns="False" OnRowCommand="GridViewTipos_RowCommand">
-                    <Columns>
-                        <asp:BoundField DataField="id" HeaderText="ID" />
-                        <asp:BoundField DataField="nombre" HeaderText="Nombre" />
-
-                        <asp:TemplateField HeaderText="Estado Tipos">
-                            <ItemTemplate>
-                                <%# Convert.ToBoolean(Eval("estado")) ? "Activo" : "Inactivo" %>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <div class="text-right">
-                                    <asp:Button ID="btnModificar" runat="server" Text="Modificar" CommandName="Modificar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-success btn-sm" />
-                                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CommandName="Eliminar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-danger btn-sm" />
-                                </div>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-                </asp:GridView>
-            </div>
-        </div>
-
     </div>
-
-
 
 
 </asp:Content>

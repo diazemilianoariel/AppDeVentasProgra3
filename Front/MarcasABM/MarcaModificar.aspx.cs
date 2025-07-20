@@ -14,13 +14,39 @@ namespace Front.MarcasABM
         MarcaNegocio marcaNegocio = new MarcaNegocio();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            Usuario usuario = Session["usuario"] as Usuario;
+            if (usuario == null || !EsAdmin(usuario))
             {
-                int marcaId = Convert.ToInt32(Request.QueryString["id"]);
-                CargarDatosMarca(marcaId);
+                Response.Redirect("../Login.aspx");
+                return;
             }
 
 
+
+            if (!IsPostBack)
+            {
+                if (Request.QueryString["id"] != null)
+                {
+                    int marcaId = Convert.ToInt32(Request.QueryString["id"]);
+                    CargarDatosMarca(marcaId);
+                }
+                else
+                {
+                    // Manejar el caso donde no se proporciona un ID.
+                    // Redirigimos a la lista de marcas si no hay ID.
+                    Response.Redirect("../Marcas.aspx");
+                }
+            }
+
+
+        }
+
+
+
+        private bool EsAdmin(Usuario usuario)
+        {
+            // Según el plan, solo los Administradores pueden gestionar Marcas.
+            return usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
         }
 
 
@@ -30,31 +56,63 @@ namespace Front.MarcasABM
             var marca = new MarcaNegocio().BuscarMarca(marcaId);
             if (marca != null)
             {
-                LabelId.Text = marca.id.ToString();
+                LabelId.Text = marca.Id.ToString();
                 TextBoxNombre.Text = marca.nombre;
                 CheckBoxEstado.Checked = marca.estado;
+            }
+            else
+            {
+                Response.Redirect("../Marcas.aspx");
             }
         }
 
         protected void ButtonGuardar_Click(object sender, EventArgs e)
         {
-            int marcaId = Convert.ToInt32(LabelId.Text);
-            Marca marca = new Marca();
+            try
+            {
+                if (string.IsNullOrWhiteSpace(TextBoxNombre.Text))
+                {
+                    LabelError.Text = "El campo 'Nombre' es obligatorio.";
+                    LabelError.Visible = true;
+                    return;
+                }
 
-            marca.id = marcaId;
-            marca.nombre = TextBoxNombre.Text;
-            marca.estado = CheckBoxEstado.Checked;
-            
-            // Implementa la lógica para actualizar el producto en la base de datos
-            marcaNegocio.ActualizarMarca(marca);
-            // Redirige a la página de lista de productos después de guardar
-            Response.Redirect("../Marcas.aspx");
+                //  lógica para validar si el nombre ya existe (si fue modificado)
+                if (!TextBoxNombre.Text.Equals(HiddenFieldNombreOriginal.Value, StringComparison.OrdinalIgnoreCase))
+                {
+                    List<Marca> listaDeMarcas = marcaNegocio.ListarMarcas();
+                    if (listaDeMarcas.Any(m => m.nombre.Equals(TextBoxNombre.Text, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        LabelErrorMarcaExistente.Text = "El nombre de la Marca ya existe.";
+                        LabelErrorMarcaExistente.Visible = true;
+                        return;
+                    }
+                }
+
+                Marca marca = new Marca
+                {
+                    Id = Convert.ToInt32(LabelId.Text),
+                    nombre = TextBoxNombre.Text,
+                    estado = CheckBoxEstado.Checked
+                };
+
+                marcaNegocio.ActualizarMarca(marca);
+                Response.Redirect("../Marcas.aspx");
+            }
+            catch (Exception ex)
+            {
+                LabelError.Text = "Ocurrió un error al guardar la marca.";
+                LabelError.Visible = true;
+
+                
+                Console.WriteLine(ex.Message); // en la consola del servidor
+            }
         }
 
 
         protected void ButtonCancelar_Click(object sender, EventArgs e)
         {
-            // Redirige a la página de lista de productos sin guardar cambios
+           
             Response.Redirect("../Marcas.aspx");
         }
 

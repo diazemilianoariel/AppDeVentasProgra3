@@ -13,43 +13,60 @@ namespace Front.ProveedoresABM
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["cliente"] == null || !IDPerfilValido())
+
+
+
+
+            Usuario usuario = Session["usuario"] as Usuario;
+            if (usuario == null || !EsAdmin(usuario))
             {
-                Response.Redirect("Login.aspx");
+                
+                Response.Redirect("../Login.aspx");
                 return;
             }
-         
+
 
         }
 
-        // Verifica si el id de perfil es valido
-        private bool IDPerfilValido()
+        
+        private bool EsAdmin(Usuario usuario)
         {
-            Usuario cliente = (Usuario)Session["cliente"];
-            return cliente.idPerfil == 2 || cliente.idPerfil == 4 || cliente.idPerfil == 3;
+            // Administradores pueden gestionar Proveedores.
+            return usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
         }
 
         protected void ButtonGuardar_Click(object sender, EventArgs e)
         {
-            // hacer la validacion 
-
-
-            ProveedoresNegocio proveedorNegocio= new ProveedoresNegocio();
-            var proveedor = new Proveedor
+            try
             {
-                Nombre = TextBoxNombre.Text,
-                Direccion = TextBoxDireccion.Text,
-                Telefono = TextBoxTelefono.Text,
-                Email = TextBoxEmail.Text,
-                estado = CheckBoxEstado.Checked
-            };
+                // Se añade validación de campos obligatorios.
+                if (string.IsNullOrWhiteSpace(TextBoxNombre.Text) || string.IsNullOrWhiteSpace(TextBoxEmail.Text))
+                {
+                    // Aquí podrías usar un Label de error para ser más específico.
+                    // Por ejemplo: LabelError.Text = "El nombre y el email son obligatorios.";
 
-            // Implementa la lógica para agregar el producto en la base de datos
-             proveedorNegocio.AgregarProveedor(proveedor);
+                    return;
+                }
 
+                ProveedoresNegocio proveedorNegocio = new ProveedoresNegocio();
+                var proveedor = new Proveedor
+                {
+                    Nombre = TextBoxNombre.Text,
+                    Direccion = TextBoxDireccion.Text,
+                    Telefono = TextBoxTelefono.Text,
+                    Email = TextBoxEmail.Text,
+                    estado = CheckBoxEstado.Checked
+                };
 
-            // Redirige a la página de lista de productos
-            Response.Redirect("../Proveedores.aspx");
+                proveedorNegocio.AgregarProveedor(proveedor);
+                Response.Redirect("../Proveedores.aspx");
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores
+                // Podrías mostrar el error en un Label: LabelError.Text = "Ocurrió un error...";
+                Console.WriteLine("Error al agregar proveedor: " + ex.Message);
+            }
 
 
         }

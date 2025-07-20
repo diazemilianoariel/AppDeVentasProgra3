@@ -17,68 +17,62 @@ namespace Front.MarcasABM
         MarcaNegocio marcaNegocio = new MarcaNegocio();
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
+            Usuario usuario = Session["usuario"] as Usuario;
+            if (usuario == null || !EsAdmin(usuario))
+            {
+                // CORRECCIÓN 2: La ruta de redirección debe subir un nivel.
+                Response.Redirect("../Login.aspx");
+                return;
+            }
+
+
             if (!IsPostBack)
             {
 
 
+          
 
 
-                // Verificar si el usuario tiene permisos para acceder a esta página
-                if (Session["cliente"] == null || !EsAdministradorOSoporte((Usuario)Session["cliente"]))
-                {
-                    Response.Redirect("Login.aspx");
-                    return;
-                }
+
             }
 
 
         }
 
 
-        private bool EsAdministradorOSoporte(Usuario cliente)
+        private bool EsAdmin(Usuario usuario)
         {
-            return cliente.nombrePerfil == "Administrador" || cliente.nombrePerfil == "Soporte" || cliente.nombrePerfil == "Vendedor";
+            // Según el plan, solo los Administradores pueden gestionar Marcas.
+            return usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
         }
-
 
 
 
         protected void ButtonGuardar_Click(object sender, EventArgs e)
         {
-            LabelErrorMarcaExistente.Text = "";
-            LabelError.Text = "";
-
-
-            string NombreNuevo = TextBoxNombre.Text;
-            List<Marca> listaDeMarca = new List<Marca>();
-            listaDeMarca = marcaNegocio.ListarMarcas();
-
-
-            // Verificar si el nombre ya existe
-            foreach (var categoria in listaDeMarca)
-            {
-                if (categoria.nombre.Equals(NombreNuevo, StringComparison.OrdinalIgnoreCase))
-                {
-                    LabelErrorMarcaExistente.Text = "El nombre de la Marca ya existe.";
-                    LabelErrorMarcaExistente.Visible = true;
-                    return;
-                }
-            }
-
-
-
             try
             {
-                // Validar campos requeridos
+                LabelErrorMarcaExistente.Text = "";
+                LabelError.Text = "";
+
                 if (string.IsNullOrWhiteSpace(TextBoxNombre.Text))
                 {
-                    // Mostrar un mensaje de error al usuario
                     LabelError.Text = "El campo 'Nombre' es obligatorio.";
                     LabelError.Visible = true;
                     return;
                 }
 
+                string nombreNuevo = TextBoxNombre.Text;
+                List<Marca> listaDeMarcas = marcaNegocio.ListarMarcas();
 
+                if (listaDeMarcas.Any(m => m.nombre.Equals(nombreNuevo, StringComparison.OrdinalIgnoreCase)))
+                {
+                    LabelErrorMarcaExistente.Text = "El nombre de la Marca ya existe.";
+                    LabelErrorMarcaExistente.Visible = true;
+                    return;
+                }
 
                 var marca = new Marca
                 {
@@ -86,24 +80,22 @@ namespace Front.MarcasABM
                     estado = CheckBoxEstado.Checked
                 };
 
-                // Implementa la lógica para agregar la marca en la base de datos
                 marcaNegocio.AgregarMarca(marca);
-
-                // Redirige a la página de lista de marcas
                 Response.Redirect("../Marcas.aspx");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Manejar cualquier error inesperado
                 LabelError.Text = "Ocurrió un error al guardar la marca. Intente nuevamente.";
                 LabelError.Visible = true;
+
+                Console.WriteLine(ex.Message); // este  mensaje se puede ver en la consola
             }
 
         }
 
         protected void ButtonCancelar_Click(object sender, EventArgs e)
         {
-            // Redirige a la página de lista de productos
+           
             Response.Redirect("../Marcas.aspx");
 
 

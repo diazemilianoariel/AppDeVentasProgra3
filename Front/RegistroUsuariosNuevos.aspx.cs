@@ -13,6 +13,11 @@ namespace Front
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["usuario"] != null)
+            {
+                Response.Redirect("Default.aspx", false);
+            }
+
             if (!IsPostBack)
             {
                 lblMensaje.Visible = false;
@@ -24,39 +29,37 @@ namespace Front
 
         protected void btnRegistrar_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtNombre.Text) || string.IsNullOrEmpty(txtApellido.Text) ||
-                string.IsNullOrEmpty(txtDni.Text) || string.IsNullOrEmpty(txtDireccion.Text) ||
-                string.IsNullOrEmpty(txtTelefono.Text) || string.IsNullOrEmpty(txtEmail.Text) ||
-                string.IsNullOrEmpty(txtClave.Text))
-            {
-                lblMensaje.Text = "Por favor, complete todos los campos.";
-                lblMensaje.CssClass = "alert alert-danger";
-                lblMensaje.Visible = true;
-                return;
-            }
-
-
-
-            Usuario nuevoCliente = new Usuario
-            {
-                Nombre = txtNombre.Text,
-                Apellido = txtApellido.Text,
-                Dni = txtDni.Text,
-                Direccion = txtDireccion.Text,
-                Telefono = txtTelefono.Text,
-                Email = txtEmail.Text,
-                clave = txtClave.Text,
-                idPerfil = 1, // Perfil de usuario siempre será cliente
-                estado = true // Estado activo
-            };
-            UsuarioNegocio clienteNegocio = new UsuarioNegocio();
             try
             {
-                clienteNegocio.AgregarCliente(nuevoCliente);
-                lblMensaje.Text = "Usuario registrado con éxito.";
-                lblMensaje.CssClass = "alert alert-success";
-                lblMensaje.Visible = true;
-                LimpiarCampos();
+                // Page.IsValid verifica todos los validadores del .aspx
+                if (!Page.IsValid)
+                    return;
+
+                UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+                Usuario nuevoUsuario = new Usuario
+                {
+                    Nombre = txtNombre.Text,
+                    Apellido = txtApellido.Text,
+                    Dni = txtDni.Text,
+                    Direccion = txtDireccion.Text,
+                    Telefono = txtTelefono.Text,
+                    Email = txtEmail.Text,
+                    clave = txtClave.Text,
+                    estado = true // Por defecto, los nuevos usuarios están activos.
+                };
+
+                // CORRECCIÓN: Se asigna el perfil de Cliente usando la nueva estructura.
+                nuevoUsuario.Perfil = new Perfil();
+                nuevoUsuario.Perfil.Id = (int)TipoPerfil.Cliente; // Siempre se registran como Clientes.
+
+                // CORRECCIÓN: Se llama al método con el nombre correcto.
+                usuarioNegocio.AgregarUsuario(nuevoUsuario);
+
+                // Opcional: Loguear al usuario automáticamente después del registro.
+                Session.Add("usuario", nuevoUsuario);
+
+                // Redirigir a la página principal después de un registro exitoso.
+                Response.Redirect("Default.aspx", false);
             }
             catch (Exception ex)
             {
@@ -64,7 +67,6 @@ namespace Front
                 lblMensaje.CssClass = "alert alert-danger";
                 lblMensaje.Visible = true;
             }
-
 
         }
 
@@ -76,15 +78,6 @@ namespace Front
 
 
 
-        private void LimpiarCampos()
-        {
-            txtNombre.Text = string.Empty;
-            txtApellido.Text = string.Empty;
-            txtDni.Text = string.Empty;
-            txtDireccion.Text = string.Empty;
-            txtTelefono.Text = string.Empty;
-            txtEmail.Text = string.Empty;
-            txtClave.Text = string.Empty;
-        }
+     
     }
 }

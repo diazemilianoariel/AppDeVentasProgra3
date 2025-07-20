@@ -1,93 +1,78 @@
 ﻿using dominio;
 using negocio;
-
 using System;
 using System.Web.UI.WebControls;
 
 namespace Front
 {
-    public partial class producto : System.Web.UI.Page
+    public partial class Productos : System.Web.UI.Page
     {
-        ProductoNegocio productonegocio = new ProductoNegocio();
+        public bool IsAdmin { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            Usuario usuario = Session["usuario"] as Usuario;
 
-
-            if (Session["cliente"] == null || !IDPerfilValido())
+            if (usuario == null || !EsPerfilValido(usuario))
             {
                 Response.Redirect("Login.aspx");
                 return;
             }
 
-
-
+            IsAdmin = EsAdmin(usuario);
 
             if (!IsPostBack)
             {
-
                 CargarGrilla();
             }
-
-
         }
 
-
-
-        private bool IDPerfilValido()
+        private bool EsPerfilValido(Usuario usuario)
         {
-            Usuario cliente = (Usuario)Session["cliente"];
-
-            return cliente.idPerfil == 2 || cliente.idPerfil == 4 || cliente.idPerfil == 3;
+            return usuario.Perfil != null &&
+                   (usuario.Perfil.Id == (int)TipoPerfil.Administrador ||
+                    usuario.Perfil.Id == (int)TipoPerfil.Vendedor);
         }
 
-
-
-
-
+        private bool EsAdmin(Usuario usuario)
+        {
+            return usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
+        }
 
         private void CargarGrilla()
         {
-            ProductoNegocio negocio = new ProductoNegocio();
-            GridViewProductos.DataSource = negocio.ListarProductos();
-            GridViewProductos.DataBind();
+            try
+            {
+                ProductoNegocio negocio = new ProductoNegocio();
+                GridViewProductos.DataSource = negocio.ListarProductos();
+                GridViewProductos.DataBind();
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = "Error al cargar los productos: " + ex.Message;
+                lblError.Visible = true;
+            }
         }
-
-
 
         protected void GridViewProductos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            int productId = Convert.ToInt32(e.CommandArgument);
+
             if (e.CommandName == "Modificar")
             {
-                int productId = Convert.ToInt32(e.CommandArgument);
-
-                //redireccionr a otra pagina
-                Response.Redirect("Productos/ProductoModificar.aspx?id=" + productId);
-
+                Response.Redirect("ProductosABM/ProductoModificar.aspx?id=" + productId);
             }
-            else
+            else if (e.CommandName == "Detalle")
             {
-                if (e.CommandName == "Detalle")
+                Response.Redirect("ProductosABM/DetalleProducto.aspx?id=" + productId);
+            }
+            else if (e.CommandName == "Eliminar")
+            {
+                if (IsAdmin)
                 {
-                    int productId = Convert.ToInt32(e.CommandArgument);
-
-                    //redireccionr a otra pagina
-                    Response.Redirect("Productos/DetalleProducto.aspx?id=" + productId);
+                    Response.Redirect("ProductosABM/ProductoEliminar.aspx?id=" + productId);
                 }
-
             }
-
-            if (e.CommandName == "Eliminar")
-            {
-                int productId = Convert.ToInt32(e.CommandArgument);
-
-                //redireccionr a otra pagina
-                Response.Redirect("Productos/ProductoEliminar.aspx?id=" + productId);
-
-            }
-
-
-
-
         }
     }
 }

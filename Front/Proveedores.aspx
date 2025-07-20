@@ -15,26 +15,18 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="text-center">Gestión de Proveedores</h1>
-            </div>
+        <div class="text-center">
+            <h1 class="mb-3">Gestión de Proveedores</h1>
+            <p class="text-muted">Administre y organice la información de sus Proveedores de manera sencilla y rápida.</p>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <h7 class="text-center">Gestione Sus Proveedores de Manera Ágil y sencilla, Agregue, Modifique o Elimine los Proveedores que Desee</h7>
-            </div>
+        <div class="row mt-4 justify-content-center">
+            <%-- asp:HyperLink para consistencia en las rutas --%>
+            <asp:HyperLink NavigateUrl="~/ProveedoresABM/ProveedorAgregar.aspx" runat="server" CssClass="btn btn-primary">Nuevo Proveedor</asp:HyperLink>
         </div>
 
-        <!-- Botón para agregar nuevo proveedor -->
-        <div class="row mt-5 justify-content-center">
-            <a href="ProveedoresABM/ProveedorAgregar.aspx" class="btn btn-primary">Nuevo</a>
-        </div>
-
-        <!-- Tabla de proveedores -->
-        <div class="row mt-5">
-            <div class="col-md-12">
+        <div class="row mt-4 justify-content-center">
+            <div class="col-md-10">
                 <div class="table-responsive">
                     <asp:GridView ID="GridViewProveedores" runat="server" CssClass="table table-striped table-bordered table-dark w-100" AutoGenerateColumns="False" OnRowCommand="GridViewProveedores_RowCommand">
                         <Columns>
@@ -43,18 +35,20 @@
                             <asp:BoundField DataField="direccion" HeaderText="Dirección" />
                             <asp:BoundField DataField="telefono" HeaderText="Teléfono" />
                             <asp:BoundField DataField="email" HeaderText="Email" />
-                            <asp:BoundField DataField="estado" HeaderText="Estado" />
-
-
-                            <asp:TemplateField>
+                            
+                            <%--  usa un TemplateField para mostrar un estado mejro --%>
+                            <asp:TemplateField HeaderText="Estado">
                                 <ItemTemplate>
-                                    <asp:Button ID="btnModificar" runat="server" Text="Modificar" CommandName="Modificar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-success btn-sm" />
+                                    <%# Convert.ToBoolean(Eval("estado")) ? "Activo" : "Inactivo" %>
                                 </ItemTemplate>
                             </asp:TemplateField>
 
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CommandName="Eliminar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-danger btn-sm" />
+                                    <div class="text-right">
+                                        <asp:Button ID="btnModificar" runat="server" Text="Modificar" CommandName="Modificar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-success btn-sm" />
+                                        <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CommandName="Eliminar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-danger btn-sm" />
+                                    </div>
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
@@ -63,5 +57,4 @@
             </div>
         </div>
     </div>
-
 </asp:Content>

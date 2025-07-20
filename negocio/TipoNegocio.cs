@@ -23,7 +23,7 @@ namespace negocio
                 while (datos.Lector.Read())
                 {
                     Tipos aux = new Tipos();
-                    aux.id = (int)datos.Lector["id"];
+                    aux.Id = (int)datos.Lector["id"];
                     aux.nombre = (string)datos.Lector["nombre"];
                     aux.estado = (bool)datos.Lector["estado"];
                     tipos.Add(aux);
@@ -51,7 +51,7 @@ namespace negocio
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())
                 {
-                    aux.id = (int)datos.Lector["id"];
+                    aux.Id = (int)datos.Lector["id"];
                     aux.nombre = (string)datos.Lector["nombre"];
                     aux.estado = (bool)datos.Lector["estado"];
                     return aux;
@@ -98,7 +98,7 @@ namespace negocio
                 datos.SetearConsulta("update Tipos set nombre = @nombre, estado = @estado where id = @id");
                 datos.SetearParametro("@nombre", tipo.nombre);
                 datos.SetearParametro("@estado", tipo.estado);
-                datos.SetearParametro("@id", tipo.id);
+                datos.SetearParametro("@id", tipo.Id);
                 
                 datos.EjecutarAccion();
             }

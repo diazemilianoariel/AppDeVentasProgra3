@@ -16,18 +16,21 @@ namespace Front.CategoriasABM
         CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
         protected void Page_Load(object sender, EventArgs e)
         {
+            Usuario usuario = Session["usuario"] as Usuario;
+            // Verificar si el usuario tiene permisos para acceder a esta página
+            if (usuario == null || !EsPerfilValido(usuario))
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
+
+
 
             if (!IsPostBack)
             {
 
 
-                Usuario usuario = Session["usuario"] as Usuario;
-                // Verificar si el usuario tiene permisos para acceder a esta página
-                if (usuario == null || !EsPerfilValido(usuario))
-                {
-                    Response.Redirect("Login.aspx");
-                    return;
-                }
+              
             }
 
         }

@@ -1,61 +1,109 @@
-﻿using System;
+﻿using dominio;
+using negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using dominio;
-using negocio;
 
 namespace Front.TiposABM
 {
-    public partial class TIpoModificar : System.Web.UI.Page
+    public partial class TipoModificar : System.Web.UI.Page
     {
 
         TipoNegocio tipoNegocio = new TipoNegocio();
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            Usuario usuario = Session["usuario"] as Usuario;
+            if(usuario ==null || !EsAdmin(usuario))
+            {
+                               Response.Redirect("../Login.aspx");
+            }
+
+
             if (!IsPostBack)
             {
-                int tipoId = Convert.ToInt32(Request.QueryString["id"]);
-                CargarDatosTipo(tipoId);
+                if (Request.QueryString["id"] != null)
+                {
+                    int tipoId = Convert.ToInt32(Request.QueryString["id"]);
+                    CargarDatosTipo(tipoId);
+                }
+                else
+                {
+                    Response.Redirect("../Tipos.aspx");
+                }
             }
 
 
         }
 
+
+        private bool EsAdmin(Usuario usuario)
+        {
+            // Según el plan, solo los Administradores pueden gestionar Tipos.
+            return usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
+        }
+
         private void CargarDatosTipo(int tipoId)
         {
-            // Implementa la lógica para obtener los datos del producto de la base de datos
-            var tipo = new TipoNegocio().BuscarTipo(tipoId);
+            var tipo = tipoNegocio.BuscarTipo(tipoId);
             if (tipo != null)
             {
-                LabelId.Text = tipo.id.ToString();
+                LabelId.Text = tipo.Id.ToString();
                 TextBoxNombre.Text = tipo.nombre;
                 CheckBoxEstado.Checked = tipo.estado;
+                // Guardamos el nombre original para la validación.
+                HiddenFieldNombreOriginal.Value = tipo.nombre;
+            }
+            else
+            {
+                Response.Redirect("../Tipos.aspx");
             }
         }
 
 
         protected void ButtonGuardar_Click(object sender, EventArgs e)
         {
-
-
-            int tipoId = Convert.ToInt32(LabelId.Text);
-            var tipo = new Tipos
+            try
             {
-                id = tipoId,
-                nombre = TextBoxNombre.Text,
-                estado = CheckBoxEstado.Checked
-            };
+                if (string.IsNullOrWhiteSpace(TextBoxNombre.Text))
+                {
+                    LabelError.Text = "El campo 'Nombre' es obligatorio.";
+                    LabelError.Visible = true;
+                    return;
+                }
 
+                // MEJORA: Se añade la lógica para validar si el nombre ya existe (si fue modificado).
+                if (!TextBoxNombre.Text.Equals(HiddenFieldNombreOriginal.Value, StringComparison.OrdinalIgnoreCase))
+                {
+                    List<dominio.Tipos> listaDeTipos = tipoNegocio.ListarTipos();
+                    if (listaDeTipos.Any(t => t.nombre.Equals(TextBoxNombre.Text, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        LabelErrorTipoExistente.Text = "El nombre del Tipo ya existe.";
+                        LabelErrorTipoExistente.Visible = true;
+                        return;
+                    }
+                }
 
-            // Implementa la lógica para actualizar el producto en la base de datos
-            tipoNegocio.ActualizarTipo(tipo);
+                var tipo = new dominio.Tipos
+                {
+                    Id = Convert.ToInt32(LabelId.Text),
+                    nombre = TextBoxNombre.Text,
+                    estado = CheckBoxEstado.Checked
+                };
 
-
-            // Redirige a la página de lista de productos después de guardar
-            Response.Redirect("../Tipos.aspx");
+                tipoNegocio.ActualizarTipo(tipo);
+                Response.Redirect("../Tipos.aspx");
+            }
+            catch (Exception ex)
+            {
+                LabelError.Text = "Ocurrió un error al guardar el tipo.";
+                LabelError.Visible = true;
+                // Opcional: Registrar el error 'ex' para depuración.
+            }
         }
 
         protected void ButtonCancelar_Click(object sender, EventArgs e)

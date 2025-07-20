@@ -28,7 +28,7 @@ namespace negocio
                 while (datos.Lector.Read())
                 {
                     Categoria aux = new Categoria();
-                    aux.id = (int)datos.Lector["id"];
+                    aux.Id = (int)datos.Lector["id"];
                     aux.nombre = (string)datos.Lector["nombre"];
                     aux.estado = (bool)datos.Lector["estado"];
 
@@ -58,7 +58,7 @@ namespace negocio
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())
                 {
-                    aux.id = (int)datos.Lector["id"];
+                    aux.Id = (int)datos.Lector["id"];
                     aux.nombre = (string)datos.Lector["nombre"];
                     aux.estado = (bool)datos.Lector["estado"];
                     return aux;
@@ -106,7 +106,7 @@ namespace negocio
                 datos.SetearConsulta("update Categorias set nombre = @nombre, estado = @estado where id = @id");
                 datos.SetearParametro("@nombre", categoria.nombre);
                 datos.SetearParametro("@estado", categoria.estado);
-                datos.SetearParametro("@id", categoria.id);
+                datos.SetearParametro("@id", categoria.Id);
                 datos.EjecutarAccion();
             }
             catch (Exception ex)

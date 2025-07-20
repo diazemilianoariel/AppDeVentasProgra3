@@ -13,22 +13,30 @@ namespace Front.PerfilesABM
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["cliente"] == null || !IDPerfilValido())
+
+
+
+            Usuario usuario = Session["usuario"] as Usuario;
+            if (usuario == null || !EsAdmin(usuario))
             {
                 Response.Redirect("Login.aspx");
                 return;
             }
+
+
+
+
             if (!IsPostBack)
             {
-                // CargarPerfiles();
+                
             }
 
         }
 
-        private bool IDPerfilValido()
+        private bool EsAdmin(Usuario usuario)
         {
-            Usuario cliente = (Usuario)Session["cliente"];
-            return cliente.idPerfil == 2 || cliente.idPerfil == 4;
+            // Según el plan, solo los Administradores pueden gestionar Perfiles.
+            return usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
         }
 
         protected void ButtonGuardar_Click(object sender, EventArgs e)
@@ -58,9 +66,18 @@ namespace Front.PerfilesABM
 
         protected void btnConfirmarReactivacion_Click(object sender, EventArgs e)
         {
-            // Aquí puedes agregar la lógica para reactivar el perfil
-            // Por ejemplo, llamar a un método en la clase de negocio para reactivar el perfil
-            // MostrarMensaje("Perfil reactivado correctamente.", false);
+            
+
+
+            PerfilesNegocio perfilesNegocio = new PerfilesNegocio();
+            Perfil perfil = new Perfil();
+            perfil.Nombre = TxtNombre.Text;
+            perfil.Estado = true; 
+
+            perfilesNegocio.AgregarPerfil(perfil);
+            
+            Response.Redirect("../Perfiles.aspx");
+
         }
 
 

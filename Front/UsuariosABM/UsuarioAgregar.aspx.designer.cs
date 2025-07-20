@@ -15,166 +15,85 @@ namespace Front.UsuariosABM
     {
 
         /// <summary>
-        /// Control LabelIdCliente.
+        /// Control TextBoxNombre.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelIdCliente;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxNombre;
 
         /// <summary>
-        /// Control TextBoxIdCliente.
+        /// Control TextBoxApellido.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxIdCliente;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxApellido;
 
         /// <summary>
-        /// Control LabelNombreCliente.
+        /// Control TextBoxDni.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelNombreCliente;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxDni;
 
         /// <summary>
-        /// Control TextBoxNombreCliente.
+        /// Control TextBoxDireccion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxNombreCliente;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxDireccion;
 
         /// <summary>
-        /// Control LabelApellidoCliente.
+        /// Control TextBoxTelefono.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelApellidoCliente;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxTelefono;
 
         /// <summary>
-        /// Control TextBoxApellidoCliente.
+        /// Control TextBoxEmail.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxApellidoCliente;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxEmail;
 
         /// <summary>
-        /// Control LabelDniCliente.
+        /// Control TextBoxClave.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelDniCliente;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxClave;
 
         /// <summary>
-        /// Control TextBoxDniCliente.
+        /// Control ddlPerfil.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxDniCliente;
+        protected global::System.Web.UI.WebControls.DropDownList ddlPerfil;
 
         /// <summary>
-        /// Control LabelDireccionCliente.
+        /// Control LabelError.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelDireccionCliente;
-
-        /// <summary>
-        /// Control TextBoxDireccionCliente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxDireccionCliente;
-
-        /// <summary>
-        /// Control LabelTelefonoCliente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelTelefonoCliente;
-
-        /// <summary>
-        /// Control TextBoxTelefonoCliente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxTelefonoCliente;
-
-        /// <summary>
-        /// Control LabelEmailCliente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelEmailCliente;
-
-        /// <summary>
-        /// Control TextBoxEmailCliente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxEmailCliente;
-
-        /// <summary>
-        /// Control LabelClaveCliente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelClaveCliente;
-
-        /// <summary>
-        /// Control TextBoxClaveCliente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxClaveCliente;
-
-        /// <summary>
-        /// Control LabelPerfilCliente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelPerfilCliente;
-
-        /// <summary>
-        /// Control ddlPerfilCliente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlPerfilCliente;
+        protected global::System.Web.UI.WebControls.Label LabelError;
 
         /// <summary>
         /// Control ButtonGuardar.

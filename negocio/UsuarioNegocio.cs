@@ -13,49 +13,14 @@ namespace negocio
         {
             List<Usuario> lista = new List<Usuario>();
             AccesoDatos datos = new AccesoDatos();
-            {
-                try
-                {
-                    datos.SetearConsulta("select U.id, U.Nombre, U.apellido, U.dni, U.direccion, U.telefono, U.email, U.clave, P.nombre as Perfil, U.estado from Usuarios U INNER JOIN Perfiles P on U.idPerfil = P.id where U.estado = 1");
-                    datos.EjecutarLectura();
-                    while (datos.Lector.Read())
-                    {
-                        Usuario aux = new Usuario();
-
-                        aux.Id = (int)datos.Lector["Id"];
-                        aux.Nombre = (string)datos.Lector["Nombre"];
-                        aux.Apellido = (string)datos.Lector["Apellido"];
-                        aux.Dni = (string)datos.Lector["Dni"];
-                        aux.Direccion = (string)datos.Lector["Direccion"];
-                        aux.Telefono = (string)datos.Lector["Telefono"];
-                        aux.Email = (string)datos.Lector["Email"];
-                        aux.clave = (string)datos.Lector["clave"];
-                        aux.Perfil = (Perfil)datos.Lector["Perfil"];
-                        aux.estado = (bool)datos.Lector["estado"];
-
-                        lista.Add(aux);
-                    }
-                    return lista;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Error al listar clientes", ex);
-                }
-            }
-        }
-
-
-        public Usuario ObtenerUsuario(int id)
-        {
-            Usuario aux = new Usuario();
-            AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select U.Id, U.Nombre, U.apellido, U.dni, U.direccion, U.telefono, U.email, U.clave, U.idPerfil, P.nombre as 'Perfil', U.estado from Usuarios U INNER JOIN Perfiles p on U.idPerfil = p.id where U.id = @id");
-                datos.SetearParametro("@id", id);
+                // trae P.id para poder construir el objeto Perfil completo.
+                datos.SetearConsulta("SELECT U.id, U.Nombre, U.apellido, U.dni, U.direccion, U.telefono, U.email, U.clave, P.id as IdPerfil, P.nombre as NombrePerfil, U.estado FROM Usuarios U INNER JOIN Perfiles P ON U.idPerfil = P.id WHERE U.estado = 1");
                 datos.EjecutarLectura();
-                if (datos.Lector.Read())
+                while (datos.Lector.Read())
                 {
+                    Usuario aux = new Usuario();
                     aux.Id = (int)datos.Lector["Id"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Apellido = (string)datos.Lector["Apellido"];
@@ -64,9 +29,56 @@ namespace negocio
                     aux.Telefono = (string)datos.Lector["Telefono"];
                     aux.Email = (string)datos.Lector["Email"];
                     aux.clave = (string)datos.Lector["clave"];
-                    aux.Perfil = (Perfil)datos.Lector["idPerfil"];
-                    aux.Perfil = (Perfil)datos.Lector["Perfil"];
                     aux.estado = (bool)datos.Lector["estado"];
+
+                    // CORRECCIÓN CLAVE: Se instancia y se rellena el objeto Perfil.
+                    aux.Perfil = new Perfil
+                    {
+                        Id = (int)datos.Lector["IdPerfil"],
+                        Nombre = (string)datos.Lector["NombrePerfil"]
+                    };
+
+                    lista.Add(aux);
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+
+        public Usuario ObtenerUsuarioPorId(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("SELECT U.Id, U.Nombre, U.apellido, U.dni, U.direccion, U.telefono, U.email, U.clave, P.id as IdPerfil, P.nombre as NombrePerfil, U.estado FROM Usuarios U INNER JOIN Perfiles P ON U.idPerfil = P.id WHERE U.id = @id");
+                datos.SetearParametro("@id", id);
+                datos.EjecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    Usuario aux = new Usuario();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Apellido = (string)datos.Lector["Apellido"];
+                    aux.Dni = (string)datos.Lector["Dni"];
+                    aux.Direccion = (string)datos.Lector["Direccion"];
+                    aux.Telefono = (string)datos.Lector["Telefono"];
+                    aux.Email = (string)datos.Lector["Email"];
+                    aux.clave = (string)datos.Lector["clave"];
+                    aux.estado = (bool)datos.Lector["estado"];
+
+                    aux.Perfil = new Perfil
+                    {
+                        Id = (int)datos.Lector["IdPerfil"],
+                        Nombre = (string)datos.Lector["NombrePerfil"]
+                    };
                     return aux;
                 }
                 return null;
@@ -83,16 +95,15 @@ namespace negocio
 
         public Usuario ObtenerUsuarioPorEmail(string Email)
         {
-            Usuario aux = new Usuario();
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select U.Id, U.Nombre, U.Apellido, U.Dni, U.Direccion, U.Telefono, U.Email, U.clave, U.idPerfil, P.Nombre as nombrePerfil from Usuarios U " +
-                             "inner join Perfiles P on U.idPerfil = P.Id where U.Email = @Email and U.estado = 1");
+                datos.SetearConsulta("SELECT U.Id, U.Nombre, U.Apellido, U.Dni, U.Direccion, U.Telefono, U.Email, U.clave, P.id as IdPerfil, P.Nombre as NombrePerfil FROM Usuarios U INNER JOIN Perfiles P ON U.idPerfil = P.Id WHERE U.Email = @Email AND U.estado = 1");
                 datos.SetearParametro("@Email", Email);
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())
                 {
+                    Usuario aux = new Usuario();
                     aux.Id = (int)datos.Lector["Id"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Apellido = (string)datos.Lector["Apellido"];
@@ -101,8 +112,13 @@ namespace negocio
                     aux.Telefono = (string)datos.Lector["Telefono"];
                     aux.Email = (string)datos.Lector["Email"];
                     aux.clave = (string)datos.Lector["clave"];
-                    aux.Perfil = (Perfil)datos.Lector["idPerfil"];
-                    aux.Perfil = (Perfil)datos.Lector["nombrePerfil"];
+
+                    aux.Perfil = new Perfil
+                    {
+                        Id = (int)datos.Lector["IdPerfil"],
+                        Nombre = (string)datos.Lector["NombrePerfil"]
+                    };
+
                     return aux;
                 }
                 return null;
@@ -120,12 +136,12 @@ namespace negocio
 
 
 
-        public void AgregarUsuarios(Usuario nuevo)
+        public void AgregarUsuario(Usuario nuevo)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("insert into Usuarios (Nombre, Apellido, Dni, Direccion, Telefono, Email, Clave, idPerfil) values (@Nombre, @Apellido, @Dni, @Direccion, @Telefono, @Email, @Clave, @idPerfil)");
+                datos.SetearConsulta("INSERT INTO Usuarios (Nombre, Apellido, Dni, Direccion, Telefono, Email, Clave, idPerfil) VALUES (@Nombre, @Apellido, @Dni, @Direccion, @Telefono, @Email, @Clave, @idPerfil)");
                 datos.SetearParametro("@Nombre", nuevo.Nombre);
                 datos.SetearParametro("@Apellido", nuevo.Apellido);
                 datos.SetearParametro("@Dni", nuevo.Dni);
@@ -133,8 +149,8 @@ namespace negocio
                 datos.SetearParametro("@Telefono", nuevo.Telefono);
                 datos.SetearParametro("@Email", nuevo.Email);
                 datos.SetearParametro("@Clave", nuevo.clave);
-                datos.SetearParametro("@idPerfil", nuevo.Perfil);
-                datos.SetearParametro("@estado", 1);
+                // CORRECCIÓN: Se pasa el ID del perfil, no el objeto completo.
+                datos.SetearParametro("@idPerfil", nuevo.Perfil.Id);
                 datos.EjecutarAccion();
             }
             catch (Exception ex)
@@ -148,22 +164,12 @@ namespace negocio
         }
 
 
-        public void ModificarUsuarios(Usuario modificado)
+        public void ModificarUsuario(Usuario modificado)
         {
-
-
-            if (string.IsNullOrEmpty(modificado.clave))
-            {
-                throw new ArgumentException("La clave no puede estar vacía.");
-            }
-
-
-
-
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("update Usuarios set Nombre = @Nombre, Apellido = @Apellido, Dni = @Dni, Direccion = @Direccion, Telefono = @Telefono, Email = @Email, Clave = @Clave, idPerfil = @idPerfil where Id = @Id");
+                datos.SetearConsulta("UPDATE Usuarios SET Nombre = @Nombre, Apellido = @Apellido, Dni = @Dni, Direccion = @Direccion, Telefono = @Telefono, Email = @Email, Clave = @Clave, idPerfil = @idPerfil WHERE Id = @Id");
                 datos.SetearParametro("@Nombre", modificado.Nombre);
                 datos.SetearParametro("@Apellido", modificado.Apellido);
                 datos.SetearParametro("@Dni", modificado.Dni);
@@ -171,28 +177,30 @@ namespace negocio
                 datos.SetearParametro("@Telefono", modificado.Telefono);
                 datos.SetearParametro("@Email", modificado.Email);
                 datos.SetearParametro("@Clave", modificado.clave);
-                datos.SetearParametro("@idPerfil", modificado.Perfil);
+                // CORRECCIÓN: Se pasa el ID del perfil, no el objeto completo.
+                datos.SetearParametro("@idPerfil", modificado.Perfil.Id);
                 datos.SetearParametro("@Id", modificado.Id);
                 datos.EjecutarAccion();
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al modificar cliente", ex);
+                throw ex;
             }
             finally
             {
                 datos.CerrarConexion();
             }
+
         }
 
 
 
-        public void EliminarUsuario(int id)
+        public void BajaLogicaUsuario(int id)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("update Usuarios SET estado = 0 where Id = @Id");
+                datos.SetearConsulta("UPDATE Usuarios SET estado = 0 WHERE Id = @Id");
                 datos.SetearParametro("@Id", id);
                 datos.EjecutarAccion();
             }

@@ -27,16 +27,16 @@ namespace Front
         protected void Page_Load(object sender, EventArgs e)
         {
 
-
-
-
-
-
-            if (Session["cliente"] == null || !IDPerfilValido())
+            Usuario usuario = Session["usuario"] as Usuario;
+            if (usuario == null || !EsAdmin(usuario))
             {
                 Response.Redirect("Login.aspx");
                 return;
             }
+
+
+
+
 
 
             if (!IsPostBack)
@@ -56,7 +56,11 @@ namespace Front
 
         }
 
-
+        private bool EsAdmin(Usuario usuario)
+        {
+            // Según el plan, solo los Administradores pueden ver los reportes.
+            return usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
+        }
         private int PaginaActual
         {
             get { return (int)(ViewState["PaginaActual"] ?? 1); }
@@ -64,11 +68,7 @@ namespace Front
         }
 
 
-        public bool IDPerfilValido()
-        {
-            Usuario cliente = (Usuario)Session["cliente"];
-            return cliente.idPerfil == 2;
-        }
+   
 
         private int TamañoPagina = 10;
 
@@ -78,27 +78,18 @@ namespace Front
         {
             litVentasHoy.Text = ventanegocio.cantidadVentasHoy().ToString();
 
-            litPedidosPendientes.Text = ventanegocio.cantidadVentaPendiente().ToString();
+            litPedidosPendientes.Text = ventanegocio.ContarVentasPorEstado(1).ToString();
 
             litUsuariosRegistrados.Text = clienteNegocio.CantidadUsuarios().ToString();
 
             litCantidadProductos.Text = productonegocio.CantidadProductos().ToString();
         }
 
-        //public void cargarDatosPanel()
-        //{ 
-             
-     
-
-        //    List<Venta> ventas = ventanegocio.ListarVentas();
-
-        //    rptVentas.DataSource = ventas;
-        //    rptVentas.DataBind(); 
+       
 
 
 
-
-        //}
+        
 
 
         private void CargarDatosPanel()
@@ -106,7 +97,7 @@ namespace Front
             List<Venta> ventas = ventanegocio.ListarVentas(); // Método que obtiene la lista de ventas
             int totalVentas = ventas.Count;
 
-            // Aplica la paginación
+            //paginación
             var ventasPaginadas = ventas.Skip((PaginaActual - 1) * TamañoPagina).Take(TamañoPagina).ToList();
 
             rptVentas.DataSource = ventasPaginadas;

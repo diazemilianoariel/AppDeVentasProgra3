@@ -1,24 +1,15 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\programador\\Documents\\TUP 2025\\PROGRA 3 RECUPERATORIO\\AppVentasProgra3Bis\\AppDeVentasProgra3\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\documents\\tup 2025\\progra 3 recuperatorio\\appventasprogra3bis\\appdeventasprogra3\\front\\error.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\error.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|c:\\users\\programador\\documents\\tup 2025\\progra 3 recuperatorio\\appventasprogra3bis\\appdeventasprogra3\\dominio\\perfil.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9512E1C9-53A7-4D8A-BE0F-71318C8FCC45}|dominio\\dominio.csproj|solutionrelative:dominio\\perfil.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "WorkspaceRootPath": "C:\\Users\\programador\\Desktop\\AppVentasProgra3Bis\\AppDeVentasProgra3\\",
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 652,
-          "SelectedChildIndex": 4,
+          "DockedWidth": 200,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -35,32 +26,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Error.aspx",
-              "DocumentMoniker": "C:\\Users\\programador\\Documents\\TUP 2025\\PROGRA 3 RECUPERATORIO\\AppVentasProgra3Bis\\AppDeVentasProgra3\\Front\\Error.aspx",
-              "RelativeDocumentMoniker": "Front\\Error.aspx",
-              "ToolTip": "C:\\Users\\programador\\Documents\\TUP 2025\\PROGRA 3 RECUPERATORIO\\AppVentasProgra3Bis\\AppDeVentasProgra3\\Front\\Error.aspx",
-              "RelativeToolTip": "Front\\Error.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-07-19T10:10:47.985Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Perfil.cs",
-              "DocumentMoniker": "C:\\Users\\programador\\Documents\\TUP 2025\\PROGRA 3 RECUPERATORIO\\AppVentasProgra3Bis\\AppDeVentasProgra3\\dominio\\Perfil.cs",
-              "RelativeDocumentMoniker": "dominio\\Perfil.cs",
-              "ToolTip": "C:\\Users\\programador\\Documents\\TUP 2025\\PROGRA 3 RECUPERATORIO\\AppVentasProgra3Bis\\AppDeVentasProgra3\\dominio\\Perfil.cs",
-              "RelativeToolTip": "dominio\\Perfil.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAA9wBQAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-19T08:22:19.533Z",
-              "EditorCaption": ""
             }
           ]
         },

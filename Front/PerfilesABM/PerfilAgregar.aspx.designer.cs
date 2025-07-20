@@ -33,13 +33,22 @@ namespace Front.PerfilesABM
         protected global::System.Web.UI.WebControls.TextBox TxtNombre;
 
         /// <summary>
-        /// Control LabelEstado.
+        /// Control LabelError.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelEstado;
+        protected global::System.Web.UI.WebControls.Label LabelError;
+
+        /// <summary>
+        /// Control LabelErrorPerfilExistente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelErrorPerfilExistente;
 
         /// <summary>
         /// Control CheckBoxEstado.
@@ -51,22 +60,13 @@ namespace Front.PerfilesABM
         protected global::System.Web.UI.WebControls.CheckBox CheckBoxEstado;
 
         /// <summary>
-        /// Control lblConfirmacion.
+        /// Control LabelEstado.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblConfirmacion;
-
-        /// <summary>
-        /// Control btnConfirmarReactivacion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnConfirmarReactivacion;
+        protected global::System.Web.UI.WebControls.Label LabelEstado;
 
         /// <summary>
         /// Control ButtonGuardar.

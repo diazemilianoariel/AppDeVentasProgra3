@@ -19,7 +19,7 @@ namespace negocio
                 {
                     Marca aux = new Marca();
 
-                    aux.id = (int)datos.Lector["id"];
+                    aux.Id = (int)datos.Lector["id"];
                     aux.nombre = (string)datos.Lector["nombre"];
                     aux.estado = (bool)datos.Lector["estado"];
 
@@ -48,7 +48,7 @@ namespace negocio
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())
                 {
-                    aux.id = (int)datos.Lector["id"];
+                    aux.Id = (int)datos.Lector["id"];
                     aux.nombre = (string)datos.Lector["nombre"];
                     aux.estado = (bool)datos.Lector["estado"];
                     return aux;
@@ -123,7 +123,7 @@ namespace negocio
                 datos.SetearConsulta("update Marcas set nombre = @nombre, estado = @estado where id = @id");
                 datos.SetearParametro("@nombre", marca.nombre);
                 datos.SetearParametro("@estado", marca.estado);
-                datos.SetearParametro("@id", marca.id);
+                datos.SetearParametro("@id", marca.Id);
                 datos.EjecutarAccion();
             }
             catch (Exception ex)

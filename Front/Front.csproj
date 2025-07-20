@@ -95,7 +95,7 @@
     <Content Include="PerfilesABM\PerfilEliminar.aspx" />
     <Content Include="PerfilesABM\PerfilAgregar.aspx" />
     <Content Include="PerfilesABM\PerfilModificar.aspx" />
-    <Content Include="Productos\DetalleProducto.aspx" />
+    <Content Include="ProductosABM\DetalleProducto.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="EstiloCSS\estilo.css" />
     <Content Include="Factura.aspx" />
@@ -103,9 +103,9 @@
     <Content Include="Marcas.aspx" />
     <Content Include="MisCompras.aspx" />
     <Content Include="Perfiles.aspx" />
-    <Content Include="Productos\ProductoAgregar.aspx" />
-    <Content Include="Productos\ProductoEliminar.aspx" />
-    <Content Include="Productos\ProductoModificar.aspx" />
+    <Content Include="ProductosABM\ProductoAgregar.aspx" />
+    <Content Include="ProductosABM\ProductoEliminar.aspx" />
+    <Content Include="ProductosABM\ProductoModificar.aspx" />
     <Content Include="ProveedoresABM\ProveedorAgregar.aspx" />
     <Content Include="ProveedoresABM\ProveedorEliminar.aspx" />
     <Content Include="ProveedoresABM\ProveedorModificar.aspx" />
@@ -222,11 +222,11 @@
     <Compile Include="PerfilesABM\PerfilModificar.aspx.designer.cs">
       <DependentUpon>PerfilModificar.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Productos\DetalleProducto.aspx.cs">
+    <Compile Include="ProductosABM\DetalleProducto.aspx.cs">
       <DependentUpon>DetalleProducto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Productos\DetalleProducto.aspx.designer.cs">
+    <Compile Include="ProductosABM\DetalleProducto.aspx.designer.cs">
       <DependentUpon>DetalleProducto.aspx</DependentUpon>
     </Compile>
     <Compile Include="Error.aspx.cs">
@@ -271,25 +271,25 @@
     <Compile Include="Perfiles.aspx.designer.cs">
       <DependentUpon>Perfiles.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Productos\ProductoAgregar.aspx.cs">
+    <Compile Include="ProductosABM\ProductoAgregar.aspx.cs">
       <DependentUpon>ProductoAgregar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Productos\ProductoAgregar.aspx.designer.cs">
+    <Compile Include="ProductosABM\ProductoAgregar.aspx.designer.cs">
       <DependentUpon>ProductoAgregar.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Productos\ProductoEliminar.aspx.cs">
+    <Compile Include="ProductosABM\ProductoEliminar.aspx.cs">
       <DependentUpon>ProductoEliminar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Productos\ProductoEliminar.aspx.designer.cs">
+    <Compile Include="ProductosABM\ProductoEliminar.aspx.designer.cs">
       <DependentUpon>ProductoEliminar.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Productos\ProductoModificar.aspx.cs">
+    <Compile Include="ProductosABM\ProductoModificar.aspx.cs">
       <DependentUpon>ProductoModificar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Productos\ProductoModificar.aspx.designer.cs">
+    <Compile Include="ProductosABM\ProductoModificar.aspx.designer.cs">
       <DependentUpon>ProductoModificar.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProveedoresABM\ProveedorAgregar.aspx.cs">

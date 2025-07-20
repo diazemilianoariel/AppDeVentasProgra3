@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MASTER.Master" AutoEventWireup="true" CodeBehind="Productos.aspx.cs" Inherits="Front.producto" %>
+﻿<%@ Page Title="Gestión de Productos" Language="C#" MasterPageFile="~/MASTER.Master" AutoEventWireup="true" CodeBehind="Productos.aspx.cs" Inherits="Front.Productos" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -16,75 +16,50 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
-
     <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="text-center">Gestion de Productos</h1>
-            </div>
+        <div class="text-center">
+            <h1 class="mb-3">Gestión de Productos</h1>
+            <p class="text-muted">Administre y organice la información de sus Productos de manera sencilla y rápida.</p>
         </div>
 
-
-        <div class="row ">
-            <div class="col-md-12 ">
-                <h7 class="text-center">Gestione Sus Productos de Manera Ágil y sencilla, Agregue, Modifique o Elimine los Productos que Desee</h7>
-            </div>
+        <div class="row mt-4 justify-content-center">
+            <%-- MEJORA DE SEGURIDAD: Este botón solo es visible para los Administradores. --%>
+            <% if (IsAdmin) { %>
+                <%-- CORRECCIÓN: La ruta ahora apunta a la carpeta correcta "ProductosABM". --%>
+                <asp:HyperLink NavigateUrl="~/ProductosABM/ProductoAgregar.aspx" runat="server" CssClass="btn btn-primary">Nuevo Producto</asp:HyperLink>
+            <% } %>
         </div>
 
+        <asp:Label ID="lblError" runat="server" CssClass="text-danger text-center d-block mt-3" Visible="false"></asp:Label>
 
-
-
-
-
-        <!-- Grilla donde van los datos seleccionados -->
-        <div class="row mt-5 justify-content-center">
-            <a href="Productos/ProductoAgregar.aspx" class="btn btn-primary">Nuevo</a>
-            <div class="">
+        <div class="row mt-4">
+            <div class="col">
                 <div class="table-responsive">
                     <asp:GridView ID="GridViewProductos" runat="server" CssClass="table table-striped table-bordered table-dark w-100" AutoGenerateColumns="False" OnRowCommand="GridViewProductos_RowCommand">
                         <Columns>
                             <asp:BoundField DataField="id" HeaderText="ID" />
                             <asp:BoundField DataField="nombre" HeaderText="Nombre" />
                             <asp:BoundField DataField="descripcion" HeaderText="Descripción" />
-                            <asp:BoundField DataField="precio" HeaderText="Precio" />
-                            <asp:BoundField DataField="margenGanancia" HeaderText="margenGanancia" />
-                            <asp:BoundField DataField="Stock" HeaderText="Stock" />
+                            <asp:BoundField DataField="precio" HeaderText="Precio" DataFormatString="{0:C}" />
+                            <asp:BoundField DataField="stock" HeaderText="Stock" />
                             <asp:BoundField DataField="Marca.nombre" HeaderText="Marca" />
-                            <asp:BoundField DataField="Tipo.nombre" HeaderText="Tipo" />
                             <asp:BoundField DataField="Categoria.nombre" HeaderText="Categoría" />
-                            <asp:BoundField DataField="Proveedor.nombre" HeaderText="Proveedor" />
                             <asp:TemplateField HeaderText="Disponibilidad">
                                 <ItemTemplate>
                                     <%# Convert.ToBoolean(Eval("Estado")) ? "Disponible" : "No disponible" %>
                                 </ItemTemplate>
                             </asp:TemplateField>
-
-
-                            <asp:TemplateField>
+                            <asp:TemplateField HeaderText="Acciones">
                                 <ItemTemplate>
                                     <asp:Button ID="btnModificar" runat="server" Text="Modificar" CommandName="Modificar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-success btn-sm" />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-
-                            <asp:TemplateField>
-                                <ItemTemplate>
                                     <asp:Button ID="btnDetalle" runat="server" Text="Detalle" CommandName="Detalle" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-info btn-sm" />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-
-                            <asp:TemplateField>
-                                <ItemTemplate>
-                                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CommandName="Eliminar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-danger btn-sm" />
+                                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CommandName="Eliminar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-danger btn-sm" Visible="<%# IsAdmin %>" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
-
-
                 </div>
             </div>
         </div>
-
     </div>
 </asp:Content>
