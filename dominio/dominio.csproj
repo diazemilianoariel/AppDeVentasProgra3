@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Categoria.cs" />
+    <Compile Include="CompraResumen.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="Compra.cs" />
     <Compile Include="DetalleCompra.cs" />

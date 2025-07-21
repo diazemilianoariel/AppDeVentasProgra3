@@ -9,10 +9,118 @@ namespace negocio
     public class FacturaNegocio
     {
 
-        // generar una factura insercion 
+        public CompraResumen ObtenerCompraPorId(int idVenta)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                string consulta = @"SELECT V.id as IdVenta, V.monto as TotalFactura, V.fecha as Fecha, E.nombre as Estado
+                            FROM Ventas V
+                            INNER JOIN EstadoVenta E ON V.idEstadoVenta = E.id
+                            WHERE V.id = @idVenta";
+                datos.SetearConsulta(consulta);
+                datos.SetearParametro("@idVenta", idVenta);
+                datos.EjecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    CompraResumen compra = new CompraResumen();
+                    compra.IdVenta = (int)datos.Lector["IdVenta"];
+                    compra.TotalFactura = (decimal)datos.Lector["TotalFactura"];
+                    compra.Fecha = (DateTime)datos.Lector["Fecha"];
+                    compra.Estado = (string)datos.Lector["Estado"];
+                    return compra;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
 
 
-        // metodo para listar facturas
+        // Puedes agregar esto a FacturaNegocio.cs o a una nueva clase VentaNegocio.cs
+        public List<Producto> ObtenerDetalleVenta(int idVenta)
+        {
+            List<Producto> lista = new List<Producto>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                string consulta = @"SELECT P.nombre, DV.cantidad, DV.precioVenta 
+                          FROM DetalleVentas DV
+                          INNER JOIN Productos P ON P.id = DV.idProducto
+                          WHERE DV.idVenta = @idVenta";
+                datos.SetearConsulta(consulta);
+                datos.SetearParametro("@idVenta", idVenta);
+                datos.EjecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    Producto aux = new Producto();
+                    aux.nombre = (string)datos.Lector["nombre"];
+                    aux.Cantidad = (int)datos.Lector["cantidad"]; // Asumo que tienes la prop Cantidad en Producto
+                    aux.precio = (decimal)datos.Lector["precioVenta"];
+                    lista.Add(aux);
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+
+        public List<CompraResumen> ListarComprasPorCliente(int idCliente)
+        {
+            List<CompraResumen> lista = new List<CompraResumen>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                // Usamos la consulta que ya sabíamos que funciona
+                string consulta = @"SELECT
+                              V.id as IdVenta,
+                              V.monto as TotalFactura,
+                              V.fecha as Fecha,
+                              E.nombre as Estado
+                          FROM Ventas V
+                          INNER JOIN EstadoVenta E ON V.idEstadoVenta = E.id
+                          WHERE V.idUsuario = @idCliente";
+
+                datos.SetearConsulta(consulta);
+                datos.SetearParametro("@idCliente", idCliente);
+                datos.EjecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    // Creamos una instancia de nuestro nuevo modelo: CompraResumen
+                    CompraResumen aux = new CompraResumen();
+                    aux.IdVenta = (int)datos.Lector["IdVenta"];
+                    aux.TotalFactura = (decimal)datos.Lector["TotalFactura"];
+                    aux.Fecha = (DateTime)datos.Lector["Fecha"];
+                    aux.Estado = (string)datos.Lector["Estado"];
+
+                    lista.Add(aux);
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al listar las compras del cliente.", ex);
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
 
         public List<Factura> ListarFacturas(int idCliente)
         {
@@ -30,7 +138,7 @@ namespace negocio
                     aux.IdVenta = (int)datos.Lector["idVenta"];
                     aux.Fecha = (DateTime)datos.Lector["Fecha"];
                     aux.TotalFactura = (decimal)datos.Lector["Total"];
-                    
+
                     lista.Add(aux);
                 }
                 return lista;
@@ -43,6 +151,7 @@ namespace negocio
             {
                 datos.CerrarConexion();
             }
+
         }
 
         public void GenerarFactura(dominio.Factura factura)
@@ -67,7 +176,7 @@ namespace negocio
 
         }
 
-
+            
 
 
     }

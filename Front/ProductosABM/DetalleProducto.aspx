@@ -1,8 +1,8 @@
-﻿<%@ Page Title="Detalle de Producto" Language="C#" MasterPageFile="~/MASTER.Master" AutoEventWireup="true" CodeBehind="DetalleProducto.aspx.cs" Inherits="Front.DetalleProducto" %>
+﻿<%@ Page Title="Detalle de Producto" Language="C#" MasterPageFile="~/MASTER.Master" AutoEventWireup="true" CodeBehind="DetalleProducto.aspx.cs" Inherits="Front.ProductosABM.DetalleProducto" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="~/EstiloCSS/estilo.css" />
+    <link rel="stylesheet" type="text/css" href="~/EstiloCSS/estilo.css" /> 
 
 </asp:Content>
 

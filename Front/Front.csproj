@@ -89,6 +89,7 @@
     <Content Include="Carrito.aspx" />
     <Content Include="ContraseñaRecupero.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="DetalleCompra.aspx" />
     <Content Include="MarcasABM\MarcaAgregar.aspx" />
     <Content Include="MarcasABM\MarcaEliminar.aspx" />
     <Content Include="MarcasABM\MarcaModificar.aspx" />
@@ -179,6 +180,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DetalleCompra.aspx.cs">
+      <DependentUpon>DetalleCompra.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalleCompra.aspx.designer.cs">
+      <DependentUpon>DetalleCompra.aspx</DependentUpon>
     </Compile>
     <Compile Include="MarcasABM\MarcaAgregar.aspx.cs">
       <DependentUpon>MarcaAgregar.aspx</DependentUpon>

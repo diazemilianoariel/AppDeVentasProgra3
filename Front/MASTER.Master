@@ -2,19 +2,30 @@
 <%@ Import Namespace="dominio" %>
 
 <!DOCTYPE html>
+
+
 <html>
+
+
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
+    <title> - La Tienda Online -</title>
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="~/EstiloCSS/estilo.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
 </head>
+
+
+
 <body>
+
+
     <form id="form1" runat="server">
         <header class="navbar navbar-expand-lg navbar-dark bg-dark">
             <asp:HyperLink ID="hlHome" runat="server" CssClass="navbar-brand" NavigateUrl="~/Default.aspx">
@@ -99,13 +110,26 @@
             </asp:ContentPlaceHolder>
         </main>
 
+
+
+
         <footer class="bg-dark text-white text-center p-3 mt-auto">
             &copy; 2024 Mi Negocio. Todos los derechos reservados.
         </footer>
+
+
+
+
     </form>
+
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
+
+
+
 </html>

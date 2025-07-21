@@ -26,7 +26,7 @@ namespace Front.ProductosABM
 
             if (!IsPostBack)
             {
-                string productoId = Request.QueryString["id"];
+                string productoId = Request.QueryString["Id"];
                 if (!string.IsNullOrEmpty(productoId))
                 {
                     CargarDetallesProducto(productoId);
@@ -91,7 +91,7 @@ namespace Front.ProductosABM
 
                         // Redirigimos al catálogo para que el usuario vea que se agregó.
                         // La Master Page actualizará el contador automáticamente.
-                        Response.Redirect("../Default.aspx");
+                        Response.Redirect(Request.RawUrl, false);
                     }
                     else
                     {

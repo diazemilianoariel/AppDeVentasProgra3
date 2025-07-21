@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using negocio;
 using dominio;
-
 
 namespace Front
 {
@@ -14,61 +11,137 @@ namespace Front
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-
-            if (Session["cliente"] == null)
+            
+            try
             {
-                Response.Redirect("Login.aspx");
-                return;
-            }
-            if (!IsPostBack)
-            {
-                CargarCompras();
-            }
+                if (!IsPostBack)
+                {
+                    Usuario usuario = Session["usuario"] as Usuario;
 
+                    // ¿Existe el usuario?
+                    if (usuario == null)
+                    {
+                        Response.Redirect("Login.aspx");
+                        return;
+                    }
+
+                    //  ¿El usuario tiene un perfil asignado?
+                    if (usuario.Perfil == null)
+                    {
+                        Session["error"] = new Exception("El usuario '" + usuario.Email + "' no tiene un perfil válido asignado.");
+                        Response.Redirect("Error.aspx");
+                        return;
+                    }
+
+                    // ¿El perfil es el correcto?
+                    bool esCliente = usuario.Perfil.Id == (int)TipoPerfil.Cliente;
+                    bool esAdmin = usuario.Perfil.Id == (int)TipoPerfil.Administrador;
+
+                    if (!esCliente && !esAdmin)
+                    {
+                        Session["error"] = new Exception("Acceso denegado. El perfil actual no tiene permiso.");
+                        Response.Redirect("Error.aspx");
+                        return;
+                    }
+
+                    // Si todo está bien, cargamos las compras.
+                    CargarCompras(usuario.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                Session["error"] = ex;
+                Response.Redirect("Error.aspx");
+            }
         }
 
-
-        private void CargarCompras()
+        
+        private void CargarCompras(int idUsuario)
         {
+            FacturaNegocio negocio = new FacturaNegocio();
+            var listaCompleta = negocio.ListarComprasPorCliente(idUsuario);
 
-
-
-
-            Usuario cliente = (Usuario)Session["cliente"];
-            negocio.FacturaNegocio negocio = new negocio.FacturaNegocio();
-            gvMisCompras.DataSource = negocio.ListarFacturas(cliente.Id);
-            gvMisCompras.DataBind();
-
-
-        }
-
-
-
-        protected void gvMisCompras_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-
-
-
-
-
-            if (e.CommandName == "VerFactura")
+            if (listaCompleta != null && listaCompleta.Any())
             {
+                // Agrupamos las compras por Año y Mes usando LINQ
+                var todosLosGrupos = listaCompleta
+                .Where(c => c.Fecha != DateTime.MinValue && c.Fecha != null)
+                .OrderByDescending(c => c.Fecha)
+                .GroupBy(c => new { c.Fecha.Year, c.Fecha.Month })
+                .Select(g => new {
+                    Periodo = new DateTime(g.Key.Year, g.Key.Month, 1),
+                    ComprasDelPeriodo = g.ToList()
+                });
 
-                string[] argumentos = e.CommandArgument.ToString().Split('|');
-                decimal valorDecimal = Convert.ToDecimal(argumentos[1]);
 
 
-                int IdVenta = Convert.ToInt32(argumentos[0]);
-                Session["IdVenta"] = IdVenta;
+                var gruposParaMostrar = todosLosGrupos.Take(this.MesesPorPagina).ToList();
 
 
-                Session["TotalFactura"] = valorDecimal;
-
-                Response.Redirect("Factura.aspx");
+                // Asignamos  datos al Repeater principal
+                rptGruposCompras.DataSource = gruposParaMostrar;
+                rptGruposCompras.DataBind();
             }
-
-
+            else
+            {
+                //  mensaje.
+                pnlNoHayCompras.Visible = true;
+            }
         }
+
+        // MÉTODO DE AYUDA PARA LOS BADGES DE ESTADO 
+        public string GetStatusBadgeClass(object estadoObj)
+        {
+            if (estadoObj == null || estadoObj == DBNull.Value)
+            {
+                return "badge badge-secondary"; // Color neutral para estados desconocidos
+            }
+            string estado = estadoObj.ToString();
+            switch (estado)
+            {
+                case "Aprobado":
+                    return "badge badge-success";
+                case "Cancelado":
+                    return "badge badge-danger";
+                case "Pendiente":
+                    return "badge badge-warning";
+                default:
+                    return "badge badge-secondary";
+            }
+        }
+
+        // MANEJADOR DE EVENTOS PARA EL BOTÓN "VER DETALLES" 
+        protected void rptCompras_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "VerDetalles")
+            {
+                string idVenta = e.CommandArgument.ToString();
+                Response.Redirect("DetalleCompra.aspx?id=" + idVenta, false);
+            }
+        }
+
+
+
+        private int MesesPorPagina
+        {
+            get { return ViewState["MesesPorPagina"] != null ? (int)ViewState["MesesPorPagina"] : 3; } // Mostramos 3 meses inicialmente
+            set { ViewState["MesesPorPagina"] = value; }
+        }
+
+        protected void btnCargarMas_Click(object sender, EventArgs e)
+        {
+            // Aumentamos la cantidad de meses a mostrar
+            this.MesesPorPagina += 3; // Cargamos los siguientes 3 meses
+
+            // Volvemos a cargar los datos
+            Usuario usuario = Session["usuario"] as Usuario;
+            if (usuario != null)
+            {
+                CargarCompras(usuario.Id);
+            }
+        }
+
+
+
     }
 }
