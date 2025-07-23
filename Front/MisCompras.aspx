@@ -1,73 +1,50 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MASTER.Master" AutoEventWireup="true" CodeBehind="MisCompras.aspx.cs" Inherits="Front.MisCompras" %>
+﻿<%@ Page Title="Mis Compras" Language="C#" MasterPageFile="~/MASTER.Master" AutoEventWireup="true" CodeBehind="MisCompras.aspx.cs" Inherits="Front.MisCompras" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="row mt-5">
-        <div class="col-md-12">
-            <h2 class="text-center">Mis Compras</h2>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="text-center mb-4">Mi Historial de Compras</h2>
 
-            <%-- Eliminamos el GridView y usamos un Repeater para los grupos de meses --%>
-            <asp:Repeater ID="rptGruposCompras" runat="server">
-                <ItemTemplate>
+                <asp:GridView ID="gvMisCompras" runat="server" AutoGenerateColumns="false" CssClass="table table-hover" GridLines="None" OnRowCommand="gvMisCompras_RowCommand">
+                    <Columns>
+                        <asp:BoundField DataField="IdVenta" HeaderText="N° de Orden" />
+                        <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" />
+                        <asp:BoundField DataField="Monto" HeaderText="Total" DataFormatString="{0:C}" />
+                        
+                        <asp:TemplateField HeaderText="Estado">
+                            <ItemTemplate>
+                                <span class='badge <%# Eval("nombreEstadoVenta").ToString() == "Aprobado" ? "badge-success" : (Eval("nombreEstadoVenta").ToString() == "Pendiente" ? "badge-warning" : "badge-danger") %>'>
+                                    <%# Eval("nombreEstadoVenta") %>
+                                </span>
+                            </ItemTemplate>
+                        </asp:TemplateField>
 
-                    <%-- Título para el grupo (ej: julio 2025) --%>
-                    <h4 class="mt-4 mb-3" style="text-transform: capitalize;"><%# Eval("Periodo", "{0:MMMM yyyy}") %></h4>
+                        <asp:TemplateField HeaderText="Acciones">
+                            <ItemTemplate>
+                                <asp:Button ID="btnVerFactura" runat="server" 
+                                    Text="Ver Factura" 
+                                    CommandName="VerFactura" 
+                                    CommandArgument='<%# Eval("IdVenta") %>' 
+                                    CssClass="btn btn-primary btn-sm" 
+                                    Visible='<%# Eval("nombreEstadoVenta").ToString() == "Aprobado" %>' />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
 
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID Venta</th>
-                                    <th>Fecha</th>
-                                    <th>Total</th>
-                                    <th>Estado</th>
-                                    <th class="text-center">Acciones</th>
-                                </tr>
-                            </thead>
+                <%-- Panel que se muestra si no hay compras --%>
+                <asp:Panel ID="pnlNoHayCompras" runat="server" Visible="false" CssClass="text-center mt-5 card p-4">
+                    <p class="h5 text-muted">Aún no has realizado ninguna compra.</p>
+                    <asp:HyperLink NavigateUrl="~/Default.aspx" runat="server" CssClass="btn btn-primary mt-3">Ir al Catálogo</asp:HyperLink>
+                </asp:Panel>
 
-                            <%-- Repeater anidado para mostrar las compras de ESE mes --%>
-                            <%-- Nota el OnItemCommand, que se conecta con tu C# --%>
-                            <asp:Repeater ID="rptCompras" runat="server" DataSource='<%# Eval("ComprasDelPeriodo") %>' OnItemCommand="rptCompras_ItemCommand">
-                                <ItemTemplate>
-                                    <tr>
-                                        <td><%# Eval("IdVenta") %></td>
-                                        <td><%# Eval("Fecha", "{0:dd/MM/yyyy}") %></td>
-                                        <td><%# Eval("TotalFactura", "{0:c}") %></td>
-                                        <td>
-                                            <%-- Usamos el método de ayuda para mostrar el badge de color --%>
-                                            <span class='<%# GetStatusBadgeClass(Eval("Estado")) %>'>
-                                                <%# Eval("Estado") %>
-                                            </span>
-                                        </td>
-                                        <td class="text-center">
-                                            <%-- Este botón ejecutará el código del servidor OnItemCommand --%>
-                                            <asp:Button ID="btnVerDetalles" runat="server"
-                                                Text="Ver Detalles"
-                                                CssClass="btn btn-info btn-sm"
-                                                CommandName="VerDetalles"
-                                                CommandArgument='<%# Eval("IdVenta") %>' />
-                                        </td>
-                                    </tr>
-                                </ItemTemplate>
-                            </asp:Repeater>
-                        </table>
-                    </div>
-
-                </ItemTemplate>
-            </asp:Repeater>
-
-            <%-- Mensaje opcional si no hay compras --%>
-            <asp:Panel ID="pnlNoHayCompras" runat="server" Visible="false" CssClass="text-center mt-5">
-                <p>Aún no has realizado ninguna compra.</p>
-            </asp:Panel>
-
-            <div class="text-center mt-4">
-                <asp:Button ID="btnCargarMas" runat="server" Text="Cargar más compras"
-                    CssClass="btn btn-outline-primary" OnClick="btnCargarMas_Click" />
+                <%-- Label para mostrar errores --%>
+                <asp:Label ID="lblError" runat="server" CssClass="text-danger text-center d-block mt-3" Visible="false"></asp:Label>
             </div>
-
         </div>
     </div>
 </asp:Content>

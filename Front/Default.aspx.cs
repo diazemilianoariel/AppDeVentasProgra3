@@ -10,6 +10,8 @@ namespace Front
 {
     public partial class Default : System.Web.UI.Page
     {
+        public List<Producto> ListaProductos { get; set; }
+
         private DefaultNegocio defaultNegocio = new DefaultNegocio();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -17,7 +19,39 @@ namespace Front
             if (!IsPostBack)
             {
                 CargarProductos();
-               
+
+
+                try
+                {
+                    if (!IsPostBack)
+                    {
+                        ProductoNegocio negocio = new ProductoNegocio();
+
+                        // 1. Leemos el ID de la categoría desde la URL
+                        string idCategoria = Request.QueryString["cat"];
+
+                        // 2. Pasamos el ID al método Listar. Si no hay ID, traerá todo.
+                        ListaProductos = negocio.Listar(idCategoria);
+
+                        // Opcional: Cambiar el título de la página
+                        if (!string.IsNullOrEmpty(idCategoria))
+                        {
+                            // Aquí podrías tener una lógica para buscar el nombre de la categoría
+                            // y mostrarlo en un Label, por ejemplo: "Mostrando productos de: Niños"
+                        }
+
+                        rptProductos.DataSource = ListaProductos;
+                        rptProductos.DataBind();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Session["error"] = ex;
+                    Response.Redirect("Error.aspx");
+                }
+            
+
+
             }
         }
 

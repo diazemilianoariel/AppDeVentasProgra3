@@ -9,63 +9,75 @@ using negocio;
 
 namespace Front
 {
-	public partial class Factura : System.Web.UI.Page
-	{
-     
-
+    public partial class Factura : System.Web.UI.Page
+    {
         protected void Page_Load(object sender, EventArgs e)
-		{
-
+        {
             if (!IsPostBack)
             {
-                CargarFacturas();
+                Usuario usuario = Session["usuario"] as Usuario;
+                if (usuario == null)
+                {
+                    Response.Redirect("Login.aspx");
+                    return;
+                }
+
+                if (Request.QueryString["id"] == null)
+                {
+                    Response.Redirect("MisCompras.aspx");
+                    return;
+                }
+
+                int idVenta = Convert.ToInt32(Request.QueryString["id"]);
+                CargarFactura(idVenta, usuario);
             }
-
-
-
         }
 
-        private void CargarFacturas()
+        private void CargarFactura(int idVenta, Usuario usuarioLogueado)
         {
-            Usuario cliente;
-            cliente = (Usuario)Session["cliente"];
-
-            if(cliente == null)
+            try
             {
+                VentaNegocio ventaNegocio = new VentaNegocio();
+                Venta venta = ventaNegocio.ObtenerVentaPorId(idVenta);
 
-                Response.Redirect("Login.aspx");
+                if (venta == null)
+                {
+                    lblError.Text = "La factura solicitada no fue encontrada.";
+                    lblError.Visible = true;
+                    return;
+                }
 
+                // VALIDACIÓN DE SEGURIDAD CLAVE:
+                // Si el usuario no es admin Y el ID del cliente de la venta no coincide con el ID del usuario logueado...
+                if (usuarioLogueado.Perfil.Id != (int)TipoPerfil.Administrador && venta.Cliente.Id != usuarioLogueado.Id)
+                {
+                    // ...lo redirigimos porque no tiene permiso para ver esta factura.
+                    Response.Redirect("MisCompras.aspx");
+                    return;
+                }
 
+                // Cargar datos del cliente de la venta
+                litCliente.Text = venta.Cliente.Nombre + " " + venta.Cliente.Apellido;
+                litDireccion.Text = venta.Cliente.Direccion;
+                litTelefono.Text = venta.Cliente.Telefono;
+                litEmail.Text = venta.Cliente.Email;
+
+                // Cargar datos de la factura
+                litNumeroFactura.Text = venta.IdVenta.ToString().PadLeft(8, '0');
+                litFecha.Text = venta.Fecha.ToString("dd/MM/yyyy");
+
+                // Cargar productos
+                rptProductos.DataSource = venta.Productos;
+                rptProductos.DataBind();
+
+                // Cargar total
+                litTotalFactura.Text = venta.Monto.ToString("C"); // "C" formatea como moneda
             }
-            else
+            catch (Exception ex)
             {
-                litCliente.Text = cliente.Nombre + " " + cliente.Apellido;
-                litDireccion.Text = cliente.Direccion;
-                litTelefono.Text = cliente.Telefono;
-                litEmail.Text = cliente.Email;
-
+                lblError.Text = "Ocurrió un error al cargar la factura. Por favor, intente más tarde.";
+                lblError.Visible = true;
             }
-
-
-
-            decimal TotalGeneral = Convert.ToDecimal(Session["TotalFactura"]) ;
-
-
-            int IdVenta = Convert.ToInt32(Session["IdVenta"]);
-            Venta venta = new Venta();
-            VentaNegocio ventanegocio = new VentaNegocio();
-            List<Producto> productos = ventanegocio.ListarProductosPorVenta(IdVenta);
-            venta = ventanegocio.ObtenerVentaPorId(IdVenta);
-
-      
-         
-            litTotalFactura.Text = TotalGeneral.ToString();
-
-
-            rptProductos.DataSource = productos;
-            rptProductos.DataBind();
-
-
         }
 
         protected void btnVolver_Click(object sender, EventArgs e)
@@ -75,26 +87,8 @@ namespace Front
 
         protected void btnImprimir_Click(object sender, EventArgs e)
         {
-            // aca  en realidad deberia mandarse por mail si es que necesito mandar la factura nuevamente al cliente
-            // pero como no tengo un servidor de correo configurado, lo que hago es abrir una nueva ventana con la factura
-
+            // Llama a una función de JavaScript para abrir el diálogo de impresión del navegador.
+            ClientScript.RegisterStartupScript(this.GetType(), "print", "window.print();", true);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

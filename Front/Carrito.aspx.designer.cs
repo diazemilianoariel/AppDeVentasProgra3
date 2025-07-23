@@ -33,6 +33,15 @@ namespace Front
         protected global::System.Web.UI.UpdatePanel updPanelCarrito;
 
         /// <summary>
+        /// Control pnlCarritoConItems.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlCarritoConItems;
+
+        /// <summary>
         /// Control rptCarrito.
         /// </summary>
         /// <remarks>
@@ -42,13 +51,22 @@ namespace Front
         protected global::System.Web.UI.WebControls.Repeater rptCarrito;
 
         /// <summary>
-        /// Control lblTotalGeneral.
+        /// Control litSubtotal.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalGeneral;
+        protected global::System.Web.UI.WebControls.Literal litSubtotal;
+
+        /// <summary>
+        /// Control litTotalGeneral.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTotalGeneral;
 
         /// <summary>
         /// Control btnConfirmarCompra.
@@ -67,6 +85,24 @@ namespace Front
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnVolverHome;
+
+        /// <summary>
+        /// Control pnlCarritoVacio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlCarritoVacio;
+
+        /// <summary>
+        /// Control btnIrAlCatalogo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnIrAlCatalogo;
 
         /// <summary>
         /// Control lblMensaje.

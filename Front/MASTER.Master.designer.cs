@@ -78,6 +78,15 @@ namespace Front
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl ActualizarCarrito;
 
         /// <summary>
+        /// Control rptCategorias.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptCategorias;
+
+        /// <summary>
         /// Control hlLogin.
         /// </summary>
         /// <remarks>
@@ -85,15 +94,6 @@ namespace Front
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink hlLogin;
-
-        /// <summary>
-        /// Control lblNombre.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNombre;
 
         /// <summary>
         /// Control btnLogout.

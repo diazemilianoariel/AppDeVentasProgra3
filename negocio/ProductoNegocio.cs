@@ -579,7 +579,57 @@ namespace negocio
         }
 
 
+       /// lista productoen base a una categoria 
+        public List<Producto> Listar(string idCategoria = "")
+        {
+            List<Producto> lista = new List<Producto>();
+            AccesoDatos datos = new AccesoDatos();
 
+            try
+            {
+                // Tu consulta base para traer todos los productos
+                string consulta = "SELECT P.id, P.nombre, P.descripcion, P.precio, P.imagen, M.nombre as Marca, C.nombre as Categoria, P.idMarca, P.idCategoria FROM Productos P INNER JOIN Marcas M ON P.idMarca = M.id INNER JOIN Categorias C ON P.idCategoria = C.id";
+
+                // Si se proporciona un idCategoria, añadimos el filtro WHERE
+                if (!string.IsNullOrEmpty(idCategoria))
+                {
+                    consulta += " WHERE P.idCategoria = @idCategoria";
+                    datos.SetearParametro("@idCategoria", idCategoria);
+                }
+
+                datos.SetearConsulta(consulta);
+                datos.EjecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Producto aux = new Producto();
+                    aux.id = (int)datos.Lector["id"];
+                    aux.nombre = (string)datos.Lector["nombre"];
+                    aux.descripcion = (string)datos.Lector["descripcion"];
+                    aux.precio = (decimal)datos.Lector["precio"];
+                    aux.Imagen = (string)datos.Lector["imagen"];
+
+                    aux.Marca = new Marca();
+                    aux.Marca.Id = (int)datos.Lector["idMarca"];
+                    aux.Marca.nombre = (string)datos.Lector["Marca"];
+
+                    aux.Categoria = new Categoria();
+                    aux.Categoria.Id = (int)datos.Lector["idCategoria"];
+                    aux.Categoria.nombre = (string)datos.Lector["Categoria"];
+
+                    lista.Add(aux);
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
 
     }
 

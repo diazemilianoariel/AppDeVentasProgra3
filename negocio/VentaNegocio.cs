@@ -12,6 +12,45 @@ namespace negocio
 
 
 
+        public List<Venta> ListarVentasPorUsuario(int idUsuario)
+        {
+            List<Venta> lista = new List<Venta>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                string consulta = @"
+            SELECT V.id, V.fecha, V.monto, E.nombre as EstadoVenta
+            FROM Ventas V
+            INNER JOIN EstadoVenta E ON V.idEstadoVenta = E.id
+            WHERE V.idUsuario = @idUsuario
+            ORDER BY V.fecha DESC";
+
+                datos.SetearConsulta(consulta);
+                datos.SetearParametro("@idUsuario", idUsuario);
+                datos.EjecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Venta aux = new Venta();
+                    aux.IdVenta = (int)datos.Lector["id"];
+                    aux.Fecha = (DateTime)datos.Lector["fecha"];
+                    aux.Monto = (decimal)datos.Lector["monto"];
+                    aux.nombreEstadoVenta = (string)datos.Lector["EstadoVenta"];
+
+                    lista.Add(aux);
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
 
         public int cantidadVentasHoy()
         {
@@ -119,15 +158,15 @@ namespace negocio
 
         }
 
+
         public List<Producto> ListarProductosPorVenta(int idVenta)
         {
             List<Producto> productos = new List<Producto>();
             AccesoDatos datos = new AccesoDatos();
-
             try
             {
-                datos.SetearConsulta("SELECT p.id, p.nombre, p.descripcion, dv.precioUnitario, dv.cantidad, p.imagen FROM DetalleVentas dv INNER JOIN Productos p ON dv.idProducto = p.id WHERE dv.idVenta = @idVenta");
-
+                // CORRECCIÓN: La consulta ahora incluye p.precio y p.margenGanancia
+                datos.SetearConsulta("SELECT p.id, p.nombre, p.descripcion, p.precio, p.margenGanancia, dv.cantidad, dv.precioVenta as precioUnitario, p.imagen FROM DetalleVentas dv INNER JOIN Productos p ON dv.idProducto = p.id WHERE dv.idVenta = @idVenta");
                 datos.SetearParametro("@idVenta", idVenta);
                 datos.EjecutarLectura();
 
@@ -137,14 +176,16 @@ namespace negocio
                     producto.id = (int)datos.Lector["id"];
                     producto.nombre = (string)datos.Lector["nombre"];
                     producto.descripcion = (string)datos.Lector["descripcion"];
-                    producto.precio = (decimal)datos.Lector["precioUnitario"];
+                    producto.precio = (decimal)datos.Lector["precio"]; // Precio base
+                    producto.margenGanancia = (decimal)datos.Lector["margenGanancia"]; // Margen
                     producto.Cantidad = (int)datos.Lector["cantidad"];
+                    // El precio de venta se calcula automáticamente en la clase Producto.
+
                     if (datos.Lector["imagen"] != DBNull.Value)
                         producto.Imagen = (string)datos.Lector["imagen"];
 
                     productos.Add(producto);
                 }
-
                 return productos;
             }
             catch (Exception ex)
@@ -157,7 +198,6 @@ namespace negocio
             }
         }
 
-       
 
         public List<Venta> ListarVentasPendientes(string filtro = "")
         {
@@ -373,42 +413,37 @@ namespace negocio
             return lista;
         }
 
+
+
         public Venta ObtenerVentaPorId(int idVenta)
         {
-            Venta venta = new Venta();
-            Usuario cliente = new Usuario();
-
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("SELECT v.id, v.fecha, v.idUsuario, U.nombre, U.apellido, U.dni, U.email, U.telefono, U.direccion, v.enLocal, E.nombre as nombreestadoventa, v.idEstadoVenta, v.monto FROM ventas v INNER JOIN Usuarios U ON v.idUsuario = U.id INNER JOIN EstadoVenta E ON v.idEstadoVenta = E.id WHERE v.id = @idVenta");
+                // La consulta trae todos los datos necesarios del cliente.
+                datos.SetearConsulta("SELECT v.id, v.fecha, v.idUsuario, v.monto, U.nombre, U.apellido, U.direccion, U.telefono, U.email FROM ventas v INNER JOIN Usuarios U ON v.idUsuario = U.id WHERE v.id = @idVenta");
                 datos.SetearParametro("@idVenta", idVenta);
-                
                 datos.EjecutarLectura();
+
                 if (datos.Lector.Read())
                 {
+                    Venta venta = new Venta();
+                    venta.IdVenta = (int)datos.Lector["id"];
+                    venta.Fecha = (DateTime)datos.Lector["fecha"];
+                    venta.Monto = (decimal)datos.Lector["monto"];
 
-                    Venta aux = new Venta();
-                    aux.IdVenta = (int)datos.Lector["id"];
-                    aux.Fecha = (DateTime)datos.Lector["fecha"];
-                    aux.Monto = (decimal)datos.Lector["monto"];
-                    aux.EnLocal = (bool)datos.Lector["enLocal"];
-                    aux.idEstadoVenta = (int)datos.Lector["idEstadoVenta"];
-                    aux.nombreEstadoVenta = (string)datos.Lector["nombreestadoventa"];
+                    // Se mapean los datos del cliente de forma segura, comprobando si son nulos.
+                    venta.Cliente = new Usuario();
+                    venta.Cliente.Id = (int)datos.Lector["idUsuario"];
+                    venta.Cliente.Nombre = datos.Lector["nombre"] != DBNull.Value ? (string)datos.Lector["nombre"] : "";
+                    venta.Cliente.Apellido = datos.Lector["apellido"] != DBNull.Value ? (string)datos.Lector["apellido"] : "";
+                    venta.Cliente.Direccion = datos.Lector["direccion"] != DBNull.Value ? (string)datos.Lector["direccion"] : "";
+                    venta.Cliente.Telefono = datos.Lector["telefono"] != DBNull.Value ? (string)datos.Lector["telefono"] : "";
+                    venta.Cliente.Email = datos.Lector["email"] != DBNull.Value ? (string)datos.Lector["email"] : "";
 
-                    aux.Cliente = new Usuario();
-                    aux.Cliente.Id = (int)datos.Lector["idUsuario"];
-                    aux.Cliente.Nombre = (string)datos.Lector["nombre"];
-                    aux.Cliente.Apellido = (string)datos.Lector["apellido"];
-                    aux.Cliente.Dni = (string)datos.Lector["dni"];
-                    aux.Cliente.Email = (string)datos.Lector["email"];
-                    aux.Cliente.Telefono = (string)datos.Lector["telefono"];
-                    aux.Cliente.Direccion = (string)datos.Lector["direccion"];
-
-                    // Cargar los productos de la venta
-                    aux.Productos = ListarProductosPorVenta(aux.IdVenta);
-                    return aux;
-
+                    // Se llama al método mejorado para cargar los productos.
+                    venta.Productos = ListarProductosPorVenta(venta.IdVenta);
+                    return venta;
                 }
                 return null;
             }
@@ -422,7 +457,6 @@ namespace negocio
             }
         }
 
-        
 
         public decimal CalcularMontoPendiente()
         {

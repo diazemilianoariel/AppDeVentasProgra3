@@ -1,4 +1,5 @@
 ﻿using dominio;
+using negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,20 +30,37 @@ namespace Front
                 totalProductos = carrito.Sum(p => p.Cantidad);
             }
 
+            ActualizarCarrito.InnerText = totalProductos.ToString();
+
+
+
+
+            if (!IsPostBack)
+            {
+                CargarCategoriasDropdown();
+            }
+
             // Actualizamos el contador en el HTML.
             ActualizarCarrito.InnerText = totalProductos.ToString();
 
-            // El resto de tu lógica para el saludo del usuario.
-            // Ojo: Usas Session["cliente"] y Session["usuario"], asegúrate de usar el correcto.
-            // Voy a usar "usuario" como en tu archivo .aspx
-            var usuario = Session["usuario"] as Usuario;
-            if (usuario != null)
-            {
-                // En tu .aspx usas DataBinding (<%#), así que no necesitarías esta línea si funciona.
-                // Pero si no, esta es la forma correcta desde el code-behind.
-                lblNombre.Text = "Bienvenido " + usuario.Nombre;
-            }
+         
 
+        }
+
+
+
+        private void CargarCategoriasDropdown()
+        {
+            try
+            {
+                CategoriaNegocio negocio = new CategoriaNegocio();
+                rptCategorias.DataSource = negocio.ListarCategorias();
+                rptCategorias.DataBind();
+            }
+            catch (Exception ex)
+            {
+                // Manejar el error si no se pueden cargar las categorías.
+            }
         }
 
         public void ActualizarContadorCarrito(int totalProductos = 0)
@@ -52,19 +70,11 @@ namespace Front
         }
 
 
-        public string CartCountClientID
-        {
-            get { return ActualizarCarrito.ClientID; }
-        }
-
+        
 
         protected void BtnLogout_Click(object sender, EventArgs e)
         {
-            // Eliminar la sesión del usuario
-            Session["cliente"] = null;
-            Session.Abandon();
-
-            // Redirigir a la página de inicio de sesión
+            Session.Remove("usuario");
             Response.Redirect("Login.aspx");
         }
     }
