@@ -14,6 +14,13 @@ namespace Front
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+              //  CargarCategoriasDropdown();
+                CategoriaNegocio negocio = new CategoriaNegocio();
+                rptCategorias.DataSource = negocio.ListarCategorias();
+                rptCategorias.DataBind();
+            }
 
             // Esta lógica ahora se ejecuta en cada carga de página (PostBack o no)
             // para que el contador esté siempre sincronizado.
@@ -31,15 +38,6 @@ namespace Front
             }
 
             ActualizarCarrito.InnerText = totalProductos.ToString();
-
-
-
-
-            if (!IsPostBack)
-            {
-                CargarCategoriasDropdown();
-            }
-
             // Actualizamos el contador en el HTML.
             ActualizarCarrito.InnerText = totalProductos.ToString();
 

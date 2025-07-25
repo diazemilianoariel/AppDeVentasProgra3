@@ -61,7 +61,10 @@ namespace negocio
             comando.Connection = conexion;
             try
             {
-                conexion.Open();
+                if (conexion.State == System.Data.ConnectionState.Closed)
+                {
+                    conexion.Open();
+                }
                 lector = comando.ExecuteReader();
             }
             catch (Exception ex)
@@ -144,6 +147,42 @@ namespace negocio
                 conexion.Close();
             }
         }
+
+
+        private SqlTransaction transaccion;
+
+
+        // 2. Añade estos NUEVOS MÉTODOS a tu clase (puedes ponerlos después del constructor)
+
+        public void AbrirConexion()
+        {
+            if (conexion.State == System.Data.ConnectionState.Closed)
+                conexion.Open();
+        }
+
+        public void IniciarTransaccion()
+        {
+            transaccion = conexion.BeginTransaction();
+            comando.Transaction = transaccion;
+        }
+
+        public void ConfirmarTransaccion()
+        {
+            // El '?' es un 'null-conditional operator'. Solo ejecuta Commit() si transaccion no es null.
+            transaccion?.Commit();
+        }
+
+        public void RevertirTransaccion()
+        {
+            transaccion?.Rollback();
+        }
+
+        public void LimpiarParametros()
+        {
+            comando.Parameters.Clear();
+        }
+
+
     }
 
 

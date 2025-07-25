@@ -11,7 +11,92 @@ namespace negocio
 
     public class ProductoNegocio
     {
+        // EN: ProductoNegocio.cs
 
+        public List<Producto> Listar(string filtro = "", string idCategoria = "", int idProducto = 0)
+        {
+            List<Producto> lista = new List<Producto>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                string consulta = @"
+            SELECT P.id, P.nombre, P.descripcion, P.imagen, P.precio, P.margenGanancia, P.estado,
+                   ISNULL(S.cantidad, 0) as Stock,
+                   M.id as idMarca, M.nombre as MarcaNombre,
+                   C.id as idCategoria, C.nombre as CategoriaNombre,
+                   T.id as idTipo, T.nombre as TipoNombre
+            FROM Productos P
+            LEFT JOIN Stock S ON P.id = S.idProducto
+            LEFT JOIN Marcas M ON P.idMarca = M.id
+            LEFT JOIN Categorias C ON P.idCategoria = C.id
+            LEFT JOIN Tipos T ON P.idTipo = T.id
+            WHERE P.estado = 1";
+
+                if (idProducto > 0)
+                {
+                    consulta += " AND P.id = @idProducto";
+                    datos.SetearParametro("@idProducto", idProducto);
+                }
+
+                // --- INICIO DEL CÓDIGO QUE FALTABA ---
+                if (!string.IsNullOrEmpty(idCategoria))
+                {
+                    consulta += " AND P.idCategoria = @idCategoria";
+                    datos.SetearParametro("@idCategoria", idCategoria);
+                }
+
+                if (!string.IsNullOrEmpty(filtro))
+                {
+                    consulta += " AND (P.nombre LIKE @filtro OR P.descripcion LIKE @filtro)";
+                    datos.SetearParametro("@filtro", "%" + filtro + "%");
+                }
+                // --- FIN DEL CÓDIGO QUE FALTABA ---
+
+                datos.SetearConsulta(consulta);
+                datos.EjecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Producto aux = new Producto();
+                    aux.id = (int)datos.Lector["id"];
+                    aux.nombre = (string)datos.Lector["nombre"];
+                    aux.descripcion = (string)datos.Lector["descripcion"];
+                    if (datos.Lector["imagen"] != DBNull.Value)
+                        aux.Imagen = (string)datos.Lector["imagen"];
+                    aux.precio = (decimal)datos.Lector["precio"];
+                    aux.margenGanancia = (decimal)datos.Lector["margenGanancia"];
+                    aux.estado = (bool)datos.Lector["estado"];
+                    aux.stock = (int)datos.Lector["Stock"];
+
+                    aux.Marca = new Marca { Id = (int)datos.Lector["idMarca"], nombre = (string)datos.Lector["MarcaNombre"] };
+                    aux.Categoria = new Categoria { Id = (int)datos.Lector["idCategoria"], nombre = (string)datos.Lector["CategoriaNombre"] };
+                    aux.Tipo = new Tipos { Id = (int)datos.Lector["idTipo"], nombre = (string)datos.Lector["TipoNombre"] };
+
+                    aux.CalcularPrecioVenta();
+                    lista.Add(aux);
+                }
+
+                if (idProducto > 0 && lista.Count > 0)
+                {
+                    datos.Lector.Close();
+                    string consultaProveedores = "SELECT Pr.id, Pr.nombre FROM Proveedores Pr INNER JOIN Proveedores_Productos PP ON Pr.id = PP.idProveedor WHERE PP.idProducto = @idProducto";
+
+                    // Limpiamos parámetros viejos antes de setear uno nuevo para esta consulta específica
+                    datos.LimpiarParametros();
+                    datos.SetearParametro("@idProducto", idProducto);
+                    datos.SetearConsulta(consultaProveedores);
+                    datos.EjecutarLectura();
+                    while (datos.Lector.Read())
+                    {
+                        lista[0].Proveedores.Add(new Proveedor { Id = (int)datos.Lector["id"], Nombre = (string)datos.Lector["nombre"] });
+                    }
+                }
+
+                return lista;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.CerrarConexion(); }
+        }
 
         public int CantidadProductos()
         {
@@ -39,446 +124,141 @@ namespace negocio
             }
         }
 
-
-        public List<Producto> ListarProductos()
-        {
-            List<Producto> lista = new List<Producto>();
-            AccesoDatos accesoDatos = new AccesoDatos();
-            try
-            {
-                // Usar parámetros para evitar inyecciones SQL
-                accesoDatos.SetearConsulta("SELECT P.id, P.nombre, P.descripcion, P.imagen, P.precio, P.margenGanancia, S.cantidad, M.nombre AS MarcaNombre, T.nombre AS TipoNombre, C.nombre AS CategoriaNombre, P.estado, Prov.nombre AS ProveedorNombre " +
-            "FROM Productos P " +
-            "INNER JOIN Stock S ON P.id = S.idProducto " +
-            "INNER JOIN Marcas M ON P.idMarca = M.id " +
-            "INNER JOIN Tipos T ON T.id = P.idTipo " +
-            "INNER JOIN Categorias C ON C.id = P.idCategoria " +
-            "INNER JOIN Proveedores_Productos PP ON P.id = PP.idProducto " +
-            "INNER JOIN Proveedores Prov ON PP.idProveedor = Prov.id");
-
-
-
-                // Ejecutar la consulta
-                accesoDatos.EjecutarLectura();
-
-                // Leer los datos obtenidos
-                while (accesoDatos.Lector.Read())
-                {
-                    Producto producto = new Producto
-                    {
-                        id = accesoDatos.Lector.GetInt32(0),
-                        nombre = accesoDatos.Lector.GetString(1),
-                        descripcion = accesoDatos.Lector.GetString(2),
-                        Imagen = accesoDatos.Lector.GetString(3),
-                        precio = accesoDatos.Lector.GetDecimal(4),
-                        margenGanancia = accesoDatos.Lector.GetDecimal(5),
-                        stock = accesoDatos.Lector.GetInt32(6),
-                        Marca = new Marca { nombre = accesoDatos.Lector.GetString(7) },
-                        Tipo = new Tipos { nombre = accesoDatos.Lector.GetString(8) },
-                        Categoria = new Categoria { nombre = accesoDatos.Lector.GetString(9) },
-                        estado = accesoDatos.Lector.GetBoolean(10),
-                        proveedor = new Proveedor { Nombre = accesoDatos.Lector.GetString(11) }
-                    };
-
-
-
-                    lista.Add(producto);
-
-
-
-
-
-                }
-
-                return lista;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                accesoDatos.CerrarConexion();
-            }
-        }
-
         public Producto ObtenerProducto(int id)
         {
-            AccesoDatos accesoDatos = new AccesoDatos();
-            Producto producto = new Producto();
-            try
+            // 1. Reutilizamos el método que ya hace todo el trabajo pesado.
+            List<Producto> lista = this.Listar(idProducto: id);
+
+            // 2. Si la lista tiene un resultado, ese es nuestro producto.
+            if (lista.Count > 0)
             {
-                // Usar parámetros para evitar inyecciones SQL
-                accesoDatos.SetearConsulta(" SELECT P.id, P.nombre, P.descripcion, P.imagen, P.precio, P.margenGanancia, S.cantidad, M.id AS MarcaId, M.nombre AS MarcaNombre, T.id AS TipoId, T.nombre AS TipoNombre, C.id AS CategoriaId, C.nombre AS CategoriaNombre, Pr.id AS ProveedorId, Pr.nombre AS ProveedorNombre, P.estado FROM Productos P " +
-                    "INNER JOIN Stock S ON P.id = S.idProducto " +
-                    "INNER JOIN Marcas M ON P.idMarca = M.id " +
-                    "INNER JOIN Tipos T ON P.idTipo = T.id " +
-                    "INNER JOIN Categorias C ON P.idCategoria = C.id " +
-                    "INNER JOIN Proveedores_Productos PP ON P.id = PP.idProducto " +
-                    "INNER JOIN Proveedores Pr ON PP.idProveedor = Pr.id " +
-                    "WHERE P.id = @id");
-                // Agregar parámetros con los valores correspondientes
-                accesoDatos.SetearParametro("@id", id);
-
-                // Ejecutar la consulta
-                accesoDatos.EjecutarLectura();
-
-                // Leer los datos obtenidos
-                if (accesoDatos.Lector.Read())
-                {
-                    producto.id = accesoDatos.Lector.GetInt32(0);
-                    producto.nombre = accesoDatos.Lector.GetString(1);
-                    producto.descripcion = accesoDatos.Lector.GetString(2);
-                    producto.Imagen = accesoDatos.Lector.GetString(3);
-                    producto.precio = accesoDatos.Lector.GetDecimal(4);
-                    producto.margenGanancia = accesoDatos.Lector.GetDecimal(5);
-                    producto.stock = accesoDatos.Lector.GetInt32(6);
-                    producto.Marca = new Marca { Id = accesoDatos.Lector.GetInt32(7), nombre = accesoDatos.Lector.GetString(8) };
-                    producto.Tipo = new Tipos { Id = accesoDatos.Lector.GetInt32(9), nombre = accesoDatos.Lector.GetString(10) };
-                    producto.Categoria = new Categoria { Id = accesoDatos.Lector.GetInt32(11), nombre = accesoDatos.Lector.GetString(12) };
-                    producto.proveedor = new Proveedor { Id = accesoDatos.Lector.GetInt32(13), Nombre = accesoDatos.Lector.GetString(14) };
-                    producto.estado = accesoDatos.Lector.GetBoolean(15);
-
-
-                }
-
-                return producto;
+                return lista[0]; // Devolvemos el primer (y único) elemento.
             }
-            catch (Exception ex)
-            {
 
-                throw ex;
-            }
-            finally
-            {
-                accesoDatos.CerrarConexion();
-            }
+            // 3. Si no se encontró, devolvemos null.
+            return null;
         }
 
-
-        /* public void AgregarProducto(Producto producto)
-         {
-             AccesoDatos accesodatos = new AccesoDatos();
-             int idProducto;
-
-
-
-             try
-             {
-                 // Verificar si el producto ya existe
-                 accesodatos.SetearConsulta("SELECT COUNT(*) " +
-                                            "FROM Productos " +
-                                            "WHERE nombre = @nombree AND descripcion = @descripcionn");
-                 accesodatos.SetearParametro("@nombree", producto.nombre);
-                 accesodatos.SetearParametro("@descripcionn", producto.descripcion);
-
-                 int count = Convert.ToInt32(accesodatos.EjecutarEscalar());
-
-                 if (count > 0)
-                 {
-                     throw new Exception("El producto ya existe");
-
-
-
-
-
-                 }
-             }
-             catch (Exception ex)
-             {
-                 throw ex;
-
-
-             }
-             finally
-             {
-                 accesodatos.CerrarConexion();
-             }
-
-
-
-
-
-             try
-             {
-
-
-
-                 // Insertar en la tabla Productos
-                 accesodatos.SetearConsulta("INSERT INTO Productos (nombre, descripcion, imagen, precio, margenGanancia, estado, idMarca, idTipo, idCategoria) " +
-                                            "VALUES (@nombre, @descripcion, @imagen, @precio, @margenGanancia, @estado, @idMarca, @idTipo, @idCategoria); " +
-                                            "SELECT SCOPE_IDENTITY();");
-
-                 accesodatos.SetearParametro("@nombre", producto.nombre);
-                 accesodatos.SetearParametro("@descripcion", producto.descripcion);
-                 accesodatos.SetearParametro("@imagen", producto.Imagen);
-                 accesodatos.SetearParametro("@precio", producto.precio);
-                 accesodatos.SetearParametro("@margenGanancia", producto.margenGanancia);
-                 accesodatos.SetearParametro("@estado", producto.estado);
-                 accesodatos.SetearParametro("@idMarca", producto.idMarca);
-                 accesodatos.SetearParametro("@idTipo", producto.idTipo);
-                 accesodatos.SetearParametro("@idCategoria", producto.IdCategoria);
-
-
-
-
-                 // Obtener el ID del producto insertado
-                 idProducto = Convert.ToInt32(accesodatos.EjecutarEscalar());
-
-             }
-             catch (Exception ex)
-             {
-                 throw ex;
-             }
-             finally
-             {
-                 accesodatos.CerrarConexion();
-             }
-
-
-
-
-             try
-             {
-                 // Insertar en la tabla Stock
-                 AccesoDatos accesoDatos = new AccesoDatos();
-                 accesodatos.SetearConsulta("INSERT INTO Stock (idProducto, cantidad, stockMinimo, fechaActualizacion) " +
-                                            "VALUES (@idProducto, @cantidad, @stockMinimo, @fechaActualizacion)");
-
-                 accesodatos.SetearParametro("@idProducto", idProducto);
-                 accesodatos.SetearParametro("@cantidad", producto.stock);
-                 accesodatos.SetearParametro("@stockMinimo", 5);
-                 accesodatos.SetearParametro("@fechaActualizacion", DateTime.Now);
-
-                 accesodatos.EjecutarAccion();
-             }
-             catch (Exception ex)
-             {
-                 throw ex;
-             }
-             finally
-             {
-                 accesodatos.CerrarConexion();
-             }
-
-
-
-
-             try
-             {
-                 // Insertar en la tabla Proveedores_Productos
-                 AccesoDatos accesoDatos = new AccesoDatos();
-                 accesodatos.SetearConsulta("INSERT INTO Proveedores_Productos (idProveedor, idProducto) " +
-                                            "VALUES (@idProveedor, @idProductoProveedorPorProducto)");
-
-                 accesodatos.SetearParametro("@idProveedor", producto.IdProveedor);
-                 accesodatos.SetearParametro("@idProductoProveedorPorProducto", idProducto);
-
-                 accesodatos.EjecutarAccion();
-             }
-             catch (Exception ex)
-             {
-                 throw ex;
-             }
-             finally
-             {
-                 accesodatos.CerrarConexion();
-             }
-
-
-
-         }*/
-
-
-        public void AgregarProducto(Producto producto)
+        public void AgregarProducto(Producto nuevo)
         {
-            AccesoDatos accesodatos = new AccesoDatos();
-            int idProducto;
-
+            AccesoDatos datos = new AccesoDatos();
             try
             {
-                // Verificar si el producto ya existe
-                accesodatos.SetearConsulta("SELECT COUNT(*) FROM Productos WHERE nombre = @nombree AND descripcion = @descripcionn");
-                accesodatos.SetearParametro("@nombree", producto.nombre);
-                accesodatos.SetearParametro("@descripcionn", producto.descripcion);
+                // INICIAMOS LA TRANSACCIÓN
+                datos.AbrirConexion();
+                datos.IniciarTransaccion();
 
-                int count = Convert.ToInt32(accesodatos.EjecutarEscalar());
+                // 1. Insertar en la tabla Productos y obtener el nuevo ID
+                string consultaProducto = "INSERT INTO Productos (nombre, descripcion, imagen, precio, margenGanancia, estado, idMarca, idTipo, idCategoria) " +
+                                          "VALUES (@nombre, @descripcion, @imagen, @precio, @margenGanancia, 1, @idMarca, @idTipo, @idCategoria); " +
+                                          "SELECT SCOPE_IDENTITY();";
+                datos.SetearConsulta(consultaProducto);
+                datos.SetearParametro("@nombre", nuevo.nombre);
+                datos.SetearParametro("@descripcion", nuevo.descripcion);
+                datos.SetearParametro("@imagen", nuevo.Imagen);
+                datos.SetearParametro("@precio", nuevo.precio);
+                datos.SetearParametro("@margenGanancia", nuevo.margenGanancia);
+                datos.SetearParametro("@idMarca", nuevo.Marca.Id);
+                datos.SetearParametro("@idTipo", nuevo.Tipo.Id);
+                datos.SetearParametro("@idCategoria", nuevo.Categoria.Id);
 
-                if (count > 0)
+                int idProductoNuevo = Convert.ToInt32(datos.EjecutarEscalar());
+                nuevo.id = idProductoNuevo;
+
+                // 2. Insertar en la tabla Stock
+                string consultaStock = "INSERT INTO Stock (idProducto, cantidad, stockMinimo, fechaActualizacion) VALUES (@idProducto, @cantidad, 5, GETDATE())";
+                datos.SetearConsulta(consultaStock);
+                datos.LimpiarParametros();
+                datos.SetearParametro("@idProducto", nuevo.id);
+                datos.SetearParametro("@cantidad", nuevo.stock);
+                datos.EjecutarAccion();
+
+                // 3. Insertar en la tabla Proveedores_Productos (para cada proveedor asociado)
+                if (nuevo.Proveedores != null && nuevo.Proveedores.Count > 0)
                 {
-                    throw new Exception("El producto ya existe");
+                    string consultaProveedor = "INSERT INTO Proveedores_Productos (idProveedor, idProducto) VALUES (@idProveedor, @idProducto)";
+                    foreach (Proveedor prov in nuevo.Proveedores)
+                    {
+                        datos.SetearConsulta(consultaProveedor);
+                        datos.LimpiarParametros();
+                        datos.SetearParametro("@idProveedor", prov.Id);
+                        datos.SetearParametro("@idProducto", nuevo.id);
+                        datos.EjecutarAccion();
+                    }
                 }
+
+                // SI TODO SALIÓ BIEN, CONFIRMAMOS LA TRANSACCIÓN
+                datos.ConfirmarTransaccion();
             }
             catch (Exception ex)
             {
+                // SI ALGO FALLÓ, REVERTIMOS TODO
+                datos.RevertirTransaccion();
                 throw ex;
             }
             finally
             {
-                accesodatos.CerrarConexion();
-            }
-
-            try
-            {
-                // Insertar en la tabla Productos
-                accesodatos.SetearConsulta("INSERT INTO Productos (nombre, descripcion, imagen, precio, margenGanancia, estado, idMarca, idTipo, idCategoria) " +
-                                           "VALUES (@nombre, @descripcion, @imagen, @precio, @margenGanancia, @estado, @idMarca, @idTipo, @idCategoria); " +
-                                           "SELECT SCOPE_IDENTITY();");
-
-                accesodatos.SetearParametro("@nombre", producto.nombre);
-                accesodatos.SetearParametro("@descripcion", producto.descripcion);
-                accesodatos.SetearParametro("@imagen", producto.Imagen);
-                accesodatos.SetearParametro("@precio", producto.precio);
-                accesodatos.SetearParametro("@margenGanancia", producto.margenGanancia);
-                accesodatos.SetearParametro("@estado", producto.estado);
-                accesodatos.SetearParametro("@idMarca", producto.Marca.Id);
-                accesodatos.SetearParametro("@idTipo", producto.Tipo.Id);
-                accesodatos.SetearParametro("@idCategoria", producto.Categoria.Id);
-
-
-
-                // Obtener el ID del producto insertado
-                idProducto = Convert.ToInt32(accesodatos.EjecutarEscalar());
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                accesodatos.CerrarConexion();
-            }
-
-            try
-            {
-                // Insertar en la tabla Stock
-                accesodatos.SetearConsulta("INSERT INTO Stock (idProducto, cantidad, stockMinimo, fechaActualizacion) " +
-                                           "VALUES (@idProducto, @cantidad, @stockMinimo, @fechaActualizacion)");
-
-                accesodatos.SetearParametro("@idProducto", idProducto);
-                accesodatos.SetearParametro("@cantidad", producto.stock);
-                accesodatos.SetearParametro("@stockMinimo", 5);
-                accesodatos.SetearParametro("@fechaActualizacion", DateTime.Now);
-
-                accesodatos.EjecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                accesodatos.CerrarConexion();
-            }
-
-            try
-            {
-                // Insertar en la tabla Proveedores_Productos
-                accesodatos.SetearConsulta("INSERT INTO Proveedores_Productos (idProveedor, idProducto) " +
-                                           "VALUES (@idProveedor, @idProductoProveedorPorProducto)");
-
-                accesodatos.SetearParametro("@idProveedor", producto.proveedor.Id);
-                accesodatos.SetearParametro("@idProductoProveedorPorProducto", idProducto);
-
-                accesodatos.EjecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                accesodatos.CerrarConexion();
+                datos.CerrarConexion();
             }
         }
-
-
 
         public void ModificarProducto(Producto producto)
         {
-            AccesoDatos accesoDatos = new AccesoDatos();
+            AccesoDatos datos = new AccesoDatos();
             try
             {
+                datos.AbrirConexion();
+                datos.IniciarTransaccion();
 
-                accesoDatos.SetearConsulta("UPDATE Productos SET nombre = @nombre, descripcion = @descripcion, imagen = @imagen, precio = @precio, estado = @estado, idMarca = @idMarca, idCategoria = @idCategoria, idTipo = @idTipo  WHERE id = @idProducto");
+                // 1. Actualizar la tabla Productos
+                string consultaProducto = "UPDATE Productos SET nombre = @nombre, descripcion = @descripcion, imagen = @imagen, precio = @precio, " +
+                                          "margenGanancia = @margenGanancia, estado = @estado, idMarca = @idMarca, idTipo = @idTipo, idCategoria = @idCategoria " +
+                                          "WHERE id = @id";
+                datos.SetearConsulta(consultaProducto);
+                // ... setear todos los parámetros para la consulta de producto ...
+                datos.SetearParametro("@id", producto.id);
+                datos.EjecutarAccion();
 
-                accesoDatos.SetearParametro("@nombre", producto.nombre);
-                accesoDatos.SetearParametro("@descripcion", producto.descripcion);
-                accesoDatos.SetearParametro("@imagen", producto.Imagen);
-                accesoDatos.SetearParametro("@precio", producto.precio);
-                accesoDatos.SetearParametro("@estado", producto.estado);
-                accesoDatos.SetearParametro("@idMarca", producto.Marca.Id);
-                accesoDatos.SetearParametro("@idTipo", producto.Tipo.Id);
-                accesoDatos.SetearParametro("@idCategoria", producto.Categoria.Id);
+                // 2. Actualizar la tabla Stock
+                string consultaStock = "UPDATE Stock SET cantidad = @cantidad, fechaActualizacion = GETDATE() WHERE idProducto = @id";
+                datos.SetearConsulta(consultaStock);
+                datos.LimpiarParametros();
+                datos.SetearParametro("@cantidad", producto.stock);
+                datos.SetearParametro("@id", producto.id);
+                datos.EjecutarAccion();
 
+                // 3. Actualizar los proveedores (la forma más fácil es borrar los viejos e insertar los nuevos)
+                string consultaBorrarProv = "DELETE FROM Proveedores_Productos WHERE idProducto = @id";
+                datos.SetearConsulta(consultaBorrarProv);
+                datos.LimpiarParametros();
+                datos.SetearParametro("@id", producto.id);
+                datos.EjecutarAccion();
 
+                if (producto.Proveedores != null && producto.Proveedores.Count > 0)
+                {
+                    string consultaInsertarProv = "INSERT INTO Proveedores_Productos (idProveedor, idProducto) VALUES (@idProveedor, @id)";
+                    foreach (Proveedor prov in producto.Proveedores)
+                    {
+                        datos.SetearConsulta(consultaInsertarProv);
+                        datos.LimpiarParametros();
+                        datos.SetearParametro("@idProveedor", prov.Id);
+                        datos.SetearParametro("@id", producto.id);
+                        datos.EjecutarAccion();
+                    }
+                }
 
-                accesoDatos.SetearParametro("@idProducto", producto.id);
-
-                // Ejecutar la acción de modificación
-                accesoDatos.EjecutarAccion();
+                datos.ConfirmarTransaccion();
             }
             catch (Exception ex)
             {
+                datos.RevertirTransaccion();
                 throw ex;
             }
             finally
             {
-                accesoDatos.CerrarConexion();
-            }
-
-            // Modificamos la cantidad de la tabla stock
-            try
-            {
-                accesoDatos = new AccesoDatos();
-                accesoDatos.SetearConsulta("UPDATE Stock SET cantidad = @cantidad WHERE idProducto = @idProductoCantidad");
-
-                // Agregar parámetros con los valores correspondientes
-                accesoDatos.SetearParametro("@cantidad", producto.stock);
-                accesoDatos.SetearParametro("@idProductoCantidad", producto.id);
-
-                // Ejecutar la acción de modificación
-                accesoDatos.EjecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                accesoDatos.CerrarConexion();
-            }
-
-
-
-
-            // Modificamos el nombre del proveedor en su tabla Proveedores
-            try
-            {
-
-                accesoDatos = new AccesoDatos();
-                accesoDatos.SetearConsulta("UPDATE Proveedores_Productos SET idProveedor = @idProveedor WHERE idProducto = @idProducto");
-
-                // Agregar parámetros con los valores correspondientes
-                accesoDatos.SetearParametro("@idProveedor", producto.proveedor.Id);
-                accesoDatos.SetearParametro("@idProducto", producto.id);
-
-                // Ejecutar la acción de modificación
-                accesoDatos.EjecutarAccion();
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                accesoDatos.CerrarConexion();
+                datos.CerrarConexion();
             }
         }
-
-
-
 
         public void bajaLogicaProducto(int id)
         {
@@ -503,60 +283,6 @@ namespace negocio
 
         }
 
-
-        public List<Producto> BuscarProductos(string busqueda)
-        {
-            List<Producto> lista = new List<Producto>();
-            AccesoDatos accesoDatos = new AccesoDatos();
-            try
-            {
-                accesoDatos.SetearConsulta("SELECT P.id, P.nombre, P.descripcion, P.imagen, P.precio, P.margenGanancia, S.cantidad, M.nombre AS MarcaNombre, T.nombre AS TipoNombre, C.nombre AS CategoriaNombre, P.estado, Prov.nombre AS ProveedorNombre " +
-                                           "FROM Productos P " +
-                                           "INNER JOIN Stock S ON P.id = S.idProducto " +
-                                           "INNER JOIN Marcas M ON P.idMarca = M.id " +
-                                           "INNER JOIN Tipos T ON T.id = P.idTipo " +
-                                           "INNER JOIN Categorias C ON C.id = P.idCategoria " +
-                                           "INNER JOIN Proveedores_Productos PP ON P.id = PP.idProducto " +
-                                           "INNER JOIN Proveedores Prov ON PP.idProveedor = Prov.id " +
-                                           "WHERE P.nombre LIKE @busqueda OR P.descripcion LIKE @busqueda");
-
-                accesoDatos.SetearParametro("@busqueda", "%" + busqueda + "%");
-
-                accesoDatos.EjecutarLectura();
-
-                while (accesoDatos.Lector.Read())
-                {
-                    Producto producto = new Producto();
-                    producto.id = accesoDatos.Lector.GetInt32(0);
-                    producto.nombre = accesoDatos.Lector.GetString(1);
-                    producto.descripcion = accesoDatos.Lector.GetString(2);
-                    producto.Imagen = accesoDatos.Lector.GetString(3);
-                    producto.precio = accesoDatos.Lector.GetDecimal(4);
-                    producto.margenGanancia = accesoDatos.Lector.GetDecimal(5);
-                    producto.stock = accesoDatos.Lector.GetInt32(6);
-                    producto.Marca.nombre = accesoDatos.Lector.GetString(7);
-                    producto.Marca.nombre = accesoDatos.Lector.GetString(8);
-                    producto.Marca.nombre = accesoDatos.Lector.GetString(9);
-                    producto.estado = accesoDatos.Lector.GetBoolean(10);
-                    producto.Marca.nombre = accesoDatos.Lector.GetString(11);
-
-                    lista.Add(producto);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                accesoDatos.CerrarConexion();
-            }
-
-            return lista;
-        }
-
-
-
         // este metodo lo usa cuando el admin rechaza la compra del usuario y tiene que volver a insertar el stock que se descontó
         public void VolverAgregarStock(int idProducto, int cantidad)
         {
@@ -578,58 +304,6 @@ namespace negocio
             }
         }
 
-
-       /// lista productoen base a una categoria 
-        public List<Producto> Listar(string idCategoria = "")
-        {
-            List<Producto> lista = new List<Producto>();
-            AccesoDatos datos = new AccesoDatos();
-
-            try
-            {
-                // Tu consulta base para traer todos los productos
-                string consulta = "SELECT P.id, P.nombre, P.descripcion, P.precio, P.imagen, M.nombre as Marca, C.nombre as Categoria, P.idMarca, P.idCategoria FROM Productos P INNER JOIN Marcas M ON P.idMarca = M.id INNER JOIN Categorias C ON P.idCategoria = C.id";
-
-                // Si se proporciona un idCategoria, añadimos el filtro WHERE
-                if (!string.IsNullOrEmpty(idCategoria))
-                {
-                    consulta += " WHERE P.idCategoria = @idCategoria";
-                    datos.SetearParametro("@idCategoria", idCategoria);
-                }
-
-                datos.SetearConsulta(consulta);
-                datos.EjecutarLectura();
-
-                while (datos.Lector.Read())
-                {
-                    Producto aux = new Producto();
-                    aux.id = (int)datos.Lector["id"];
-                    aux.nombre = (string)datos.Lector["nombre"];
-                    aux.descripcion = (string)datos.Lector["descripcion"];
-                    aux.precio = (decimal)datos.Lector["precio"];
-                    aux.Imagen = (string)datos.Lector["imagen"];
-
-                    aux.Marca = new Marca();
-                    aux.Marca.Id = (int)datos.Lector["idMarca"];
-                    aux.Marca.nombre = (string)datos.Lector["Marca"];
-
-                    aux.Categoria = new Categoria();
-                    aux.Categoria.Id = (int)datos.Lector["idCategoria"];
-                    aux.Categoria.nombre = (string)datos.Lector["Categoria"];
-
-                    lista.Add(aux);
-                }
-                return lista;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.CerrarConexion();
-            }
-        }
 
     }
 

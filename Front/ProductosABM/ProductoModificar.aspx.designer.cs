@@ -96,13 +96,13 @@ namespace Front.ProductosABM
         protected global::System.Web.UI.WebControls.DropDownList DropDownListCategoria;
 
         /// <summary>
-        /// Control DropDownListProveedor.
+        /// Control cblProveedores.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListProveedor;
+        protected global::System.Web.UI.WebControls.CheckBoxList cblProveedores;
 
         /// <summary>
         /// Control TextBoxImagen.

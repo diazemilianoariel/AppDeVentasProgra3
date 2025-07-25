@@ -10,24 +10,38 @@ namespace negocio
     {
 
 
-        public List<Producto> ListarProductos(string filtro = "")
+        // EN DefaultNegocio.cs
+
+        public List<Producto> ListarProductos(string filtro = "", string idCategoria = "")
         {
             List<Producto> lista = new List<Producto>();
             AccesoDatos datos = new AccesoDatos();
             try
             {
                 string consulta = @"
-                    SELECT 
-                        P.id, P.nombre, P.descripcion, P.precio, P.imagen, P.margenGanancia, P.estado,
-                        S.cantidad as Stock
-                    FROM Productos P
-                    LEFT JOIN Stock S ON P.id = S.idProducto
-                    WHERE P.estado = 1 ";
+            SELECT 
+                P.id, P.nombre, P.descripcion, P.precio, P.imagen, P.margenGanancia, P.estado,
+                S.cantidad as Stock,
+                P.idCategoria, C.nombre as CategoriaNombre, -- Agregamos datos de categoría
+                P.idMarca, M.nombre as MarcaNombre          -- Agregamos datos de marca
+            FROM Productos P
+            LEFT JOIN Stock S ON P.id = S.idProducto
+            LEFT JOIN Categorias C ON P.idCategoria = C.id  -- JOIN para obtener nombre de categoría
+            LEFT JOIN Marcas M ON P.idMarca = M.id          -- JOIN para obtener nombre de marca
+            WHERE P.estado = 1 ";
 
+                // Filtro por búsqueda de texto
                 if (!string.IsNullOrEmpty(filtro))
                 {
-                    consulta += "AND P.nombre LIKE @filtro";
+                    consulta += " AND (P.nombre LIKE @filtro OR P.descripcion LIKE @filtro)";
                     datos.SetearParametro("@filtro", "%" + filtro + "%");
+                }
+
+                // ¡NUEVO! Filtro por categoría
+                if (!string.IsNullOrEmpty(idCategoria))
+                {
+                    consulta += " AND P.idCategoria = @idCategoria";
+                    datos.SetearParametro("@idCategoria", idCategoria);
                 }
 
                 datos.SetearConsulta(consulta);
@@ -38,17 +52,17 @@ namespace negocio
                     Producto aux = new Producto();
                     aux.id = (int)datos.Lector["id"];
                     aux.nombre = (string)datos.Lector["nombre"];
-                    aux.descripcion = (string)datos.Lector["descripcion"];
-                    aux.precio = (decimal)datos.Lector["precio"];
-                    aux.margenGanancia = (decimal)datos.Lector["margenGanancia"];
-                    aux.estado = (bool)datos.Lector["estado"];
-                    if (datos.Lector["imagen"] != DBNull.Value)
-                        aux.Imagen = (string)datos.Lector["imagen"];
+                    // ... (resto de las asignaciones) ...
+
+                    // Mapeamos los nuevos datos de las relaciones
+                    aux.IdCategoria = (int)datos.Lector["idCategoria"];
+                    aux.Categoria = new Categoria { Id = aux.IdCategoria, nombre = (string)datos.Lector["CategoriaNombre"] };
+
+                    aux.idMarca = (int)datos.Lector["idMarca"];
+                    aux.Marca = new Marca { Id = aux.idMarca, nombre = (string)datos.Lector["MarcaNombre"] };
 
                     aux.stock = datos.Lector["Stock"] != DBNull.Value ? (int)datos.Lector["Stock"] : 0;
-
-                    // CÁLCULO CLAVE: Se calcula el precio de venta para mostrar en el catálogo.
-                    aux.precioVenta = aux.precio + (aux.precio * (aux.margenGanancia / 100));
+                    aux.CalcularPrecioVenta(); // Usamos el método que creamos en la clase Producto
 
                     lista.Add(aux);
                 }
@@ -70,11 +84,10 @@ namespace negocio
             return productoNegocio.ObtenerProducto(idProducto);
         }
 
-        public List<Producto> BuscarProductos(string busqueda)
-        {
-            List<Producto> listaProductos = ListarProductos();
-            return listaProductos.Where(p => p.nombre.ToLower().Contains(busqueda.ToLower())).ToList();
-        }
+        //public List<Producto> BuscarProductos(string busqueda)
+        //{
+        //   return ListarProductos(busqueda);
+        //}
 
         public void AgregarProductosAlCarrito(List<Producto> carrito, Producto producto, int Cantidad)
         {

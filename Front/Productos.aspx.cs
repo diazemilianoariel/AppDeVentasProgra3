@@ -44,7 +44,7 @@ namespace Front
             try
             {
                 ProductoNegocio negocio = new ProductoNegocio();
-                GridViewProductos.DataSource = negocio.ListarProductos();
+                GridViewProductos.DataSource = negocio.Listar();
                 GridViewProductos.DataBind();
             }
             catch (Exception ex)

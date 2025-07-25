@@ -46,19 +46,21 @@
                         <a class="nav-link" href="Default.aspx">Home</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="Default.aspx" id="navbarDropdownCategorias" role="button" data-toggle="dropdown">Categorías
+
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCategorias" role="button" data-toggle="dropdown">Categorías
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownCategorias">
-                            <%-- Este Repeater se cargará desde el code-behind --%>
                             <asp:Repeater ID="rptCategorias" runat="server">
                                 <ItemTemplate>
-                                    <a class="dropdown-item" href='<%# "Default.aspx?cat=" + Eval("id") %>'>
-                                        <%# Eval("nombre") %>
-                                    </a>
+                                    <asp:HyperLink runat="server" CssClass="dropdown-item"
+                                        NavigateUrl='<%# "~/Default.aspx?cat=" + Eval("id") %>'>
+            <%# Eval("nombre") %>
+                                    </asp:HyperLink>
                                 </ItemTemplate>
                             </asp:Repeater>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="Default.aspx">Ver Todo</a>
+
+                            <asp:HyperLink runat="server" CssClass="dropdown-item" NavigateUrl="~/Default.aspx">Ver Todo</asp:HyperLink>
                         </div>
                     </li>
                     <li class="nav-item">

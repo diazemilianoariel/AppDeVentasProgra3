@@ -75,7 +75,7 @@
                             <td><%# Eval("nombre") %></td>
                             <td class="text-center"><%# Eval("Cantidad") %></td>
                             <td class="text-right"><%# Eval("precioVenta", "{0:C}") %></td>
-                            <td class="text-right"><%# Eval("SubTotalEnFactura", "{0:C}") %></td>
+                            <td class="text-right"><%# Eval("SubTotal", "{0:C}") %></td>
                         </tr>
                     </ItemTemplate>
                 </asp:Repeater>

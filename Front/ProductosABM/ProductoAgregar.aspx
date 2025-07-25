@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="form-group">
                                     <asp:Label runat="server" AssociatedControlID="DropDownListProveedor" CssClass="form-label fw-bold">Proveedor</asp:Label>
-                                    <asp:DropDownList ID="DropDownListProveedor" runat="server" CssClass="form-control"></asp:DropDownList>
+                                    <asp:CheckBoxList ID="cblProveedores" runat="server"></asp:CheckBoxList>
                                 </div>
                                 <div class="form-group">
                                     <asp:Label runat="server" AssociatedControlID="TextBoxImagen" CssClass="form-label fw-bold">URL de la Imagen</asp:Label>

@@ -58,9 +58,22 @@ namespace Front.ProductosABM
                     Marca = new Marca { Id = Convert.ToInt32(DropDownListMarca.SelectedValue) },
                     Tipo = new dominio.Tipos { Id = Convert.ToInt32(DropDownListTipo.SelectedValue) },
                     Categoria = new Categoria { Id = Convert.ToInt32(DropDownListCategoria.SelectedValue) },
-                    proveedor = new Proveedor { Id = Convert.ToInt32(DropDownListProveedor.SelectedValue) },
+
+                    Proveedores = new List<Proveedor>(),
+
                     estado = CheckBoxEstado.Checked
                 };
+
+
+
+                foreach (ListItem item in cblProveedores.Items)
+                {
+                    if (item.Selected)
+                    {
+                        producto.Proveedores.Add(new Proveedor { Id = Convert.ToInt32(item.Value) });
+                    }
+                }
+
 
                 productoNegocio.AgregarProducto(producto);
                 Response.Redirect("../Productos.aspx");
@@ -116,10 +129,11 @@ namespace Front.ProductosABM
 
                 // Cargar Proveedores
                 ProveedoresNegocio proveedorNegocio = new ProveedoresNegocio();
-                DropDownListProveedor.DataSource = proveedorNegocio.ListarProveedores();
-                DropDownListProveedor.DataTextField = "nombre";
-                DropDownListProveedor.DataValueField = "id";
-                DropDownListProveedor.DataBind();   
+                cblProveedores.DataSource = proveedorNegocio.ListarProveedores();
+                cblProveedores.DataTextField = "nombre";
+                cblProveedores.DataValueField = "id";
+                cblProveedores.DataBind();
+
             }
             catch(Exception ex)
             {
@@ -128,10 +142,6 @@ namespace Front.ProductosABM
                 return; 
             }
 
-
-
-
-           
         }
 
        

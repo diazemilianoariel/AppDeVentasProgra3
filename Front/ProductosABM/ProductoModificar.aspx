@@ -1,4 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MASTER.Master" AutoEventWireup="true" CodeBehind="ProductoModificar.aspx.cs" Inherits="Front.Productos.ProductoModificar" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MASTER.Master" AutoEventWireup="true" CodeBehind="ProductoModificar.aspx.cs" Inherits="Front.ProductosABM.ProductoModificar" %>
+
+
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -74,7 +77,7 @@
                                 </div>
                                 <div class="form-group">
                                     <asp:Label runat="server" AssociatedControlID="DropDownListProveedor" CssClass="form-label fw-bold">Proveedor</asp:Label>
-                                    <asp:DropDownList ID="DropDownListProveedor" runat="server" CssClass="form-control"></asp:DropDownList>
+                                    <asp:CheckBoxList ID="cblProveedores" runat="server" CssClass="checkbox-list-class"></asp:CheckBoxList>
                                 </div>
                                 <div class="form-group">
                                     <asp:Label runat="server" AssociatedControlID="TextBoxImagen" CssClass="form-label fw-bold">URL de la Imagen</asp:Label>

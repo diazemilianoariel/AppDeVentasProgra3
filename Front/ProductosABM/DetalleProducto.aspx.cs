@@ -56,8 +56,20 @@ namespace Front.ProductosABM
                     ImageProducto.ImageUrl = producto.Imagen;
                     LabelTipoProducto.Text = producto.Tipo.nombre;
                     LabelCategoriaProducto.Text = producto.Categoria.nombre;
-                    LabelProveedorProducto.Text = producto.proveedor.Nombre;
-                   
+
+                    if (producto.Proveedores != null && producto.Proveedores.Any())
+                    {
+                        // Unimos los nombres de todos los proveedores en un solo string, separados por ", "
+                        LabelProveedorProducto.Text = string.Join(", ", producto.Proveedores.Select(p => p.Nombre));
+                    }
+                    else
+                    {
+                        // Si no hay proveedores, mostramos un texto por defecto.
+                        LabelProveedorProducto.Text = "No especificado";
+                    }
+
+
+
                     LabelEstadoProducto.Text = producto.estado ? "Activo" : "Inactivo";
                 }
                 else
