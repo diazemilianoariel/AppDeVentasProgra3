@@ -76,7 +76,7 @@
                                     <asp:DropDownList ID="DropDownListCategoria" runat="server" CssClass="form-control"></asp:DropDownList>
                                 </div>
                                 <div class="form-group">
-                                    <asp:Label runat="server" AssociatedControlID="DropDownListProveedor" CssClass="form-label fw-bold">Proveedor</asp:Label>
+                                    <asp:Label runat="server" AssociatedControlID="cblProveedores" CssClass="form-label fw-bold">Proveedores</asp:Label>
                                     <asp:CheckBoxList ID="cblProveedores" runat="server" CssClass="checkbox-list-class"></asp:CheckBoxList>
                                 </div>
                                 <div class="form-group">
@@ -91,7 +91,11 @@
                             </div>
                         </div>
 
-                        <asp:Label ID="LabelError" runat="server" CssClass="text-danger text-center d-block mt-3" Visible="false"></asp:Label>
+                        <div class="row mt-3 justify-content-center">
+                            <div class="col-md-10 col-lg-8">
+                                <asp:Label ID="LabelError" runat="server" Visible="false" Width="100%"></asp:Label>
+                            </div>
+                        </div>
 
                         <div class="row mt-4">
                             <div class="col-md-12 text-center">
@@ -99,6 +103,9 @@
                                 <asp:Button ID="ButtonCancelar" runat="server" Text="Cancelar" CssClass="btn btn-secondary" OnClick="ButtonCancelar_Click" CausesValidation="false" />
                             </div>
                         </div>
+
+
+
                     </div>
                 </div>
             </div>

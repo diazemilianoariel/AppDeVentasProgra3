@@ -9,9 +9,6 @@ namespace negocio
     public class VentaNegocio
     {
 
-
-
-
         public List<Venta> ListarVentasPorUsuario(int idUsuario)
         {
             List<Venta> lista = new List<Venta>();
@@ -165,8 +162,14 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                // CORRECCIÓN: La consulta ahora incluye p.precio y p.margenGanancia
-                datos.SetearConsulta("SELECT p.id, p.nombre, p.descripcion, p.precio, p.margenGanancia, dv.cantidad, dv.precioVenta as precioUnitario, p.imagen FROM DetalleVentas dv INNER JOIN Productos p ON dv.idProducto = p.id WHERE dv.idVenta = @idVenta");
+                // La consulta ahora es más simple y trae el dato que importa: dv.precioVenta
+                string consulta = @"
+                    SELECT p.id, p.nombre, dv.cantidad, dv.precioVenta 
+                    FROM DetalleVentas dv 
+                    INNER JOIN Productos p ON dv.idProducto = p.id 
+                    WHERE dv.idVenta = @idVenta";
+
+                datos.SetearConsulta(consulta);
                 datos.SetearParametro("@idVenta", idVenta);
                 datos.EjecutarLectura();
 
@@ -175,14 +178,11 @@ namespace negocio
                     Producto producto = new Producto();
                     producto.id = (int)datos.Lector["id"];
                     producto.nombre = (string)datos.Lector["nombre"];
-                    producto.descripcion = (string)datos.Lector["descripcion"];
-                    producto.precio = (decimal)datos.Lector["precio"]; // Precio base
-                    producto.margenGanancia = (decimal)datos.Lector["margenGanancia"]; // Margen
                     producto.Cantidad = (int)datos.Lector["cantidad"];
-                    // El precio de venta se calcula automáticamente en la clase Producto.
 
-                    if (datos.Lector["imagen"] != DBNull.Value)
-                        producto.Imagen = (string)datos.Lector["imagen"];
+                    // ¡ESTA ES LA CORRECCIÓN CLAVE!
+                    // Le asignamos el precio histórico de la venta.
+                    producto.precioVenta = (decimal)datos.Lector["precioVenta"];
 
                     productos.Add(producto);
                 }
@@ -308,6 +308,52 @@ namespace negocio
 
         }
 
+
+
+        // AGREGÁ ESTE MÉTODO A VentaNegocio.cs
+
+        public void RechazarVentaYDevolverStock(int idVenta, List<Producto> productos)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                // Iniciamos la conexión y la transacción
+                datos.AbrirConexion();
+                datos.IniciarTransaccion();
+
+                // --- TAREA 1: Devolver el stock de cada producto ---
+                foreach (var producto in productos)
+                {
+                    datos.SetearConsulta("UPDATE Stock SET cantidad = cantidad + @cantidad WHERE idProducto = @idProducto");
+                    datos.LimpiarParametros();
+                    datos.SetearParametro("@cantidad", producto.Cantidad);
+                    datos.SetearParametro("@idProducto", producto.id);
+                    datos.EjecutarAccion();
+                }
+
+                // --- TAREA 2: Cambiar el estado de la venta a "Cancelado" (ID 3) ---
+                datos.SetearConsulta("UPDATE Ventas SET idEstadoVenta = 3 WHERE id = @idVenta");
+                datos.LimpiarParametros();
+                datos.SetearParametro("@idVenta", idVenta);
+                datos.EjecutarAccion();
+
+                // Si ambas tareas fueron exitosas, confirmamos la transacción
+                datos.ConfirmarTransaccion();
+            }
+            catch (Exception ex)
+            {
+                // Si algo falló, revertimos todos los cambios
+                datos.RevertirTransaccion();
+                throw ex;
+            }
+            finally
+            {
+                // Cerramos la conexión al final
+                datos.CerrarConexion();
+            }
+        }
+
+
         public List<Venta> BuscarVentasPendientes(string query)
         {
             List<Venta> lista = new List<Venta>();
@@ -420,7 +466,6 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                // La consulta trae todos los datos necesarios del cliente.
                 datos.SetearConsulta("SELECT v.id, v.fecha, v.idUsuario, v.monto, U.nombre, U.apellido, U.direccion, U.telefono, U.email FROM ventas v INNER JOIN Usuarios U ON v.idUsuario = U.id WHERE v.id = @idVenta");
                 datos.SetearParametro("@idVenta", idVenta);
                 datos.EjecutarLectura();
@@ -432,7 +477,6 @@ namespace negocio
                     venta.Fecha = (DateTime)datos.Lector["fecha"];
                     venta.Monto = (decimal)datos.Lector["monto"];
 
-                    // Se mapean los datos del cliente de forma segura, comprobando si son nulos.
                     venta.Cliente = new Usuario();
                     venta.Cliente.Id = (int)datos.Lector["idUsuario"];
                     venta.Cliente.Nombre = datos.Lector["nombre"] != DBNull.Value ? (string)datos.Lector["nombre"] : "";
@@ -441,7 +485,10 @@ namespace negocio
                     venta.Cliente.Telefono = datos.Lector["telefono"] != DBNull.Value ? (string)datos.Lector["telefono"] : "";
                     venta.Cliente.Email = datos.Lector["email"] != DBNull.Value ? (string)datos.Lector["email"] : "";
 
-                    // Se llama al método mejorado para cargar los productos.
+                    // Cerramos el lector para la siguiente consulta
+                    datos.Lector.Close();
+
+                    // Llamamos al método CORREGIDO para cargar los productos.
                     venta.Productos = ListarProductosPorVenta(venta.IdVenta);
                     return venta;
                 }

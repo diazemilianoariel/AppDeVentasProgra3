@@ -144,13 +144,38 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                // INICIAMOS LA TRANSACCIÓN
+
+                // 1. Verificamos si el producto existe y obtenemos su estado.
+                datos.SetearConsulta("SELECT id, estado FROM Productos WHERE nombre = @nombre");
+                datos.SetearParametro("@nombre", nuevo.nombre);
+                datos.AbrirConexion();
+                datos.EjecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    bool estaActivo = (bool)datos.Lector["estado"];
+                    int idExistente = (int)datos.Lector["id"];
+
+                    if (estaActivo)
+                    {
+                        // Si está ACTIVO, lanzamos un error normal.
+                        throw new Exception("Ya existe un producto activo con el nombre '" + nuevo.nombre + "'.");
+                    }
+                    else
+                    {
+                        // Si está INACTIVO, lanzamos nuestra excepción especial.
+                        throw new ProductoInactivoException("Producto inactivo encontrado.", idExistente);
+                    }
+                }
+                datos.CerrarConexion();
+
+                // Iniciamos la conexión y la transacción si es que no se encontró un producto activo.
                 datos.AbrirConexion();
                 datos.IniciarTransaccion();
 
                 // 1. Insertar en la tabla Productos y obtener el nuevo ID
                 string consultaProducto = "INSERT INTO Productos (nombre, descripcion, imagen, precio, margenGanancia, estado, idMarca, idTipo, idCategoria) " +
-                                          "VALUES (@nombre, @descripcion, @imagen, @precio, @margenGanancia, 1, @idMarca, @idTipo, @idCategoria); " +
+                                          "VALUES (@nombre, @descripcion, @imagen, @precio, @margenGanancia, @estado, @idMarca, @idTipo, @idCategoria); " +
                                           "SELECT SCOPE_IDENTITY();";
                 datos.SetearConsulta(consultaProducto);
                 datos.SetearParametro("@nombre", nuevo.nombre);
@@ -158,6 +183,7 @@ namespace negocio
                 datos.SetearParametro("@imagen", nuevo.Imagen);
                 datos.SetearParametro("@precio", nuevo.precio);
                 datos.SetearParametro("@margenGanancia", nuevo.margenGanancia);
+                datos.SetearParametro("@estado", nuevo.estado);
                 datos.SetearParametro("@idMarca", nuevo.Marca.Id);
                 datos.SetearParametro("@idTipo", nuevo.Tipo.Id);
                 datos.SetearParametro("@idCategoria", nuevo.Categoria.Id);
@@ -168,13 +194,16 @@ namespace negocio
                 // 2. Insertar en la tabla Stock
                 string consultaStock = "INSERT INTO Stock (idProducto, cantidad, stockMinimo, fechaActualizacion) VALUES (@idProducto, @cantidad, 5, GETDATE())";
                 datos.SetearConsulta(consultaStock);
+
+                
                 datos.LimpiarParametros();
+
                 datos.SetearParametro("@idProducto", nuevo.id);
                 datos.SetearParametro("@cantidad", nuevo.stock);
                 datos.EjecutarAccion();
 
-                // 3. Insertar en la tabla Proveedores_Productos (para cada proveedor asociado)
-                if (nuevo.Proveedores != null && nuevo.Proveedores.Count > 0)
+                // 3. Insertar en la tabla Proveedores_Productos
+                if (nuevo.Proveedores != null && nuevo.Proveedores.Any())
                 {
                     string consultaProveedor = "INSERT INTO Proveedores_Productos (idProveedor, idProducto) VALUES (@idProveedor, @idProducto)";
                     foreach (Proveedor prov in nuevo.Proveedores)
@@ -187,12 +216,12 @@ namespace negocio
                     }
                 }
 
-                // SI TODO SALIÓ BIEN, CONFIRMAMOS LA TRANSACCIÓN
+                // Si todo salió bien, confirmamos la transacción
                 datos.ConfirmarTransaccion();
             }
             catch (Exception ex)
             {
-                // SI ALGO FALLÓ, REVERTIMOS TODO
+                // Si algo falló, revertimos todo
                 datos.RevertirTransaccion();
                 throw ex;
             }
@@ -201,6 +230,8 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
+
+  
 
         public void ModificarProducto(Producto producto)
         {
@@ -211,12 +242,29 @@ namespace negocio
                 datos.IniciarTransaccion();
 
                 // 1. Actualizar la tabla Productos
-                string consultaProducto = "UPDATE Productos SET nombre = @nombre, descripcion = @descripcion, imagen = @imagen, precio = @precio, " +
-                                          "margenGanancia = @margenGanancia, estado = @estado, idMarca = @idMarca, idTipo = @idTipo, idCategoria = @idCategoria " +
-                                          "WHERE id = @id";
+                string consultaProducto = @"
+            UPDATE Productos 
+            SET nombre = @nombre, descripcion = @descripcion, imagen = @imagen, 
+                precio = @precio, margenGanancia = @margenGanancia, estado = @estado, 
+                idMarca = @idMarca, idTipo = @idTipo, idCategoria = @idCategoria 
+            WHERE id = @id";
+
                 datos.SetearConsulta(consultaProducto);
-                // ... setear todos los parámetros para la consulta de producto ...
-                datos.SetearParametro("@id", producto.id);
+
+                // --- INICIO DEL CÓDIGO CORREGIDO QUE FALTABA ---
+                // Seteamos TODOS los parámetros que la consulta UPDATE necesita.
+                datos.SetearParametro("@nombre", producto.nombre);
+                datos.SetearParametro("@descripcion", producto.descripcion);
+                datos.SetearParametro("@imagen", producto.Imagen);
+                datos.SetearParametro("@precio", producto.precio);
+                datos.SetearParametro("@margenGanancia", producto.margenGanancia);
+                datos.SetearParametro("@estado", producto.estado);
+                datos.SetearParametro("@idMarca", producto.Marca.Id);
+                datos.SetearParametro("@idTipo", producto.Tipo.Id);
+                datos.SetearParametro("@idCategoria", producto.Categoria.Id);
+                datos.SetearParametro("@id", producto.id); // No olvidar el ID para el WHERE
+                                                           // --- FIN DEL CÓDIGO CORREGIDO ---
+
                 datos.EjecutarAccion();
 
                 // 2. Actualizar la tabla Stock
@@ -227,14 +275,14 @@ namespace negocio
                 datos.SetearParametro("@id", producto.id);
                 datos.EjecutarAccion();
 
-                // 3. Actualizar los proveedores (la forma más fácil es borrar los viejos e insertar los nuevos)
+                // 3. Actualizar los proveedores (borrar los viejos e insertar los nuevos)
                 string consultaBorrarProv = "DELETE FROM Proveedores_Productos WHERE idProducto = @id";
                 datos.SetearConsulta(consultaBorrarProv);
                 datos.LimpiarParametros();
                 datos.SetearParametro("@id", producto.id);
                 datos.EjecutarAccion();
 
-                if (producto.Proveedores != null && producto.Proveedores.Count > 0)
+                if (producto.Proveedores != null && producto.Proveedores.Any())
                 {
                     string consultaInsertarProv = "INSERT INTO Proveedores_Productos (idProveedor, idProducto) VALUES (@idProveedor, @id)";
                     foreach (Proveedor prov in producto.Proveedores)
@@ -301,6 +349,100 @@ namespace negocio
             finally
             {
                 accesoDatos.CerrarConexion();
+            }
+        }
+
+
+        // EN: ProductoNegocio.cs
+
+        public Producto ObtenerProductoParaAdmin(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                string consulta = @"
+            SELECT P.id, P.nombre, P.descripcion, P.imagen, P.precio, P.margenGanancia, P.estado,
+                   ISNULL(S.cantidad, 0) as Stock,
+                   M.id as idMarca, M.nombre as MarcaNombre,
+                   C.id as idCategoria, C.nombre as CategoriaNombre,
+                   T.id as idTipo, T.nombre as TipoNombre
+            FROM Productos P
+            LEFT JOIN Stock S ON P.id = S.idProducto
+            LEFT JOIN Marcas M ON P.idMarca = M.id
+            LEFT JOIN Categorias C ON P.idCategoria = C.id
+            LEFT JOIN Tipos T ON P.idTipo = T.id
+            WHERE P.id = @id";
+
+                datos.SetearConsulta(consulta);
+                datos.SetearParametro("@id", id);
+                datos.EjecutarLectura();
+
+                Producto producto = null;
+                if (datos.Lector.Read())
+                {
+                    producto = new Producto();
+                    // Mapeo de datos del producto...
+                    producto.id = (int)datos.Lector["id"];
+                    producto.nombre = (string)datos.Lector["nombre"];
+                    producto.descripcion = (string)datos.Lector["descripcion"];
+                    if (datos.Lector["imagen"] != DBNull.Value)
+                        producto.Imagen = (string)datos.Lector["imagen"];
+                    producto.precio = (decimal)datos.Lector["precio"];
+                    producto.margenGanancia = (decimal)datos.Lector["margenGanancia"];
+                    producto.estado = (bool)datos.Lector["estado"];
+                    producto.stock = (int)datos.Lector["Stock"];
+
+                    producto.Marca = new Marca { Id = (int)datos.Lector["idMarca"], nombre = (string)datos.Lector["MarcaNombre"] };
+                    producto.Categoria = new Categoria { Id = (int)datos.Lector["idCategoria"], nombre = (string)datos.Lector["CategoriaNombre"] };
+                    producto.Tipo = new Tipos { Id = (int)datos.Lector["idTipo"], nombre = (string)datos.Lector["TipoNombre"] };
+                    producto.CalcularPrecioVenta();
+                }
+                else
+                {
+                    return null;
+                }
+
+                datos.Lector.Close();
+
+                // Cargamos la lista de proveedores para este producto
+                string consultaProveedores = "SELECT Pr.id, Pr.nombre FROM Proveedores Pr INNER JOIN Proveedores_Productos PP ON Pr.id = PP.idProveedor WHERE PP.idProducto = @id";
+                datos.SetearConsulta(consultaProveedores);
+
+                // --- INICIO DE LA CORRECCIÓN ---
+                // Limpiamos los parámetros de la consulta anterior...
+                datos.LimpiarParametros();
+                // ...y volvemos a agregar el que necesitamos para esta nueva consulta.
+                datos.SetearParametro("@id", id);
+                // --- FIN DE LA CORRECCIÓN ---
+
+                datos.EjecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    producto.Proveedores.Add(new Proveedor { Id = (int)datos.Lector["id"], Nombre = (string)datos.Lector["nombre"] });
+                }
+
+                return producto;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+
+
+        public class ProductoInactivoException : Exception
+        {
+            public int IdProductoExistente { get; set; }
+
+            public ProductoInactivoException(string mensaje, int id) : base(mensaje)
+            {
+                this.IdProductoExistente = id;
             }
         }
 

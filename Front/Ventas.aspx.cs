@@ -75,26 +75,40 @@ namespace Front
             }
         }
 
+
+
+      
+
         protected void btnRechazar_Click(object sender, EventArgs e)
         {
             try
             {
                 int idVenta = Convert.ToInt32(((Button)sender).CommandArgument);
                 VentaNegocio negocio = new VentaNegocio();
-                negocio.RechazarVenta(idVenta);
-                CargarDatos(); // Recargar todo para ver los cambios
+
+                // 1. Buscamos la lista de productos de esa venta para saber qué stock devolver.
+                //    Usamos el método que ya sabemos que funciona.
+                List<Producto> productosDeLaVenta = negocio.ListarProductosPorVenta(idVenta);
+
+                // 2. Llamamos al método transaccional que hace TODO el trabajo de forma segura.
+                //    (Este es el método que te pasé en el mensaje anterior para VentaNegocio.cs)
+                negocio.RechazarVentaYDevolverStock(idVenta, productosDeLaVenta);
+
+                // 3. Recargamos la grilla para que se vea el cambio de estado.
+                CargarDatos();
 
                 pnlMensaje.Visible = true;
                 pnlMensaje.CssClass = "alert alert-warning";
-                lblMensaje.Text = "Venta #" + idVenta + " rechazada.";
+                lblMensaje.Text = "Venta #" + idVenta + " rechazada y stock devuelto.";
             }
             catch (Exception ex)
             {
                 pnlMensaje.Visible = true;
                 pnlMensaje.CssClass = "alert alert-danger";
-               lblMensaje.Text = "Error al rechazar la venta: " + ex.Message;
+                lblMensaje.Text = "Error al rechazar la venta: " + ex.Message;
             }
         }
+
 
         protected void btnVerDetalle_Click(object sender, EventArgs e)
         {

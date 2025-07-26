@@ -1,155 +1,98 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Data.SqlClient;
 using dominio;
-using System.Net.Mail;
-
-
 
 namespace negocio
 {
     public class CarritoNegocio
     {
-
-        AccesoDatos datos = new AccesoDatos();
-
-        // aca tiene que estar el metodo que inserta una venta que recibe una lista de productos desde el Carrpito
-        // 
-
-        public bool InsertarVenta(List<Producto> carrito, decimal totalGeneral, int idCliente)
+        public int ProcesarVenta(List<Producto> carrito, decimal totalGeneral, int idCliente)
         {
-
-            // hay  stock sufuciente ??
-            // se derifica que haya sstock suficiente para la venta
-
-
-            int idVenta;
-
-            // Insertar en la tabla Ventas
-            AccesoDatos datosVenta = new AccesoDatos();
+            AccesoDatos datos = new AccesoDatos();
             try
             {
-               // datosVenta.Conexion.Open();
-                datosVenta.SetearConsulta("INSERT INTO Ventas (fecha, idUsuario, monto) OUTPUT INSERTED.id VALUES (@fecha, @idUsuario, @monto)");
-                datosVenta.Comando.Parameters.Clear();
-                datosVenta.SetearParametro("@fecha", DateTime.Now);
-                datosVenta.SetearParametro("@idUsuario", idCliente); // Cambiar por el ID del usuario actual
-                datosVenta.SetearParametro("@monto", totalGeneral);
-                idVenta = (int)datosVenta.EjecutarEscalar();
+                // Abrimos la conexión e iniciamos la transacción UNA SOLA VEZ.
+                datos.AbrirConexion();
+                datos.IniciarTransaccion();
 
-                // aca se debe descontar del stock la cantidad de productos vendidos
+                // 1. Insertar la cabecera de la Venta y obtener el nuevo ID
+                string consultaVenta = "INSERT INTO Ventas (fecha, idUsuario, monto) OUTPUT INSERTED.id VALUES (GETDATE(), @idUsuario, @monto)";
+                datos.SetearConsulta(consultaVenta);
+                datos.LimpiarParametros();
+                datos.SetearParametro("@idUsuario", idCliente);
+                datos.SetearParametro("@monto", totalGeneral);
+                int idVenta = (int)datos.EjecutarEscalar();
 
-
-
-
-
-
-
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al insertar la venta", ex);
-            }
-            finally
-            {
-                datosVenta.CerrarConexion();
-            }
-
-            return InsertarDetalleVenta(carrito, idVenta);
-        }
-
-        public bool InsertarDetalleVenta(List<Producto> carrito, int idVenta)
-        {
-            // Insertar en la tabla DetalleVentas
-            AccesoDatos datosDetalleVenta = new AccesoDatos();
-            try
-            {
-                datosDetalleVenta.Conexion.Open();
-
+                // 2. Recorrer el carrito para insertar el detalle y descontar el stock
                 foreach (var producto in carrito)
                 {
-                    datosDetalleVenta.SetearConsulta("INSERT INTO DetalleVentas (idVenta, idProducto, cantidad, precioVenta) VALUES (@idVenta, @idProducto, @cantidad, @precioVenta)");
-                    datosDetalleVenta.Comando.Parameters.Clear();
-                    datosDetalleVenta.SetearParametro("@idVenta", idVenta);
-                    datosDetalleVenta.SetearParametro("@idProducto", producto.id);
-                    datosDetalleVenta.SetearParametro("@cantidad", producto.Cantidad);
-                    datosDetalleVenta.SetearParametro("@precioVenta", producto.precioVenta);
-                    datosDetalleVenta.EjecutarAccion();
+                    // 2a. Insertar en DetalleVentas
+                    string consultaDetalle = "INSERT INTO DetalleVentas (idVenta, idProducto, cantidad, precioVenta) VALUES (@idVenta, @idProducto, @cantidad, @precioVenta)";
+                    datos.SetearConsulta(consultaDetalle);
+                    datos.LimpiarParametros();
+                    datos.SetearParametro("@idVenta", idVenta);
+                    datos.SetearParametro("@idProducto", producto.id);
+                    datos.SetearParametro("@cantidad", producto.Cantidad);
+                    datos.SetearParametro("@precioVenta", producto.precioVenta);
+                    datos.EjecutarAccion();
 
-                    DescontarStocK(producto.id, producto.Cantidad);
+                    // 2b. Descontar del Stock
+                    string consultaStock = "UPDATE Stock SET cantidad = cantidad - @cantidad WHERE idProducto = @idProducto";
+                    datos.SetearConsulta(consultaStock);
+                    datos.LimpiarParametros();
+                    datos.SetearParametro("@cantidad", producto.Cantidad);
+                    datos.SetearParametro("@idProducto", producto.id);
+                    datos.EjecutarAccion();
                 }
 
-                return true;
+                // 3. Si todo salió bien, confirmamos la transacción.
+                datos.ConfirmarTransaccion();
+                return idVenta; // Devolvemos el ID de la venta por si lo necesitamos.
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al insertar el detalle de la venta", ex);
+                // Si algo falló en cualquiera de los pasos, revertimos todo y lanzamos la excepción.
+                datos.RevertirTransaccion();
+                throw ex;
             }
             finally
             {
-                datosDetalleVenta.CerrarConexion();
+                // Cerramos la conexión al final de todo, sin importar si fue éxito o error.
+                datos.CerrarConexion();
             }
         }
 
-
-
-        public bool DescontarStocK(int idProducto, int CantidadVendida)
+        // Este método ahora es para cuando un admin CANCELA una venta y debe devolver el stock.
+        public void DevolverStock(List<Producto> productos)
         {
+            // Este proceso también debería ser transaccional.
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("UPDATE Stock SET cantidad = cantidad - @cantidadV WHERE idProducto = @id");
-                datos.Comando.Parameters.Clear();
-                datos.SetearParametro("@id", idProducto);
-                datos.SetearParametro("@cantidadV", CantidadVendida);
-                datos.EjecutarAccion();
-                return true;
+                datos.AbrirConexion();
+                datos.IniciarTransaccion();
+
+                foreach (var producto in productos)
+                {
+                    datos.SetearConsulta("UPDATE Stock SET cantidad = cantidad + @cantidad WHERE idProducto = @idProducto");
+                    datos.LimpiarParametros();
+                    datos.SetearParametro("@cantidad", producto.Cantidad);
+                    datos.SetearParametro("@idProducto", producto.id);
+                    datos.EjecutarAccion();
+                }
+
+                datos.ConfirmarTransaccion();
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al descontar el stock", ex);
+                datos.RevertirTransaccion();
+                throw ex;
             }
             finally
             {
                 datos.CerrarConexion();
             }
-
-
-        }
-
-        public void Devolverstock(int id, int cantidad)
-        {
-
-            // aca se tiene que volver a insertar el stock que se descontó cuando el cliente confimo la compra en la pagina carrito
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.SetearConsulta("UPDATE Stock SET cantidad = cantidad + @cantidad WHERE idProducto = @id");
-                datos.Comando.Parameters.Clear();
-                datos.SetearParametro("@id", id);
-                datos.SetearParametro("@cantidad", cantidad);
-                datos.EjecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al devolver el stock", ex);
-            }
-            finally
-            {
-                datos.CerrarConexion();
-            }
-
         }
     }
 }
-    
-
-
-
-
-
-
-

@@ -1,14 +1,13 @@
-﻿using System;
+﻿using dominio;
+using negocio;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using dominio;
-using negocio;
-
-
-using System.Data;
+using static negocio.ProductoNegocio;
 
 
 
@@ -78,10 +77,13 @@ namespace Front.ProductosABM
                 productoNegocio.AgregarProducto(producto);
                 Response.Redirect("../Productos.aspx");
             }
-            catch (FormatException)
+            catch (ProductoInactivoException ex)
             {
-                LabelError.Text = "Error en el formato de los datos ingresados. Por favor, revise los campos numéricos.";
-                LabelError.Visible = true;
+                // CASO ESPECIAL: Atrapamos nuestra excepción personalizada.
+                // Mostramos un mensaje y redirigimos al usuario a la página de MODIFICAR
+                // pasándole el ID del producto inactivo que encontramos.
+                Session["MensajeReactivacion"] = "El producto '" + TextBoxNombre.Text + "' ya existía y estaba inactivo. Se han cargado sus datos para que puedas reactivarlo y modificarlo.";
+                Response.Redirect("../ProductosABM/ProductoModificar.aspx?id=" + ex.IdProductoExistente);
             }
             catch (Exception ex)
             {

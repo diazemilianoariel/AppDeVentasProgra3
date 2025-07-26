@@ -20,7 +20,7 @@ namespace dominio
         public decimal precio { get; set; }
 
         // Propiedad calculada. El setter privado evita que se asigne desde fuera.
-        public decimal precioVenta { get; private set; }
+        public decimal precioVenta { get; set; }
 
         // Propiedad que calcula el subtotal para el carrito
         public decimal SubTotal => Math.Round(precioVenta * Cantidad, 2);

@@ -15,7 +15,7 @@ namespace Front.ProductosABM
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // La validación de seguridad está perfecta.
+            
             Usuario usuario = Session["usuario"] as Usuario;
             if (usuario == null || !EsPerfilValido(usuario))
             {
@@ -23,9 +23,20 @@ namespace Front.ProductosABM
                 return;
             }
 
+
+            if (Session["MensajeReactivacion"] != null)
+            {
+                LabelError.Text = Session["MensajeReactivacion"].ToString();
+                LabelError.CssClass = "alert alert-info"; // Un color más amigable
+                LabelError.Visible = true;
+                Session["MensajeReactivacion"] = null; // Lo borramos para que no aparezca de nuevo
+            }
+
+
+
             if (!IsPostBack)
             {
-                // Renombramos el método para que sea más claro.
+               
                 LlenarControles();
 
                 if (Request.QueryString["id"] != null)
@@ -77,7 +88,7 @@ namespace Front.ProductosABM
 
         private void CargarDatosProducto(int productId)
         {
-            var producto = productoNegocio.ObtenerProducto(productId);
+            var producto = productoNegocio.ObtenerProductoParaAdmin(productId);
             if (producto != null)
             {
                 LabelId.Text = producto.id.ToString();

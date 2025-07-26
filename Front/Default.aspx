@@ -46,7 +46,7 @@
     </asp:UpdatePanel>
 
     <!-- Listado de productos -->
-    <asp:UpdatePanel ID="updPanelProductos" runat="server">
+   
         <ContentTemplate>
             <div class="row product-list">
                 <asp:Repeater ID="rptProductos" runat="server">
@@ -73,7 +73,7 @@
 
             </div>
         </ContentTemplate>
-    </asp:UpdatePanel>
+    
 
 
 </asp:Content>

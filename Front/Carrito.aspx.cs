@@ -85,6 +85,8 @@ namespace Front
             litTotalGeneral.Text = totalGeneral.ToString("F2");
         }
 
+        // EN: Carrito.aspx.cs (o el nombre de tu página de carrito)
+
         protected void btnConfirmarCompra_Click(object sender, EventArgs e)
         {
             Usuario usuario = (Usuario)Session["usuario"];
@@ -96,26 +98,34 @@ namespace Front
                     decimal totalGeneral = carrito.Sum(p => p.SubTotal);
 
                     CarritoNegocio carritoNegocio = new CarritoNegocio();
-                    bool exito = carritoNegocio.InsertarVenta(carrito, totalGeneral, usuario.Id);
 
-                    if (exito)
+                    // --- INICIO DE LA CORRECCIÓN ---
+
+                    // 1. Llamamos al nuevo método transaccional 'ProcesarVenta'.
+                    int idVentaGenerada = carritoNegocio.ProcesarVenta(carrito, totalGeneral, usuario.Id);
+
+                    // 2. Verificamos que se haya generado un ID de venta válido.
+                    if (idVentaGenerada > 0)
                     {
+                        // Si la venta fue exitosa, vaciamos el carrito y enviamos el email.
                         Session["Carrito"] = new List<Producto>();
-                        EmailService emailService = new EmailService();
+                        EmailService emailService = new EmailService(); // Asumiendo que tenés esta clase
                         emailService.EnviarCorreoConfirmacion(usuario.Email, "Confirmación de Compra", "Tu compra está siendo procesada.");
 
                         // Redirigir a una página de éxito o a "Mis Compras"
                         Response.Redirect("MisCompras.aspx", false);
                     }
+                    // --- FIN DE LA CORRECCIÓN ---
                     else
                     {
-                        MostrarMensaje("Error al confirmar la compra. Por favor, inténtelo de nuevo.");
+                        MostrarMensaje("Error al confirmar la compra. No se pudo generar la venta.");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MostrarMensaje("Ocurrió un error: " + ex.Message);
+                // Si la transacción falló, mostramos el error que viene de la capa de negocio.
+                MostrarMensaje("Ocurrió un error al procesar la venta: " + ex.Message);
             }
         }
 

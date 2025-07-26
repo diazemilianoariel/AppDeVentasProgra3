@@ -25,10 +25,10 @@ namespace negocio
 
 
                     proveedor.Id = (int)accesoDatos.Lector["id"];
-                    proveedor.Nombre = accesoDatos.Lector["Nombre"].ToString();
-                    proveedor.Direccion = accesoDatos.Lector["Direccion"].ToString();
-                    proveedor.Telefono = accesoDatos.Lector["Telefono"].ToString();
-                    proveedor.Email = accesoDatos.Lector["Email"].ToString();
+                    proveedor.Nombre = (String)accesoDatos.Lector["nombre"];
+                    proveedor.Direccion = (String)accesoDatos.Lector["direccion"];
+                    proveedor.Telefono = (String)accesoDatos.Lector["telefono"];
+                    proveedor.Email = (String)accesoDatos.Lector["email"];
                     proveedor.estado = (bool)accesoDatos.Lector["estado"];
                     lista.Add(proveedor);
                 }

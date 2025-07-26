@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
-
-
 
 namespace negocio
 {
@@ -14,57 +9,66 @@ namespace negocio
         private SqlConnection conexion;
         private SqlCommand comando;
         private SqlDataReader lector;
+        private SqlTransaction transaccion;
 
+        public SqlDataReader Lector => lector;
 
-
-
-        public SqlDataReader Lector
-        {
-            get { return lector; }
-        }
-
-        public SqlConnection Conexion
-        {
-            get { return conexion; }
-        }
-
-        public SqlCommand Comando
-        {
-            get { return comando; }
-        }
-
-
-
-        //defino el constructor
         public AccesoDatos()
         {
-            // Configura la cadena de conexión para usar UTF-8
             conexion = new SqlConnection("server=.\\SQLEXPRESS; database=TiendaOnline; integrated security=true");
             comando = new SqlCommand();
         }
 
-
-        public void SetearConsulta(string query)
+        // --- MÉTODOS DE TRANSACCIONES ---
+        public void AbrirConexion()
         {
-            comando.CommandType = System.Data.CommandType.Text;
-            comando.CommandText = query;
+            if (conexion.State == ConnectionState.Closed)
+                conexion.Open();
         }
 
-        public void SetearProcedimiento(string sp)
+        public void IniciarTransaccion()
         {
-            comando.CommandType = System.Data.CommandType.StoredProcedure;
-            comando.CommandText = sp;
+            // Solo inicia una transacción si la conexión está abierta
+            if (conexion.State == ConnectionState.Open)
+            {
+                transaccion = conexion.BeginTransaction();
+                comando.Transaction = transaccion;
+            }
+        }
+
+        public void ConfirmarTransaccion()
+        {
+            transaccion?.Commit();
+            transaccion = null; // Limpiamos la transacción
+        }
+
+        public void RevertirTransaccion()
+        {
+            transaccion?.Rollback();
+            transaccion = null; // Limpiamos la transacción
+        }
+
+        public void LimpiarParametros()
+        {
+            comando.Parameters.Clear();
+        }
+
+        // --- MÉTODOS DE EJECUCIÓN ---
+        public void SetearConsulta(string query)
+        {
+            comando.CommandType = CommandType.Text;
+            comando.CommandText = query;
+            comando.Connection = this.conexion; // Aseguramos siempre la conexión
+            if (this.transaccion != null)
+                comando.Transaction = this.transaccion; // Y la transacción si existe
         }
 
         public void EjecutarLectura()
         {
-            comando.Connection = conexion;
             try
             {
-                if (conexion.State == System.Data.ConnectionState.Closed)
-                {
+                if (conexion.State == ConnectionState.Closed)
                     conexion.Open();
-                }
                 lector = comando.ExecuteReader();
             }
             catch (Exception ex)
@@ -75,115 +79,61 @@ namespace negocio
 
         public void EjecutarAccion()
         {
+            // Este método ahora es consciente de las transacciones.
+            // No abre ni cierra la conexión por sí mismo si hay una transacción activa.
             comando.Connection = conexion;
-            try
+            if (transaccion == null) // Si NO hay transacción, maneja su propia conexión.
             {
-                if (conexion.State != ConnectionState.Open)
+                try
                 {
                     conexion.Open();
+                    comando.ExecuteNonQuery();
                 }
+                finally
+                {
+                    conexion.Close();
+                }
+            }
+            else // Si HAY transacción, simplemente ejecuta.
+            {
                 comando.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conexion.Close();
             }
         }
 
-        
-     
+        public object EjecutarEscalar()
+        {
+            // Este método ahora es consciente de las transacciones.
+            comando.Connection = conexion;
+            if (transaccion == null) // Si NO hay transacción
+            {
+                try
+                {
+                    conexion.Open();
+                    return comando.ExecuteScalar();
+                }
+                finally
+                {
+                    conexion.Close();
+                }
+            }
+            else // Si HAY transacción
+            {
+                return comando.ExecuteScalar();
+            }
+        }
 
         public void SetearParametro(string parametro, object valor)
         {
-            if (valor is string)
-            {
-                comando.Parameters.Add(new SqlParameter(parametro, SqlDbType.NVarChar) { Value = valor });
-            }
-            else
-            {
-                comando.Parameters.AddWithValue(parametro, valor);
-            }
+            comando.Parameters.AddWithValue(parametro, valor);
         }
-
-      
-
-   
-
-        // para un registro recien inserttado 
-        public object EjecutarEscalar()
-        {
-            comando.Connection = conexion;
-            try
-            {
-                if (conexion.State != System.Data.ConnectionState.Open)
-                {
-                    conexion.Open();
-                }
-                return comando.ExecuteScalar();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conexion.Close();
-            }
-        }
-
-      
-
 
         public void CerrarConexion()
         {
-            if (lector != null)
-                lector.Close();
+            lector?.Close();
             if (conexion.State == ConnectionState.Open)
             {
                 conexion.Close();
             }
         }
-
-
-        private SqlTransaction transaccion;
-
-
-        // 2. Añade estos NUEVOS MÉTODOS a tu clase (puedes ponerlos después del constructor)
-
-        public void AbrirConexion()
-        {
-            if (conexion.State == System.Data.ConnectionState.Closed)
-                conexion.Open();
-        }
-
-        public void IniciarTransaccion()
-        {
-            transaccion = conexion.BeginTransaction();
-            comando.Transaction = transaccion;
-        }
-
-        public void ConfirmarTransaccion()
-        {
-            // El '?' es un 'null-conditional operator'. Solo ejecuta Commit() si transaccion no es null.
-            transaccion?.Commit();
-        }
-
-        public void RevertirTransaccion()
-        {
-            transaccion?.Rollback();
-        }
-
-        public void LimpiarParametros()
-        {
-            comando.Parameters.Clear();
-        }
-
-
     }
-
-
 }
