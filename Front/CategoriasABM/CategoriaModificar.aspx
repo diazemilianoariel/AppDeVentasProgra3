@@ -30,9 +30,14 @@
                 </div>
 
 
+
+
                 <div class="form-group">
-                    <asp:Label ID="LabelEstado" runat="server" CssClass="form-label fw-bold">Categoría Disponible:</asp:Label>
-                    <asp:CheckBox ID="CheckBoxEstado" runat="server" CssClass="form-control " />
+                    <div class="form-check">
+                        <asp:CheckBox ID="CheckBoxEstado" runat="server"
+                            Text="Categoria Disponible"
+                            CssClass="form-check-input" />
+                    </div>
                 </div>
             </div>
         </div>

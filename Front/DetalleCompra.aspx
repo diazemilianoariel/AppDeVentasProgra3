@@ -46,7 +46,7 @@
                             <Columns>
                                 <asp:BoundField DataField="nombre" HeaderText="Producto" />
                                 <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" ItemStyle-CssClass="text-center" HeaderStyle-CssClass="text-center" />
-                                <asp:BoundField DataField="precio" HeaderText="Precio Unitario" DataFormatString="{0:c}" ItemStyle-CssClass="text-right" HeaderStyle-CssClass="text-right" />
+                               <asp:BoundField DataField="precioVenta" HeaderText="Precio Unitario" DataFormatString="{0:c}" ItemStyle-CssClass="text-right" HeaderStyle-CssClass="text-right" />
                             </Columns>
                         </asp:GridView>
                     </div>
@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <div class="card-footer text-center">
-                    <a href="MisCompras.aspx" class="btn btn-secondary">Volver a Mis Compras</a>
+                    <a href="Ventas.aspx" class="btn btn-secondary">Atras</a>
                 </div>
             </div>
         </div>

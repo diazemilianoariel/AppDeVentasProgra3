@@ -99,7 +99,7 @@
     <asp:Label ID="lblError" runat="server" CssClass="text-danger text-center d-block mt-3" Visible="false"></asp:Label>
 
     <div class="text-center my-4 no-print">
-        <asp:Button ID="btnVolver" runat="server" Text="Volver a Mis Compras" CssClass="btn btn-secondary" OnClick="btnVolver_Click" />
+       
         <asp:Button ID="btnImprimir" runat="server" Text="Imprimir Factura" CssClass="btn btn-success" OnClick="btnImprimir_Click" />
     </div>
 </asp:Content>

@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="form-group form-check mt-4">
                                     <asp:CheckBox ID="CheckBoxEstado" runat="server" CssClass="form-check-input" />
-                                    <asp:Label runat="server" AssociatedControlID="CheckBoxEstado" CssClass="form-check-label">Producto Activo</asp:Label>
+                                    <asp:Label runat="server" AssociatedControlID="CheckBoxEstado" CssClass="form-check-label">Producto Disponible</asp:Label>
                                 </div>
                             </div>
                         </div>

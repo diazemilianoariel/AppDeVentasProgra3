@@ -80,10 +80,10 @@ namespace Front
             }
         }
 
-        protected void btnVolver_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("MisCompras.aspx");
-        }
+        //protected void btnVolver_Click(object sender, EventArgs e)
+        //{
+        //    Response.Redirect("MisCompras.aspx");
+        //}
 
         protected void btnImprimir_Click(object sender, EventArgs e)
         {

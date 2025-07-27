@@ -45,7 +45,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select id, nombre, estado from Perfiles");
+                datos.SetearConsulta("select id, nombre, estado from Perfiles where estado = 1");
                 datos.EjecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -122,22 +122,18 @@ namespace negocio
         }
 
 
-        public void BajaLogicaPerfiles(Perfil perfil)
+        public void BajaLogicaPerfiles(int id)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
                 datos.SetearConsulta("update Perfiles set estado = 0 where id = @id");
-                datos.SetearParametro("@id", perfil.Id);
+                datos.SetearParametro("@id", id);
                 datos.EjecutarAccion();
             }
             catch (Exception ex)
             {
                 throw ex;
-            }
-            finally
-            {
-                datos.CerrarConexion();
             }
         }
 

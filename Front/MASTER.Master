@@ -53,8 +53,8 @@
                             <asp:Repeater ID="rptCategorias" runat="server">
                                 <ItemTemplate>
                                     <asp:HyperLink runat="server" CssClass="dropdown-item"
-                                        NavigateUrl='<%# "~/Default.aspx?cat=" + Eval("id") %>'>
-            <%# Eval("nombre") %>
+                                        NavigateUrl='<%# "~/Default.aspx?cat=" + Eval("id") %>'> 
+                                        <%# Eval("nombre") %>
                                     </asp:HyperLink>
                                 </ItemTemplate>
                             </asp:Repeater>

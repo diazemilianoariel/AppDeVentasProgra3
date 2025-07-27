@@ -10,7 +10,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-   <div class="container mt-5">
+    <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6">
                 <div class="card shadow-sm">
@@ -40,10 +40,17 @@
                             <asp:RegularExpressionValidator ErrorMessage="El formato del email no es válido." ControlToValidate="TextBoxEmail" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" runat="server" CssClass="text-danger" Display="Dynamic" />
                         </div>
 
-                        <div class="form-group form-check">
-                            <asp:CheckBox ID="CheckBoxEstado" runat="server" CssClass="form-check-input" Checked="true" />
-                            <asp:Label runat="server" AssociatedControlID="CheckBoxEstado" CssClass="form-check-label">Activo</asp:Label>
+                        
+
+                        <div class="form-group">
+                            <div class="form-check">
+                                <asp:CheckBox ID="CheckBoxEstado" runat="server" CssClass="form-check-input" Checked="true" />
+                                <asp:Label runat="server" AssociatedControlID="CheckBoxEstado" CssClass="form-check-label">Proveedor Disponible</asp:Label>
+                            </div>
                         </div>
+
+
+
 
                         <div class="row mt-4">
                             <div class="col-md-12 text-center">

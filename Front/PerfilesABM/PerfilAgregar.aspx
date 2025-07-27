@@ -23,7 +23,7 @@
 
                         <div class="form-group form-check">
                             <asp:CheckBox ID="CheckBoxEstado" runat="server" CssClass="form-check-input" />
-                            <asp:Label ID="LabelEstado" runat="server" AssociatedControlID="CheckBoxEstado" CssClass="form-check-label">Activo</asp:Label>
+                            <asp:Label ID="LabelEstado" runat="server" AssociatedControlID="CheckBoxEstado" CssClass="form-check-label">Perfil Disponible</asp:Label>
                         </div>
 
                         <div class="row mt-4">

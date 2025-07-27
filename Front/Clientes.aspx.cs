@@ -38,7 +38,9 @@ namespace Front
         private bool EsAdmin(Usuario usuario)
         {
             // Según el plan, solo los Administradores pueden gestionar usuarios.
-            return usuario != null && usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
+           // return usuario != null && usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
+            return usuario?.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
+
         }
 
 
@@ -46,9 +48,26 @@ namespace Front
         private void CargarGrillaUsuarios()
         {
             UsuarioNegocio negocio = new UsuarioNegocio();
-            GridViewClientes.DataSource = negocio.ListarUsuarios();
+            string filtro = txtFiltro.Text;
+            GridViewClientes.DataSource = negocio.ListarUsuarios(filtro);
             GridViewClientes.DataBind();
         }
+
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            // Al buscar, reiniciamos el índice de la página a 0 (la primera página)
+            GridViewClientes.PageIndex = 0;
+            CargarGrillaUsuarios();
+        }
+
+        protected void GridViewClientes_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            // Maneja el cambio de página
+            GridViewClientes.PageIndex = e.NewPageIndex;
+            CargarGrillaUsuarios();
+        }
+
 
 
         protected void GridViewClientes_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -70,6 +89,14 @@ namespace Front
 
 
             }
+        }
+
+
+        protected void txtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            // Cuando el texto cambia, reiniciamos la paginación y recargamos la grilla.
+            GridViewClientes.PageIndex = 0;
+            CargarGrillaUsuarios();
         }
     }
 }

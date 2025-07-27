@@ -36,7 +36,7 @@
                 <asp:Label ID="LabelError" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
 
                 <div class="d-flex justify-content-end mt-4">
-                    <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-secondary mr-2" />
+                    <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-secondary mr-2" onClick="btnCancelar_Click"/>
                     <asp:Button ID="btnConfirmar" runat="server" Text="Confirmar Eliminación" CssClass="btn btn-danger" OnClick="btnConfirmar_Click" />
                 </div>
             </div>

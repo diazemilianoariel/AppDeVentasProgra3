@@ -9,43 +9,45 @@ namespace Front
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                if (Session["usuario"] == null)
+                {
+                    Response.Redirect("Login.aspx", false);
+                    return;
+                }
+
+                if (Request.QueryString["id"] != null && int.TryParse(Request.QueryString["id"], out int idVenta))
+                {
+                    CargarDetalles(idVenta);
+                }
+                else
+                {
+                    // Si no hay ID, redirigir a una página principal
+                    Response.Redirect("Default.aspx", false);
+                }
+            }   
+        }
+
+
+        private void CargarDetalles(int idVenta)
+        {
             try
             {
-                if (!IsPostBack)
+                VentaNegocio negocio = new VentaNegocio();
+                // Usamos el método que ya trae toda la información de la venta.
+                Venta venta = negocio.ObtenerVentaPorId(idVenta);
+
+                if (venta != null)
                 {
-                    if (Session["usuario"] == null)
-                    {
-                        Response.Redirect("Login.aspx", false);
-                        return;
-                    }
+                    // Cargamos los datos en los controles de la página
+                    litIdCompra.Text = venta.IdVenta.ToString("D8");
+                    litFechaCompra.Text = venta.Fecha.ToString("dd/MM/yyyy");
+                    litTotalCompra.Text = venta.Monto.ToString("C");
 
-                    int idVenta = 0;
-                    if (Request.QueryString["id"] != null && int.TryParse(Request.QueryString["id"], out idVenta))
-                    {
-                        FacturaNegocio negocio = new FacturaNegocio();
-
-                        // 1. Obtenemos los datos generales de la compra
-                        CompraResumen compra = negocio.ObtenerCompraPorId(idVenta);
-
-                        // 2. Obtenemos la lista de productos
-                        List<Producto> detalleVenta = negocio.ObtenerDetalleVenta(idVenta);
-
-                        if (compra != null)
-                        {
-                            // Mostramos los datos en los nuevos literales
-                            litIdCompra.Text = "#" + compra.IdVenta.ToString();
-                            litFechaCompra.Text = compra.Fecha.ToString("dd/MM/yyyy");
-                            litTotalCompra.Text = compra.TotalFactura.ToString("c");
-
-                            // Mostramos los productos en la tabla
-                            gvDetalles.DataSource = detalleVenta;
-                            gvDetalles.DataBind();
-                        }
-                    }
-                    else
-                    {
-                        Response.Redirect("MisCompras.aspx", false);
-                    }
+                    // Cargamos la lista de productos en el GridView
+                    gvDetalles.DataSource = venta.Productos;
+                    gvDetalles.DataBind();
                 }
             }
             catch (Exception ex)
@@ -54,9 +56,6 @@ namespace Front
                 Response.Redirect("Error.aspx", false);
             }
         }
-
-
-
 
 
 

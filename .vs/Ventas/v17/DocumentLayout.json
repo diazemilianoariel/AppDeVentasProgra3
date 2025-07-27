@@ -5,38 +5,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appventasprogra3bis\\appdeventasprogra3\\front\\master.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}",
       "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\master.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appventasprogra3bis\\appdeventasprogra3\\front\\productosabm\\productomodificar.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\productosabm\\productomodificar.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3DF910B5-5CB0-47DC-8894-659C2DD82C01}|negocio\\negocio.csproj|c:\\users\\programador\\desktop\\appventasprogra3bis\\appdeventasprogra3\\negocio\\productonegocio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3DF910B5-5CB0-47DC-8894-659C2DD82C01}|negocio\\negocio.csproj|solutionrelative:negocio\\productonegocio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appventasprogra3bis\\appdeventasprogra3\\front\\productosabm\\productoeliminar.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\productosabm\\productoeliminar.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appventasprogra3bis\\appdeventasprogra3\\front\\productosabm\\productoeliminar.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\productosabm\\productoeliminar.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appventasprogra3bis\\appdeventasprogra3\\front\\productosabm\\productomodificar.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\productosabm\\productomodificar.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appventasprogra3bis\\appdeventasprogra3\\front\\productos.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\productos.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appventasprogra3bis\\appdeventasprogra3\\front\\productosabm\\productoagregar.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\productosabm\\productoagregar.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|c:\\users\\programador\\desktop\\appventasprogra3bis\\appdeventasprogra3\\front\\productosabm\\productoagregar.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{8D61371F-8ED8-4CA0-9759-6F911046B42C}|Front\\Front.csproj|solutionrelative:front\\productosabm\\productoagregar.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -66,45 +34,6 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ProductoEliminar.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppVentasProgra3Bis\\AppDeVentasProgra3\\Front\\ProductosABM\\ProductoEliminar.aspx.cs",
-              "RelativeDocumentMoniker": "Front\\ProductosABM\\ProductoEliminar.aspx.cs",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppVentasProgra3Bis\\AppDeVentasProgra3\\Front\\ProductosABM\\ProductoEliminar.aspx.cs",
-              "RelativeToolTip": "Front\\ProductosABM\\ProductoEliminar.aspx.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAowCoAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T05:48:15.99Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ProductoEliminar.aspx",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppVentasProgra3Bis\\AppDeVentasProgra3\\Front\\ProductosABM\\ProductoEliminar.aspx",
-              "RelativeDocumentMoniker": "Front\\ProductosABM\\ProductoEliminar.aspx",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppVentasProgra3Bis\\AppDeVentasProgra3\\Front\\ProductosABM\\ProductoEliminar.aspx",
-              "RelativeToolTip": "Front\\ProductosABM\\ProductoEliminar.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-07-26T05:48:12.23Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Productos.aspx",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppVentasProgra3Bis\\AppDeVentasProgra3\\Front\\Productos.aspx",
-              "RelativeDocumentMoniker": "Front\\Productos.aspx",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppVentasProgra3Bis\\AppDeVentasProgra3\\Front\\Productos.aspx",
-              "RelativeToolTip": "Front\\Productos.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-07-26T05:21:24.25Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "MASTER.Master",
               "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppVentasProgra3Bis\\AppDeVentasProgra3\\Front\\MASTER.Master",
@@ -113,72 +42,7 @@
               "RelativeToolTip": "Front\\MASTER.Master",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-07-26T05:17:56.414Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ProductoModificar.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppVentasProgra3Bis\\AppDeVentasProgra3\\Front\\ProductosABM\\ProductoModificar.aspx.cs",
-              "RelativeDocumentMoniker": "Front\\ProductosABM\\ProductoModificar.aspx.cs",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppVentasProgra3Bis\\AppDeVentasProgra3\\Front\\ProductosABM\\ProductoModificar.aspx.cs",
-              "RelativeToolTip": "Front\\ProductosABM\\ProductoModificar.aspx.cs",
-              "ViewState": "AgIAAFIAAAAAAAAAAAAYwF0AAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T05:15:45.744Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ProductoModificar.aspx",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppVentasProgra3Bis\\AppDeVentasProgra3\\Front\\ProductosABM\\ProductoModificar.aspx",
-              "RelativeDocumentMoniker": "Front\\ProductosABM\\ProductoModificar.aspx",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppVentasProgra3Bis\\AppDeVentasProgra3\\Front\\ProductosABM\\ProductoModificar.aspx",
-              "RelativeToolTip": "Front\\ProductosABM\\ProductoModificar.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-07-26T05:15:41.535Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ProductoAgregar.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppVentasProgra3Bis\\AppDeVentasProgra3\\Front\\ProductosABM\\ProductoAgregar.aspx.cs",
-              "RelativeDocumentMoniker": "Front\\ProductosABM\\ProductoAgregar.aspx.cs",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppVentasProgra3Bis\\AppDeVentasProgra3\\Front\\ProductosABM\\ProductoAgregar.aspx.cs",
-              "RelativeToolTip": "Front\\ProductosABM\\ProductoAgregar.aspx.cs",
-              "ViewState": "AgIAAEkAAAAAAAAAAAAwwFUAAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T05:11:41.895Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ProductoAgregar.aspx",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppVentasProgra3Bis\\AppDeVentasProgra3\\Front\\ProductosABM\\ProductoAgregar.aspx",
-              "RelativeDocumentMoniker": "Front\\ProductosABM\\ProductoAgregar.aspx",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppVentasProgra3Bis\\AppDeVentasProgra3\\Front\\ProductosABM\\ProductoAgregar.aspx",
-              "RelativeToolTip": "Front\\ProductosABM\\ProductoAgregar.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-07-26T05:11:38.501Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ProductoNegocio.cs",
-              "DocumentMoniker": "C:\\Users\\programador\\Desktop\\AppVentasProgra3Bis\\AppDeVentasProgra3\\negocio\\ProductoNegocio.cs",
-              "RelativeDocumentMoniker": "negocio\\ProductoNegocio.cs",
-              "ToolTip": "C:\\Users\\programador\\Desktop\\AppVentasProgra3Bis\\AppDeVentasProgra3\\negocio\\ProductoNegocio.cs",
-              "RelativeToolTip": "negocio\\ProductoNegocio.cs",
-              "ViewState": "AgIAAIIBAAAAAAAAAAAYwKoBAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T04:55:09.678Z",
+              "WhenOpened": "2025-07-26T23:52:10.969Z",
               "EditorCaption": ""
             }
           ]

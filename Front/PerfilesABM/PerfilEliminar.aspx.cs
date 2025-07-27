@@ -94,10 +94,9 @@ namespace Front.PerfilesABM
                 int perfilId = Convert.ToInt32(Request.QueryString["id"]);
                 PerfilesNegocio perfilesNegocio = new PerfilesNegocio();
 
-                //  objeto Perfil solo con el ID, que es lo que necesita el método de baja.
-                Perfil perfil = new Perfil { Id = perfilId };
+                // Llamamos al método mejorado pasándole solo el ID.
+                perfilesNegocio.BajaLogicaPerfiles(perfilId);
 
-                perfilesNegocio.BajaLogicaPerfiles(perfil);
                 Response.Redirect("../Perfiles.aspx");
             }
             catch (Exception ex)

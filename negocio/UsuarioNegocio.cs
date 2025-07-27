@@ -9,34 +9,42 @@ namespace negocio
     {
 
 
-        public List<Usuario> ListarUsuarios()
+        public List<Usuario> ListarUsuarios(string filtro = "")
         {
             List<Usuario> lista = new List<Usuario>();
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                // trae P.id para poder construir el objeto Perfil completo.
-                datos.SetearConsulta("SELECT U.id, U.Nombre, U.apellido, U.dni, U.direccion, U.telefono, U.email, U.clave, P.id as IdPerfil, P.nombre as NombrePerfil, U.estado FROM Usuarios U INNER JOIN Perfiles P ON U.idPerfil = P.id WHERE U.estado = 1");
+                string consulta = @"
+            SELECT U.id, U.nombre, U.apellido, U.dni, U.direccion, U.telefono, U.email, U.estado, P.nombre as PerfilNombre 
+            FROM Usuarios U 
+            LEFT JOIN Perfiles P ON U.idPerfil = P.id";
+
+                if (!string.IsNullOrEmpty(filtro))
+                {
+                    consulta += " WHERE U.nombre LIKE @filtro OR U.apellido LIKE @filtro OR U.email LIKE @filtro";
+                    datos.SetearParametro("@filtro", "%" + filtro + "%");
+                }
+
+                datos.SetearConsulta(consulta);
                 datos.EjecutarLectura();
+
                 while (datos.Lector.Read())
                 {
                     Usuario aux = new Usuario();
-                    aux.Id = (int)datos.Lector["Id"];
-                    aux.Nombre = (string)datos.Lector["Nombre"];
-                    aux.Apellido = (string)datos.Lector["Apellido"];
-                    aux.Dni = (string)datos.Lector["Dni"];
-                    aux.Direccion = (string)datos.Lector["Direccion"];
-                    aux.Telefono = (string)datos.Lector["Telefono"];
-                    aux.Email = (string)datos.Lector["Email"];
-                    aux.clave = (string)datos.Lector["clave"];
+                    aux.Id = (int)datos.Lector["id"];
+                    aux.Nombre = (string)datos.Lector["nombre"];
+                    aux.Apellido = (string)datos.Lector["apellido"];
+                    aux.Dni = (string)datos.Lector["dni"];
+                    aux.Direccion = (string)datos.Lector["direccion"];
+                    aux.Telefono = (string)datos.Lector["telefono"];
+                    aux.Email = (string)datos.Lector["email"];
                     aux.estado = (bool)datos.Lector["estado"];
 
-                    // CORRECCIÓN CLAVE: Se instancia y se rellena el objeto Perfil.
-                    aux.Perfil = new Perfil
-                    {
-                        Id = (int)datos.Lector["IdPerfil"],
-                        Nombre = (string)datos.Lector["NombrePerfil"]
-                    };
+                    if (datos.Lector["PerfilNombre"] != DBNull.Value)
+                        aux.Perfil = new Perfil { Nombre = (string)datos.Lector["PerfilNombre"] };
+                    else
+                        aux.Perfil = new Perfil { Nombre = "Sin Perfil" };
 
                     lista.Add(aux);
                 }

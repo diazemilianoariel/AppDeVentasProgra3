@@ -1,9 +1,6 @@
 ﻿using negocio;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using dominio;
 
@@ -11,134 +8,96 @@ namespace Front
 {
     public partial class Ventas : System.Web.UI.Page
     {
+        VentaNegocio negocio = new VentaNegocio();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                CargarDatos();
+                CargarDatosCompletos();
             }
         }
 
-       
-        private void CargarDatos()
+        private void CargarDatosCompletos()
         {
-            VentaNegocio negocio = new VentaNegocio();
             try
             {
-                // Cargar los KPIs (Indicadores Clave de Desempeño)
+                // Cargar los KPIs
                 litVentasPendientes.Text = negocio.ContarVentasPorEstado(1).ToString(); // 1 = Pendiente
-                litMontoPendiente.Text = negocio.CalcularMontoPendiente().ToString("C"); // "C" formatea como moneda
+                litMontoPendiente.Text = negocio.CalcularMontoPendiente().ToString("C");
                 litVentasAprobadas.Text = negocio.ContarVentasPorEstado(2).ToString(); // 2 = Aprobado
                 litIngresosTotales.Text = negocio.CalcularIngresosTotales().ToString("C");
 
-              
-                string filtroPendientes = txtBuscarPendientes.Text;
-                gvVentasPendientes.DataSource = negocio.ListarVentasPendientes(filtroPendientes);
+                // Cargar las grillas
+                gvVentasPendientes.DataSource = negocio.ListarVentasPendientes();
                 gvVentasPendientes.DataBind();
 
-               
-                string filtroHistorial = txtBuscarHistorial.Text;
-                gvVentasRealizadas.DataSource = negocio.ListarVentas(filtroHistorial);
-                gvVentasRealizadas.DataBind();
+                CargarHistorialConFiltros();
             }
             catch (Exception ex)
             {
-
-
                 pnlMensaje.Visible = true;
                 pnlMensaje.CssClass = "alert alert-danger";
-                //lblMensaje.Text = "Error al cargar los datos: " + ex.Message;
-
+                lblMensaje.Text = "Error al cargar datos: " + ex.Message;
             }
         }
 
-        // EVENTOS DE LOS BOTONES DE ACCIÓN
-        protected void btnAprobar_Click(object sender, EventArgs e)
+        private void CargarHistorialConFiltros()
         {
-            try
+            DateTime? fechaDesde = null;
+            if (!string.IsNullOrEmpty(txtFechaDesde.Text))
+                fechaDesde = DateTime.Parse(txtFechaDesde.Text);
+
+            DateTime? fechaHasta = null;
+            if (!string.IsNullOrEmpty(txtFechaHasta.Text))
+                fechaHasta = DateTime.Parse(txtFechaHasta.Text);
+
+            gvVentasRealizadas.DataSource = negocio.ListarVentasParaReporte("", fechaDesde, fechaHasta);
+            gvVentasRealizadas.DataBind();
+        }
+
+        protected void gvVentas_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            int idVenta = Convert.ToInt32(e.CommandArgument);
+
+            if (e.CommandName == "Aprobar")
             {
-                int idVenta = Convert.ToInt32(((Button)sender).CommandArgument);
-                VentaNegocio negocio = new VentaNegocio();
                 negocio.AprobarVenta(idVenta);
-                CargarDatos(); // Recargar todo para ver los cambios
-
-                pnlMensaje.Visible = true;
-                pnlMensaje.CssClass = "alert alert-success";
-                lblMensaje.Text = "Venta #" + idVenta + " aprobada.";
-
             }
-            catch (Exception ex)
+            else if (e.CommandName == "Rechazar")
             {
-                pnlMensaje.Visible = true;
-                pnlMensaje.CssClass = "alert alert-danger";
-                lblMensaje.Text = "Error al aprobar la venta: " + ex.Message;
-            }
-        }
-
-
-
-      
-
-        protected void btnRechazar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int idVenta = Convert.ToInt32(((Button)sender).CommandArgument);
-                VentaNegocio negocio = new VentaNegocio();
-
-                // 1. Buscamos la lista de productos de esa venta para saber qué stock devolver.
-                //    Usamos el método que ya sabemos que funciona.
                 List<Producto> productosDeLaVenta = negocio.ListarProductosPorVenta(idVenta);
-
-                // 2. Llamamos al método transaccional que hace TODO el trabajo de forma segura.
-                //    (Este es el método que te pasé en el mensaje anterior para VentaNegocio.cs)
                 negocio.RechazarVentaYDevolverStock(idVenta, productosDeLaVenta);
-
-                // 3. Recargamos la grilla para que se vea el cambio de estado.
-                CargarDatos();
-
-                pnlMensaje.Visible = true;
-                pnlMensaje.CssClass = "alert alert-warning";
-                lblMensaje.Text = "Venta #" + idVenta + " rechazada y stock devuelto.";
             }
-            catch (Exception ex)
+            else if (e.CommandName== "VerResumen")
             {
-                pnlMensaje.Visible = true;
-                pnlMensaje.CssClass = "alert alert-danger";
-                lblMensaje.Text = "Error al rechazar la venta: " + ex.Message;
+                Response.Redirect("DetalleCompra.aspx?id=" + idVenta);
             }
+
+
+
+
+            CargarDatosCompletos(); // Recargar todo para ver los cambios
         }
 
-
-        protected void btnVerDetalle_Click(object sender, EventArgs e)
+        protected void btnFiltrar_Click(object sender, EventArgs e)
         {
-            string idVenta = ((Button)sender).CommandArgument;
-            Response.Redirect("DetalleVenta.aspx?id=" + idVenta);
+            gvVentasRealizadas.PageIndex = 0; // Volver a la primera página al filtrar
+            CargarHistorialConFiltros();
         }
 
-
-      
-        protected void txtBuscarPendientes_TextChanged(object sender, EventArgs e)
+        protected void btnLimpiar_Click(object sender, EventArgs e)
         {
-            CargarDatos();
-        }
-
-        protected void txtBuscarHistorial_TextChanged(object sender, EventArgs e)
-        {
-            CargarDatos();
-        }
-
-       
-        protected void gvVentasPendientes_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            gvVentasPendientes.PageIndex = e.NewPageIndex;
-            CargarDatos();
+            txtFechaDesde.Text = "";
+            txtFechaHasta.Text = "";
+            gvVentasRealizadas.PageIndex = 0;
+            CargarHistorialConFiltros();
         }
 
         protected void gvVentasRealizadas_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvVentasRealizadas.PageIndex = e.NewPageIndex;
-            CargarDatos();
+            CargarHistorialConFiltros();
         }
     }
 }

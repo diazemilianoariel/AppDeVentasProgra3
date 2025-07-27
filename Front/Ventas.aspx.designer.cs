@@ -59,7 +59,6 @@ namespace Front
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlMensaje;
 
-
         /// <summary>
         /// Control lblMensaje.
         /// </summary>
@@ -68,17 +67,6 @@ namespace Front
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMensaje;
-
-
-
-        /// <summary>
-        /// Control txtBuscarPendientes.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBuscarPendientes;
 
         /// <summary>
         /// Control gvVentasPendientes.
@@ -90,13 +78,40 @@ namespace Front
         protected global::System.Web.UI.WebControls.GridView gvVentasPendientes;
 
         /// <summary>
-        /// Control txtBuscarHistorial.
+        /// Control txtFechaDesde.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBuscarHistorial;
+        protected global::System.Web.UI.WebControls.TextBox txtFechaDesde;
+
+        /// <summary>
+        /// Control txtFechaHasta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFechaHasta;
+
+        /// <summary>
+        /// Control btnFiltrar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFiltrar;
+
+        /// <summary>
+        /// Control btnLimpiar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLimpiar;
 
         /// <summary>
         /// Control gvVentasRealizadas.

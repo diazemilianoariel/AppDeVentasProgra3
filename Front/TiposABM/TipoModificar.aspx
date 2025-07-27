@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MASTER.Master" AutoEventWireup="true" CodeBehind="TipoModificar.aspx.cs" Inherits="Front.TiposABM.TIpoModificar" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MASTER.Master" AutoEventWireup="true" CodeBehind="TipoModificar.aspx.cs" Inherits="Front.TiposABM.TipoModificar" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -27,10 +27,17 @@
                             <asp:Label ID="LabelErrorTipoExistente" runat="server" CssClass="text-danger mt-1 d-block" Visible="false"></asp:Label>
                         </div>
 
-                        <div class="form-group form-check">
-                            <asp:CheckBox ID="CheckBoxEstado" runat="server" CssClass="form-check-input" />
-                            <asp:Label ID="LabelEstado" runat="server" AssociatedControlID="CheckBoxEstado" CssClass="form-check-label">Activo</asp:Label>
+
+
+
+                        <div class="form-group">
+                            <div class="form-check">
+                                <asp:CheckBox ID="CheckBoxEstado" runat="server" CssClass="form-check-input" />
+                                <asp:Label ID="LabelEstado" runat="server" AssociatedControlID="CheckBoxEstado" CssClass="form-check-label">Tipo Disponible</asp:Label>
+                            </div>
                         </div>
+
+
 
                         <div class="row mt-4">
                             <div class="col-md-12 text-center">

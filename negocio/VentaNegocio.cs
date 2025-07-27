@@ -574,5 +574,69 @@ namespace negocio
         }
 
 
+
+
+
+        public List<Venta> ListarVentasParaReporte(string filtro = "", DateTime? fechaDesde = null, DateTime? fechaHasta = null)
+        {
+            List<Venta> ventas = new List<Venta>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                // CORRECCIÓN: Agregamos el INNER JOIN a EstadoVenta y seleccionamos E.nombre
+                string consulta = @"
+            SELECT v.id, v.fecha, v.idUsuario, U.nombre, U.apellido, v.monto, E.nombre as nombreEstadoVenta
+            FROM Ventas v 
+            INNER JOIN Usuarios U ON v.idUsuario = U.id
+            INNER JOIN EstadoVenta E ON v.idEstadoVenta = E.id
+            WHERE 1=1";
+
+                if (fechaDesde.HasValue)
+                {
+                    consulta += " AND v.fecha >= @fechaDesde";
+                    datos.SetearParametro("@fechaDesde", fechaDesde.Value);
+                }
+                if (fechaHasta.HasValue)
+                {
+                    consulta += " AND v.fecha < @fechaHasta";
+                    datos.SetearParametro("@fechaHasta", fechaHasta.Value.AddDays(1));
+                }
+
+                consulta += " ORDER BY v.fecha DESC";
+                datos.SetearConsulta(consulta);
+                datos.EjecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Venta aux = new Venta();
+                    aux.IdVenta = (int)datos.Lector["id"];
+                    aux.Fecha = (DateTime)datos.Lector["fecha"];
+                    aux.Monto = (decimal)datos.Lector["monto"];
+
+                    // CORRECCIÓN: Ahora leemos el nombre del estado que viene de la consulta
+                    aux.nombreEstadoVenta = (string)datos.Lector["nombreEstadoVenta"];
+
+                    aux.Cliente = new Usuario
+                    {
+                        Id = (int)datos.Lector["idUsuario"],
+                        Nombre = (string)datos.Lector["nombre"],
+                        Apellido = (string)datos.Lector["apellido"]
+                    };
+                    ventas.Add(aux);
+                }
+                return ventas;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+
+
     }
 }
