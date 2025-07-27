@@ -90,9 +90,11 @@
     <Content Include="ContraseñaRecupero.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="DetalleCompra.aspx" />
+    <Content Include="GestionOfertas.aspx" />
     <Content Include="MarcasABM\MarcaAgregar.aspx" />
     <Content Include="MarcasABM\MarcaEliminar.aspx" />
     <Content Include="MarcasABM\MarcaModificar.aspx" />
+    <Content Include="Ofertas.aspx" />
     <Content Include="PerfilesABM\PerfilEliminar.aspx" />
     <Content Include="PerfilesABM\PerfilAgregar.aspx" />
     <Content Include="PerfilesABM\PerfilModificar.aspx" />
@@ -187,6 +189,13 @@
     <Compile Include="DetalleCompra.aspx.designer.cs">
       <DependentUpon>DetalleCompra.aspx</DependentUpon>
     </Compile>
+    <Compile Include="GestionOfertas.aspx.cs">
+      <DependentUpon>GestionOfertas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestionOfertas.aspx.designer.cs">
+      <DependentUpon>GestionOfertas.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MarcasABM\MarcaAgregar.aspx.cs">
       <DependentUpon>MarcaAgregar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -207,6 +216,13 @@
     </Compile>
     <Compile Include="MarcasABM\MarcaModificar.aspx.designer.cs">
       <DependentUpon>MarcaModificar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Ofertas.aspx.cs">
+      <DependentUpon>Ofertas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ofertas.aspx.designer.cs">
+      <DependentUpon>Ofertas.aspx</DependentUpon>
     </Compile>
     <Compile Include="PerfilesABM\PerfilEliminar.aspx.cs">
       <DependentUpon>PerfilEliminar.aspx</DependentUpon>

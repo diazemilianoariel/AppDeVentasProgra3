@@ -44,7 +44,7 @@ namespace Front.ProductosABM
             try
             {
                 ProductoNegocio negocio = new ProductoNegocio();
-                Producto producto = negocio.ObtenerProducto(Convert.ToInt32(productoId));
+                Producto producto = negocio.ObtenerProductoPublico(Convert.ToInt32(productoId));
 
                 if (producto != null)
                 {
@@ -85,25 +85,40 @@ namespace Front.ProductosABM
 
         protected void btnAgregarCarrito_Click(object sender, EventArgs e)
         {
-            DefaultNegocio defaultNegocio = new DefaultNegocio();
             try
             {
                 int idProducto = Convert.ToInt32(Request.QueryString["id"]);
-                Producto producto = defaultNegocio.ObtenerProducto(idProducto);
 
-                if (producto != null)
+                // Usamos la capa de negocio correcta y el método que sabe de ofertas
+                ProductoNegocio negocio = new ProductoNegocio();
+                Producto productoAAgregar = negocio.ObtenerProductoPublico(idProducto);
+
+                if (productoAAgregar != null)
                 {
                     List<Producto> carrito = (List<Producto>)Session["Carrito"] ?? new List<Producto>();
-                    int cantidad = Convert.ToInt32(txtCantidad.Text);
+                    int cantidadDeseada = Convert.ToInt32(txtCantidad.Text);
 
-                    if (producto.stock >= cantidad)
+                    if (productoAAgregar.stock >= cantidadDeseada)
                     {
-                        defaultNegocio.AgregarProductosAlCarrito(carrito, producto, cantidad);
+                        // Buscamos si el producto ya existe en el carrito
+                        Producto productoEnCarrito = carrito.FirstOrDefault(p => p.id == idProducto);
+
+                        if (productoEnCarrito != null)
+                        {
+                            // Si ya está, solo actualizamos la cantidad
+                            productoEnCarrito.Cantidad += cantidadDeseada;
+                        }
+                        else
+                        {
+                            // Si es nuevo, le asignamos la cantidad y lo agregamos
+                            productoAAgregar.Cantidad = cantidadDeseada;
+                            carrito.Add(productoAAgregar);
+                        }
+
                         Session["Carrito"] = carrito;
 
-                        // Redirigimos al catálogo para que el usuario vea que se agregó.
-                        // La Master Page actualizará el contador automáticamente.
-                        Response.Redirect(Request.RawUrl, false);
+                        // Redirigimos a la página del carrito para que el usuario vea su producto
+                        Response.Redirect("~/Carrito.aspx", false);
                     }
                     else
                     {
@@ -111,9 +126,10 @@ namespace Front.ProductosABM
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 MostrarError("Ocurrió un error al agregar el producto al carrito.");
+                // Opcional: registrar ex.ToString() en un log de errores.
             }
         }
 

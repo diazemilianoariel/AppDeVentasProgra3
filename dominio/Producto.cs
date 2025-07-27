@@ -63,5 +63,11 @@ namespace dominio
         {
             this.precioVenta = Math.Round(this.precio + (this.precio * (this.margenGanancia / 100)), 2);
         }
+
+        public bool EnOferta { get; set; }
+
+        public decimal? PrecioOferta { get; set; }
+        public DateTime? FechaInicioOferta { get; set; }
+        public DateTime? FechaFinOferta { get; set; }
     }
 }

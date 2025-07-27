@@ -88,6 +88,7 @@
     <Compile Include="AccesoDatos.cs" />
     <Compile Include="CarritoNegocio.cs" />
     <Compile Include="CategoriaNegocio.cs" />
+    <Compile Include="OfertaNegocio.cs" />
     <Compile Include="UsuarioNegocio.cs" />
     <Compile Include="CompraNegocio.cs" />
     <Compile Include="DefaultNegocio.cs" />

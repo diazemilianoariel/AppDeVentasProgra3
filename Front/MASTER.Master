@@ -64,7 +64,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Ofertas.aspx">Ofertas</a>
+                        <asp:HyperLink runat="server" NavigateUrl="~/Ofertas.aspx" CssClass="nav-link">Ofertas</asp:HyperLink>
                     </li>
 
 
@@ -113,6 +113,9 @@
                             <asp:HyperLink CssClass="dropdown-item" NavigateUrl="~/Categorias.aspx" runat="server">Categoría</asp:HyperLink>
                             <asp:HyperLink CssClass="dropdown-item" NavigateUrl="~/Marcas.aspx" runat="server">Marca</asp:HyperLink>
                             <asp:HyperLink CssClass="dropdown-item" NavigateUrl="~/Tipos.aspx" runat="server">Tipo</asp:HyperLink>
+                            <div class="dropdown-divider"></div>
+                            <asp:HyperLink CssClass="dropdown-item" NavigateUrl="~/GestionOfertas.aspx" runat="server">Gestionar Ofertas</asp:HyperLink>
+
                         </div>
                     </li>
                     <% } %>

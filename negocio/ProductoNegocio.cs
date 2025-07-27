@@ -13,6 +13,78 @@ namespace negocio
     {
         // EN: ProductoNegocio.cs
 
+       
+
+        public Producto ObtenerProductoPublico(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                // Esta consulta une Productos con Ofertas para ver si hay un precio especial
+                string consulta = @"
+            SELECT P.id, P.nombre, P.descripcion, P.imagen, P.precio, P.margenGanancia, P.estado,
+                   ISNULL(S.cantidad, 0) as Stock,
+                   M.nombre as MarcaNombre, C.nombre as CategoriaNombre, T.nombre as TipoNombre,
+                   O.precioOferta
+            FROM Productos P
+            LEFT JOIN Stock S ON P.id = S.idProducto
+            LEFT JOIN Marcas M ON P.idMarca = M.id
+            LEFT JOIN Categorias C ON P.idCategoria = C.id
+            LEFT JOIN Tipos T ON P.idTipo = T.id
+            LEFT JOIN Ofertas O ON P.id = O.idProducto 
+                AND (O.FechaInicio IS NULL OR O.FechaInicio <= GETDATE())
+                AND (O.FechaFin IS NULL OR O.FechaFin >= GETDATE())
+            WHERE P.id = @id AND P.estado = 1";
+
+                datos.SetearConsulta(consulta);
+                datos.SetearParametro("@id", id);
+                datos.EjecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    Producto producto = new Producto();
+                    producto.id = (int)datos.Lector["id"];
+                    producto.nombre = (string)datos.Lector["nombre"];
+                    producto.descripcion = (string)datos.Lector["descripcion"];
+                    producto.Imagen = (string)datos.Lector["imagen"];
+                    producto.stock = (int)datos.Lector["Stock"];
+                    producto.Marca = new Marca { nombre = (string)datos.Lector["MarcaNombre"] };
+                    producto.Categoria = new Categoria { nombre = (string)datos.Lector["CategoriaNombre"] };
+                    producto.Tipo = new Tipos { nombre = (string)datos.Lector["TipoNombre"] };
+
+                    // --- LÓGICA DE PRECIO INTELIGENTE ---
+                    if (datos.Lector["precioOferta"] != DBNull.Value)
+                    {
+                        // Si hay un precio de oferta VÁLIDO, usamos ese.
+                        producto.precioVenta = (decimal)datos.Lector["precioOferta"];
+                    }
+                    else
+                    {
+                        // Si no, calculamos el precio de venta normal.
+                        producto.precio = (decimal)datos.Lector["precio"];
+                        producto.margenGanancia = (decimal)datos.Lector["margenGanancia"];
+                        producto.CalcularPrecioVenta();
+                    }
+
+                    // Opcional: Aquí podrías agregar la lógica para cargar los proveedores si los mostrás en esta página
+
+                    return producto;
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+
+
         public List<Producto> Listar(string filtro = "", string idCategoria = "", int idProducto = 0)
         {
             List<Producto> lista = new List<Producto>();
