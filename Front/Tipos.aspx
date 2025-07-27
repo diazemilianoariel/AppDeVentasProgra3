@@ -10,6 +10,28 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
         }
+
+        .pagination-ys {
+            padding-left: 0;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+            .pagination-ys table > tbody > tr > td {
+                display: inline;
+                padding: 8px 12px;
+                text-decoration: none;
+                color: #007bff;
+                background-color: #fff;
+                border: 1px solid #ddd;
+            }
+
+                .pagination-ys table > tbody > tr > td > span {
+                    z-index: 3;
+                    color: #fff;
+                    background-color: #007bff;
+                    border-color: #007bff;
+                }
     </style>
 </asp:Content>
 
@@ -17,27 +39,38 @@
     <div class="container mt-5">
         <div class="text-center">
             <h1 class="mb-3">Gestión de Tipos</h1>
-            <p class="text-muted">Gestione Sus Tipos de Manera Ágil y sencilla, Agregue, Modifique o Elimine los Tipos que Desee.</p>
+            <p class="text-muted">Administre y organice los Tipos de productos de la aplicación.</p>
         </div>
 
         <div class="row mt-4 justify-content-center">
-            <%--  asp:HyperLink para consistencia en las rutas --%>
             <asp:HyperLink NavigateUrl="~/TiposABM/TipoAgregar.aspx" runat="server" CssClass="btn btn-primary">Nuevo Tipo</asp:HyperLink>
+        </div>
+
+        <div class="row mt-4 justify-content-center">
+            <div class="col-md-8">
+                <div class="input-group">
+                    <asp:TextBox ID="txtFiltro" runat="server" CssClass="form-control" placeholder="Buscar por nombre..." AutoPostBack="true" OnTextChanged="txtFiltro_TextChanged"></asp:TextBox>
+                </div>
+            </div>
         </div>
 
         <div class="row mt-4 justify-content-center">
             <div class="col-md-10">
                 <div class="table-responsive">
-                    <asp:GridView ID="GridViewTipos" runat="server" CssClass="table table-striped table-bordered table-dark w-100" AutoGenerateColumns="False" OnRowCommand="GridViewTipos_RowCommand">
+                    <asp:GridView ID="GridViewTipos" runat="server"
+                        AutoGenerateColumns="False" DataKeyNames="Id"
+                        CssClass="table table-dark w-100"
+                        OnRowCommand="GridViewTipos_RowCommand"
+                        AllowPaging="True" PageSize="5" OnPageIndexChanging="GridViewTipos_PageIndexChanging">
                         <Columns>
-                            <asp:BoundField DataField="id" HeaderText="ID" />
+                            <asp:BoundField DataField="Id" HeaderText="ID" ReadOnly="True" />
                             <asp:BoundField DataField="nombre" HeaderText="Nombre" />
-                            <asp:TemplateField HeaderText="Estado Tipos">
+                            <asp:TemplateField HeaderText="Estado">
                                 <ItemTemplate>
                                     <%# Convert.ToBoolean(Eval("estado")) ? "Activo" : "Inactivo" %>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField>
+                            <asp:TemplateField HeaderText="Acciones">
                                 <ItemTemplate>
                                     <div class="text-right">
                                         <asp:Button ID="btnModificar" runat="server" Text="Modificar" CommandName="Modificar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-success btn-sm" />
@@ -46,11 +79,11 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
+                        <PagerStyle CssClass="pagination-ys" />
                     </asp:GridView>
                 </div>
             </div>
         </div>
     </div>
-
 
 </asp:Content>

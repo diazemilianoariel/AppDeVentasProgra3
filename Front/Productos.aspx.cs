@@ -44,7 +44,8 @@ namespace Front
             try
             {
                 ProductoNegocio negocio = new ProductoNegocio();
-                GridViewProductos.DataSource = negocio.Listar();
+                string filtro = txtFiltro.Text;
+                GridViewProductos.DataSource = negocio.Listar(filtro);
                 GridViewProductos.DataBind();
             }
             catch (Exception ex)
@@ -53,6 +54,22 @@ namespace Front
                 lblError.Visible = true;
             }
         }
+
+
+        // EVENTO PARA EL FILTRO DE BÚSQUEDA
+        protected void txtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            GridViewProductos.PageIndex = 0;
+            CargarGrilla();
+        }
+
+        // EVENTO PARA LA PAGINACIÓN
+        protected void GridViewProductos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewProductos.PageIndex = e.NewPageIndex;
+            CargarGrilla();
+        }
+
 
         protected void GridViewProductos_RowCommand(object sender, GridViewCommandEventArgs e)
         {

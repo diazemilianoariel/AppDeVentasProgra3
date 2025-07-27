@@ -17,13 +17,21 @@ namespace negocio
 
 
 
-        public List<Categoria> ListarCategorias()
+        public List<Categoria> ListarCategorias(string filtro = "")
         {
             List<Categoria> categorias = new List<Categoria>();
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select id, nombre, estado from Categorias ");
+                string consulta = "SELECT id, nombre, estado FROM Categorias WHERE estado = 1";
+
+                if (!string.IsNullOrEmpty(filtro))
+                {
+                    consulta += " AND nombre LIKE @filtro";
+                    datos.SetearParametro("@filtro", "%" + filtro + "%");
+                }
+
+                datos.SetearConsulta(consulta);
                 datos.EjecutarLectura();
                 while (datos.Lector.Read())
                 {

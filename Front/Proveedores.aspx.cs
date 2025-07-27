@@ -46,13 +46,24 @@ namespace Front
         private void CargarGrilla()
         {
             ProveedoresNegocio negocio = new ProveedoresNegocio();
-            GridViewProveedores.DataSource = negocio.ListarProveedores();
+            string filtro = txtFiltro.Text;
+            GridViewProveedores.DataSource = negocio.ListarProveedores(filtro);
             GridViewProveedores.DataBind();
 
 
         }
 
+        protected void txtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            GridViewProveedores.PageIndex = 0;
+            CargarGrilla();
+        }
 
+        protected void GridViewProveedores_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewProveedores.PageIndex = e.NewPageIndex;
+            CargarGrilla();
+        }
 
 
         protected void GridViewProveedores_RowCommand(object sender, GridViewCommandEventArgs e)

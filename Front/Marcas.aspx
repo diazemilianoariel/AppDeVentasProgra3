@@ -10,52 +10,79 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
         }
+
+        .pagination-ys {
+            padding-left: 0;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+            .pagination-ys table > tbody > tr > td {
+                display: inline;
+                padding: 8px 12px;
+                text-decoration: none;
+                color: #007bff;
+                background-color: #fff;
+                border: 1px solid #ddd;
+            }
+
+                .pagination-ys table > tbody > tr > td > span {
+                    z-index: 3;
+                    color: #fff;
+                    background-color: #007bff;
+                    border-color: #007bff;
+                }
     </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="text-center">Gestión de Marcas</h1>
-            </div>
+        <div class="text-center">
+            <h1 class="mb-3">Gestión de Marcas</h1>
+            <p class="text-muted">Gestione Sus Marcas de Manera Ágil y sencilla.</p>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <h7 class="text-center">Gestione Sus Marcas de Manera Ágil y sencilla, Agregue, Modifique o Elimine las Marcas que Desee</h7>
-            </div>
-        </div>
-
-        <div class="row mt-6 justify-content-center">
+        <div class="row mt-4 justify-content-center">
             <asp:HyperLink NavigateUrl="~/MarcasABM/MarcaAgregar.aspx" runat="server" CssClass="btn btn-primary">Nueva Marca</asp:HyperLink>
         </div>
 
-
-
-        <div class="col-md-10 mt-5 mx-auto">
-            <div class="table-responsive">
-                <asp:GridView ID="GridViewMarca" runat="server" CssClass="table table-striped table-bordered table-dark w-100" AutoGenerateColumns="False" OnRowCommand="GridViewMarcas_RowCommand">
-                    <Columns>
-                        <asp:BoundField DataField="id" HeaderText="ID" />
-                        <asp:BoundField DataField="nombre" HeaderText="Nombre" />
-                        <asp:TemplateField HeaderText="Estado Marcas">
-                            <ItemTemplate>
-                                <%# Convert.ToBoolean(Eval("estado")) ? "Activo" : "Inactivo" %>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <div class="text-right">
-                                    <asp:Button ID="btnModificar" runat="server" Text="Modificar" CommandName="Modificar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-success btn-sm" />
-                                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CommandName="Eliminar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-danger btn-sm" />
-                                </div>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-                </asp:GridView>
+        <div class="row mt-4 justify-content-center">
+            <div class="col-md-8">
+                <div class="input-group">
+                    <asp:TextBox ID="txtFiltro" runat="server" CssClass="form-control" placeholder="Buscar por nombre..." AutoPostBack="true" OnTextChanged="txtFiltro_TextChanged"></asp:TextBox>
+                </div>
             </div>
         </div>
 
+        <div class="row mt-4 justify-content-center">
+            <div class="col-md-10">
+                <div class="table-responsive">
+                    <asp:GridView ID="GridViewMarca" runat="server"
+                        CssClass="table table-striped table-bordered table-dark w-100"
+                        AutoGenerateColumns="False"
+                        OnRowCommand="GridViewMarcas_RowCommand"
+                        AllowPaging="True" PageSize="5" OnPageIndexChanging="GridViewMarcas_PageIndexChanging">
+                        <Columns>
+                            <asp:BoundField DataField="id" HeaderText="ID" />
+                            <asp:BoundField DataField="nombre" HeaderText="Nombre" />
+                            <asp:TemplateField HeaderText="Estado">
+                                <ItemTemplate>
+                                    <%# Convert.ToBoolean(Eval("estado")) ? "Activo" : "Inactivo" %>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Acciones">
+                                <ItemTemplate>
+                                    <div class="text-right">
+                                        <asp:Button ID="btnModificar" runat="server" Text="Modificar" CommandName="Modificar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-success btn-sm" />
+                                        <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CommandName="Eliminar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-danger btn-sm" />
+                                    </div>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                        <PagerStyle CssClass="pagination-ys" />
+                    </asp:GridView>
+                </div>
+            </div>
+        </div>
     </div>
 </asp:Content>

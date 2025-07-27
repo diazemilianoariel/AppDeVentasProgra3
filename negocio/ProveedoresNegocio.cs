@@ -10,13 +10,21 @@ namespace negocio
 {
     public class ProveedoresNegocio
     {
-        public List<Proveedor> ListarProveedores()
+        public List<Proveedor> ListarProveedores(string filtro = "")
         {
             List<Proveedor> lista = new List<Proveedor>();
             AccesoDatos accesoDatos = new AccesoDatos();
             try
             {
-                accesoDatos.SetearConsulta("SELECT id, nombre, direccion, telefono, email, estado FROM Proveedores where estado = 1");
+                string consulta = "SELECT id, nombre, direccion, telefono, email, estado FROM Proveedores WHERE estado = 1";
+
+                if (!string.IsNullOrEmpty(filtro))
+                {
+                    consulta += " AND (nombre LIKE @filtro OR email LIKE @filtro)";
+                    accesoDatos.SetearParametro("@filtro", "%" + filtro + "%");
+                }
+
+                accesoDatos.SetearConsulta(consulta);
                 accesoDatos.EjecutarLectura();
 
                 while (accesoDatos.Lector.Read())

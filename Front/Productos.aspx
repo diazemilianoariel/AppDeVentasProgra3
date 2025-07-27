@@ -10,6 +10,11 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
         }
+
+        .pagination-ys { padding-left: 0; margin: 20px 0; border-radius: 4px; }
+        .pagination-ys table > tbody > tr > td { display: inline; padding: 8px 12px; text-decoration: none; color: #007bff; background-color: #fff; border: 1px solid #ddd; }
+        .pagination-ys table > tbody > tr > td > span { z-index: 3; color: #fff; background-color: #007bff; border-color: #007bff; }
+
     </style>
 
 
@@ -30,12 +35,23 @@
             <% } %>
         </div>
 
+        <div class="row mt-4 justify-content-center">
+            <div class="col-md-8">
+                <div class="input-group">
+                    <asp:TextBox ID="txtFiltro" runat="server" CssClass="form-control" placeholder="Buscar por nombre o descripción..." AutoPostBack="true" OnTextChanged="txtFiltro_TextChanged"></asp:TextBox>
+                </div>
+            </div>
+        </div>
+
+
         <asp:Label ID="lblError" runat="server" CssClass="text-danger text-center d-block mt-3" Visible="false"></asp:Label>
 
         <div class="row mt-4">
             <div class="col">
                 <div class="table-responsive">
-                    <asp:GridView ID="GridViewProductos" runat="server" CssClass="table table-striped table-bordered table-dark w-100" AutoGenerateColumns="False" OnRowCommand="GridViewProductos_RowCommand">
+                    <asp:GridView ID="GridViewProductos" runat="server" CssClass="table table-striped table-bordered table-dark w-100" AutoGenerateColumns="False" OnRowCommand="GridViewProductos_RowCommand"
+                      AllowPaging="True" PageSize="5" OnPageIndexChanging="GridViewProductos_PageIndexChanging">
+
                         <Columns>
                             <asp:BoundField DataField="id" HeaderText="ID" />
                             <asp:BoundField DataField="nombre" HeaderText="Nombre" />
@@ -57,6 +73,7 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
+                        <PagerStyle CssClass="pagination-ys" />
                     </asp:GridView>
                 </div>
             </div>

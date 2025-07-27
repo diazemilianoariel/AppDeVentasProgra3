@@ -12,14 +12,24 @@ namespace negocio
 {
     public class TipoNegocio
     {
-        public List<Tipos> ListarTipos()
+        public List<Tipos> ListarTipos(string filtro = "")
         {
             List<Tipos> tipos = new List<Tipos>();
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select id, nombre, estado from Tipos");
+                string consulta = "SELECT id, nombre, estado FROM Tipos WHERE estado = 1";
+
+                if (!string.IsNullOrEmpty(filtro))
+                {
+                    consulta += " AND nombre LIKE @filtro";
+                    datos.SetearParametro("@filtro", "%" + filtro + "%");
+                }
+
+                datos.SetearConsulta(consulta);
                 datos.EjecutarLectura();
+
+
                 while (datos.Lector.Read())
                 {
                     Tipos aux = new Tipos();

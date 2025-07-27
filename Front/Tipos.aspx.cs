@@ -42,11 +42,25 @@ namespace Front
         private void CargarTipos()
         {
             TipoNegocio negocio = new TipoNegocio();
-            GridViewTipos.DataSource = negocio.ListarTipos();
+            string filtro = txtFiltro.Text;
+            GridViewTipos.DataSource = negocio.ListarTipos(filtro);
             GridViewTipos.DataBind();
         }
 
-       
+
+
+        protected void txtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            GridViewTipos.PageIndex = 0;
+            CargarTipos();
+        }
+
+        protected void GridViewTipos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewTipos.PageIndex = e.NewPageIndex;
+            CargarTipos();
+        }
+
 
         protected void GridViewTipos_RowCommand(object sender, GridViewCommandEventArgs e)
         {

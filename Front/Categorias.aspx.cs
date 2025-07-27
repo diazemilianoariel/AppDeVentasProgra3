@@ -41,11 +41,27 @@ namespace Front
         private void CargarCategorias()
         {
             CategoriaNegocio negocio = new CategoriaNegocio();
-            GridViewCategorias.DataSource = negocio.ListarCategorias();
+            string filtro = txtFiltro.Text;
+            GridViewCategorias.DataSource = negocio.ListarCategorias(filtro);
            GridViewCategorias.DataBind();
         }
 
-        
+        protected void txtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            GridViewCategorias.PageIndex = 0;
+            CargarCategorias();
+        }
+
+        protected void GridViewCategorias_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewCategorias.PageIndex = e.NewPageIndex;
+            CargarCategorias();
+        }
+
+
+
+
+
         protected void GridViewCategorias_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "Modificar")

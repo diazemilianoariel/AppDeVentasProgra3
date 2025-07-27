@@ -42,9 +42,24 @@ namespace Front
         private void CargarMarcas()
         {
             MarcaNegocio negocio = new MarcaNegocio();
-            GridViewMarca.DataSource = negocio.ListarMarcas();
+            string filtro = txtFiltro.Text;
+            GridViewMarca.DataSource = negocio.ListarMarcas(filtro);
             GridViewMarca.DataBind();
         }
+
+
+        protected void txtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            GridViewMarca.PageIndex = 0;
+            CargarMarcas();
+        }
+
+        protected void GridViewMarcas_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewMarca.PageIndex = e.NewPageIndex;
+            CargarMarcas();
+        }
+
 
         protected void GridViewMarcas_RowCommand(object sender, GridViewCommandEventArgs e)
         {
