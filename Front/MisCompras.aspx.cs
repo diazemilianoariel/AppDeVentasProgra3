@@ -25,7 +25,7 @@ namespace Front
             if (!IsPostBack)
             {
                 // Se le pasa el ID del usuario logueado para cargar sus compras
-                CargarCompras(usuario.Id);
+                CargarCompras();
             }
         }
 
@@ -37,13 +37,16 @@ namespace Front
                     usuario.Perfil.Id == (int)TipoPerfil.Administrador);
         }
 
-        private void CargarCompras(int idUsuario)
+        private void CargarCompras()
         {
+
             try
             {
-                // Se utiliza el método de VentaNegocio para listar las ventas del usuario.
+                Usuario usuario = (Usuario)Session["usuario"];
                 VentaNegocio negocio = new VentaNegocio();
-                List<Venta> listaCompras = negocio.ListarVentasPorUsuario(idUsuario);
+                string filtro = txtFiltro.Text;
+
+                List<Venta> listaCompras = negocio.ListarVentasPorUsuario(usuario.Id, filtro);
 
                 if (listaCompras.Any())
                 {
@@ -52,18 +55,33 @@ namespace Front
                 }
                 else
                 {
-                    // Si no hay compras, mostramos el panel de mensaje.
                     pnlNoHayCompras.Visible = true;
                     gvMisCompras.Visible = false;
                 }
             }
             catch (Exception ex)
             {
-                // Manejo de errores
                 lblError.Text = "Ocurrió un error al cargar tus compras.";
                 lblError.Visible = true;
             }
         }
+
+
+
+        protected void txtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            gvMisCompras.PageIndex = 0;
+            CargarCompras();
+        }
+
+        protected void gvMisCompras_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvMisCompras.PageIndex = e.NewPageIndex;
+            CargarCompras();
+        }
+
+
+
 
         protected void gvMisCompras_RowCommand(object sender, GridViewCommandEventArgs e)
         {

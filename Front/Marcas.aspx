@@ -1,14 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MASTER.Master" AutoEventWireup="true" CodeBehind="Marcas.aspx.cs" Inherits="Front.Marcas" ValidateRequest="false" %>
+﻿<%@ Page Title="Gestión de Marcas" Language="C#" MasterPageFile="~/MASTER.Master" AutoEventWireup="true" CodeBehind="Marcas.aspx.cs" Inherits="Front.Marcas" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="estilos.css" rel="stylesheet" />
     <style>
         body {
-            background-image: url('https://www.shutterstock.com/shutterstock/photos/2369360047/display_1500/stock-photo-mockup-wall-in-the-children-s-room-on-wall-cream-color-background-d-rendering-2369360047.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+            background-color: #f8f9fa;
         }
 
         .pagination-ys {
@@ -37,44 +32,46 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container mt-5">
-        <div class="text-center">
+      
+        <div class="text-center bg-white p-4 rounded shadow-sm mb-4">
             <h1 class="mb-3">Gestión de Marcas</h1>
-            <p class="text-muted">Gestione Sus Marcas de Manera Ágil y sencilla.</p>
+            <p class="text-muted">Administre y organice las Marcas de la aplicación.</p>
         </div>
 
+       
         <div class="row mt-4 justify-content-center">
-            <asp:HyperLink NavigateUrl="~/MarcasABM/MarcaAgregar.aspx" runat="server" CssClass="btn btn-primary">Nueva Marca</asp:HyperLink>
+            <asp:HyperLink NavigateUrl="~/MarcasABM/MarcaAgregar.aspx" runat="server" CssClass="btn btn-primary shadow-sm">Nueva Marca</asp:HyperLink>
         </div>
-
         <div class="row mt-4 justify-content-center">
-            <div class="col-md-8">
-                <div class="input-group">
-                    <asp:TextBox ID="txtFiltro" runat="server" CssClass="form-control" placeholder="Buscar por nombre..." AutoPostBack="true" OnTextChanged="txtFiltro_TextChanged"></asp:TextBox>
-                </div>
+            <div class="col-md-8 shadow-sm rounded p-2">
+                <asp:TextBox ID="txtFiltro" runat="server" CssClass="form-control" placeholder="Buscar por nombre..." AutoPostBack="true" OnTextChanged="txtFiltro_TextChanged"></asp:TextBox>
             </div>
         </div>
 
-        <div class="row mt-4 justify-content-center">
-            <div class="col-md-10">
+      
+        <div class="card shadow-sm mt-4">
+            <div class="card-body p-0">
                 <div class="table-responsive">
                     <asp:GridView ID="GridViewMarca" runat="server"
-                        CssClass="table table-striped table-bordered table-dark w-100"
-                        AutoGenerateColumns="False"
+                        AutoGenerateColumns="False" DataKeyNames="Id"
+                        CssClass="table table-hover align-middle mb-0"
                         OnRowCommand="GridViewMarcas_RowCommand"
-                        AllowPaging="True" PageSize="5" OnPageIndexChanging="GridViewMarcas_PageIndexChanging">
+                        AllowPaging="True" PageSize="5" OnPageIndexChanging="GridViewMarcas_PageIndexChanging"
+                        GridLines="None">
                         <Columns>
-                            <asp:BoundField DataField="id" HeaderText="ID" />
+                            <asp:BoundField DataField="id" HeaderText="ID" ReadOnly="True" />
                             <asp:BoundField DataField="nombre" HeaderText="Nombre" />
                             <asp:TemplateField HeaderText="Estado">
                                 <ItemTemplate>
                                     <%# Convert.ToBoolean(Eval("estado")) ? "Activo" : "Inactivo" %>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Acciones">
+                           
+                            <asp:TemplateField HeaderText="Acciones" ItemStyle-Width="180px" ItemStyle-CssClass="text-right">
                                 <ItemTemplate>
-                                    <div class="text-right">
-                                        <asp:Button ID="btnModificar" runat="server" Text="Modificar" CommandName="Modificar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-success btn-sm" />
-                                        <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CommandName="Eliminar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-danger btn-sm" />
+                                    <div class="btn-group" role="group">
+                                        <asp:Button ID="btnModificar" runat="server" Text="Modificar" CommandName="Modificar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-outline-success btn-sm" />
+                                        <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CommandName="Eliminar" CommandArgument='<%# Eval("id") %>' CssClass="btn btn-outline-danger btn-sm" />
                                     </div>
                                 </ItemTemplate>
                             </asp:TemplateField>

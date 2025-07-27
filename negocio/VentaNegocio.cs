@@ -9,7 +9,10 @@ namespace negocio
     public class VentaNegocio
     {
 
-        public List<Venta> ListarVentasPorUsuario(int idUsuario)
+
+        
+
+        public List<Venta> ListarVentasPorUsuario(int idUsuario, string filtro = "")
         {
             List<Venta> lista = new List<Venta>();
             AccesoDatos datos = new AccesoDatos();
@@ -19,11 +22,28 @@ namespace negocio
             SELECT V.id, V.fecha, V.monto, E.nombre as EstadoVenta
             FROM Ventas V
             INNER JOIN EstadoVenta E ON V.idEstadoVenta = E.id
-            WHERE V.idUsuario = @idUsuario
-            ORDER BY V.fecha DESC";
+            WHERE V.idUsuario = @idUsuario";
+
+                datos.SetearParametro("@idUsuario", idUsuario);
+
+                if (!string.IsNullOrEmpty(filtro))
+                {
+
+
+
+                    consulta += @" AND (
+                            E.nombre LIKE @filtro OR 
+                            CAST(V.id AS VARCHAR(20)) LIKE @filtro OR 
+                            CONVERT(VARCHAR, V.fecha, 103) LIKE @filtro
+                          )";
+
+
+                    datos.SetearParametro("@filtro", "%" + filtro + "%");
+                }
+
+                consulta += " ORDER BY V.fecha DESC";
 
                 datos.SetearConsulta(consulta);
-                datos.SetearParametro("@idUsuario", idUsuario);
                 datos.EjecutarLectura();
 
                 while (datos.Lector.Read())
@@ -33,7 +53,6 @@ namespace negocio
                     aux.Fecha = (DateTime)datos.Lector["fecha"];
                     aux.Monto = (decimal)datos.Lector["monto"];
                     aux.nombreEstadoVenta = (string)datos.Lector["EstadoVenta"];
-
                     lista.Add(aux);
                 }
                 return lista;
@@ -47,7 +66,6 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
-
 
         public int cantidadVentasHoy()
         {

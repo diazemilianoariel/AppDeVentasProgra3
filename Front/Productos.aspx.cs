@@ -91,5 +91,16 @@ namespace Front
                 }
             }
         }
+
+
+
+
+        public string AcortarTexto(string texto, int longitudMaxima)
+        {
+            if (string.IsNullOrEmpty(texto) || texto.Length <= longitudMaxima)
+                return texto;
+
+            return texto.Substring(0, longitudMaxima) + "...";
+        }
     }
 }

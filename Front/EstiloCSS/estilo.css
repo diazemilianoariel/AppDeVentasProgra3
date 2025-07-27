@@ -110,3 +110,42 @@ body {
 }
 /*fin estilo de factura*/
 
+
+
+
+/* Estilos para sombras */
+.shadow-sm {
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
+}
+
+.shadow {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+}
+
+.shadow-lg {
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+}
+
+/* Estilos para la paginación (ya estaban aquí) */
+.pagination-ys {
+    padding-left: 0;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+    .pagination-ys table > tbody > tr > td {
+        display: inline;
+        padding: 8px 12px;
+        text-decoration: none;
+        color: #007bff;
+        background-color: #fff;
+        border: 1px solid #ddd;
+    }
+
+        .pagination-ys table > tbody > tr > td > span {
+            z-index: 3;
+            color: #fff;
+            cursor: default;
+            background-color: #007bff;
+            border-color: #007bff;
+        }

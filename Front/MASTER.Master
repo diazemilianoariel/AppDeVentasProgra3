@@ -81,13 +81,6 @@
                     </li>
                     <% } %>
 
-                    <%-- Menú de Reportes (Solo para Admin) --%>
-                    <% if (usuario != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador)
-                        { %>
-                    <li class="nav-item">
-                        <asp:HyperLink CssClass="nav-link" NavigateUrl="~/Reportes.aspx" runat="server">Reportes</asp:HyperLink>
-                    </li>
-                    <% } %>
 
                     <%-- Menú de Mis Compras (Solo para Clientes) --%>
                     <% if (usuario != null && usuario.Perfil.Id == (int)TipoPerfil.Cliente)
