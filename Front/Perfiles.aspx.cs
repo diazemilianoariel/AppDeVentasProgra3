@@ -33,7 +33,8 @@ namespace Front
         private void CargarPerfiles()
         {
             PerfilesNegocio perfilesNegocio = new PerfilesNegocio();
-            GridViewPerfiles.DataSource = perfilesNegocio.ListarPerfiles();
+            string filtro = txtFiltro.Text; // Lee el valor del nuevo TextBox de búsqueda
+            GridViewPerfiles.DataSource = perfilesNegocio.ListarPerfiles(filtro);
             GridViewPerfiles.DataBind();
         }
 
@@ -43,10 +44,19 @@ namespace Front
             return usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
         }
 
-        protected void MostrarMensaje(string mensaje, bool esError = true)
-        {
-            
 
+
+        protected void txtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            GridViewPerfiles.PageIndex = 0;
+            CargarPerfiles();
+        }
+
+
+        protected void GridViewPerfiles_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridViewPerfiles.PageIndex = e.NewPageIndex;
+            CargarPerfiles();
         }
 
         protected void GridViewPerfiles_RowCommand(object sender, GridViewCommandEventArgs e)

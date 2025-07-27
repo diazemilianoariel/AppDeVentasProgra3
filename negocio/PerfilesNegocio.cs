@@ -39,13 +39,21 @@ namespace negocio
 
 
 
-        public List<Perfil> ListarPerfiles()
+        public List<Perfil> ListarPerfiles(string filtro = "")
         {
             List<Perfil> lista = new List<Perfil>();
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select id, nombre, estado from Perfiles where estado = 1");
+                string consulta = "SELECT id, nombre, estado FROM Perfiles WHERE estado = 1";
+
+                if (!string.IsNullOrEmpty(filtro))
+                {
+                    consulta += " AND nombre LIKE @filtro";
+                    datos.SetearParametro("@filtro", "%" + filtro + "%");
+                }
+
+                datos.SetearConsulta(consulta);
                 datos.EjecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -267,5 +275,8 @@ namespace negocio
 
 
         }
+   
+    
+    
     }
 }
