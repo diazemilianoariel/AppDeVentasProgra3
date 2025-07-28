@@ -250,6 +250,7 @@ namespace negocio
                                           "VALUES (@nombre, @descripcion, @imagen, @precio, @margenGanancia, @estado, @idMarca, @idTipo, @idCategoria); " +
                                           "SELECT SCOPE_IDENTITY();";
                 datos.SetearConsulta(consultaProducto);
+                datos.LimpiarParametros();
                 datos.SetearParametro("@nombre", nuevo.nombre);
                 datos.SetearParametro("@descripcion", nuevo.descripcion);
                 datos.SetearParametro("@imagen", nuevo.Imagen);
