@@ -110,7 +110,7 @@ namespace Front
                         // Si la venta fue exitosa, vaciamos el carrito y enviamos el email.
                         Session["Carrito"] = new List<Producto>();
                         EmailService emailService = new EmailService(); // Asumiendo que tenés esta clase
-                        emailService.EnviarCorreoConfirmacion(usuario.Email, "Confirmación de Compra", "Tu compra está siendo procesada.");
+                        emailService.EnviarCorreoConfirmacion(usuario.Email, "Confirmación de Compra", "Queremos Agradecerte por confiar en nuestros productos, porfavor ten paciencia ,nuestro equipo esta procesando tu compra, pronto recibiras un nuevo correo de aprobacion exitosa.");
 
                         // Redirigir a una página de éxito o a "Mis Compras"
                         Response.Redirect("MisCompras.aspx", false);

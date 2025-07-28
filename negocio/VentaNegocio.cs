@@ -304,6 +304,50 @@ namespace negocio
 
         }
 
+
+        // EN: VentaNegocio.cs
+        // Agregá este método
+
+        public Venta ObtenerVentaParaNotificacion(int idVenta)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                // Traemos los datos básicos de la venta y el email del usuario.
+                string consulta = @"
+            SELECT v.id, U.Email, U.Nombre 
+            FROM Ventas v 
+            INNER JOIN Usuarios U ON v.idUsuario = U.id 
+            WHERE v.id = @idVenta";
+
+                datos.SetearConsulta(consulta);
+                datos.SetearParametro("@idVenta", idVenta);
+                datos.EjecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    Venta venta = new Venta();
+                    venta.IdVenta = (int)datos.Lector["id"];
+                    venta.Cliente = new Usuario
+                    {
+                        Email = (string)datos.Lector["Email"],
+                        Nombre = (string)datos.Lector["Nombre"]
+                    };
+                    return venta;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+
         public void RechazarVenta(int idVenta)
         {
             AccesoDatos datos = new AccesoDatos();
