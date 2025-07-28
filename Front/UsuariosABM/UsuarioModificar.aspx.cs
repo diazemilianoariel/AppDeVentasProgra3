@@ -68,6 +68,10 @@ namespace Front.UsuariosABM
                 // TextBoxClave.Text = usuario.clave; 
                 ddlPerfil.SelectedValue = usuario.Perfil.Id.ToString();
                 CheckBoxEstado.Checked = usuario.estado;
+
+
+
+
             }
         }
 
@@ -89,9 +93,13 @@ namespace Front.UsuariosABM
                     return;
 
                 UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+
+                // Obtenemos el usuario original para tener su clave si no se modifica.
+                Usuario usuarioOriginal = usuarioNegocio.ObtenerUsuarioPorId(Convert.ToInt32(LabelId.Text));
+
                 Usuario usuarioModificado = new Usuario();
 
-                usuarioModificado.Id = Convert.ToInt32(LabelId.Text);
+                usuarioModificado.Id = usuarioOriginal.Id;
                 usuarioModificado.Nombre = TextBoxNombre.Text;
                 usuarioModificado.Apellido = TextBoxApellido.Text;
                 usuarioModificado.Dni = TextBoxDni.Text;
@@ -99,22 +107,20 @@ namespace Front.UsuariosABM
                 usuarioModificado.Telefono = TextBoxTelefono.Text;
                 usuarioModificado.Email = TextBoxEmail.Text;
 
-                // Si el campo de la clave está vacío, no la actualizamos.
-                // Si tiene texto, actualizamos la clave.
+                // Asignamos el perfil y el estado.
+                usuarioModificado.Perfil = new Perfil();
+                usuarioModificado.Perfil.Id = int.Parse(ddlPerfil.SelectedValue);
+                usuarioModificado.estado = CheckBoxEstado.Checked;
+
+                // Manejamos la clave: si el usuario escribió una nueva, la usamos. Si no, mantenemos la original.
                 if (!string.IsNullOrWhiteSpace(TextBoxClave.Text))
                 {
                     usuarioModificado.clave = TextBoxClave.Text;
                 }
                 else
                 {
-                    // Obtenemos la clave original para no guardarla vacía.
-                    Usuario original = usuarioNegocio.ObtenerUsuarioPorId(usuarioModificado.Id);
-                    usuarioModificado.clave = original.clave;
+                    usuarioModificado.clave = usuarioOriginal.clave;
                 }
-
-                usuarioModificado.Perfil = new Perfil();
-                usuarioModificado.Perfil.Id = int.Parse(ddlPerfil.SelectedValue);
-                usuarioModificado.estado = CheckBoxEstado.Checked;
 
                 usuarioNegocio.ModificarUsuario(usuarioModificado);
                 Response.Redirect("../Clientes.aspx");

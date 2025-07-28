@@ -94,6 +94,7 @@
     <Content Include="MarcasABM\MarcaAgregar.aspx" />
     <Content Include="MarcasABM\MarcaEliminar.aspx" />
     <Content Include="MarcasABM\MarcaModificar.aspx" />
+    <Content Include="MiPerfil.aspx" />
     <Content Include="Ofertas.aspx" />
     <Content Include="PerfilesABM\PerfilEliminar.aspx" />
     <Content Include="PerfilesABM\PerfilAgregar.aspx" />
@@ -216,6 +217,13 @@
     </Compile>
     <Compile Include="MarcasABM\MarcaModificar.aspx.designer.cs">
       <DependentUpon>MarcaModificar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MiPerfil.aspx.cs">
+      <DependentUpon>MiPerfil.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MiPerfil.aspx.designer.cs">
+      <DependentUpon>MiPerfil.aspx</DependentUpon>
     </Compile>
     <Compile Include="Ofertas.aspx.cs">
       <DependentUpon>Ofertas.aspx</DependentUpon>

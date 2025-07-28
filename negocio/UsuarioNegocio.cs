@@ -177,7 +177,9 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("UPDATE Usuarios SET Nombre = @Nombre, Apellido = @Apellido, Dni = @Dni, Direccion = @Direccion, Telefono = @Telefono, Email = @Email, Clave = @Clave, idPerfil = @idPerfil WHERE Id = @Id");
+                
+                datos.SetearConsulta("UPDATE Usuarios SET Nombre = @Nombre, Apellido = @Apellido, Dni = @Dni, Direccion = @Direccion, Telefono = @Telefono, Email = @Email, Clave = @Clave, idPerfil = @idPerfil, estado = @estado WHERE Id = @Id");
+
                 datos.SetearParametro("@Nombre", modificado.Nombre);
                 datos.SetearParametro("@Apellido", modificado.Apellido);
                 datos.SetearParametro("@Dni", modificado.Dni);
@@ -185,8 +187,9 @@ namespace negocio
                 datos.SetearParametro("@Telefono", modificado.Telefono);
                 datos.SetearParametro("@Email", modificado.Email);
                 datos.SetearParametro("@Clave", modificado.clave);
-                // CORRECCIÓN: Se pasa el ID del perfil, no el objeto completo.
                 datos.SetearParametro("@idPerfil", modificado.Perfil.Id);
+                datos.SetearParametro("@estado", modificado.estado);
+
                 datos.SetearParametro("@Id", modificado.Id);
                 datos.EjecutarAccion();
             }
@@ -198,9 +201,7 @@ namespace negocio
             {
                 datos.CerrarConexion();
             }
-
         }
-
 
 
         public void BajaLogicaUsuario(int id)

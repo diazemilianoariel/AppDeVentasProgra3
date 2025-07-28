@@ -136,10 +136,10 @@
                         <a class="nav-link dropdown-toggle text-white" href="#" id="usuarioDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bienvenido, <%= usuario.Nombre %>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="usuarioDropdown">
-                            <a class="dropdown-item" href="Perfil.aspx">Mi Perfil</a>
-                            <a class="dropdown-item" href="MisDirecciones.aspx">Mis Direcciones</a>
-                            <a class="dropdown-item" href="MisCompras.aspx">Mis Compras</a>
-                            <a class="dropdown-item" href="ListaDeseos.aspx">Lista de Deseos</a>
+                            <asp:HyperLink NavigateUrl="~/MiPerfil.aspx" CssClass="dropdown-item" runat="server">Mi Perfil</asp:HyperLink>
+                            <asp:HyperLink NavigateUrl="~/MisDirecciones.aspx" CssClass="dropdown-item" runat="server">Mis Direcciones</asp:HyperLink>
+                            <asp:HyperLink NavigateUrl="~/MisCompras.aspx" CssClass="dropdown-item" runat="server">Mis Compras</asp:HyperLink>
+                            <asp:HyperLink NavigateUrl="~/ListaDeseos.aspx" CssClass="dropdown-item" runat="server">Lista de Deseos</asp:HyperLink>
                             <div class="dropdown-divider"></div>
                             <asp:LinkButton ID="btnLogout" runat="server" CssClass="dropdown-item" OnClick="BtnLogout_Click">Salir</asp:LinkButton>
                         </div>
