@@ -1,11 +1,12 @@
 ﻿using dominio;
+using negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using negocio;
+using static negocio.TipoNegocio;
 
 namespace Front.TiposABM
 {
@@ -34,28 +35,20 @@ namespace Front.TiposABM
             return usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
         }
 
+
+
+
+
+        // EN: TipoAgregar.aspx.cs
+
         protected void ButtonGuardar_Click(object sender, EventArgs e)
         {
-
             try
             {
-                LabelErrorTipoExistente.Text = "";
-                LabelError.Text = "";
-
                 if (string.IsNullOrWhiteSpace(TextBoxNombre.Text))
                 {
                     LabelError.Text = "El campo 'Nombre' es obligatorio.";
                     LabelError.Visible = true;
-                    return;
-                }
-
-                string nombreNuevo = TextBoxNombre.Text;
-                List<dominio.Tipos> listaDeTipos = tipoNegocio.ListarTipos();
-
-                if (listaDeTipos.Any(t => t.nombre.Equals(nombreNuevo, StringComparison.OrdinalIgnoreCase)))
-                {
-                    LabelErrorTipoExistente.Text = "El nombre del Tipo ya existe.";
-                    LabelErrorTipoExistente.Visible = true;
                     return;
                 }
 
@@ -68,15 +61,19 @@ namespace Front.TiposABM
                 tipoNegocio.AgregarTipo(tipo);
                 Response.Redirect("../Tipos.aspx");
             }
+            catch (TipoInactivoException ex)
+            {
+                // CASO ESPECIAL: El tipo existe pero está inactivo. Lo reactivamos.
+                tipoNegocio.ReactivarTipo(ex.TipoExistente.Id);
+                Response.Redirect("../Tipos.aspx");
+            }
             catch (Exception ex)
             {
-                LabelError.Text = "Ocurrió un error al guardar el tipo. Intente nuevamente.";
-                LabelError.Visible = true;
-                // Opcional: Registrar el error 'ex' para depuración.
-
+                // CASO GENERAL: Otro error (ej: ya existe y está activo).
+                LabelErrorTipoExistente.Text = "Error: " + ex.Message;
+                LabelErrorTipoExistente.Visible = true;
             }
         }
-
 
         protected void ButtonCancelar_Click(object sender, EventArgs e)
         {

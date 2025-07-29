@@ -1,11 +1,12 @@
-﻿using System;
+﻿using dominio;
+using negocio;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using System.Data.SqlClient;
-using System.Data;
-using dominio;
-using negocio;
+using static negocio.TipoNegocio;
 
 
 namespace negocio
@@ -83,21 +84,30 @@ namespace negocio
 
         public void AgregarTipo(Tipos tipo)
         {
+            Tipos existente = VerificarTipo(tipo.nombre);
+            if (existente != null)
+            {
+                if (existente.estado) // Si está ACTIVO
+                {
+                    throw new Exception("Ya existe un tipo activo con ese nombre.");
+                }
+                else // Si está INACTIVO
+                {
+                    throw new TipoInactivoException("Tipo inactivo encontrado.", existente);
+                }
+            }
+
+            // Si no existe, lo crea
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("insert into Tipos (nombre) values (@nombre)");
+                datos.SetearConsulta("INSERT INTO Tipos (nombre, estado) VALUES (@nombre, @estado)");
                 datos.SetearParametro("@nombre", tipo.nombre);
+                datos.SetearParametro("@estado", tipo.estado);
                 datos.EjecutarAccion();
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.CerrarConexion();
-            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.CerrarConexion(); }
         }
 
         public void ActualizarTipo(Tipos tipo)
@@ -207,5 +217,57 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
+
+
+
+        public Tipos VerificarTipo(string nombre)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("SELECT id, nombre, estado FROM Tipos WHERE nombre = @nombre");
+                datos.SetearParametro("@nombre", nombre);
+                datos.EjecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    Tipos aux = new Tipos();
+                    aux.Id = (int)datos.Lector["id"];
+                    aux.nombre = (string)datos.Lector["nombre"];
+                    aux.estado = (bool)datos.Lector["estado"];
+                    return aux; // Devuelve el tipo encontrado (activo o inactivo)
+                }
+                return null; // No existe
+            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.CerrarConexion(); }
+        }
+
+
+        public void ReactivarTipo(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("UPDATE Tipos SET estado = 1 WHERE id = @id");
+                datos.SetearParametro("@id", id);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+
+        public class TipoInactivoException : Exception
+        {
+            public Tipos TipoExistente { get; set; }
+
+            public TipoInactivoException(string mensaje, Tipos tipo) : base(mensaje)
+            {
+                this.TipoExistente = tipo;
+            }
+        }
+
+
+
+
     }
 }

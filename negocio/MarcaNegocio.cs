@@ -80,52 +80,57 @@ namespace negocio
             }
         }
 
-        public bool BuscarMarcaNombre(string nombre)
+        public Marca VerificarMarca(string nombre)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select count(*) from Marcas where nombre = @nombre");
+                datos.SetearConsulta("SELECT id, nombre, estado FROM Marcas WHERE nombre = @nombre");
                 datos.SetearParametro("@nombre", nombre);
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())
                 {
-                    int count = (int)datos.Lector[0];
-                    return count > 0;
+                    Marca aux = new Marca();
+                    aux.Id = (int)datos.Lector["id"];
+                    aux.nombre = (string)datos.Lector["nombre"];
+                    aux.estado = (bool)datos.Lector["estado"];
+                    return aux; // Devuelve la marca encontrada (activa o inactiva)
                 }
-                else
-                {
-                    return false;
-                }
+                return null; // No existe
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.CerrarConexion();
-            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.CerrarConexion(); }
         }
+
 
         public void AgregarMarca(Marca marca)
         {
+            Marca existente = VerificarMarca(marca.nombre);
+            if (existente != null)
+            {
+                if (existente.estado) // Si está ACTIVA
+                {
+                    throw new Exception("Ya existe una marca activa con ese nombre.");
+                }
+                else // Si está INACTIVA
+                {
+                    throw new MarcaInactivaException("Marca inactiva encontrada.", existente);
+                }
+            }
+
+            // Si no existe, la crea
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("insert into Marcas (nombre) values (@nombre)");
+                datos.SetearConsulta("INSERT INTO Marcas (nombre, estado) VALUES (@nombre, @estado)");
                 datos.SetearParametro("@nombre", marca.nombre);
+                datos.SetearParametro("@estado", marca.estado);
                 datos.EjecutarAccion();
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.CerrarConexion();
-            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.CerrarConexion(); }
         }
+
 
         public void ActualizarMarca(Marca marca)
         {
@@ -206,5 +211,70 @@ namespace negocio
             }
         }
 
+        public void ReactivarMarca(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("UPDATE Marcas SET estado = 1 WHERE id = @id");
+                datos.SetearParametro("@id", id);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex) { throw ex; }
+            // Omitimos el finally si EjecutarAccion ya gestiona la conexión
+        }
+
+        public bool ExisteMarca(string nombreActual)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("SELECT COUNT(*) FROM Marcas WHERE nombre = @nombre");
+                datos.SetearParametro("@nombre", nombreActual);
+                datos.EjecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    return (int)datos.Lector[0] > 0; // Devuelve true si hay al menos una marca con ese nombre
+                }
+                return false; // No existe ninguna marca con ese nombre
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+        public class MarcaInactivaException : Exception
+        {
+            public Marca MarcaExistente { get; set; }
+
+            public MarcaInactivaException(string mensaje, Marca marca) : base(mensaje)
+            {
+                this.MarcaExistente = marca;
+            }
+        }
+
     }
+
+
+
+
+
+
+
 }

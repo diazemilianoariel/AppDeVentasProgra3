@@ -59,6 +59,9 @@ namespace Front.MarcasABM
                 LabelId.Text = marca.Id.ToString();
                 TextBoxNombre.Text = marca.nombre;
                 CheckBoxEstado.Checked = marca.estado;
+
+                HiddenFieldNombreOriginal.Value = marca.nombre;
+
             }
             else
             {
@@ -70,6 +73,13 @@ namespace Front.MarcasABM
         {
             try
             {
+
+
+                string nombreActual = TextBoxNombre.Text;
+                string nombreOriginal = HiddenFieldNombreOriginal.Value;
+
+
+
                 if (string.IsNullOrWhiteSpace(TextBoxNombre.Text))
                 {
                     LabelError.Text = "El campo 'Nombre' es obligatorio.";
@@ -77,27 +87,25 @@ namespace Front.MarcasABM
                     return;
                 }
 
-                //  lógica para validar si el nombre ya existe (si fue modificado)
-                if (!TextBoxNombre.Text.Equals(HiddenFieldNombreOriginal.Value, StringComparison.OrdinalIgnoreCase))
+                if (nombreActual.ToLower() != nombreOriginal.ToLower())
                 {
-                    List<Marca> listaDeMarcas = marcaNegocio.ListarMarcas();
-                    if (listaDeMarcas.Any(m => m.nombre.Equals(TextBoxNombre.Text, StringComparison.OrdinalIgnoreCase)))
+                    if (marcaNegocio.ExisteMarca(nombreActual))
                     {
-                        LabelErrorMarcaExistente.Text = "El nombre de la Marca ya existe.";
-                        LabelErrorMarcaExistente.Visible = true;
+                        LabelError.Text = "Ya existe otra marca con ese nombre.";
+                        LabelError.Visible = true;
                         return;
                     }
                 }
 
-                Marca marca = new Marca
-                {
-                    Id = Convert.ToInt32(LabelId.Text),
-                    nombre = TextBoxNombre.Text,
-                    estado = CheckBoxEstado.Checked
-                };
+                Marca marca = new Marca();
+                marca.Id = Convert.ToInt32(Request.QueryString["id"]);
+                marca.nombre = nombreActual;
+                marca.estado = CheckBoxEstado.Checked;
 
                 marcaNegocio.ActualizarMarca(marca);
                 Response.Redirect("../Marcas.aspx");
+
+              
             }
             catch (Exception ex)
             {

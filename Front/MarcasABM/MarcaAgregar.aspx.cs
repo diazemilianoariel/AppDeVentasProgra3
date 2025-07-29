@@ -1,11 +1,12 @@
 ﻿using dominio;
+using negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using negocio;
+using static negocio.MarcaNegocio;
 
 namespace Front.MarcasABM
 {
@@ -49,28 +50,16 @@ namespace Front.MarcasABM
         }
 
 
+        // EN: MarcaAgregar.aspx.cs
 
         protected void ButtonGuardar_Click(object sender, EventArgs e)
         {
             try
             {
-                LabelErrorMarcaExistente.Text = "";
-                LabelError.Text = "";
-
                 if (string.IsNullOrWhiteSpace(TextBoxNombre.Text))
                 {
                     LabelError.Text = "El campo 'Nombre' es obligatorio.";
                     LabelError.Visible = true;
-                    return;
-                }
-
-                string nombreNuevo = TextBoxNombre.Text;
-                List<Marca> listaDeMarcas = marcaNegocio.ListarMarcas();
-
-                if (listaDeMarcas.Any(m => m.nombre.Equals(nombreNuevo, StringComparison.OrdinalIgnoreCase)))
-                {
-                    LabelErrorMarcaExistente.Text = "El nombre de la Marca ya existe.";
-                    LabelErrorMarcaExistente.Visible = true;
                     return;
                 }
 
@@ -83,15 +72,20 @@ namespace Front.MarcasABM
                 marcaNegocio.AgregarMarca(marca);
                 Response.Redirect("../Marcas.aspx");
             }
+            catch (MarcaInactivaException ex)
+            {
+                // CASO ESPECIAL: La marca existe pero está inactiva. La reactivamos.
+                marcaNegocio.ReactivarMarca(ex.MarcaExistente.Id);
+                Response.Redirect("../Marcas.aspx");
+            }
             catch (Exception ex)
             {
-                LabelError.Text = "Ocurrió un error al guardar la marca. Intente nuevamente.";
+                // CASO GENERAL: Otro error (ej: ya existe y está activa).
+                LabelError.Text = "Error: " + ex.Message;
                 LabelError.Visible = true;
-
-                Console.WriteLine(ex.Message); // este  mensaje se puede ver en la consola
             }
-
         }
+
 
         protected void ButtonCancelar_Click(object sender, EventArgs e)
         {

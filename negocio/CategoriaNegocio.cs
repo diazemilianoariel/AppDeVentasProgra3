@@ -86,25 +86,36 @@ namespace negocio
             }
         }
 
+
         public void AgregarCategoria(Categoria categoria)
         {
+            // Verificación de duplicados ANTES de insertar
+            Categoria existente = VerificarCategoria(categoria.nombre);
+            if (existente != null)
+            {
+                if (existente.estado) // Si está ACTIVA
+                {
+                    throw new Exception("Ya existe una categoría activa con ese nombre.");
+                }
+                else // Si está INACTIVA
+                {
+                    throw new CategoriaInactivaException("Categoría inactiva encontrada.", existente);
+                }
+            }
+
+            // Si no existe, la crea
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("insert into Categorias (nombre) values (@nombre)");
+                datos.SetearConsulta("INSERT INTO Categorias (nombre, estado) VALUES (@nombre, @estado)");
                 datos.SetearParametro("@nombre", categoria.nombre);
+                datos.SetearParametro("@estado", categoria.estado);
                 datos.EjecutarAccion();
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.CerrarConexion();
-            }
-
+            catch (Exception ex) { throw ex; }
+            finally { datos.CerrarConexion(); }
         }
+
 
         public void ActualizarCategoria(Categoria categoria)
         {
@@ -270,6 +281,55 @@ namespace negocio
             finally
             {
                 datos.CerrarConexion();
+            }
+        }
+
+        
+        public Categoria VerificarCategoria(string nombre)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("SELECT id, nombre, estado FROM Categorias WHERE nombre = @nombre");
+                datos.SetearParametro("@nombre", nombre);
+                datos.EjecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    Categoria aux = new Categoria();
+                    aux.Id = (int)datos.Lector["id"];
+                    aux.nombre = (string)datos.Lector["nombre"];
+                    aux.estado = (bool)datos.Lector["estado"];
+                    return aux; // Devuelve la categoría encontrada (activa o inactiva)
+                }
+                return null; // No existe
+            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.CerrarConexion(); }
+        }
+
+
+
+        public void ReactivarCategoria(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("UPDATE Categorias SET estado = 1 WHERE id = @id");
+                datos.SetearParametro("@id", id);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.CerrarConexion(); }
+        }
+
+
+        public class CategoriaInactivaException : Exception
+        {
+            public Categoria CategoriaExistente { get; set; }
+
+            public CategoriaInactivaException(string mensaje, Categoria categoria) : base(mensaje)
+            {
+                this.CategoriaExistente = categoria;
             }
         }
 
