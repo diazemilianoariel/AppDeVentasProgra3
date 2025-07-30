@@ -14,6 +14,8 @@ namespace Front
 {
     public partial class ContraseñaRecupero : System.Web.UI.Page
     {
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -25,60 +27,51 @@ namespace Front
 
         }
 
+
         protected void btnRecuperar_Click(object sender, EventArgs e)
         {
-            UsuarioNegocio clienteNegocio = new UsuarioNegocio();
-            string email = txtEmail.Text;
-            string clave = clienteNegocio.RecuperarContraseña(email);
-            if (clave != null)
-            {
-                EnviarCorreo(email, clave);
-                lblMensaje.Text = "Se ha enviado un correo con su contraseña";
-            }
-            else
-            {
-                lblMensaje.Text = "No se ha encontrado el email";
-            }
-
-
-
-        }
-
-        private void EnviarCorreo(string email, string clave)
-        {
-            string remitente = System.Configuration.ConfigurationManager.AppSettings["Email"];
-            string contraseña = System.Configuration.ConfigurationManager.AppSettings["EmailPassword"];
-
-
-
-            MailMessage mail = new MailMessage();
-            mail.To.Add(email);
-            mail.From = new MailAddress(remitente);//mail del que envia
-            mail.Subject = "Recuperacion de contraseña";
-            mail.Body = "Su contraseña es: " + clave;
-            mail.IsBodyHtml = true;
-
-
-            SmtpClient smtp = new SmtpClient();
-            smtp.Host = "smtp.live.com";
-            smtp.Port = 587;
-            smtp.EnableSsl = true;
-            smtp.Credentials = new NetworkCredential(remitente, contraseña);
-
             try
             {
-                smtp.Send(mail);
-            }
-            catch(Exception ex)
-            {
-                lblMensaje.Text = "Error al enviar el correo: " + ex.Message;
-            }
+                UsuarioNegocio negocio = new UsuarioNegocio();
+                string email = txtEmail.Text;
 
+                // Buscamos la clave en texto plano (como lo tenías).
+                string clave = negocio.RecuperarContraseña(email);
+
+                if (!string.IsNullOrEmpty(clave))
+                {
+                    // Usamos nuestro EmailService centralizado.
+                    EmailService emailService = new EmailService();
+                    string asunto = "Recuperación de Contraseña";
+                    string cuerpo = "Hola, recibimos una solicitud para recuperar tu contraseña. Tu contraseña es: <strong>" + clave + "</strong>";
+
+                    emailService.EnviarCorreoConfirmacion(email, asunto, cuerpo);
+
+                    lblMensaje.Text = "Se ha enviado un correo con tu contraseña.";
+                    lblMensaje.CssClass = "alert alert-success";
+                    lblMensaje.Visible = true;
+                }
+                else
+                {
+                    lblMensaje.Text = "No se encontró una cuenta con ese correo electrónico.";
+                    lblMensaje.CssClass = "alert alert-danger";
+                    lblMensaje.Visible = true;
+                }
+            }
+            catch (Exception)
+            {
+                lblMensaje.Text = "Ocurrió un error. Por favor, intentá de nuevo más tarde.";
+                lblMensaje.CssClass = "alert alert-danger";
+                lblMensaje.Visible = true;
+            }
         }
 
+       
         protected void btnVolver_Click(object sender, EventArgs e)
         {
             Response.Redirect("Login.aspx");
         }
+    
+    
     }
 }

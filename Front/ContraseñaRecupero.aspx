@@ -18,12 +18,12 @@
             <asp:Button Text="Volver" CssClass="btn btn-secondary w-100" ID="btnVolver" runat="server" OnClick="btnVolver_Click" />
 
 
-
-            <div class="row mt-3">
-                <div class="col-md-12 text-center">
-                    <asp:Label ID="lblMensaje" runat="server" Text="" Visible="false" CssClass="alert alert-danger d-inline-block"></asp:Label>
+            <div class="row mt-3 justify-content-center">
+                <div class="col-16">
+                    <asp:Label ID="lblMensaje" runat="server" Text="" Visible="false" CssClass="alert text-center"></asp:Label>
                 </div>
             </div>
+
         </div>
     </div>
 

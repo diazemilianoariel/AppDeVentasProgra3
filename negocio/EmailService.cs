@@ -9,36 +9,51 @@ namespace negocio
 {
     public class EmailService
     {
+
+
+        private SmtpClient smtp;
+        private string emailFrom;
+        private string password;
+
+
+
+        public EmailService()
+        {
+            // Leemos las credenciales desde el Web.config
+            // Si no las tenés ahí, podés ponerlas directamente como strings.
+            emailFrom = "arielemilianodiaz@gmail.com"; // TU CORREO DE GMAIL
+            password = "zeuw efeg tgqq voen"; // TU CONTRASEÑA DE APLICACIÓN
+
+            smtp = new SmtpClient();
+            smtp.Host = "smtp.gmail.com";
+            smtp.Port = 587;
+            smtp.EnableSsl = true;
+            smtp.Credentials = new NetworkCredential(emailFrom, password);
+        }
+
+
         public void EnviarCorreoConfirmacion(string destinatario, string asunto, string cuerpo)
         {
             try
             {
-                string email = "arielemilianodiaz@gmail.com"; // Tu correo de Gmail
-                string password = "zeuw efeg tgqq voen"; // La contraseña de aplicación de Google
-                using (MailMessage mail = new MailMessage())
-                {
-                    mail.From = new MailAddress(email);
-                    mail.To.Add(destinatario);
-                    mail.Subject = asunto;
-                    mail.Body = cuerpo;
-                    mail.IsBodyHtml = true; // Cambia a false si solo quieres texto plano
-                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
-                    {
-                        smtp.Credentials = new NetworkCredential(email, password);
-                        smtp.EnableSsl = true;
-                        smtp.Send(mail);
-                        Console.WriteLine("Correo enviado correctamente.");
-                    }
-                }
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress(emailFrom);
+                mail.To.Add(destinatario);
+                mail.Subject = asunto;
+                mail.Body = cuerpo;
+                mail.IsBodyHtml = true;
+
+                smtp.Send(mail);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error al enviar correo: " + ex.Message);
+                // Es importante relanzar la excepción para que la página que llama
+                // sepa que hubo un error y pueda mostrar un mensaje al usuario.
+                throw ex;
             }
-
-
-
         }
+
+        
 
 
 

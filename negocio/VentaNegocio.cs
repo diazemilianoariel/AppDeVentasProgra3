@@ -8,10 +8,6 @@ namespace negocio
 {
     public class VentaNegocio
     {
-
-
-        
-
         public List<Venta> ListarVentasPorUsuario(int idUsuario, string filtro = "")
         {
             List<Venta> lista = new List<Venta>();
@@ -67,7 +63,7 @@ namespace negocio
             }
         }
 
-        public int cantidadVentasHoy()
+        public int CantidadVentasHoy()
         {
             AccesoDatos datos = new AccesoDatos();
             try
@@ -304,10 +300,6 @@ namespace negocio
 
         }
 
-
-        // EN: VentaNegocio.cs
-        // Agregá este método
-
         public Venta ObtenerVentaParaNotificacion(int idVenta)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -348,31 +340,28 @@ namespace negocio
         }
 
 
-        public void RechazarVenta(int idVenta)
-        {
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.SetearConsulta("update ventas set idEstadoVenta = 3 where id = @idVenta");
-                datos.SetearParametro("@idVenta", idVenta);
-                datos.EjecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.CerrarConexion();
-            }
+        //public void RechazarVenta(int idVenta)
+        //{
+        //    AccesoDatos datos = new AccesoDatos();
+        //    try
+        //    {
+        //        datos.SetearConsulta("update ventas set idEstadoVenta = 3 where id = @idVenta");
+        //        datos.SetearParametro("@idVenta", idVenta);
+        //        datos.EjecutarAccion();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    finally
+        //    {
+        //        datos.CerrarConexion();
+        //    }
 
 
 
-        }
+        //}
 
-
-
-        // AGREGÁ ESTE MÉTODO A VentaNegocio.cs
 
         public void RechazarVentaYDevolverStock(int idVenta, List<Producto> productos)
         {
@@ -416,110 +405,110 @@ namespace negocio
         }
 
 
-        public List<Venta> BuscarVentasPendientes(string query)
-        {
-            List<Venta> lista = new List<Venta>();
-            AccesoDatos accesoDatos = new AccesoDatos();
-            try
-            {
-                accesoDatos.SetearConsulta("SELECT * FROM Ventas WHERE (idVenta LIKE @query OR Cliente.id LIKE @query OR nombreEstadoVenta LIKE @query) AND idEstadoVenta = 1");
-                accesoDatos.SetearParametro("@query", "%" + query + "%");
-                accesoDatos.EjecutarLectura();
+        //public List<Venta> BuscarVentasPendientes(string query)
+        //{
+        //    List<Venta> lista = new List<Venta>();
+        //    AccesoDatos accesoDatos = new AccesoDatos();
+        //    try
+        //    {
+        //        accesoDatos.SetearConsulta("SELECT * FROM Ventas WHERE (idVenta LIKE @query OR Cliente.id LIKE @query OR nombreEstadoVenta LIKE @query) AND idEstadoVenta = 1");
+        //        accesoDatos.SetearParametro("@query", "%" + query + "%");
+        //        accesoDatos.EjecutarLectura();
 
-                while (accesoDatos.Lector.Read())
-                {
-                    Venta venta = new Venta();
-                    // Asignar valores a las propiedades de venta
-                    lista.Add(venta);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                accesoDatos.CerrarConexion();
-            }
+        //        while (accesoDatos.Lector.Read())
+        //        {
+        //            Venta venta = new Venta();
+        //            // Asignar valores a las propiedades de venta
+        //            lista.Add(venta);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    finally
+        //    {
+        //        accesoDatos.CerrarConexion();
+        //    }
 
-            return lista;
-        }
+        //    return lista;
+        //}
 
-        public List<Producto> ObtenerCarritoPorVenta(int idVenta)
-        {
-            List<Producto> productos = new List<Producto>();
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.SetearConsulta("select p.id, p.nombre, p.descripcion, p.precio, dv.cantidad, p.margenGanancia from DetalleVentas dv inner join Productos p on dv.idProducto = p.id where dv.idVenta = @idVenta");
-                datos.SetearParametro("@idVenta", idVenta);
-                datos.EjecutarLectura();
-                while (datos.Lector.Read())
-                {
-                    Producto producto = new Producto();
-                    producto.id = (int)datos.Lector["id"];
-                    producto.nombre = (string)datos.Lector["nombre"];
-                    producto.descripcion = (string)datos.Lector["descripcion"];
-                    producto.precio = (decimal)datos.Lector["precio"];
-                    producto.Cantidad = (int)datos.Lector["cantidad"];
-                    producto.margenGanancia = (decimal)datos.Lector["margenGanancia"];
+        //public List<Producto> ObtenerCarritoPorVenta(int idVenta)
+        //{
+        //    List<Producto> productos = new List<Producto>();
+        //    AccesoDatos datos = new AccesoDatos();
+        //    try
+        //    {
+        //        datos.SetearConsulta("select p.id, p.nombre, p.descripcion, p.precio, dv.cantidad, p.margenGanancia from DetalleVentas dv inner join Productos p on dv.idProducto = p.id where dv.idVenta = @idVenta");
+        //        datos.SetearParametro("@idVenta", idVenta);
+        //        datos.EjecutarLectura();
+        //        while (datos.Lector.Read())
+        //        {
+        //            Producto producto = new Producto();
+        //            producto.id = (int)datos.Lector["id"];
+        //            producto.nombre = (string)datos.Lector["nombre"];
+        //            producto.descripcion = (string)datos.Lector["descripcion"];
+        //            producto.precio = (decimal)datos.Lector["precio"];
+        //            producto.Cantidad = (int)datos.Lector["cantidad"];
+        //            producto.margenGanancia = (decimal)datos.Lector["margenGanancia"];
                  
-                    productos.Add(producto);
-                }
-                return productos;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.CerrarConexion();
-            }
-        }
+        //            productos.Add(producto);
+        //        }
+        //        return productos;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    finally
+        //    {
+        //        datos.CerrarConexion();
+        //    }
+        //}
 
-        public List<Venta> BuscarVentas(string query)
-        {
-            List<Venta> lista = new List<Venta>();
-            AccesoDatos accesoDatos = new AccesoDatos();
-            try
-            {
-                accesoDatos.SetearConsulta("SELECT v.id, v.fecha, v.idUsuario, u.nombre, u.apellido, u.direccion, u.telefono, u.email, v.enLocal, e.nombre as nombreestadoventa, v.idEstadoVenta FROM Ventas v INNER JOIN Usuarios u ON v.idUsuario = u.id INNER JOIN EstadoVenta e ON v.idEstadoVenta = e.id WHERE v.id = @query");
-                accesoDatos.SetearParametro("@query", query);
-                accesoDatos.EjecutarLectura();
+        //public List<Venta> BuscarVentas(string query)
+        //{
+        //    List<Venta> lista = new List<Venta>();
+        //    AccesoDatos accesoDatos = new AccesoDatos();
+        //    try
+        //    {
+        //        accesoDatos.SetearConsulta("SELECT v.id, v.fecha, v.idUsuario, u.nombre, u.apellido, u.direccion, u.telefono, u.email, v.enLocal, e.nombre as nombreestadoventa, v.idEstadoVenta FROM Ventas v INNER JOIN Usuarios u ON v.idUsuario = u.id INNER JOIN EstadoVenta e ON v.idEstadoVenta = e.id WHERE v.id = @query");
+        //        accesoDatos.SetearParametro("@query", query);
+        //        accesoDatos.EjecutarLectura();
 
-                while (accesoDatos.Lector.Read())
-                {
-                    Venta venta = new Venta();
-                    venta.IdVenta = (int)accesoDatos.Lector["id"];
-                    venta.Fecha = (DateTime)accesoDatos.Lector["fecha"];
-                    venta.Cliente = new Usuario
-                    {
-                        Id = (int)accesoDatos.Lector["idUsuario"],
-                        Nombre = (string)accesoDatos.Lector["nombre"],
-                        Apellido = (string)accesoDatos.Lector["apellido"],
-                        Direccion = (string)accesoDatos.Lector["direccion"],
-                        Telefono = (string)accesoDatos.Lector["telefono"],
-                        Email = (string)accesoDatos.Lector["email"]
-                    };
-                    venta.EnLocal = (bool)accesoDatos.Lector["enLocal"];
-                    venta.idEstadoVenta = (int)accesoDatos.Lector["idEstadoVenta"];
-                    venta.nombreEstadoVenta = (string)accesoDatos.Lector["nombreestadoventa"];
-                    venta.Productos = ListarProductosPorVenta(venta.IdVenta);
-                    lista.Add(venta);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                accesoDatos.CerrarConexion();
-            }
+        //        while (accesoDatos.Lector.Read())
+        //        {
+        //            Venta venta = new Venta();
+        //            venta.IdVenta = (int)accesoDatos.Lector["id"];
+        //            venta.Fecha = (DateTime)accesoDatos.Lector["fecha"];
+        //            venta.Cliente = new Usuario
+        //            {
+        //                Id = (int)accesoDatos.Lector["idUsuario"],
+        //                Nombre = (string)accesoDatos.Lector["nombre"],
+        //                Apellido = (string)accesoDatos.Lector["apellido"],
+        //                Direccion = (string)accesoDatos.Lector["direccion"],
+        //                Telefono = (string)accesoDatos.Lector["telefono"],
+        //                Email = (string)accesoDatos.Lector["email"]
+        //            };
+        //            venta.EnLocal = (bool)accesoDatos.Lector["enLocal"];
+        //            venta.idEstadoVenta = (int)accesoDatos.Lector["idEstadoVenta"];
+        //            venta.nombreEstadoVenta = (string)accesoDatos.Lector["nombreestadoventa"];
+        //            venta.Productos = ListarProductosPorVenta(venta.IdVenta);
+        //            lista.Add(venta);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    finally
+        //    {
+        //        accesoDatos.CerrarConexion();
+        //    }
 
-            return lista;
-        }
+        //    return lista;
+        //}
 
 
 
@@ -634,10 +623,6 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
-
-
-
-
 
         public List<Venta> ListarVentasParaReporte(string filtro = "", DateTime? fechaDesde = null, DateTime? fechaHasta = null)
         {
