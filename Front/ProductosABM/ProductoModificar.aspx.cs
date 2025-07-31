@@ -78,7 +78,7 @@ namespace Front.ProductosABM
             DropDownListCategoria.DataValueField = "id";
             DropDownListCategoria.DataBind();
 
-            // CORRECCIÓN: Cargar Proveedores en el CheckBoxList
+            // Cargar Proveedores en el CheckBoxList
             ProveedoresNegocio proveedorNegocio = new ProveedoresNegocio();
             cblProveedores.DataSource = proveedorNegocio.ListarProveedores();
             cblProveedores.DataTextField = "nombre";
@@ -98,7 +98,7 @@ namespace Front.ProductosABM
                 TextBoxGanancia.Text = producto.margenGanancia.ToString("F2");
                 TextBoxStock.Text = producto.stock.ToString();
                 TextBoxImagen.Text = producto.Imagen;
-                ImagenProducto.Src = producto.Imagen; // Asumiendo que es un <img id="ImagenProducto" runat="server">
+                ImagenProducto.Src = producto.Imagen; 
 
                 // Seleccionar los valores en los DropDownLists
                 DropDownListMarca.SelectedValue = producto.Marca.Id.ToString();
@@ -106,7 +106,7 @@ namespace Front.ProductosABM
                 DropDownListCategoria.SelectedValue = producto.Categoria.Id.ToString();
                 CheckBoxEstado.Checked = producto.estado;
 
-                // CORRECCIÓN: Seleccionar los proveedores en el CheckBoxList
+                //  Seleccionar los proveedores en el CheckBoxList
                 foreach (ListItem item in cblProveedores.Items)
                 {
                     // Usamos LINQ (.Any) para ver si la lista de proveedores del producto contiene el ID del item actual.
@@ -137,10 +137,10 @@ namespace Front.ProductosABM
                     Tipo = new dominio.Tipos { Id = Convert.ToInt32(DropDownListTipo.SelectedValue) },
                     Categoria = new Categoria { Id = Convert.ToInt32(DropDownListCategoria.SelectedValue) },
                     estado = CheckBoxEstado.Checked,
-                    Proveedores = new List<Proveedor>() // CORRECCIÓN: Inicializamos la lista de proveedores
+                    Proveedores = new List<Proveedor>() //Inicializamos la lista de proveedores
                 };
 
-                // CORRECCIÓN: Llenamos la lista de proveedores a partir de los checkboxes seleccionados
+                // Llenamos la lista de proveedores a partir de los checkboxes seleccionados
                 foreach (ListItem item in cblProveedores.Items)
                 {
                     if (item.Selected)

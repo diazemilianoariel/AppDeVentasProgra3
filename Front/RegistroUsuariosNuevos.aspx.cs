@@ -48,14 +48,14 @@ namespace Front
                     estado = true // Por defecto, los nuevos usuarios están activos.
                 };
 
-                // CORRECCIÓN: Se asigna el perfil de Cliente usando la nueva estructura.
+                // Se asigna el perfil de Cliente usando la nueva estructura.
                 nuevoUsuario.Perfil = new Perfil();
                 nuevoUsuario.Perfil.Id = (int)TipoPerfil.Cliente; // Siempre se registran como Clientes.
 
-                // CORRECCIÓN: Se llama al método con el nombre correcto.
+                //  Se llama al método con el nombre correcto.
                 usuarioNegocio.AgregarUsuario(nuevoUsuario);
 
-                // Opcional: Loguear al usuario automáticamente después del registro.
+                //  Loguear al usuario automáticamente después del registro.
                 Session.Add("usuario", nuevoUsuario);
 
                 // Redirigir a la página principal después de un registro exitoso.

@@ -7,6 +7,8 @@ namespace negocio
 {
     public class MarcaNegocio
     {
+
+
         public List<Marca> ListarMarcas(string filtro = "")
         {
             List<Marca> marcas = new List<Marca>();
@@ -173,25 +175,7 @@ namespace negocio
         }
 
 
-        public void bajaFisica(int id)
-        {
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.SetearConsulta("delete from Marcas where id = @id");
-                datos.SetearParametro("@id", id);
-                datos.EjecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.CerrarConexion();
-            }
-        }
-
+       
         public void altaLogica(string nombre)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -248,14 +232,6 @@ namespace negocio
             }
 
         }
-
-
-
-
-
-
-
-
 
 
 

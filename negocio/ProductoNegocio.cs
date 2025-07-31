@@ -11,7 +11,7 @@ namespace negocio
 
     public class ProductoNegocio
     {
-        // EN: ProductoNegocio.cs
+        
 
 
 
@@ -338,7 +338,7 @@ namespace negocio
 
                 datos.SetearConsulta(consultaProducto);
 
-                // --- INICIO DEL CÓDIGO CORREGIDO QUE FALTABA ---
+               
                 // Seteamos TODOS los parámetros que la consulta UPDATE necesita.
                 datos.SetearParametro("@nombre", producto.nombre);
                 datos.SetearParametro("@descripcion", producto.descripcion);
@@ -350,7 +350,7 @@ namespace negocio
                 datos.SetearParametro("@idTipo", producto.Tipo.Id);
                 datos.SetearParametro("@idCategoria", producto.Categoria.Id);
                 datos.SetearParametro("@id", producto.id); // No olvidar el ID para el WHERE
-                                                           // --- FIN DEL CÓDIGO CORREGIDO ---
+                                                          
 
                 datos.EjecutarAccion();
 
@@ -440,7 +440,6 @@ namespace negocio
         }
 
 
-        // EN: ProductoNegocio.cs
 
         public Producto ObtenerProductoParaAdmin(int id)
         {
@@ -495,12 +494,12 @@ namespace negocio
                 string consultaProveedores = "SELECT Pr.id, Pr.nombre FROM Proveedores Pr INNER JOIN Proveedores_Productos PP ON Pr.id = PP.idProveedor WHERE PP.idProducto = @id";
                 datos.SetearConsulta(consultaProveedores);
 
-                // --- INICIO DE LA CORRECCIÓN ---
+                
                 // Limpiamos los parámetros de la consulta anterior...
                 datos.LimpiarParametros();
-                // ...y volvemos a agregar el que necesitamos para esta nueva consulta.
+                //  volvemos a agregar el que necesitamos para esta nueva consulta.
                 datos.SetearParametro("@id", id);
-                // --- FIN DE LA CORRECCIÓN ---
+               
 
                 datos.EjecutarLectura();
 

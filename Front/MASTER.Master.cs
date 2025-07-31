@@ -31,14 +31,12 @@ namespace Front
 
             if (carrito != null)
             {
-                // Sumamos la propiedad "Cantidad" de cada producto en la lista.
-                // Asegúrate de que tu clase Producto tenga una propiedad 'Cantidad' para el carrito.
-                // Si no la tiene y solo guardas un producto por línea, puedes usar 'carrito.Count'.
+                
                 totalProductos = carrito.Sum(p => p.Cantidad);
             }
 
             ActualizarCarrito.InnerText = totalProductos.ToString();
-            // Actualizamos el contador en el HTML.
+            // Actualiza el contador en el HTML.
             ActualizarCarrito.InnerText = totalProductos.ToString();
 
          

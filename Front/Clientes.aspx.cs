@@ -37,7 +37,7 @@ namespace Front
         // Método de validación corregido y específico para esta página
         private bool EsAdmin(Usuario usuario)
         {
-            // Según el plan, solo los Administradores pueden gestionar usuarios.
+            //  solo los Administradores pueden gestionar usuarios.
            // return usuario != null && usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
             return usuario?.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
 

@@ -79,7 +79,7 @@ namespace Front
         private void ActualizarTotalGeneral()
         {
             List<Producto> carrito = ObtenerCarrito();
-            // CORRECCIÓN: Se usa precioVenta para el cálculo, que ya incluye el margen.
+            // Se usa precioVenta para el cálculo, que ya incluye el margen.
             decimal totalGeneral = carrito.Sum(p => p.SubTotal);
             litSubtotal.Text = totalGeneral.ToString("F2");
             litTotalGeneral.Text = totalGeneral.ToString("F2");
@@ -99,7 +99,7 @@ namespace Front
 
                     CarritoNegocio carritoNegocio = new CarritoNegocio();
 
-                    // --- INICIO DE LA CORRECCIÓN ---
+                   
 
                     // 1. Llamamos al nuevo método transaccional 'ProcesarVenta'.
                     int idVentaGenerada = carritoNegocio.ProcesarVenta(carrito, totalGeneral, usuario.Id);
@@ -115,7 +115,7 @@ namespace Front
                         // Redirigir a una página de éxito o a "Mis Compras"
                         Response.Redirect("MisCompras.aspx", false);
                     }
-                    // --- FIN DE LA CORRECCIÓN ---
+                   
                     else
                     {
                         MostrarMensaje("Error al confirmar la compra. No se pudo generar la venta.");

@@ -43,7 +43,7 @@ namespace negocio
         }
 
 
-        // Puedes agregar esto a FacturaNegocio.cs o a una nueva clase VentaNegocio.cs
+        
         public List<Producto> ObtenerDetalleVenta(int idVenta)
         {
             List<Producto> lista = new List<Producto>();
@@ -61,7 +61,7 @@ namespace negocio
                 {
                     Producto aux = new Producto();
                     aux.nombre = (string)datos.Lector["nombre"];
-                    aux.Cantidad = (int)datos.Lector["cantidad"]; // Asumo que tienes la prop Cantidad en Producto
+                    aux.Cantidad = (int)datos.Lector["cantidad"]; 
                     aux.precio = (decimal)datos.Lector["precioVenta"];
                     lista.Add(aux);
                 }
@@ -84,7 +84,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                // Usamos la consulta que ya sabíamos que funciona
+               
                 string consulta = @"SELECT
                               V.id as IdVenta,
                               V.monto as TotalFactura,
@@ -100,7 +100,7 @@ namespace negocio
 
                 while (datos.Lector.Read())
                 {
-                    // Creamos una instancia de nuestro nuevo modelo: CompraResumen
+                   
                     CompraResumen aux = new CompraResumen();
                     aux.IdVenta = (int)datos.Lector["IdVenta"];
                     aux.TotalFactura = (decimal)datos.Lector["TotalFactura"];

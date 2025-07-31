@@ -194,7 +194,7 @@ namespace negocio
                     producto.nombre = (string)datos.Lector["nombre"];
                     producto.Cantidad = (int)datos.Lector["cantidad"];
 
-                    // ¡ESTA ES LA CORRECCIÓN CLAVE!
+                  
                     // Le asignamos el precio histórico de la venta.
                     producto.precioVenta = (decimal)datos.Lector["precioVenta"];
 
@@ -340,7 +340,7 @@ namespace negocio
         }
 
 
-        //public void RechazarVenta(int idVenta)
+        /*public void RechazarVenta(int idVenta)
         //{
         //    AccesoDatos datos = new AccesoDatos();
         //    try
@@ -360,9 +360,12 @@ namespace negocio
 
 
 
-        //}
+        //}*/
+       
+        
+        
 
-
+        //transaccion
         public void RechazarVentaYDevolverStock(int idVenta, List<Producto> productos)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -372,7 +375,7 @@ namespace negocio
                 datos.AbrirConexion();
                 datos.IniciarTransaccion();
 
-                // --- TAREA 1: Devolver el stock de cada producto ---
+                // ---  devuelve stock ---
                 foreach (var producto in productos)
                 {
                     datos.SetearConsulta("UPDATE Stock SET cantidad = cantidad + @cantidad WHERE idProducto = @idProducto");
@@ -382,7 +385,7 @@ namespace negocio
                     datos.EjecutarAccion();
                 }
 
-                // --- TAREA 2: Cambiar el estado de la venta a "Cancelado" (ID 3) ---
+                // estado de la venta a "Cancelado" (ID 3)
                 datos.SetearConsulta("UPDATE Ventas SET idEstadoVenta = 3 WHERE id = @idVenta");
                 datos.LimpiarParametros();
                 datos.SetearParametro("@idVenta", idVenta);
@@ -539,7 +542,7 @@ namespace negocio
                     // Cerramos el lector para la siguiente consulta
                     datos.Lector.Close();
 
-                    // Llamamos al método CORREGIDO para cargar los productos.
+                   
                     venta.Productos = ListarProductosPorVenta(venta.IdVenta);
                     return venta;
                 }

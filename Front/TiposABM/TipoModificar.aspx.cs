@@ -76,7 +76,7 @@ namespace Front.TiposABM
                     return;
                 }
 
-                // MEJORA: Se añade la lógica para validar si el nombre ya existe (si fue modificado).
+                //  Se añade la lógica para validar si el nombre ya existe (si fue modificado).
                 if (!TextBoxNombre.Text.Equals(HiddenFieldNombreOriginal.Value, StringComparison.OrdinalIgnoreCase))
                 {
                     List<dominio.Tipos> listaDeTipos = tipoNegocio.ListarTipos();

@@ -39,7 +39,7 @@ namespace Front.TiposABM
 
 
 
-        // EN: TipoAgregar.aspx.cs
+        
 
         protected void ButtonGuardar_Click(object sender, EventArgs e)
         {

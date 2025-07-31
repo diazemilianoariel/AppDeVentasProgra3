@@ -82,15 +82,11 @@ namespace Front
                 // Actualizamos el objeto en la sesión para que el "Bienvenido, ..." se refresque
                 Session["usuario"] = usuarioActual;
 
-                // (Opcional) Mostramos un mensaje de éxito
-                // lblMensaje.Text = "¡Perfil actualizado con éxito!";
-                // lblMensaje.Visible = true;
+               
             }
             catch (Exception ex)
             {
-                // (Opcional) Mostramos un mensaje de error
-                // lblMensaje.Text = "Ocurrió un error al actualizar el perfil.";
-                // lblMensaje.Visible = true;
+                
             }
         }
     }

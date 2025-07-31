@@ -47,7 +47,7 @@ namespace Front
                     return;
                 }
 
-                // VALIDACIÓN DE SEGURIDAD CLAVE:
+                
                 // Si el usuario no es admin Y el ID del cliente de la venta no coincide con el ID del usuario logueado...
                 if (usuarioLogueado.Perfil.Id != (int)TipoPerfil.Administrador && venta.Cliente.Id != usuarioLogueado.Id)
                 {

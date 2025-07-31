@@ -16,7 +16,7 @@ namespace Front.UsuariosABM
             Usuario usuarioLogueado = Session["usuario"] as Usuario;
             if (usuarioLogueado == null || !EsAdmin(usuarioLogueado))
             {
-                // CORRECCIÓN: La ruta de redirección debe subir un nivel.
+                //  La ruta de redirección debe subir un nivel.
                 Response.Redirect("../Login.aspx");
                 return;
             }
@@ -31,7 +31,7 @@ namespace Front.UsuariosABM
 
         private bool EsAdmin(Usuario usuario)
         {
-            // Según el plan, solo los Administradores pueden gestionar Usuarios.
+            //solo los Administradores pueden gestionar Usuarios.
             return usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
         }
 
@@ -68,7 +68,7 @@ namespace Front.UsuariosABM
                 nuevoUsuario.Email = TextBoxEmail.Text;
                 nuevoUsuario.clave = TextBoxClave.Text;
 
-                // CORRECCIÓN: Se asigna el objeto Perfil completo.
+                //  Se asigna el objeto Perfil completo.
                 nuevoUsuario.Perfil = new Perfil();
                 nuevoUsuario.Perfil.Id = int.Parse(ddlPerfil.SelectedValue);
 

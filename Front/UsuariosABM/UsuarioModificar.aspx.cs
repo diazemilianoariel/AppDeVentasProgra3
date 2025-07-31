@@ -22,17 +22,17 @@ namespace Front.UsuariosABM
 
             if (!IsPostBack)
             {
-                // PASO 2: Solo si el usuario tiene permisos, cargamos los datos.
+                //  Solo si el usuario tiene permisos, cargamos los datos.
                 if (Request.QueryString["id"] != null)
                 {
                     CargarPerfiles();
                     int usuarioId = Convert.ToInt32(Request.QueryString["id"]);
                     CargarDatosUsuario(usuarioId);
 
-                    // MEJORA DE SEGURIDAD: Si el admin se está editando a sí mismo...
+                    //  Si el admin se está editando a sí mismo...
                     if (usuarioLogueado.Id == usuarioId)
                     {
-                        // ...deshabilitamos la opción de cambiar de perfil y de desactivarse.
+                        // ...deshabilita la opción de cambiar de perfil y de desactivarse.
                         ddlPerfil.Enabled = false;
                         CheckBoxEstado.Enabled = false;
                     }

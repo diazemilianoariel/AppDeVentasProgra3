@@ -35,7 +35,7 @@ namespace Front.PerfilesABM
 
         private bool EsAdmin(Usuario usuario)
         {
-            // Según el plan, solo los Administradores pueden gestionar Perfiles.
+            //  solo los Administradores pueden gestionar Perfiles.
             return usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
         }
 

@@ -23,7 +23,7 @@ namespace Front.MarcasABM
             Usuario usuario = Session["usuario"] as Usuario;
             if (usuario == null || !EsAdmin(usuario))
             {
-                // CORRECCIÓN 2: La ruta de redirección debe subir un nivel.
+                // La ruta de redirección debe subir un nivel.
                 Response.Redirect("../Login.aspx");
                 return;
             }

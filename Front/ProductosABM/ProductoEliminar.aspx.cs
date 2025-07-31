@@ -77,7 +77,7 @@ namespace Front.ProductosABM
                 int productId = Convert.ToInt32(Request.QueryString["id"]);
                 ProductoNegocio productoNegocio = new ProductoNegocio();
 
-                // CORRECCIÓN: Usamos el nombre de método que ya existe en ProductoNegocio
+                //  Usamos el nombre de método que ya existe en ProductoNegocio
                 productoNegocio.bajaLogicaProducto(productId);
 
                 Response.Redirect("../Productos.aspx");

@@ -15,7 +15,7 @@ namespace Front.ProductosABM
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // CORRECCIÓN 1: La validación ahora es más simple.
+            //  La validación ahora es más simple.
             // Si no hay un usuario en la sesión, no puede ver la página.
             if (Session["usuario"] == null)
             {
@@ -129,7 +129,7 @@ namespace Front.ProductosABM
             catch (Exception ex)
             {
                 MostrarError("Ocurrió un error al agregar el producto al carrito.");
-                // Opcional: registrar ex.ToString() en un log de errores.
+                
             }
         }
 

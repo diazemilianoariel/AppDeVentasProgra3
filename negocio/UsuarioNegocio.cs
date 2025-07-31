@@ -157,7 +157,6 @@ namespace negocio
                 datos.SetearParametro("@Telefono", nuevo.Telefono);
                 datos.SetearParametro("@Email", nuevo.Email);
                 datos.SetearParametro("@Clave", nuevo.clave);
-                // CORRECCIÓN: Se pasa el ID del perfil, no el objeto completo.
                 datos.SetearParametro("@idPerfil", nuevo.Perfil.Id);
                 datos.EjecutarAccion();
             }

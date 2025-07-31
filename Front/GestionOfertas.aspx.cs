@@ -10,11 +10,25 @@ namespace Front
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // FALTANTE: Agregar tu validación de seguridad para que solo entre el Admin.
+            Usuario usuario = Session["usuario"] as Usuario;
+            if (usuario == null || !EsAdmin(usuario))
+            {
+                // Si no es admin, lo redirigimos al login.
+                Response.Redirect("Login.aspx");
+                return;
+            }
+
+
             if (!IsPostBack)
             {
                 CargarGrilla();
             }
+        }
+
+
+        private bool EsAdmin(Usuario usuario)
+        {
+            return usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
         }
 
         private void CargarGrilla()

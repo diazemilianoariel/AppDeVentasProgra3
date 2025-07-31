@@ -63,7 +63,7 @@ namespace negocio
             }
         }
 
-        // Este método ahora es para cuando un admin CANCELA una venta y debe devolver el stock.
+        
         public void DevolverStock(List<Producto> productos)
         {
             // Este proceso también debería ser transaccional.
@@ -94,5 +94,8 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
+    
+    
+    
     }
 }

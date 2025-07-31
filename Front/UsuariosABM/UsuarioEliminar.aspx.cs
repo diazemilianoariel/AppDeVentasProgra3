@@ -22,12 +22,12 @@ namespace Front.UsuariosABM
 
             if (!IsPostBack)
             {
-                // PASO 2: Solo si el usuario tiene permisos, cargamos los datos.
+                //  Solo si el usuario tiene permisos, cargamos los datos.
                 if (Request.QueryString["id"] != null)
                 {
                     int usuarioId = Convert.ToInt32(Request.QueryString["id"]);
 
-                    // IMPORTANTE: Un administrador no debería poder eliminarse a sí mismo.
+                    //  Un administrador no debería poder eliminarse a sí mismo.
                     if (usuarioLogueado.Id == usuarioId)
                     {
                         // Redirigimos o mostramos un error.
@@ -47,7 +47,7 @@ namespace Front.UsuariosABM
 
         private bool EsAdmin(Usuario usuario)
         {
-            // Según el plan, solo los Administradores pueden gestionar Usuarios.
+            //  solo los Administradores pueden gestionar Usuarios.
             return usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
         }
 
@@ -58,7 +58,7 @@ namespace Front.UsuariosABM
             try
             {
                 UsuarioNegocio negocio = new UsuarioNegocio();
-                // Asumo que tienes un método para obtener un usuario por ID.
+                
                 Usuario usuarioAEliminar = negocio.ObtenerUsuarioPorId(usuarioId);
 
                 if (usuarioAEliminar != null)
@@ -91,7 +91,7 @@ namespace Front.UsuariosABM
             {
                 int usuarioId = Convert.ToInt32(Request.QueryString["id"]);
                 UsuarioNegocio negocio = new UsuarioNegocio();
-                // Asumo que tienes un método para la baja lógica de usuarios.
+                
                 negocio.BajaLogicaUsuario(usuarioId);
                 Response.Redirect("../Clientes.aspx");
             }

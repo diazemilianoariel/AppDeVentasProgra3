@@ -32,8 +32,7 @@ namespace Front.MarcasABM
                 }
                 else
                 {
-                    // Manejar el caso donde no se proporciona un ID.
-                    // Redirigimos a la lista de marcas si no hay ID.
+                    
                     Response.Redirect("../Marcas.aspx");
                 }
             }
@@ -45,7 +44,7 @@ namespace Front.MarcasABM
 
         private bool EsAdmin(Usuario usuario)
         {
-            // Según el plan, solo los Administradores pueden gestionar Marcas.
+           
             return usuario.Perfil != null && usuario.Perfil.Id == (int)TipoPerfil.Administrador;
         }
 

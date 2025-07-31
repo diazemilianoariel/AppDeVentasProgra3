@@ -66,7 +66,7 @@ namespace Front.PerfilesABM
                 if (perfil != null)
                 {
                     LabelNombrePerfil.Text = perfil.Nombre;
-                    // MEJORA: Se muestra un texto más amigable para el estado.
+                    // Se muestra un texto más amigable para el estado.
                     LabelEstadoPerfil.Text = perfil.Estado ? "Activo" : "Inactivo";
                 }
                 else

@@ -19,13 +19,13 @@ namespace negocio
             comando = new SqlCommand();
         }
 
-        // --- MÉTODOS DE TRANSACCIONES ---
         public void AbrirConexion()
         {
             if (conexion.State == ConnectionState.Closed)
                 conexion.Open();
         }
 
+        //  MÉTODOS DE TRANSACCIONES
         public void IniciarTransaccion()
         {
             // Solo inicia una transacción si la conexión está abierta
